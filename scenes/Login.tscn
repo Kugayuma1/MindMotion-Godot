@@ -1,0 +1,248 @@
+[gd_scene load_steps=13 format=3 uid="uid://bcj1se16a650t"]
+
+[ext_resource type="Script" uid="uid://cc7us5wbsk55" path="res://scripts/login.gd" id="1_p5ycx"]
+[ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="2_yxk4x"]
+[ext_resource type="Texture2D" uid="uid://crxf5fjyp7ncf" path="res://assets/container.png" id="3_jbclg"]
+[ext_resource type="Texture2D" uid="uid://c6lyvgte3htt2" path="res://assets/eye.png" id="4_jbclg"]
+[ext_resource type="Texture2D" uid="uid://b8lf8vmcx55l4" path="res://assets/mindmotion_logo.png" id="4_xpxjw"]
+[ext_resource type="Texture2D" uid="uid://b1k5g3yqlqpl8" path="res://assets/login_button.png" id="4_yxk4x"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p5ycx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p5ycx"]
+content_margin_left = 50.0
+bg_color = Color(0.909804, 0.952941, 1, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.505882, 0.466667, 0.466667, 1)
+border_blend = true
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yxk4x"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jbclg"]
+bg_color = Color(0.909804, 0.952941, 1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jbclg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xpxjw"]
+bg_color = Color(0.909804, 0.952941, 1, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p5ycx")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Back" type="TextureButton" parent="."]
+layout_mode = 1
+offset_left = 58.0
+offset_top = 35.0
+offset_right = 153.0
+offset_bottom = 133.0
+texture_normal = ExtResource("2_yxk4x")
+
+[node name="Container" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -443.441
+offset_top = -338.0
+offset_right = 431.44
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_jbclg")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="HelloLabel" type="Label" parent="Container"]
+modulate = Color(1, 0.815686, 0.258824, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -139.44
+offset_top = -215.0
+offset_right = 162.56
+offset_bottom = -138.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "Hello"
+
+[node name="Email" type="LineEdit" parent="Container"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -261.999
+offset_top = -124.0
+offset_right = 288.001
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/caret_color = Color(0, 0, 0, 1)
+theme_override_colors/font_placeholder_color = Color(0.345098, 0.345098, 0.345098, 0.560784)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_p5ycx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_p5ycx")
+placeholder_text = "Enter your E-mail"
+
+[node name="Password" type="LineEdit" parent="Container"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -261.999
+offset_top = 2.0
+offset_right = 288.001
+offset_bottom = 99.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/caret_color = Color(0, 0, 0, 1)
+theme_override_colors/font_placeholder_color = Color(0.345098, 0.345098, 0.345098, 0.560784)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yxk4x")
+theme_override_styles/normal = SubResource("StyleBoxFlat_p5ycx")
+placeholder_text = "Password"
+secret = true
+
+[node name="Hide" type="TextureButton" parent="Container/Password"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -71.0004
+offset_top = -13.5
+offset_right = -38.0004
+offset_bottom = 16.5
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = ExtResource("4_jbclg")
+stretch_mode = 5
+
+[node name="Forget" type="Button" parent="Container"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 126.559
+offset_top = 102.0
+offset_right = 272.559
+offset_bottom = 130.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_colors/font_hover_color = Color(0.345098, 0.345098, 0.345098, 1)
+theme_override_colors/font_color = Color(0.345098, 0.345098, 0.345098, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/hover = SubResource("StyleBoxFlat_jbclg")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jbclg")
+text = "Forget Password?"
+
+[node name="Login" type="TextureButton" parent="Container"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -124.999
+offset_top = -188.0
+offset_right = 153.001
+offset_bottom = -112.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("4_yxk4x")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Container"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.9995
+offset_top = -110.0
+offset_right = 99.0005
+offset_bottom = -87.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.345098, 0.345098, 0.345098, 1)
+text = "Don't have an account?"
+
+[node name="Signup" type="Button" parent="Container"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -34.9995
+offset_top = -90.0
+offset_right = 59.0005
+offset_bottom = -62.0
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+theme_override_colors/font_hover_color = Color(0.454902, 0.0470588, 0.976471, 1)
+theme_override_colors/font_color = Color(0.454902, 0.0470588, 0.976471, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/hover = SubResource("StyleBoxFlat_xpxjw")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jbclg")
+text = "Sign up"
+
+[node name="Logo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -271.0
+offset_top = -25.0
+offset_right = 282.0
+offset_bottom = 388.0
+grow_horizontal = 2
+texture = ExtResource("4_xpxjw")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Container/Password/Hide" to="." method="_on_hide_pressed"]
+[connection signal="pressed" from="Container/Forget" to="." method="_on_forget_pressed"]
+[connection signal="pressed" from="Container/Login" to="." method="_on_login_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]

@@ -1,0 +1,121 @@
+[gd_scene load_steps=8 format=3 uid="uid://gkpo32kjf8f7"]
+
+[ext_resource type="Texture2D" uid="uid://diy6w4rj2rm83" path="res://assets/left_wave.png" id="1_ay21k"]
+[ext_resource type="Script" uid="uid://tu7genpt6cgm" path="res://scripts/student_main.gd" id="1_hhgdh"]
+[ext_resource type="Texture2D" uid="uid://cwgfqyonunybf" path="res://assets/right_wave.png" id="2_hhgdh"]
+[ext_resource type="Texture2D" uid="uid://b8lf8vmcx55l4" path="res://assets/mindmotion_logo.png" id="3_o61y4"]
+[ext_resource type="Texture2D" uid="uid://tskpou0x4eht" path="res://assets/play_button.png" id="4_owdee"]
+[ext_resource type="Texture2D" uid="uid://bh8jl4arm3y03" path="res://assets/settings_button.png" id="5_ki2ok"]
+[ext_resource type="Texture2D" uid="uid://cidl525ho6lg7" path="res://assets/quit_button.png" id="6_wumuo"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hhgdh")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -624.0
+offset_right = 657.0
+offset_bottom = 620.0
+grow_vertical = 2
+texture = ExtResource("1_ay21k")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -608.0
+offset_top = -663.0
+offset_bottom = 665.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("2_hhgdh")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Logo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -524.0
+offset_top = -46.0
+offset_right = 542.0
+offset_bottom = 600.0
+grow_horizontal = 2
+texture = ExtResource("3_o61y4")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Play" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -184.0
+offset_top = 3.0
+offset_right = 218.0
+offset_bottom = 113.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("4_owdee")
+stretch_mode = 5
+
+[node name="Setting" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -184.0
+offset_top = 144.0
+offset_right = 218.0
+offset_bottom = 254.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("5_ki2ok")
+stretch_mode = 6
+
+[node name="Quit" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -184.0
+offset_top = 275.0
+offset_right = 218.0
+offset_bottom = 385.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("6_wumuo")
+stretch_mode = 5
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Setting" to="." method="_on_setting_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

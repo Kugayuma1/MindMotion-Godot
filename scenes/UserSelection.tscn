@@ -1,0 +1,109 @@
+[gd_scene load_steps=7 format=3 uid="uid://c8jrl0pgsf0k2"]
+
+[ext_resource type="Script" uid="uid://dvnpb55g60ayk" path="res://scripts/user_selection.gd" id="1_2ucj4"]
+[ext_resource type="Texture2D" uid="uid://crxf5fjyp7ncf" path="res://assets/container.png" id="1_512yq"]
+[ext_resource type="Texture2D" uid="uid://b8lf8vmcx55l4" path="res://assets/mindmotion_logo.png" id="2_6x8v3"]
+[ext_resource type="Texture2D" uid="uid://seccw72dbtc1" path="res://assets/student_button.png" id="2_haymk"]
+[ext_resource type="Texture2D" uid="uid://ck37it82t4joe" path="res://assets/teacher_button.png" id="3_2gb3k"]
+[ext_resource type="Script" uid="uid://bkd5djw3nsj1d" path="res://global/global.gd" id="5_vbtce"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2ucj4")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Container" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -428.0
+offset_top = -338.0
+offset_right = 416.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_512yq")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Container"]
+modulate = Color(0.184314, 0.184314, 0.184314, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.0
+offset_top = -195.0
+offset_right = 101.0
+offset_bottom = -140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Are you a"
+
+[node name="Student" type="TextureButton" parent="Container"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.441
+offset_top = -86.0
+offset_right = 232.559
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_haymk")
+stretch_mode = 5
+
+[node name="Teacher" type="TextureButton" parent="Container"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -211.441
+offset_top = 79.0
+offset_right = 237.559
+offset_bottom = 205.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("3_2gb3k")
+stretch_mode = 5
+script = ExtResource("5_vbtce")
+
+[node name="Logo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -271.0
+offset_top = -25.0
+offset_right = 282.0
+offset_bottom = 388.0
+grow_horizontal = 2
+texture = ExtResource("2_6x8v3")
+expand_mode = 3
+stretch_mode = 5
+
+[connection signal="pressed" from="Container/Student" to="." method="_on_student_pressed"]
+[connection signal="pressed" from="Container/Teacher" to="." method="_on_teacher_pressed"]

@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccl0pbip3p2i8"]
+
+[ext_resource type="Script" uid="uid://cjv6anfyburo" path="res://games_script/a_reading.gd" id="1_21jv4"]
+[ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="2_8k27c"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_21jv4")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 121.0
+offset_top = 455.0
+offset_right = 1813.0
+offset_bottom = 660.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 150
+text = "A game to ONIN PAKYU"
+
+[node name="Mema" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 736.0
+offset_top = 51.0
+offset_right = 1117.0
+offset_bottom = 442.0
+texture_normal = ExtResource("2_8k27c")
+stretch_mode = 5
+
+[connection signal="pressed" from="Mema" to="." method="_on_mema_pressed"]

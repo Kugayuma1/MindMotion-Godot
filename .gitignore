@@ -1,0 +1,29 @@
+# Godot 4 specific
+.godot/
+.import/
+.export/
+mono/
+godot.env
+
+# Android-specific
+/android/.gradle/
+/android/build/
+/android/app/build/
+local.properties
+*.keystore
+*.jks
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Build files / packages
+*.exe
+*.apk
+*.aab
+*.pck
+*.zip
+*.tar.gz
+
+# Logs
+*.log
