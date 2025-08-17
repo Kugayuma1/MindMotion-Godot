@@ -5,6 +5,7 @@ var selected_correct = []
 var original_feedback_text = ""
 var countdown := 15
 var timer_active := true
+var start_time := 0
 
 @onready var feedback_label = $TextureRect/Holder/Label
 @onready var timer_label = $TextureRect/Time/Label
@@ -13,6 +14,7 @@ func _ready():
 	selected_correct.clear()
 	original_feedback_text = feedback_label.text
 	start_timer()  # start the countdown
+	start_time = Time.get_ticks_msec()
 
 func start_timer() -> void:
 	timer_label.text = "⏱️ 15s"
@@ -24,6 +26,7 @@ func update_timer() -> void:
 	if countdown <= 0:
 		timer_label.text = "⏰ Time's up!"
 		timer_active = false
+		ProgressManager.save_progress("reading", false)
 		return
 
 	timer_label.text = "⏱️ " + str(countdown) + "s"
@@ -47,6 +50,7 @@ func check_answer(answer: String, button: TextureButton) -> void:
 			if selected_correct.size() == correct_answers.size():
 				feedback_label.text = "🎉 Nakuha mo lahat!"
 				timer_active = false  # stop timer when done
+				ProgressManager.save_progress("reading", true)
 			else:
 				await get_tree().create_timer(1.5).timeout
 				reset_feedback_label()
@@ -69,6 +73,7 @@ func shake_button(button: TextureButton) -> void:
 	tween.tween_property(button, "position", original_pos + Vector2(-10, 0), 0.05)
 	tween.tween_property(button, "position", original_pos + Vector2(10, 0), 0.05).set_delay(0.05)
 	tween.tween_property(button, "position", original_pos, 0.05).set_delay(0.10)
+
 
 
 

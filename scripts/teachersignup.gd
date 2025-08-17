@@ -60,6 +60,7 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 			temp_uid = response["localId"]
 			temp_id_token = response["idToken"]
 
+			Global.firebase_id_token = temp_id_token
 			Global.set_user_type("teacher")
 			Global.set_user_info(temp_uid, response["email"], name_input.text)
 

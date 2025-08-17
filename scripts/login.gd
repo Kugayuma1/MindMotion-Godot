@@ -61,6 +61,7 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 			print("ID Token:", response["idToken"])
 			print("User ID (UID):", response["localId"])
 			
+			Global.firebase_id_token = response["idToken"]
 			Global.set_user_info(response["localId"], response["email"], "")
 			
 			if Global.user_type == "student":
