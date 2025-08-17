@@ -14,7 +14,7 @@ func _ready():
 	selected_correct.clear()
 	original_feedback_text = feedback_label.text
 	start_timer()  # start the countdown
-	start_time = Time.get_ticks_msec()
+	Global.start_time = Time.get_ticks_msec()  # store start time globally
 
 func start_timer() -> void:
 	timer_label.text = "⏱️ 15s"

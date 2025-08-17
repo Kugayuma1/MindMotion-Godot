@@ -9,6 +9,7 @@ var is_logged_in: bool = false
 var current_index = 0
 var current_letter = ""
 var firebase_id_token: String = ""   # store after login
+var start_time: int = 0
 
 # Utility Methods
 func set_user_type(type: String) -> void:
