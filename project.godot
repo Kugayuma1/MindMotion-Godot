@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="MindMotion"
-run/main_scene="uid://bcq1vf723pg2i"
+run/main_scene="uid://ccl0pbip3p2i8"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
