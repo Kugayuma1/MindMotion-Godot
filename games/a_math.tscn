@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://djq85k7q6el1w"]
+[gd_scene load_steps=10 format=3 uid="uid://djq85k7q6el1w"]
 
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Math/Math Item.png" id="1_lhqpv"]
-[ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Math/ambulance 1.png" id="2_dvs47"]
+[ext_resource type="Script" uid="uid://b30y6gng8yp66" path="res://games_script/a_math.gd" id="1_c07j2"]
+[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_lhqpv"]
+[ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="2_dvs47"]
 [ext_resource type="Texture2D" uid="uid://d4c4gl0nb1fhv" path="res://Game Assets/2.png" id="3_c07j2"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="4_j6bb5"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="5_07ek3"]
-[ext_resource type="Texture2D" uid="uid://bokh5jyck76ni" path="res://Fine Motor Assets/4.png" id="6_aite7"]
+[ext_resource type="Texture2D" uid="uid://bokh5jyck76ni" path="res://Game Assets/Fine Motor Assets/4.png" id="6_aite7"]
 [ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="7_b8ook"]
-[ext_resource type="Texture2D" uid="uid://5lbec33bmuqc" path="res://Math/Rectangle 14.png" id="8_dbr2l"]
+[ext_resource type="Texture2D" uid="uid://5lbec33bmuqc" path="res://Game Assets/Math/Rectangle 14.png" id="8_dbr2l"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -16,6 +17,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_c07j2")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -26,14 +28,16 @@ offset_right = -2.0
 offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 0
 texture = ExtResource("1_lhqpv")
 
 [node name="TextureRect" type="TextureRect" parent="TextureRect"]
 layout_mode = 0
-offset_left = 424.0
-offset_top = 90.0
-offset_right = 1565.0
-offset_bottom = 1078.0
+offset_left = 363.0
+offset_top = 86.0
+offset_right = 1609.0
+offset_bottom = 1072.0
+mouse_filter = 2
 texture = ExtResource("2_dvs47")
 
 [node name="Time" type="TextureRect" parent="TextureRect"]
@@ -79,98 +83,119 @@ text = "solve"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="TextureRect"]
-layout_mode = 0
-offset_left = 530.0
-offset_top = 304.0
-offset_right = 732.0
-offset_bottom = 526.0
-texture = ExtResource("6_aite7")
-
-[node name="TextureRect3" type="TextureRect" parent="TextureRect"]
-layout_mode = 0
-offset_left = 732.0
-offset_top = 304.0
-offset_right = 934.0
-offset_bottom = 526.0
-texture = ExtResource("6_aite7")
-
-[node name="TextureRect4" type="TextureRect" parent="TextureRect"]
-layout_mode = 0
-offset_left = 957.0
-offset_top = 302.0
-offset_right = 1159.0
-offset_bottom = 524.0
-texture = ExtResource("6_aite7")
-
-[node name="TextureRect5" type="TextureRect" parent="TextureRect"]
-layout_mode = 0
-offset_left = 1179.0
-offset_top = 302.0
-offset_right = 1381.0
-offset_bottom = 524.0
-texture = ExtResource("6_aite7")
-
-[node name="TextureRect6" type="TextureRect" parent="TextureRect"]
-layout_mode = 0
-offset_left = 660.0
-offset_top = 581.0
-offset_right = 862.0
-offset_bottom = 803.0
-texture = ExtResource("6_aite7")
-
-[node name="TextureRect7" type="TextureRect" parent="TextureRect"]
-layout_mode = 0
-offset_left = 856.0
-offset_top = 579.0
-offset_right = 1058.0
-offset_bottom = 801.0
-texture = ExtResource("6_aite7")
-
-[node name="TextureRect8" type="TextureRect" parent="TextureRect"]
-layout_mode = 0
-offset_left = 1042.0
-offset_top = 582.0
-offset_right = 1244.0
-offset_bottom = 804.0
-texture = ExtResource("6_aite7")
-
 [node name="Label" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 922.0
-offset_top = 489.0
-offset_right = 1007.0
-offset_bottom = 589.0
+offset_left = 809.0
+offset_top = 484.0
+offset_right = 894.0
+offset_bottom = 610.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_b8ook")
-theme_override_font_sizes/font_size = 95
+theme_override_font_sizes/font_size = 120
 text = "+"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 931.0
-offset_top = 798.0
-offset_right = 1016.0
-offset_bottom = 898.0
+offset_left = 1241.0
+offset_top = 482.0
+offset_right = 1326.0
+offset_bottom = 608.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_b8ook")
-theme_override_font_sizes/font_size = 95
+theme_override_font_sizes/font_size = 120
 text = "="
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureButton" type="TextureButton" parent="TextureRect"]
+[node name="Label3" type="Label" parent="TextureRect"]
 layout_mode = 0
-offset_left = 675.0
-offset_top = 901.0
-offset_right = 831.0
-offset_bottom = 1056.0
+offset_left = 1351.0
+offset_top = 480.0
+offset_right = 1436.0
+offset_bottom = 606.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_b8ook")
+theme_override_font_sizes/font_size = 120
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightGroup" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect6" type="TextureRect" parent="RightGroup"]
+layout_mode = 0
+offset_left = 865.0
+offset_top = 316.0
+offset_right = 1067.0
+offset_bottom = 538.0
+texture = ExtResource("6_aite7")
+
+[node name="TextureRect7" type="TextureRect" parent="RightGroup"]
+layout_mode = 0
+offset_left = 931.0
+offset_top = 526.0
+offset_right = 1133.0
+offset_bottom = 748.0
+texture = ExtResource("6_aite7")
+
+[node name="TextureRect8" type="TextureRect" parent="RightGroup"]
+layout_mode = 0
+offset_left = 1045.0
+offset_top = 319.0
+offset_right = 1247.0
+offset_bottom = 541.0
+texture = ExtResource("6_aite7")
+
+[node name="LeftGroup" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect2" type="TextureRect" parent="LeftGroup"]
+layout_mode = 0
+offset_left = 436.0
+offset_top = 308.0
+offset_right = 638.0
+offset_bottom = 530.0
+texture = ExtResource("6_aite7")
+
+[node name="TextureRect3" type="TextureRect" parent="LeftGroup"]
+layout_mode = 0
+offset_left = 433.0
+offset_top = 518.0
+offset_right = 635.0
+offset_bottom = 740.0
+texture = ExtResource("6_aite7")
+
+[node name="TextureRect4" type="TextureRect" parent="LeftGroup"]
+layout_mode = 0
+offset_left = 620.0
+offset_top = 313.0
+offset_right = 822.0
+offset_bottom = 535.0
+texture = ExtResource("6_aite7")
+
+[node name="Button1" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 570.0
+offset_top = 892.0
+offset_right = 726.0
+offset_bottom = 1047.0
 texture_normal = ExtResource("8_dbr2l")
 stretch_mode = 0
 
-[node name="Label3" type="Label" parent="TextureRect/TextureButton"]
+[node name="Label3" type="Label" parent="Button1"]
 layout_mode = 0
 offset_left = 36.0
 offset_top = 21.0
@@ -183,16 +208,16 @@ text = "8"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureButton2" type="TextureButton" parent="TextureRect"]
+[node name="Button2" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 887.0
-offset_top = 901.0
-offset_right = 1043.0
-offset_bottom = 1056.0
+offset_left = 782.0
+offset_top = 892.0
+offset_right = 938.0
+offset_bottom = 1047.0
 texture_normal = ExtResource("8_dbr2l")
 stretch_mode = 0
 
-[node name="Label3" type="Label" parent="TextureRect/TextureButton2"]
+[node name="Label3" type="Label" parent="Button2"]
 layout_mode = 0
 offset_left = 36.0
 offset_top = 21.0
@@ -205,16 +230,16 @@ text = "7"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureButton3" type="TextureButton" parent="TextureRect"]
+[node name="Button3" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 1100.0
-offset_top = 903.0
-offset_right = 1256.0
-offset_bottom = 1058.0
+offset_left = 995.0
+offset_top = 894.0
+offset_right = 1151.0
+offset_bottom = 1049.0
 texture_normal = ExtResource("8_dbr2l")
 stretch_mode = 0
 
-[node name="Label3" type="Label" parent="TextureRect/TextureButton3"]
+[node name="Label3" type="Label" parent="Button3"]
 layout_mode = 0
 offset_left = 36.0
 offset_top = 21.0
@@ -224,5 +249,27 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("4_j6bb5")
 theme_override_font_sizes/font_size = 95
 text = "12"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button4" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 1213.0
+offset_top = 894.0
+offset_right = 1369.0
+offset_bottom = 1049.0
+texture_normal = ExtResource("8_dbr2l")
+stretch_mode = 0
+
+[node name="Label3" type="Label" parent="Button4"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 21.0
+offset_right = 121.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_j6bb5")
+theme_override_font_sizes/font_size = 95
+text = "15"
 horizontal_alignment = 1
 vertical_alignment = 1
