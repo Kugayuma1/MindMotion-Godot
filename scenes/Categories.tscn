@@ -217,3 +217,6 @@ text = "Arts"
 
 [connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Reading" to="." method="_on_reading_pressed"]
+[connection signal="pressed" from="FineMotor" to="." method="_on_fine_motor_pressed"]
+[connection signal="pressed" from="Math" to="." method="_on_math_pressed"]
+[connection signal="pressed" from="Arts" to="." method="_on_arts_pressed"]

@@ -32,6 +32,8 @@ var group2_avocados = []
 func _ready():
 	print("=== GAME STARTING WITH CORRECT PATHS ===")
 	
+	Global.start_time = Time.get_ticks_msec()
+	
 	# Assign avocados to groups using correct paths
 	assign_avocados_to_groups()
 	
@@ -229,6 +231,7 @@ func _on_button_pressed(button_num: int):
 			equation_label.text = "✅ Tama! " + str(correct_answer)
 		timer_active = false
 		print("🎉 CORRECT ANSWER! Player won!")
+		ProgressManager.save_progress("math", true)
 	else:
 		# Wrong
 		if equation_label:
@@ -264,6 +267,7 @@ func update_timer() -> void:
 		if equation_label:
 			equation_label.text = "⏱️ Time's up! Answer: " + str(correct_answer)
 		timer_active = false
+		ProgressManager.save_progress("math", false)
 		return
 	
 	if timer_label:

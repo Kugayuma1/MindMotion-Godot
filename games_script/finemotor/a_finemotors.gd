@@ -22,7 +22,7 @@ func _ready():
 		feedback_label.text = "Drag the "  # Initial instruction
 	
 	start_timer()
-	Global.start_time = Time.get_ticks_msec() if Global else Time.get_ticks_msec()
+	Global.start_time = Time.get_ticks_msec() 
 	
 	# Connect to all draggable items to handle their drop events
 	setup_draggable_items()
@@ -114,13 +114,11 @@ func game_over(success: bool):
 	if success:
 		print("🎉 Game completed successfully!")
 		# Save progress as successful
-		if has_method("save_progress"):
-			ProgressManager.save_progress("drag_drop", true)
+		ProgressManager.save_progress("fine_motor", true)
 	else:
 		print("⏰ Game over - Time's up!")
 		# Save progress as failed
-		if has_method("save_progress"):
-			ProgressManager.save_progress("drag_drop", false)
+		ProgressManager.save_progress("fine_motor", false)
 	
 	# You can add scene transition or restart logic here
 
