@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brqotxttkifg8"
-path="res://.godot/imported/ambulance (1) 1.png-de69e3015e8692a0d8043d0d0b34d8bb.ctex"
+uid="uid://b4fcft4nhtcia"
+path="res://.godot/imported/subt 1.png-e46bb15d5da230dd54005a9c24ac029d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Arts/ambulance (1) 1.png"
-dest_files=["res://.godot/imported/ambulance (1) 1.png-de69e3015e8692a0d8043d0d0b34d8bb.ctex"]
+source_file="res://Game Assets/Arts/subt 1.png"
+dest_files=["res://.godot/imported/subt 1.png-e46bb15d5da230dd54005a9c24ac029d.ctex"]
 
 [params]
 

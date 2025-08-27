@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://devtinturp83y"
-path="res://.godot/imported/ambulance 1.png-d737c92bdafff89c32f8832284155d3c.ctex"
+uid="uid://ckwfxbesn5jj"
+path="res://.godot/imported/sysarchi (7).png-119dd84fb721ec23877844eed220b351.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Arts/ambulance 1.png"
-dest_files=["res://.godot/imported/ambulance 1.png-d737c92bdafff89c32f8832284155d3c.ctex"]
+source_file="res://Game Assets/Arts/sysarchi (7).png"
+dest_files=["res://.godot/imported/sysarchi (7).png-119dd84fb721ec23877844eed220b351.ctex"]
 
 [params]
 

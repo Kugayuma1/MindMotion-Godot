@@ -2,27 +2,27 @@
 
 [ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_imnym"]
 [ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="2_bt123"]
-[ext_resource type="Texture2D" uid="uid://ckwfxbesn5jj" path="res://Arts/sysarchi (7).png" id="3_adl1h"]
-[ext_resource type="Script" uid="uid://c6nyokigv55kv" path="res://games/node_2d.gd" id="4_adl1h"]
-[ext_resource type="Texture2D" uid="uid://c0o18p3vnkr1l" path="res://Arts/Red.png" id="4_gxa2b"]
-[ext_resource type="Script" uid="uid://b1l0yr8aqltu4" path="res://games/polygon_2d.gd" id="5_adl1h"]
-[ext_resource type="Texture2D" uid="uid://bfy5xt28jb22w" path="res://Arts/Yellow.png" id="5_pi75f"]
-[ext_resource type="Script" uid="uid://vnc4jiukcidr" path="res://games/polygon_2d_2.gd" id="6_g2rvk"]
-[ext_resource type="Script" uid="uid://bbvccfbi8kqk0" path="res://games/polygon_2d_5.gd" id="9_uvcr8"]
-[ext_resource type="Script" uid="uid://bhah30rgog6wl" path="res://games/polygon_2d_11.gd" id="10_ngnm3"]
-[ext_resource type="Script" uid="uid://ok8exy4da83s" path="res://games/polygon_2d_8.gd" id="12_4a8l5"]
-[ext_resource type="Script" uid="uid://dunu2pcnk8vol" path="res://games/polygon_2d_9.gd" id="13_epncs"]
-[ext_resource type="Script" uid="uid://fub4ys2bwmot" path="res://games/polygon_2d_10.gd" id="14_dxr4o"]
-[ext_resource type="Script" uid="uid://dd2hl5jffy827" path="res://games/texture_button.gd" id="16_0iiwq"]
-[ext_resource type="Script" uid="uid://ckenedttsudc5" path="res://games/texture_button_2.gd" id="18_w0ded"]
-[ext_resource type="Texture2D" uid="uid://b78ibc2kn5i7i" path="res://Arts/Blue.png" id="19_bns0c"]
-[ext_resource type="Script" uid="uid://r5eur67urdng" path="res://games/texture_button_3.gd" id="20_reiol"]
-[ext_resource type="Texture2D" uid="uid://bvr3c0k1ony61" path="res://Arts/Black.png" id="21_srf2l"]
-[ext_resource type="Script" uid="uid://vqbo1cv8ma7d" path="res://games/texture_button_4.gd" id="22_e0cix"]
-[ext_resource type="Script" uid="uid://dark5v3gjykbo" path="res://games/polygon_2d_12.gd" id="23_g2rvk"]
-[ext_resource type="Script" uid="uid://bchc3cdyvnbd2" path="res://games/polygon_2d_14.gd" id="25_gqfqg"]
-[ext_resource type="Script" uid="uid://ct0yqtvw14x7" path="res://games/polygon_2d_15.gd" id="26_uvcr8"]
-[ext_resource type="Texture2D" uid="uid://b4fcft4nhtcia" path="res://Arts/subt 1.png" id="27_uvcr8"]
+[ext_resource type="Texture2D" uid="uid://ckwfxbesn5jj" path="res://Game Assets/Arts/sysarchi (7).png" id="3_adl1h"]
+[ext_resource type="Script" uid="uid://c6nyokigv55kv" path="res://games_script/Arts/LetterA/node_2d.gd" id="4_adl1h"]
+[ext_resource type="Texture2D" uid="uid://c0o18p3vnkr1l" path="res://Game Assets/Arts/Red.png" id="4_gxa2b"]
+[ext_resource type="Script" uid="uid://b1l0yr8aqltu4" path="res://games_script/Arts/LetterA/polygon_2d.gd" id="5_adl1h"]
+[ext_resource type="Texture2D" uid="uid://bfy5xt28jb22w" path="res://Game Assets/Arts/Yellow.png" id="5_pi75f"]
+[ext_resource type="Script" uid="uid://vnc4jiukcidr" path="res://games_script/Arts/LetterA/polygon_2d_2.gd" id="6_g2rvk"]
+[ext_resource type="Script" uid="uid://bbvccfbi8kqk0" path="res://games_script/Arts/LetterA/polygon_2d_5.gd" id="9_uvcr8"]
+[ext_resource type="Script" uid="uid://bhah30rgog6wl" path="res://games_script/Arts/LetterA/polygon_2d_11.gd" id="10_ngnm3"]
+[ext_resource type="Script" uid="uid://ok8exy4da83s" path="res://games_script/Arts/LetterA/polygon_2d_8.gd" id="12_4a8l5"]
+[ext_resource type="Script" uid="uid://dunu2pcnk8vol" path="res://games_script/Arts/LetterA/polygon_2d_9.gd" id="13_epncs"]
+[ext_resource type="Script" uid="uid://fub4ys2bwmot" path="res://games_script/Arts/LetterA/polygon_2d_10.gd" id="14_dxr4o"]
+[ext_resource type="Script" uid="uid://dd2hl5jffy827" path="res://games_script/Arts/LetterA/texture_button.gd" id="16_0iiwq"]
+[ext_resource type="Script" uid="uid://ckenedttsudc5" path="res://games_script/Arts/LetterA/texture_button_2.gd" id="18_w0ded"]
+[ext_resource type="Texture2D" uid="uid://b78ibc2kn5i7i" path="res://Game Assets/Arts/Blue.png" id="19_bns0c"]
+[ext_resource type="Script" uid="uid://r5eur67urdng" path="res://games_script/Arts/LetterA/texture_button_3.gd" id="20_reiol"]
+[ext_resource type="Texture2D" uid="uid://bvr3c0k1ony61" path="res://Game Assets/Arts/Black.png" id="21_srf2l"]
+[ext_resource type="Script" uid="uid://vqbo1cv8ma7d" path="res://games_script/Arts/LetterA/texture_button_4.gd" id="22_e0cix"]
+[ext_resource type="Script" uid="uid://dark5v3gjykbo" path="res://games_script/Arts/LetterA/polygon_2d_12.gd" id="23_g2rvk"]
+[ext_resource type="Script" uid="uid://bchc3cdyvnbd2" path="res://games_script/Arts/LetterA/polygon_2d_14.gd" id="25_gqfqg"]
+[ext_resource type="Script" uid="uid://ct0yqtvw14x7" path="res://games_script/Arts/LetterA/polygon_2d_15.gd" id="26_uvcr8"]
+[ext_resource type="Texture2D" uid="uid://b4fcft4nhtcia" path="res://Game Assets/Arts/subt 1.png" id="27_uvcr8"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="28_ngnm3"]
 [ext_resource type="Texture2D" uid="uid://d4c4gl0nb1fhv" path="res://Game Assets/2.png" id="29_jttwe"]
 
@@ -59,18 +59,6 @@ offset_right = 1476.0
 offset_bottom = 1026.0
 texture = ExtResource("3_adl1h")
 expand_mode = 1
-
-[node name="Control" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -38.0
-offset_top = -6.0
-offset_right = 147.0
-offset_bottom = 56.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="Node2D" type="Node2D" parent="."]
 script = ExtResource("4_adl1h")

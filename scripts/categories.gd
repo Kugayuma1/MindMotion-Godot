@@ -33,7 +33,7 @@ func _on_math_pressed():
 	
 func _on_arts_pressed():
 	var letter_lower = Global.current_letter.to_lower()
-	var path = "res://games/" + letter_lower + "_arts.tscn"
+	var path = "res://games/Arts/" + letter_lower + "_arts.tscn"
 	if ResourceLoader.exists(path):
 		get_tree().change_scene_to_file(path)
 	else:
