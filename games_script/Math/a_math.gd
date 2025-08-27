@@ -8,6 +8,15 @@ var timer_active := true
 var correct_answer := 0
 var current_equation := ""
 
+var complete1_scene = preload("res://reward scene/Complete1.tscn")
+var complete2_scene = preload("res://reward scene/Complete2.tscn")
+var complete3_scene = preload("res://reward scene/Complete3.tscn")
+
+var popup_instance: Control = null
+
+# Track time
+var start_time: int = 0
+
 # UI References
 @onready var equation_label = $TextureRect/Holder/Label
 @onready var timer_label = $TextureRect/Time/Label
@@ -31,19 +40,11 @@ var group2_avocados = []
 
 func _ready():
 	print("=== GAME STARTING WITH CORRECT PATHS ===")
+	start_time = Time.get_ticks_msec()  # record when the game starts
 	
-	Global.start_time = Time.get_ticks_msec()
-	
-	# Assign avocados to groups using correct paths
 	assign_avocados_to_groups()
-	
-	# Setup math game
 	setup_visual_math_game()
-	
-	# Debug everything
 	debug_everything()
-	
-	# Start game
 	start_timer()
 	setup_buttons()
 
@@ -213,36 +214,33 @@ func _on_button_pressed(button_num: int):
 	if !timer_active:
 		return
 	
-	print("=== BUTTON %d PRESSED ===" % button_num)
-	
 	var buttons = [btn1, btn2, btn3, btn4]
 	var clicked_button = buttons[button_num - 1]
-	
 	if !clicked_button:
-		print("ERROR: Button not found!")
 		return
 	
 	var selected_answer = clicked_button.get_meta("answer_value", -999)
-	print("Selected: %d, Correct: %d" % [selected_answer, correct_answer])
 	
 	if selected_answer == correct_answer:
 		# Correct!
 		if equation_label:
 			equation_label.text = "✅ Tama! " + str(correct_answer)
 		timer_active = false
-		print("🎉 CORRECT ANSWER! Player won!")
+		
+		# Calculate elapsed time
+		var elapsed = (Time.get_ticks_msec() - start_time) / 1000.0
+		print("🎉 CORRECT in %.2f seconds" % elapsed)
+		
+		game_over(true, elapsed)   # ✅ now passes elapsed
 		ProgressManager.save_progress("math", true)
 	else:
-		# Wrong
 		if equation_label:
 			equation_label.text = "❌ Mali!"
 		shake_button(clicked_button)
-		print("❌ Wrong! Selected: %d, Should be: %d" % [selected_answer, correct_answer])
-		
-		# Reset after delay
 		await get_tree().create_timer(1.5).timeout
 		if timer_active and equation_label:
 			equation_label.text = "solve"
+
 
 func shake_button(button: Control) -> void:
 	if !button:
@@ -254,28 +252,63 @@ func shake_button(button: Control) -> void:
 	tween.tween_property(button, "position", original_pos, 0.05).set_delay(0.10)
 
 func start_timer() -> void:
-	if timer_label:
-		timer_label.text = "⏱️ 15s"
 	countdown = 15
 	timer_active = true
-	update_timer()
+	if timer_label:
+		timer_label.text = "⏱️ " + str(countdown) + "s"
+	update_timer()   # ✅ start the countdown loop
 
 func update_timer() -> void:
 	if countdown <= 0:
+		timer_active = false
 		if timer_label:
 			timer_label.text = "⏰ Tapos na!"
 		if equation_label:
 			equation_label.text = "⏱️ Time's up! Answer: " + str(correct_answer)
-		timer_active = false
 		ProgressManager.save_progress("math", false)
+		game_over(false)
 		return
-	
+
+	# Show time
 	if timer_label:
 		timer_label.text = "⏱️ " + str(countdown) + "s"
+	
 	countdown -= 1
 	await get_tree().create_timer(1.0).timeout
+
 	if timer_active:
-		update_timer()
+		update_timer()   # ✅ loop continues
+
+		
+func game_over(success: bool, elapsed: float = 999.0):
+	# Hide UI elements
+	if has_node("TextureRect/GameBG"): $TextureRect/GameBG.visible = false
+	if has_node("TextureRect/Time"): $TextureRect/Time.visible = false
+	if has_node("TextureRect/Holder"): $TextureRect/Holder.visible = false
+	if has_node("TextureRect/Label"): $TextureRect/Label.visible = false
+	if has_node("TextureRect/Label2"): $TextureRect/Label2.visible = false
+	if has_node("TextureRect/Label3"): $TextureRect/Label3.visible = false
+	if has_node("RightGroup"): $RightGroup.visible = false
+	if has_node("LeftGroup"): $LeftGroup.visible = false
+	if has_node("Button1"): $Button1.visible = false
+	if has_node("Button2"): $Button2.visible = false
+	if has_node("Button3"): $Button3.visible = false
+	if has_node("Button4"): $Button4.visible = false
+	
+	# ✅ POPUP LOGIC BASED ON COUNTDOWN (like the spelling game)
+	if success:
+		if countdown >= 10:   # finished fast → 3 stars
+			popup_instance = complete3_scene.instantiate()
+		elif countdown >= 5:  # medium speed → 2 stars
+			popup_instance = complete2_scene.instantiate()
+		else:                 # slow but correct → 1 star
+			popup_instance = complete1_scene.instantiate()
+	else:
+		popup_instance = complete1_scene.instantiate()  # always show 1-star if failed
+
+	# Add popup to scene
+	if popup_instance:
+		add_child(popup_instance)
 
 # DEBUG FUNCTION
 func debug_everything():

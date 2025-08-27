@@ -9,7 +9,7 @@ func _on_back_pressed():
 
 func _on_reading_pressed():
 	var letter_lower = Global.current_letter.to_lower()
-	var path = "res://games/" + letter_lower + "_reading.tscn"
+	var path = "res://games/Reading/" + letter_lower + "_reading.tscn"
 	if ResourceLoader.exists(path):
 		get_tree().change_scene_to_file(path)
 	else:
@@ -17,7 +17,7 @@ func _on_reading_pressed():
 		
 func _on_fine_motor_pressed() :
 	var letter_lower = Global.current_letter.to_lower()
-	var path = "res://games/" + letter_lower + "_finemotors.tscn"
+	var path = "res://games/FineMotor/" + letter_lower + "_finemotors.tscn"
 	if ResourceLoader.exists(path):
 		get_tree().change_scene_to_file(path)
 	else:
@@ -25,7 +25,7 @@ func _on_fine_motor_pressed() :
 	
 func _on_math_pressed():
 	var letter_lower = Global.current_letter.to_lower()
-	var path = "res://games/" + letter_lower + "_math.tscn"
+	var path = "res://games/Math/" + letter_lower + "_math.tscn"
 	if ResourceLoader.exists(path):
 		get_tree().change_scene_to_file(path)
 	else:

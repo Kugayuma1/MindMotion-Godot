@@ -4,8 +4,15 @@ var correct_answers = ["Alive", "Apple", "Art"]
 var selected_correct = []
 var original_feedback_text = ""
 var countdown := 15
-var timer_active := true
+var timer_active = true
 var start_time := 0
+
+# Preload popup star scenes (adjust the paths as needed!)
+var complete1_scene = preload("res://reward scene/Complete1.tscn")
+var complete2_scene = preload("res://reward scene/Complete2.tscn")
+var complete3_scene = preload("res://reward scene/Complete3.tscn")
+
+var popup_instance: Control = null
 
 @onready var feedback_label = $TextureRect/Holder/Label
 @onready var timer_label = $TextureRect/Time/Label
@@ -13,8 +20,8 @@ var start_time := 0
 func _ready():
 	selected_correct.clear()
 	original_feedback_text = feedback_label.text
-	start_timer()  # start the countdown
-	Global.start_time = Time.get_ticks_msec()  # store start time globally
+	start_timer()
+	Global.start_time = Time.get_ticks_msec()
 
 func start_timer() -> void:
 	timer_label.text = "⏱️ 15s"
@@ -27,6 +34,7 @@ func update_timer() -> void:
 		timer_label.text = "⏰ Time's up!"
 		timer_active = false
 		ProgressManager.save_progress("reading", false)
+		game_over(false)  # ⬅️ Show 1-star popup if time runs out
 		return
 
 	timer_label.text = "⏱️ " + str(countdown) + "s"
@@ -49,8 +57,9 @@ func check_answer(answer: String, button: TextureButton) -> void:
 
 			if selected_correct.size() == correct_answers.size():
 				feedback_label.text = "🎉 Nakuha mo lahat!"
-				timer_active = false  # stop timer when done
+				timer_active = false
 				ProgressManager.save_progress("reading", true)
+				game_over(true)  # ⬅️ Show star popup when complete
 			else:
 				await get_tree().create_timer(1.5).timeout
 				reset_feedback_label()
@@ -74,6 +83,28 @@ func shake_button(button: TextureButton) -> void:
 	tween.tween_property(button, "position", original_pos + Vector2(10, 0), 0.05).set_delay(0.05)
 	tween.tween_property(button, "position", original_pos, 0.05).set_delay(0.10)
 
+# 🎯 Game over function (popup logic)
+func game_over(success: bool):
+	# Hide objects except background
+	if has_node("TextureRect/ant1"): $TextureRect/ant1.visible = false
+	if has_node("TextureRect/ant2"): $TextureRect/ant2.visible = false
+	if has_node("TextureRect/ant3"): $TextureRect/ant3.visible = false
+	if has_node("TextureRect/ant4"): $TextureRect/ant4.visible = false
+	if has_node("TextureRect/ant5"): $TextureRect/ant5.visible = false
+	if has_node("TextureRect/Holder"): $TextureRect/Holder.visible = false
+	if has_node("TextureRect/Time"): $TextureRect/Time.visible = false
+
+	if success:
+		if countdown >= 10:
+			popup_instance = complete3_scene.instantiate()
+		elif countdown >= 5:
+			popup_instance = complete2_scene.instantiate()
+		else:
+			popup_instance = complete1_scene.instantiate()
+	else:
+		popup_instance = complete1_scene.instantiate()
+
+	add_child(popup_instance)  # Show popup on top
 
 
 
