@@ -9,6 +9,11 @@ var timer_active := true
 var start_time := 0
 var original_feedback_text = ""
 
+var complete1_scene = preload("res://reward scene/Complete1.tscn")
+var complete2_scene = preload("res://reward scene/Complete2.tscn")
+var complete3_scene = preload("res://reward scene/Complete3.tscn")
+
+var popup_instance: Control = null
 # Update these paths to match your actual scene structure
 @onready var feedback_label = $Holder/Label  # Instructions/feedback label
 @onready var timer_label = $Time/Label      # Timer label
@@ -111,16 +116,36 @@ func shake_child(child_node: Node) -> void:
 
 func game_over(success: bool):
 	timer_active = false
+	
+	# Hide game UI (optional, adjust as needed for your scene)
+	if has_node("Holder"): $Holder.visible = false
+	if has_node("Time"): $Time.visible = false
+	if has_node("Children"): $Children.visible = false
+	if has_node("Item"): $Item.visible = false
+	
+	var popup_instance: Node = null
+	
+	# ✅ POPUP LOGIC BASED ON REMAINING TIME
+	if success:
+		if countdown >= 10:
+			popup_instance = complete3_scene.instantiate()  # ⭐⭐⭐
+		elif countdown >= 5:
+			popup_instance = complete2_scene.instantiate()  # ⭐⭐
+		else:
+			popup_instance = complete1_scene.instantiate()  # ⭐
+	else:
+		popup_instance = complete1_scene.instantiate()      # ❌ always 1 star on fail
+	
+	if popup_instance:
+		add_child(popup_instance)
+	
+	# Save progress
 	if success:
 		print("🎉 Game completed successfully!")
-		# Save progress as successful
 		ProgressManager.save_progress("fine_motor", true)
 	else:
 		print("⏰ Game over - Time's up!")
-		# Save progress as failed
 		ProgressManager.save_progress("fine_motor", false)
-	
-	# You can add scene transition or restart logic here
 
 func reset_feedback_label() -> void:
 	if feedback_label and timer_active:

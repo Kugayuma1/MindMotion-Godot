@@ -1,0 +1,354 @@
+[gd_scene load_steps=11 format=3 uid="uid://j0vtwj1bsc8x"]
+
+[ext_resource type="Script" uid="uid://bnpkrdts57o54" path="res://games_script/Reading/b_reading.gd" id="1_f2fe5"]
+[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="2_jdrnc"]
+[ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="3_3pwhd"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="4_qljmb"]
+[ext_resource type="Texture2D" uid="uid://d4c4gl0nb1fhv" path="res://Game Assets/2.png" id="5_3q7cu"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="6_87e88"]
+[ext_resource type="Texture2D" uid="uid://bu6q4juh8egkf" path="res://Game Assets/Reading Assets/Rectangle 14.png" id="7_hukqg"]
+[ext_resource type="Texture2D" uid="uid://bbj31q1hj2ka3" path="res://Game Assets/Reading Assets/Group 33.png" id="8_iesgq"]
+[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="9_3vv8s"]
+[ext_resource type="Texture2D" uid="uid://hhrp1ial4en1" path="res://Game Assets/as (1280 x 800 px) (11) 4.png" id="10_hn2c4"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f2fe5")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_jdrnc")
+
+[node name="AssetsBG" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 286.0
+offset_top = -78.0
+offset_right = 1699.0
+offset_bottom = 1200.0
+texture = ExtResource("3_3pwhd")
+
+[node name="Instruction" type="Label" parent="."]
+layout_mode = 0
+offset_left = 713.0
+offset_top = 55.0
+offset_right = 1175.0
+offset_bottom = 164.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_qljmb")
+theme_override_font_sizes/font_size = 45
+text = "Instruction"
+horizontal_alignment = 1
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1617.0
+offset_top = 17.0
+offset_right = 1875.0
+offset_bottom = 275.0
+texture = ExtResource("5_3q7cu")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 113.0
+offset_right = 181.0
+offset_bottom = 191.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_qljmb")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 443.0
+offset_top = 615.0
+offset_right = 1456.0
+offset_bottom = 1076.0
+texture = ExtResource("6_87e88")
+expand_mode = 1
+
+[node name="Button1" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 583.0
+offset_top = 681.0
+offset_right = 749.0
+offset_bottom = 838.0
+texture_normal = ExtResource("7_hukqg")
+texture_pressed = ExtResource("8_iesgq")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Button1"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 34.0
+offset_right = 123.0
+offset_bottom = 127.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_3vv8s")
+theme_override_font_sizes/font_size = 90
+text = "G"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 788.0
+offset_top = 681.0
+offset_right = 954.0
+offset_bottom = 838.0
+texture_normal = ExtResource("7_hukqg")
+texture_pressed = ExtResource("8_iesgq")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Button2"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 34.0
+offset_right = 123.0
+offset_bottom = 127.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_3vv8s")
+theme_override_font_sizes/font_size = 90
+text = "H"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button3" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 974.0
+offset_top = 681.0
+offset_right = 1140.0
+offset_bottom = 838.0
+texture_normal = ExtResource("7_hukqg")
+texture_pressed = ExtResource("8_iesgq")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Button3"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 34.0
+offset_right = 123.0
+offset_bottom = 127.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_3vv8s")
+theme_override_font_sizes/font_size = 90
+text = "U"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button4" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 1163.0
+offset_top = 681.0
+offset_right = 1329.0
+offset_bottom = 838.0
+texture_normal = ExtResource("7_hukqg")
+texture_pressed = ExtResource("8_iesgq")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Button4"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 34.0
+offset_right = 123.0
+offset_bottom = 127.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_3vv8s")
+theme_override_font_sizes/font_size = 90
+text = "E"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button5" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 583.0
+offset_top = 848.0
+offset_right = 749.0
+offset_bottom = 1005.0
+texture_normal = ExtResource("7_hukqg")
+texture_pressed = ExtResource("8_iesgq")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Button5"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 34.0
+offset_right = 123.0
+offset_bottom = 127.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_3vv8s")
+theme_override_font_sizes/font_size = 90
+text = "B"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button6" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 790.0
+offset_top = 850.0
+offset_right = 956.0
+offset_bottom = 1007.0
+texture_normal = ExtResource("7_hukqg")
+texture_pressed = ExtResource("8_iesgq")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Button6"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 34.0
+offset_right = 123.0
+offset_bottom = 127.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_3vv8s")
+theme_override_font_sizes/font_size = 90
+text = "R"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button7" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 981.0
+offset_top = 852.0
+offset_right = 1147.0
+offset_bottom = 1009.0
+texture_normal = ExtResource("7_hukqg")
+texture_pressed = ExtResource("8_iesgq")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Button7"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 34.0
+offset_right = 123.0
+offset_bottom = 127.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_3vv8s")
+theme_override_font_sizes/font_size = 90
+text = "M"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button8" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 1168.0
+offset_top = 855.0
+offset_right = 1334.0
+offset_bottom = 1012.0
+texture_normal = ExtResource("7_hukqg")
+texture_pressed = ExtResource("8_iesgq")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Button8"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 34.0
+offset_right = 123.0
+offset_bottom = 127.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_3vv8s")
+theme_override_font_sizes/font_size = 90
+text = "R"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ObjectBurger" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 777.0
+offset_top = 177.0
+offset_right = 1118.0
+offset_bottom = 496.0
+texture = ExtResource("10_hn2c4")
+
+[node name="FirstLtr" type="Label" parent="."]
+layout_mode = 0
+offset_left = 707.0
+offset_top = 468.0
+offset_right = 786.0
+offset_bottom = 577.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_qljmb")
+theme_override_font_sizes/font_size = 95
+text = "_"
+horizontal_alignment = 1
+
+[node name="ScndLtr" type="Label" parent="."]
+layout_mode = 0
+offset_left = 793.0
+offset_top = 471.0
+offset_right = 872.0
+offset_bottom = 580.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_qljmb")
+theme_override_font_sizes/font_size = 95
+text = "_"
+horizontal_alignment = 1
+
+[node name="ThrdLtr" type="Label" parent="."]
+layout_mode = 0
+offset_left = 871.0
+offset_top = 471.0
+offset_right = 950.0
+offset_bottom = 580.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_qljmb")
+theme_override_font_sizes/font_size = 95
+text = "_"
+horizontal_alignment = 1
+
+[node name="FrthLtr" type="Label" parent="."]
+layout_mode = 0
+offset_left = 957.0
+offset_top = 471.0
+offset_right = 1036.0
+offset_bottom = 580.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_qljmb")
+theme_override_font_sizes/font_size = 95
+text = "_"
+horizontal_alignment = 1
+
+[node name="FfthLtr" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1040.0
+offset_top = 471.0
+offset_right = 1119.0
+offset_bottom = 580.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_qljmb")
+theme_override_font_sizes/font_size = 95
+text = "_"
+horizontal_alignment = 1
+
+[node name="SixthLtr" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1126.0
+offset_top = 471.0
+offset_right = 1205.0
+offset_bottom = 580.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_qljmb")
+theme_override_font_sizes/font_size = 95
+text = "_"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="Button1" to="." method="_on_button_1_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Button3" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="Button4" to="." method="_on_button_4_pressed"]
+[connection signal="pressed" from="Button5" to="." method="_on_button_5_pressed"]
+[connection signal="pressed" from="Button6" to="." method="_on_button_6_pressed"]
+[connection signal="pressed" from="Button7" to="." method="_on_button_7_pressed"]
+[connection signal="pressed" from="Button8" to="." method="_on_button_8_pressed"]
