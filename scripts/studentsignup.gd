@@ -1,5 +1,4 @@
 extends Control
-
 @onready var gender_option = $Container/Gender
 @onready var name_input = $Container/Name
 @onready var email_input = $Container/Email
@@ -7,10 +6,8 @@ extends Control
 @onready var age_input = $Container/Age
 @onready var agreement_checkbox = $Container/Password/Agree
 @onready var http_request = $HTTPRequest
-
 const FIREBASE_API_KEY = "AIzaSyC7bPi7suzy8DmMFSgP7n090t7zHXzI5Bk"
 const FIRESTORE_URL = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents"
-
 var current_stage = ""  # "signup" or "store_data"
 var temp_uid = ""
 var temp_id_token = ""
@@ -46,7 +43,6 @@ func _on_signup_pressed():
 	if !agreement_checkbox.button_pressed:
 		print("You must agree to Terms and Privacy Policy.")
 		return
-
 	# Begin Firebase sign-up
 	current_stage = "signup"
 	var signup_url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + FIREBASE_API_KEY
@@ -59,18 +55,15 @@ func _on_signup_pressed():
 	
 func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
 	var response = JSON.parse_string(body.get_string_from_utf8())
-
 	if current_stage == "signup":
 		if response_code == 200:
 			print("Student signup successful.")
 			temp_uid = response["localId"]
 			temp_id_token = response["idToken"]
-
 			# Save to Global
 			Global.firebase_id_token = temp_id_token
 			Global.set_user_type("student")
 			Global.set_user_info(temp_uid, response["email"], name_input.text)
-
 			# Now upload additional student info to Firestore
 			current_stage = "store_data"
 			var doc_url = "%s/users/%s" % [FIRESTORE_URL, temp_uid]
@@ -91,10 +84,14 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 			http_request.request(doc_url, request_headers, HTTPClient.METHOD_PATCH, JSON.stringify(student_data))
 		else:
 			print("Signup failed:", response)
-
 	elif current_stage == "store_data":
 		if response_code == 200:
 			print("Student data stored successfully.")
+			
+			# 🚀 PRELOAD LETTER DATA FOR NEW STUDENT
+			print("📡 Preloading letter completion data for new student...")
+			Global.load_all_letter_completion_data()
+			
 			get_tree().change_scene_to_file("res://scenes/StudentMain.tscn")
 		else:
 			print("Failed to store user data:", response)

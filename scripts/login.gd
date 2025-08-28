@@ -1,12 +1,9 @@
 extends Control
-
 @onready var password_input = $Container/Password
 @onready var email_input = $Container/Email
 @onready var eye_button = $Container/Password/Hide
 @onready var http_request = $HTTPRequest
-
 const FIREBASE_API_KEY = "AIzaSyC7bPi7suzy8DmMFSgP7n090t7zHXzI5Bk"
-
 var current_request_type: String = ""
 
 func _ready():
@@ -37,13 +34,10 @@ func _on_login_pressed():
 	
 func _on_forget_pressed():
 	var email = email_input.text.strip_edges()
-
 	if email == "":
 		print("Please enter your email.")
 		return
-
 	current_request_type = "forgot_password"
-
 	var url = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" + FIREBASE_API_KEY
 	var data = {
 		"requestType": "PASSWORD_RESET",
@@ -54,7 +48,6 @@ func _on_forget_pressed():
 
 func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
 	var response = JSON.parse_string(body.get_string_from_utf8())
-
 	if current_request_type == "login":
 		if response_code == 200:
 			print("Login successful!")
@@ -64,7 +57,10 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 			Global.firebase_id_token = response["idToken"]
 			Global.set_user_info(response["localId"], response["email"], "")
 			
+			# 🚀 PRELOAD LETTER DATA FOR STUDENTS ONLY
 			if Global.user_type == "student":
+				print("📡 Preloading letter completion data for student...")
+				Global.load_all_letter_completion_data()
 				get_tree().change_scene_to_file("res://scenes/StudentMain.tscn")
 			elif Global.user_type == "teacher":
 				get_tree().change_scene_to_file("res://scenes/TeacherMain.tscn")
