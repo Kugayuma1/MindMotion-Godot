@@ -8,7 +8,7 @@ extends Control
 @onready var http_request = $HTTPRequest
 const FIREBASE_API_KEY = "AIzaSyC7bPi7suzy8DmMFSgP7n090t7zHXzI5Bk"
 const FIRESTORE_URL = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents"
-var current_stage = ""  # "signup" or "store_data"
+var current_stage = ""  # "signup", "store_data", "create_progress", "create_all_progress", or "create_categories"
 var temp_uid = ""
 var temp_id_token = ""
 
@@ -88,13 +88,25 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 		if response_code == 200:
 			print("Student data stored successfully.")
 			
+			# 🚀 NOW CREATE INITIAL PROGRESS DATA
+			current_stage = "create_progress"
+			create_initial_progress_data()
+		else:
+			print("Failed to store user data:", response)
+	elif current_stage == "create_progress":
+		if response_code == 200:
+			print("✅ Initial progress data created successfully.")
+			
 			# 🚀 PRELOAD LETTER DATA FOR NEW STUDENT
 			print("📡 Preloading letter completion data for new student...")
 			Global.load_all_letter_completion_data()
 			
 			get_tree().change_scene_to_file("res://scenes/StudentMain.tscn")
 		else:
-			print("Failed to store user data:", response)
+			print("❌ Failed to create initial progress data:", response)
+			# Still proceed to main scene even if progress creation fails
+			Global.load_all_letter_completion_data()
+			get_tree().change_scene_to_file("res://scenes/StudentMain.tscn")
 	
 func _on_gender_item_selected(index: int):
 	if index == 0:
@@ -102,3 +114,26 @@ func _on_gender_item_selected(index: int):
 		gender_option.selected = 0
 	else:
 		print("Selected: ", gender_option.get_item_text(index))
+
+# 🚀 CREATE INITIAL PROGRESS DATA FOR NEW STUDENT (MATCHING YOUR FIREBASE STRUCTURE)
+func create_initial_progress_data():
+	print("📊 Creating initial progress data to match your Firebase structure...")
+	
+	# Create progress document for letter A (unlocked but not completed yet)
+	var progress_url = "%s/users/%s/progress/A" % [FIRESTORE_URL, temp_uid]
+	
+	# Match your exact Firebase structure
+	var progress_data = {
+		"fields": {
+			"averageTime": {"integerValue": "0"},
+			"completedLevels": {"integerValue": "0"},
+			"letterCompleted": {"booleanValue": false}
+		}
+	}
+	
+	var request_headers = [
+		"Content-Type: application/json",
+		"Authorization: Bearer %s" % temp_id_token
+	]
+	
+	http_request.request(progress_url, request_headers, HTTPClient.METHOD_PATCH, JSON.stringify(progress_data))

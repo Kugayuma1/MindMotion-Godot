@@ -271,7 +271,6 @@ func update_letter_stats(completed_levels: int, average_time: int, letter_comple
 		"completedLevels": completed_levels,
 		"averageTime": average_time,
 		"letterCompleted": letter_completed,
-		"lastUpdated": Time.get_datetime_string_from_system()
 	}
 	
 	# Convert to Firestore format
