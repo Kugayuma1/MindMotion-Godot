@@ -2,7 +2,7 @@ extends Control
 
 
 func _on_play_pressed():
-	get_tree().change_scene_to_file("res://scenes/LevelSelection.tscn")
+	Global.change_scene_with_cache_wait("res://scenes/LevelSelection.tscn")
 
 
 func _on_setting_pressed():

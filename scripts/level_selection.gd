@@ -1,4 +1,3 @@
-# LetterCarousel.gd - Optimized version using Global cache
 extends Control
 
 # Letter data and completion tracking
@@ -54,26 +53,82 @@ func _ready():
 	setup_carousel()
 	current_index = Global.current_index 
 	
-	# 🚀 Since data is preloaded at login, it should be instant
-	if Global.is_letter_cache_loaded:
-		# Data already loaded - instant display!
-		update_letters_with_lock_status()
-		print("✅ Letter carousel loaded instantly from cache!")
-	else:
-		# Fallback: Load data now (shouldn't happen if preload works correctly)
-		print("⚠️ Cache not loaded yet, loading now...")
-		if Global.is_logged_in:
-			Global.load_all_letter_completion_data()
-			await wait_for_cache_load_quick()
-		else:
-			# User not logged in, default to A only
-			Global.set_default_letter_cache()
-		update_letters_with_lock_status()
+	# Cache should already be loaded by Global.change_scene_with_cache_wait()
+	# But add a small safety check
+	if not Global.is_letter_cache_loaded:
+		print("⚠️ Cache still not loaded, using defaults")
+		Global.set_default_letter_cache()
+	
+	# Update UI immediately since cache is ready
+	update_letters_with_lock_status()
 	
 	# Connect button signals
 	left_button.pressed.connect(_on_any_button_pressed.bind(left_button))
 	center_button.pressed.connect(_on_any_button_pressed.bind(center_button))
 	right_button.pressed.connect(_on_any_button_pressed.bind(right_button))
+
+# NEW: Signal handler for when cache updates
+func _on_letter_cache_updated():
+	print("🔄 Letter cache updated - refreshing UI...")
+	update_letters_with_lock_status()
+	
+# IMPROVED: Better cache handling
+func handle_cache_and_update_ui():
+	print("📚 Letter Carousel: Initializing with proper cache handling...")
+	
+	# Always show safe defaults first
+	update_letters_with_safe_defaults()
+	
+	if Global.is_letter_cache_loaded:
+		# Cache is ready, update immediately
+		print("✅ Cache already loaded - updating UI immediately")
+		update_letters_with_lock_status()
+	else:
+		print("⏳ Cache not loaded - will update when ready via signal")
+		
+		if Global.is_logged_in:
+			# Don't wait here - let the signal handle it
+			# The cache loading is already triggered in Global._ready()
+			pass
+		else:
+			# Set default cache for offline users
+			Global.set_default_letter_cache()
+		
+		# Update UI with real cache data
+		update_letters_with_lock_status()
+		print("✅ UI updated after cache load")
+
+# NEW: Show safe defaults immediately (A unlocked, others grayed out)
+func update_letters_with_safe_defaults():
+	# Update letter text
+	var prev_index = (current_index - 1 + letters.size()) % letters.size()
+	var next_index = (current_index + 1) % letters.size()
+	
+	left_label.text = letters[prev_index]
+	center_label.text = letters[current_index]
+	right_label.text = letters[next_index]
+	
+	# Apply safe visual defaults
+	apply_safe_default_visual(left_button, left_lock, letters[prev_index])
+	apply_safe_default_visual(center_button, center_lock, letters[current_index])
+	apply_safe_default_visual(right_button, right_lock, letters[next_index])
+
+# NEW: Apply safe defaults (only A unlocked)
+func apply_safe_default_visual(button: TextureButton, lock_icon: TextureRect, letter: String):
+	if not button:
+		return
+	
+	# Only A is unlocked by default
+	var is_unlocked = (letter == "A")
+	
+	if is_unlocked:
+		button.modulate = unlocked_modulate
+		if lock_icon and is_instance_valid(lock_icon):
+			lock_icon.visible = false
+	else:
+		button.modulate = locked_modulate
+		if lock_icon and is_instance_valid(lock_icon):
+			lock_icon.visible = true
 
 func setup_carousel():
 	# Store initial positions AFTER nodes are ready
@@ -96,24 +151,12 @@ func setup_carousel():
 	center_button.z_index = 3
 	right_button.z_index = 2
 
-# 🚀 QUICK WAIT FOR CACHE (only if needed as fallback)
-func wait_for_cache_load_quick():
-	var max_wait_time = 3.0  # Maximum 3 seconds
-	var wait_time = 0.0
-	
-	while not Global.is_letter_cache_loaded and wait_time < max_wait_time and is_inside_tree():
-		await get_tree().process_frame
-		wait_time += get_process_delta_time()
-	
-	if not Global.is_letter_cache_loaded and is_inside_tree():
-		print("⚠️ Cache loading timed out, using default (A only)")
-		Global.set_default_letter_cache()
 
-# 🔒 CHECK IF LETTER IS UNLOCKED (Now uses Global cache)
 func is_letter_unlocked(letter: String) -> bool:
+	if letter == "A":
+		return true
 	return Global.is_letter_unlocked(letter)
 
-# 🎨 UPDATE LETTERS WITH LOCK STATUS
 func update_letters_with_lock_status():
 	# Update the letters displayed
 	var prev_index = (current_index - 1 + letters.size()) % letters.size()
@@ -127,54 +170,79 @@ func update_letters_with_lock_status():
 	center_label.text = center_letter
 	right_label.text = right_letter
 	
+	# Update lock icon references before applying visuals
+	update_lock_references()
+	
 	# Apply lock visual effects
 	apply_lock_visual(left_button, left_lock, left_letter)
 	apply_lock_visual(center_button, center_lock, center_letter)
 	apply_lock_visual(right_button, right_lock, right_letter)
+	
+	print("🎨 UI updated: Left=%s, Center=%s, Right=%s" % [left_letter, center_letter, right_letter])
+
+func update_lock_references():
+	left_lock = left_button.get_node("LockIcon") if left_button.has_node("LockIcon") else null
+	center_lock = center_button.get_node("LockIcon") if center_button.has_node("LockIcon") else null
+	right_lock = right_button.get_node("LockIcon") if right_button.has_node("LockIcon") else null
+
+func update_label_references():
+	for child in left_button.get_children():
+		if child is Label:
+			left_label = child
+			break
+	
+	for child in center_button.get_children():
+		if child is Label:
+			center_label = child
+			break
+			
+	for child in right_button.get_children():
+		if child is Label:
+			right_label = child
+			break
 
 func apply_lock_visual(button: TextureButton, lock_icon: TextureRect, letter: String):
+	if not button:
+		return
+		
 	var is_unlocked = is_letter_unlocked(letter)
 	
 	if is_unlocked:
 		button.modulate = unlocked_modulate
-		if lock_icon:
+		if lock_icon and is_instance_valid(lock_icon):
 			lock_icon.visible = false
 	else:
 		button.modulate = locked_modulate
-		if lock_icon:
+		if lock_icon and is_instance_valid(lock_icon):
 			lock_icon.visible = true
 
+# FIXED: Always update UI after letters change
 func update_letters():
 	update_letters_with_lock_status()
 
-# 🔒 BUTTON PRESS HANDLER WITH LOCK CHECK
 func _on_any_button_pressed(clicked_button: TextureButton):
 	if is_animating:
 		return
 	
-	# Check which button is currently in the center position
 	if clicked_button.scale == large_scale:
-		# This is the center button - check if it's unlocked
 		var center_letter = letters[current_index]
 		
 		if is_letter_unlocked(center_letter):
-			# Letter is unlocked - proceed to categories
 			Global.current_index = current_index
 			Global.current_letter = center_letter
+			# Preload stage data for smoother transition
+			Global.preload_letter_stages(center_letter)
 			var categories_scene = load("res://scenes/Categories.tscn").instantiate()
 			get_tree().root.add_child(categories_scene)
 			queue_free()
 		else:
-			# Letter is locked - show lock message
 			show_lock_message(center_letter)
 	else:
-		# This is a side button - animate to center
 		if clicked_button == left_button:
 			slide_right()
 		elif clicked_button == right_button:
 			slide_left()
 
-# 🔒 SHOW LOCK MESSAGE
 func show_lock_message(letter: String):
 	var letter_index = letters.find(letter)
 	if letter_index <= 0:
@@ -183,11 +251,15 @@ func show_lock_message(letter: String):
 	var previous_letter = letters[letter_index - 1]
 	var lock_message = "Complete letter %s first to unlock %s!" % [previous_letter, letter]
 	
-	print("🔒 " + lock_message)
-	# You can enhance this with a proper dialog/toast UI
-
-# [Keep all your existing animation functions - slide_left, slide_right, etc.]
-# [Keep all your existing input handling functions]
+	# Create a simple dialog
+	var dialog = AcceptDialog.new()
+	add_child(dialog)
+	dialog.dialog_text = "🔒 Letter Locked!\n\n" + lock_message
+	dialog.title = "Unlock Required"
+	dialog.popup_centered()
+	
+	dialog.confirmed.connect(func(): dialog.queue_free())
+	dialog.close_requested.connect(func(): dialog.queue_free())
 
 func slide_left():
 	if is_animating:
@@ -223,19 +295,14 @@ func finish_slide_left():
 	center_button = right_button
 	right_button = temp
 	
-	left_label = left_button.get_node("LeftLabel") if left_button.has_node("LeftLabel") else left_button.get_node("CenterLabel") if left_button.has_node("CenterLabel") else left_button.get_node("RightLabel")
-	center_label = center_button.get_node("CenterLabel") if center_button.has_node("CenterLabel") else center_button.get_node("LeftLabel") if center_button.has_node("LeftLabel") else center_button.get_node("RightLabel")
-	right_label = right_button.get_node("RightLabel") if right_button.has_node("RightLabel") else right_button.get_node("CenterLabel") if right_button.has_node("CenterLabel") else right_button.get_node("LeftLabel")
-	
-	left_lock = left_button.get_node("LockIcon") if left_button.has_node("LockIcon") else null
-	center_lock = center_button.get_node("LockIcon") if center_button.has_node("LockIcon") else null
-	right_lock = right_button.get_node("LockIcon") if right_button.has_node("LockIcon") else null
+	update_label_references()
 	
 	var right_enter_pos = Vector2(right_initial_pos.x + slide_out_distance, right_initial_pos.y)
 	right_button.position = right_enter_pos
 	right_button.modulate.a = 0.0
 	right_button.z_index = 2
 	
+	# FIXED: Update letters immediately after reference swap
 	update_letters()
 	
 	var adjusted_right_pos = Vector2(right_initial_pos.x - button_spacing_adjustment, right_initial_pos.y)
@@ -281,19 +348,14 @@ func finish_slide_right():
 	center_button = left_button
 	left_button = temp
 	
-	left_label = left_button.get_node("LeftLabel") if left_button.has_node("LeftLabel") else left_button.get_node("CenterLabel") if left_button.has_node("CenterLabel") else left_button.get_node("RightLabel")
-	center_label = center_button.get_node("CenterLabel") if center_button.has_node("CenterLabel") else center_button.get_node("LeftLabel") if center_button.has_node("LeftLabel") else center_button.get_node("RightLabel")
-	right_label = right_button.get_node("RightLabel") if right_button.has_node("RightLabel") else right_button.get_node("CenterLabel") if right_button.has_node("CenterLabel") else right_button.get_node("LeftLabel")
-	
-	left_lock = left_button.get_node("LockIcon") if left_button.has_node("LockIcon") else null
-	center_lock = center_button.get_node("LockIcon") if center_button.has_node("LockIcon") else null
-	right_lock = right_button.get_node("LockIcon") if right_button.has_node("LockIcon") else null
+	update_label_references()
 	
 	var left_enter_pos = Vector2(left_initial_pos.x - slide_out_distance, left_initial_pos.y)
 	left_button.position = left_enter_pos
 	left_button.modulate.a = 0.0
 	left_button.z_index = 1
 	
+	# FIXED: Update letters immediately after reference swap
 	update_letters()
 	
 	var adjusted_left_pos = Vector2(left_initial_pos.x + button_spacing_adjustment, left_initial_pos.y)
@@ -304,6 +366,18 @@ func finish_slide_right():
 	
 	await tween.finished
 	is_animating = false
+
+# NEW: Call this when returning from a completed letter to refresh the carousel
+func refresh_carousel():
+	print("🔄 Refreshing letter carousel after letter completion...")
+	
+	# Reload letter cache
+	if Global.is_logged_in:
+		Global.load_all_letter_completion_data()
+
+	
+	# Update UI with new states
+	update_letters_with_lock_status()
 
 func _input(event):
 	if event is InputEventScreenTouch:
@@ -353,3 +427,7 @@ func handle_drag(event: InputEventScreenDrag):
 
 func _on_back_pressed():
 	get_tree().change_scene_to_file("res://scenes/StudentMain.tscn")
+	
+func _exit_tree():
+	if Global.letter_cache_updated.is_connected(_on_letter_cache_updated):
+		Global.letter_cache_updated.disconnect(_on_letter_cache_updated)
