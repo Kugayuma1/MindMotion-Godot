@@ -11,141 +11,88 @@ var current_letter = ""
 var firebase_id_token: String = ""
 var start_time: int = 0
 
-# Letter completion cache
+# Caches
 var letter_completion_cache = {}
 var is_letter_cache_loaded = false
 var letter_cache_http_request: HTTPRequest
-
-# Stage completion cache - IMPROVED
 var stage_completion_cache = {}
 var is_stage_cache_loaded = false
-var stage_cache_loading_letters = {}  # Track which letters are currently being loaded
+var stage_cache_loading_letters = {}
 
-# Persistent auth file path
+# File paths
 const AUTH_SAVE_PATH = "user://auth_data.save"
-const STAGE_CACHE_PATH = "user://stage_cache.save"  # NEW: Local stage cache
+const STAGE_CACHE_PATH = "user://stage_cache.save"
 
-# Add these signals to your Global.gd at the top:
+# Signals
 signal letter_cache_updated
 signal stage_cache_updated(letter: String)
 
+# Debug helper
+func debug_print(message: String, category: String = "Global", icon: String = "📋"):
+	print("[%s] %s %s" % [category, icon, message])
+
 func _ready():
-	# Initialize HTTP request for letter cache loading
 	letter_cache_http_request = HTTPRequest.new()
 	add_child(letter_cache_http_request)
 	letter_cache_http_request.request_completed.connect(_on_letter_cache_request_completed)
-	
-	# Load saved data on startup
 	load_auth_data()
-	load_local_stage_cache()  # NEW: Load cached stage data from disk
+	load_local_stage_cache()
 
-# NEW: Save stage cache to disk for faster startup
-func save_local_stage_cache():
-	var save_file = FileAccess.open(STAGE_CACHE_PATH, FileAccess.WRITE)
+# File Operations
+func save_data_to_file(file_path: String, data: Dictionary):
+	var save_file = FileAccess.open(file_path, FileAccess.WRITE)
 	if save_file == null:
-		print("❌ Failed to create stage cache file")
-		return
+		debug_print("Failed to create save file: %s" % file_path, "FileOp", "❌")
+		return false
 	
-	var cache_data = {
-		"stage_completion_cache": stage_completion_cache,
-		"save_timestamp": Time.get_unix_time_from_system()
-	}
-	
-	save_file.store_string(JSON.stringify(cache_data))
+	data["save_timestamp"] = Time.get_unix_time_from_system()
+	save_file.store_string(JSON.stringify(data))
 	save_file.close()
-	print("💾 Stage cache saved to disk")
+	return true
 
-# NEW: Load stage cache from disk
-func load_local_stage_cache():
-	if not FileAccess.file_exists(STAGE_CACHE_PATH):
-		print("📁 No local stage cache found")
-		return
+func load_data_from_file(file_path: String, max_age_hours: float = 24) -> Dictionary:
+	if not FileAccess.file_exists(file_path):
+		return {}
 	
-	var save_file = FileAccess.open(STAGE_CACHE_PATH, FileAccess.READ)
+	var save_file = FileAccess.open(file_path, FileAccess.READ)
 	if save_file == null:
-		print("❌ Failed to open stage cache file")
-		return
+		debug_print("Failed to open file: %s" % file_path, "FileOp", "❌")
+		return {}
 	
 	var json_text = save_file.get_as_text()
 	save_file.close()
 	
 	var json = JSON.new()
-	var parse_result = json.parse(json_text)
+	if json.parse(json_text) != OK:
+		debug_print("Failed to parse JSON from: %s" % file_path, "FileOp", "❌")
+		return {}
 	
-	if parse_result != OK:
-		print("❌ Failed to parse stage cache file")
-		return
+	var data = json.data
+	var save_timestamp = data.get("save_timestamp", 0)
+	var hours_since_save = (Time.get_unix_time_from_system() - save_timestamp) / 3600.0
 	
-	var cache_data = json.data
+	if hours_since_save > max_age_hours:
+		debug_print("Data expired in: %s" % file_path, "FileOp", "⏰")
+		return {}
 	
-	# Check if cache is recent (expire after 1 hour for stage data)
-	var save_timestamp = cache_data.get("save_timestamp", 0)
-	var current_time = Time.get_unix_time_from_system()
-	var hours_since_save = (current_time - save_timestamp) / (60 * 60)
-	
-	if hours_since_save > 1:  # Cache for 1 hour only
-		print("⏰ Stage cache expired")
-		return
-	
-	# Load cached stage data
-	stage_completion_cache = cache_data.get("stage_completion_cache", {})
-	print("✅ Stage cache loaded from disk: %d letters cached" % stage_completion_cache.size())
+	return data
 
-# Save authentication data to file
+# Auth Management
 func save_auth_data():
-	var save_file = FileAccess.open(AUTH_SAVE_PATH, FileAccess.WRITE)
-	if save_file == null:
-		print("❌ Failed to create auth save file")
-		return
-	
 	var auth_data = {
-		"user_type": user_type,
-		"user_id": user_id,
-		"user_email": user_email,
-		"user_name": user_name,
-		"firebase_id_token": firebase_id_token,
-		"is_logged_in": is_logged_in,
-		"save_timestamp": Time.get_unix_time_from_system()
+		"user_type": user_type, "user_id": user_id, "user_email": user_email,
+		"user_name": user_name, "firebase_id_token": firebase_id_token, "is_logged_in": is_logged_in
 	}
-	
-	save_file.store_string(JSON.stringify(auth_data))
-	save_file.close()
-	print("💾 Auth data saved successfully")
+	if save_data_to_file(AUTH_SAVE_PATH, auth_data):
+		debug_print("Auth data saved", "Auth", "💾")
 
-# Load authentication data from file
 func load_auth_data():
-	if not FileAccess.file_exists(AUTH_SAVE_PATH):
-		print("📁 No auth save file found")
+	var auth_data = load_data_from_file(AUTH_SAVE_PATH, 720)  # 30 days
+	
+	if auth_data.is_empty():
+		debug_print("No valid auth data found", "Auth", "📁")
 		return
 	
-	var save_file = FileAccess.open(AUTH_SAVE_PATH, FileAccess.READ)
-	if save_file == null:
-		print("❌ Failed to open auth save file")
-		return
-	
-	var json_text = save_file.get_as_text()
-	save_file.close()
-	
-	var json = JSON.new()
-	var parse_result = json.parse(json_text)
-	
-	if parse_result != OK:
-		print("❌ Failed to parse auth save file")
-		return
-	
-	var auth_data = json.data
-	
-	# Check if the save data is recent (expire after 30 days)
-	var save_timestamp = auth_data.get("save_timestamp", 0)
-	var current_time = Time.get_unix_time_from_system()
-	var days_since_save = (current_time - save_timestamp) / (24 * 60 * 60)
-	
-	if days_since_save > 30:
-		print("⏰ Auth data expired, requiring fresh login")
-		clear_auth_data()
-		return
-	
-	# Restore user data
 	user_type = auth_data.get("user_type", "")
 	user_id = auth_data.get("user_id", "")
 	user_email = auth_data.get("user_email", "")
@@ -153,29 +100,39 @@ func load_auth_data():
 	firebase_id_token = auth_data.get("firebase_id_token", "")
 	is_logged_in = auth_data.get("is_logged_in", false)
 	
-	if is_logged_in and user_id != "" and firebase_id_token != "":
-		print("✅ Auth data loaded successfully - User: %s (%s)" % [user_name, user_type])
-		# Load letter completion data
+	if is_authenticated():
+		debug_print("Auth loaded - User: %s (%s)" % [user_name, user_type], "Auth", "✅")
 		load_all_letter_completion_data()
 	else:
-		print("⚠️ Incomplete auth data, requiring fresh login")
+		debug_print("Incomplete auth data", "Auth", "⚠️")
 		clear_auth_data()
 
-# Clear saved authentication data
 func clear_auth_data():
 	if FileAccess.file_exists(AUTH_SAVE_PATH):
 		DirAccess.remove_absolute(AUTH_SAVE_PATH)
-		print("🗑️ Auth data cleared")
+	if FileAccess.file_exists(STAGE_CACHE_PATH):
+		DirAccess.remove_absolute(STAGE_CACHE_PATH)
 
-# Check if user is authenticated and data is valid
+# Stage Cache Management
+func save_local_stage_cache():
+	var cache_data = {"stage_completion_cache": stage_completion_cache}
+	if save_data_to_file(STAGE_CACHE_PATH, cache_data):
+		debug_print("Stage cache saved to disk", "Cache", "💾")
+
+func load_local_stage_cache():
+	var cache_data = load_data_from_file(STAGE_CACHE_PATH, 1)  # 1 hour
+	
+	if not cache_data.is_empty():
+		stage_completion_cache = cache_data.get("stage_completion_cache", {})
+		debug_print("Stage cache loaded: %d letters" % stage_completion_cache.size(), "Cache", "✅")
+
+# User Management
 func is_authenticated() -> bool:
 	return is_logged_in and user_id != "" and user_type != "" and firebase_id_token != ""
 
-# Utility Methods
 func set_user_type(type: String) -> void:
 	user_type = type
 	save_auth_data()
-	print("User type set to:", user_type)
 
 func set_user_info(uid: String, email: String, name: String, token: String = "") -> void:
 	user_id = uid
@@ -185,9 +142,6 @@ func set_user_info(uid: String, email: String, name: String, token: String = "")
 		firebase_id_token = token
 	is_logged_in = true
 	save_auth_data()
-	print("User logged in:", user_name, user_email)
-	
-	# Load letter completion data after login
 	load_all_letter_completion_data()
 
 func logout() -> void:
@@ -203,127 +157,115 @@ func logout() -> void:
 	is_stage_cache_loaded = false
 	stage_cache_loading_letters.clear()
 	clear_auth_data()
-	# Clear stage cache file too
-	if FileAccess.file_exists(STAGE_CACHE_PATH):
-		DirAccess.remove_absolute(STAGE_CACHE_PATH)
-	print("User logged out.")
+	debug_print("User logged out", "Auth", "🚪")
 
+# Letter Completion Management
 func load_all_letter_completion_data():
-	if not is_logged_in or user_id == "" or firebase_id_token == "":
-		print("⚠️ User not logged in or missing token, skipping letter cache load")
+	if not is_authenticated():
+		debug_print("Not authenticated, skipping letter cache", "LetterCache", "⚠️")
 		return
 	
-	print("📡 Loading all letter completion data...")
+	debug_print("Loading letter completion data", "LetterCache", "📡")
 	
-	var project_id = "mindmotion-55c99"
-	var uid = user_id
-	
-	var url = "https://firestore.googleapis.com/v1/projects/%s/databases/(default)/documents/users/%s/progress" % [project_id, uid]
-	
-	var headers = [
-		"Authorization: Bearer %s" % firebase_id_token,
-		"Content-Type: application/json"
-	]
+	var url = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents/users/%s/progress" % user_id
+	var headers = ["Authorization: Bearer %s" % firebase_id_token, "Content-Type: application/json"]
 	
 	var err = letter_cache_http_request.request(url, headers, HTTPClient.METHOD_GET)
 	if err != OK:
-		push_error("❌ Failed to load letter completion cache: %s" % err)
+		debug_print("Failed to request letter cache: %s" % err, "LetterCache", "❌")
 		set_default_letter_cache()
 
-# Modify the _on_letter_cache_request_completed function in Global.gd:
 func _on_letter_cache_request_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray):
 	var body_text = body.get_string_from_utf8()
 	
 	if response_code == 200:
 		var json = JSON.new()
-		var parse_result = json.parse(body_text)
-		
-		if parse_result == OK:
-			var data = json.data
-			
-			# Clear existing cache
-			letter_completion_cache.clear()
-			
-			# Set A as always unlocked
-			letter_completion_cache["A"] = true
-			
-			if data.has("documents"):
-				for doc in data.documents:
-					var letter = doc.name.split("/")[-1]
-					
-					if doc.has("fields") and doc.fields.has("letterCompleted"):
-						var is_completed = doc.fields.letterCompleted.booleanValue if doc.fields.letterCompleted.has("booleanValue") else false
-						letter_completion_cache[letter] = is_completed
-						print("📊 Cached letter %s: %s" % [letter, is_completed])
-			
-			is_letter_cache_loaded = true
-			print("✅ Letter completion cache loaded successfully: %s" % str(letter_completion_cache))
-			
-			# EMIT SIGNAL TO NOTIFY UI
-			letter_cache_updated.emit()
-			
-			# Load priority stage data for better UX
-			load_priority_stage_data()
+		if json.parse(body_text) == OK:
+			process_letter_cache_data(json.data)
 		else:
-			push_error("❌ Failed to parse letter completion cache")
+			debug_print("Failed to parse letter cache", "LetterCache", "❌")
 			set_default_letter_cache()
 	else:
-		print("⚠️ Letter completion cache request failed with code: %d" % response_code)
-		if response_code == 401 or response_code == 403:
-			print("🔐 Authentication token expired, clearing auth data")
+		debug_print("Letter cache request failed: %d" % response_code, "LetterCache", "⚠️")
+		if response_code in [401, 403]:
 			logout()
 			get_tree().change_scene_to_file("res://scenes/UserSelection.tscn")
 		else:
 			set_default_letter_cache()
 
-# Also update set_default_letter_cache to emit the signal:
-func set_default_letter_cache():
+func process_letter_cache_data(data):
 	letter_completion_cache.clear()
-	letter_completion_cache["A"] = true
+	letter_completion_cache["A"] = true  # Always unlocked
+	
+	if data.has("documents"):
+		for doc in data.documents:
+			var letter = doc.name.split("/")[-1]
+			if doc.has("fields") and doc.fields.has("letterCompleted"):
+				var is_completed = doc.fields.letterCompleted.booleanValue if doc.fields.letterCompleted.has("booleanValue") else false
+				letter_completion_cache[letter] = is_completed
+	
 	is_letter_cache_loaded = true
-	print("📊 Set default letter cache (A unlocked only)")
+	debug_print("Letter cache loaded: %s" % str(letter_completion_cache), "LetterCache", "✅")
 	
-	# EMIT SIGNAL HERE TOO
-	letter_cache_updated.emit()
-	
-	# Still try to load some stage data
+	# Force immediate UI refresh
+	force_ui_refresh()
 	load_priority_stage_data()
 
-# IMPROVED: Load stage data for the most important letters only
+func force_ui_refresh():
+	debug_print("Forcing UI refresh after cache update", "LetterCache", "🔄")
+	letter_cache_updated.emit()
+	
+	# Also refresh current scene if it has update methods
+	var current_scene = get_tree().current_scene
+	if current_scene and current_scene.has_method("refresh_carousel"):
+		current_scene.refresh_carousel()
+	elif current_scene and current_scene.has_method("update_letters_with_lock_status"):
+		current_scene.update_letters_with_lock_status()
+		
+
+func set_default_letter_cache():
+	letter_completion_cache.clear()
+	letter_completion_cache["A"] = true  # ✅ A should ALWAYS be unlocked
+	
+	# For new accounts, only A should be unlocked
+	# Don't set other letters to false explicitly - absence means locked
+	
+	is_letter_cache_loaded = true
+	debug_print("Set default letter cache: A=true", "LetterCache", "📊")
+	letter_cache_updated.emit()
+	load_priority_stage_data()
+
 func load_priority_stage_data():
 	if not is_authenticated():
-		print("⚠️ Not authenticated, skipping priority stage data load")
 		return
 	
 	var priority_letters = []
-	
-	# Always include current letter if set
 	if current_letter != "":
 		priority_letters.append(current_letter)
-	
-	# Include letter A (always unlocked)
 	if not priority_letters.has("A"):
 		priority_letters.append("A")
 	
-	# Include the next unlocked letter based on letter completion
 	var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", 
 				   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 	
 	for letter in letters:
 		if is_letter_unlocked(letter) and not priority_letters.has(letter):
 			priority_letters.append(letter)
-			if priority_letters.size() >= 3:  # Limit to 3 letters for faster loading
+			if priority_letters.size() >= 3:
 				break
 	
-	print("🎯 Loading priority stage data for letters: %s" % str(priority_letters))
-	
+	debug_print("Loading priority stages: %s" % str(priority_letters), "StageCache", "🎯")
 	for letter in priority_letters:
 		load_letter_stages_on_demand(letter)
 
-# Helper function to check if a letter is unlocked
 func is_letter_unlocked(letter: String) -> bool:
 	if letter == "A":
-		return true
+		return true  # A is ALWAYS unlocked
+	
+	# Wait for cache to load if we're logged in
+	if is_logged_in and not is_letter_cache_loaded:
+		debug_print("Cache not ready, assuming locked for %s" % letter, "LetterCache", "⏳")
+		return false
 	
 	var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", 
 				   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
@@ -335,150 +277,101 @@ func is_letter_unlocked(letter: String) -> bool:
 	var previous_letter = letters[letter_index - 1]
 	return letter_completion_cache.get(previous_letter, false)
 
-# IMPROVED: Get cached stage completion data with better defaults
-func get_stage_cache(letter: String):
-	var cached_data = stage_completion_cache.get(letter, null)
-	
-	if cached_data == null:
-		# Return safe default - only reading unlocked
-		return {
-			"reading": true,
-			"fine_motor": false,
-			"math": false,
-			"art": false
-		}
-	
-	return cached_data.duplicate()
+# Stage Completion Management
+func get_default_stage_data() -> Dictionary:
+	return {"reading": false, "fine_motor": false, "math": false, "art": false}
 
-# Cache stage completion data for a specific letter
+func get_stage_cache(letter: String):
+	return stage_completion_cache.get(letter, get_default_stage_data()).duplicate()
+
 func set_stage_cache(letter: String, stage_data: Dictionary):
 	stage_completion_cache[letter] = stage_data.duplicate()
-	print("💾 Cached stage data for letter %s" % letter)
-	
-	# Save to disk for persistence
 	save_local_stage_cache()
 
-# IMPROVED: Load stage data for a specific letter on demand (non-blocking)
 func load_letter_stages_on_demand(letter: String):
-	# Check if already cached
-	if stage_completion_cache.has(letter):
-		print("📋 Stage data for letter %s already cached" % letter)
+	if stage_completion_cache.has(letter) or stage_cache_loading_letters.has(letter):
 		return
 	
-	# Check if already loading
-	if stage_cache_loading_letters.has(letter):
-		print("⏳ Stage data for letter %s already loading" % letter)
-		return
-	
-	print("📡 Loading stage data for letter %s on demand..." % letter)
+	debug_print("Loading stages for letter %s" % letter, "StageCache", "📡")
 	stage_cache_loading_letters[letter] = true
 	
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
 	
 	http_request.request_completed.connect(func(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray):
-		var body_text = body.get_string_from_utf8()
-		
-		if response_code == 200:
-			var json = JSON.new()
-			var parse_result = json.parse(body_text)
-			
-			if parse_result == OK:
-				var data = json.data
-				var stage_data = {
-					"reading": true,  # Always unlocked
-					"fine_motor": false,
-					"math": false,
-					"art": false
-				}
-				
-				if data.has("documents"):
-					for doc in data.documents:
-						var stage_name = doc.name.split("/")[-1]
-						if doc.has("fields") and doc.fields.has("everCompleted"):
-							var is_completed = doc.fields.everCompleted.booleanValue if doc.fields.everCompleted.has("booleanValue") else false
-							stage_data[stage_name] = is_completed
-				
-				# Cache the stage data
-				set_stage_cache(letter, stage_data)
-				print("✅ Loaded stages for letter %s: %s" % [letter, stage_data])
-			else:
-				print("❌ Failed to parse stage data for letter %s" % letter)
-		else:
-			print("⚠️ Stage data request failed for letter %s with code: %d" % [letter, response_code])
-		
-		# Remove from loading list and cleanup
+		process_stage_data_response(letter, response_code, body.get_string_from_utf8())
 		stage_cache_loading_letters.erase(letter)
 		http_request.queue_free()
 	)
 	
-	var project_id = "mindmotion-55c99"
-	var uid = user_id
-	var url = "https://firestore.googleapis.com/v1/projects/%s/databases/(default)/documents/users/%s/progress/%s/levels" % [project_id, uid, letter]
-	
-	var headers = [
-		"Authorization: Bearer %s" % firebase_id_token,
-		"Content-Type: application/json"
-	]
+	var url = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents/users/%s/progress/%s/levels" % [user_id, letter]
+	var headers = ["Authorization: Bearer %s" % firebase_id_token, "Content-Type: application/json"]
 	
 	var err = http_request.request(url, headers, HTTPClient.METHOD_GET)
 	if err != OK:
-		print("❌ Failed to request stage data for letter %s: %s" % [letter, err])
+		debug_print("Failed to request stages for %s: %s" % [letter, err], "StageCache", "❌")
 		stage_cache_loading_letters.erase(letter)
 		http_request.queue_free()
 
-# Method to update stage completion (call this when a stage is completed)
-func mark_stage_completed(letter: String, stage: String):
-	print("✅ Stage %s completed for letter %s" % [stage, letter])
+func process_stage_data_response(letter: String, response_code: int, body_text: String):
+	if response_code == 200:
+		var json = JSON.new()
+		if json.parse(body_text) == OK:
+			var stage_data = parse_stage_data(json.data)
+			set_stage_cache(letter, stage_data)
+			debug_print("Loaded stages for %s: %s" % [letter, str(stage_data)], "StageCache", "✅")
+			if letter == current_letter:
+				stage_cache_updated.emit(letter)
+		else:
+			debug_print("Failed to parse stage JSON for %s" % letter, "StageCache", "❌")
+	elif response_code == 404:
+		debug_print("No progress for %s - using defaults" % letter, "StageCache", "🆕")
+		set_stage_cache(letter, get_default_stage_data())
+	else:
+		debug_print("Stage request failed for %s: %d" % [letter, response_code], "StageCache", "⚠️")
+
+func parse_stage_data(data) -> Dictionary:
+	var stage_data = get_default_stage_data()
 	
-	# Update local cache immediately
+	if data.has("documents") and data.documents.size() > 0:
+		for doc in data.documents:
+			var stage_name = doc.name.split("/")[-1]
+			if doc.has("fields") and doc.fields.has("everCompleted") and doc.fields.everCompleted.has("booleanValue"):
+				if doc.fields.everCompleted.booleanValue == true:
+					stage_data[stage_name] = true
+	
+	return stage_data
+
+func mark_stage_completed(letter: String, stage: String):
 	if not stage_completion_cache.has(letter):
-		stage_completion_cache[letter] = {
-			"reading": true,
-			"fine_motor": false,
-			"math": false,
-			"art": false
-		}
+		stage_completion_cache[letter] = get_default_stage_data()
 	
 	stage_completion_cache[letter][stage] = true
-	
-	# Save updated cache to disk
 	save_local_stage_cache()
-	
-	# Refresh UI immediately
-	refresh_category_locks()
+	stage_cache_updated.emit(letter)
+	debug_print("Stage %s completed for %s" % [stage, letter], "StageCache", "✅")
 
-# Helper method to check stage completion for a specific letter and stage
+# Utility Methods
 func is_stage_completed(letter: String, stage: String) -> bool:
 	var cached_data = get_stage_cache(letter)
-	if cached_data:
-		return cached_data.get(stage, false)
-	return false
+	return cached_data.get(stage, false)
 
-# Method to check if stage cache is ready
 func is_stage_cache_ready() -> bool:
 	return stage_completion_cache.has(current_letter) or current_letter == ""
 
-# Method to wait for stage cache to load (useful for scenes)
 func wait_for_stage_cache() -> void:
 	if current_letter == "":
 		return
 	
-	var max_wait_time = 2.0  # Reduced to 2 seconds
-	var wait_interval = 0.1
 	var elapsed_time = 0.0
-	
-	while not stage_completion_cache.has(current_letter) and elapsed_time < max_wait_time:
+	while not stage_completion_cache.has(current_letter) and elapsed_time < 2.0:
 		await Engine.get_main_loop().process_frame
-		elapsed_time += wait_interval
-		await Engine.get_main_loop().create_timer(wait_interval).timeout
+		elapsed_time += 0.1
+		await Engine.get_main_loop().create_timer(0.1).timeout
 	
-	if not stage_completion_cache.has(current_letter):
-		print("⚠️ Stage cache loading timed out for letter %s" % current_letter)
-	else:
-		print("✅ Stage cache ready for letter %s" % current_letter)
+	var status = "ready" if stage_completion_cache.has(current_letter) else "timed out"
+	debug_print("Stage cache %s for %s" % [status, current_letter], "StageCache", "⏳")
 
-# Method to refresh category locks in the current scene
 func refresh_category_locks():
 	var current_scene = get_tree().current_scene
 	if current_scene.has_method("refresh_stage_locks"):
@@ -486,56 +379,18 @@ func refresh_category_locks():
 	elif current_scene.has_method("update_button_states"):
 		current_scene.update_button_states()
 
-# IMPROVED: Method to preload stage data when changing letters
 func preload_letter_stages(letter: String):
-	if stage_completion_cache.has(letter):
-		print("📋 Stage data for letter %s already available" % letter)
-		return
-	
-	print("🚀 Preloading stage data for letter %s" % letter)
-	load_letter_stages_on_demand(letter)
+	if not stage_completion_cache.has(letter):
+		debug_print("Preloading stages for %s" % letter, "StageCache", "🚀")
+		load_letter_stages_on_demand(letter)
 
-# Method to clear expired cache entries
-func cleanup_expired_cache():
-	# This could be called periodically to keep memory usage down
-	# For now, we'll keep it simple and rely on the disk cache expiry
-	print("🧹 Cache cleanup (placeholder for future implementation)")
-
-# Debug method to print current cache status
 func debug_cache_status():
-	print("=== CACHE DEBUG INFO ===")
-	print("Letter cache loaded: %s" % is_letter_cache_loaded)
-	print("Letter completion cache: %s" % str(letter_completion_cache))
-	print("Stage completion cache: %d letters" % stage_completion_cache.size())
-	for letter in stage_completion_cache.keys():
-		print("  Letter %s: %s" % [letter, str(stage_completion_cache[letter])])
-	print("Currently loading letters: %s" % str(stage_cache_loading_letters.keys()))
-	print("========================")
+	debug_print("=== CACHE STATUS ===", "Debug")
+	debug_print("Letter cache: %s loaded, %d entries" % [is_letter_cache_loaded, letter_completion_cache.size()], "Debug")
+	debug_print("Stage cache: %d letters cached" % stage_completion_cache.size(), "Debug")
+	debug_print("Loading: %s" % str(stage_cache_loading_letters.keys()), "Debug")
 
 func change_scene_with_cache_wait(scene_path: String):
-	print("🔄 Changing scene with cache preload: %s" % scene_path)
-	
-	if is_logged_in and not is_letter_cache_loaded:
-		print("⏳ Cache not ready, waiting...")
-		
-		# Start loading if not already started
-		if not letter_cache_http_request:
-			load_all_letter_completion_data()
-		
-		# Wait for cache to load (max 2 seconds)
-		var wait_time = 0.0
-		var max_wait = 2.0
-		
-		while not is_letter_cache_loaded and wait_time < max_wait:
-			await get_tree().process_frame
-			wait_time += 0.1
-			await get_tree().create_timer(0.1).timeout
-		
-		if not is_letter_cache_loaded:
-			print("⚠️ Cache loading timeout, using defaults")
-			set_default_letter_cache()
-		else:
-			print("✅ Cache loaded successfully")
-	
-	# Now change scene
+	# Since login/signup now handles cache loading, this can be simple
+	debug_print("Changing scene: %s (cache loaded: %s)" % [scene_path, is_letter_cache_loaded], "Scene", "🔄")
 	get_tree().change_scene_to_file(scene_path)
