@@ -11,7 +11,7 @@ func _on_quit_pressed() -> void:
 
 
 func _on_next_item_pressed() -> void:
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://scenes/Clap.tscn")
 
 
 func _on_retry_pressed() -> void:
