@@ -12,18 +12,64 @@ var max_poll_attempts: int = 20
 var poll_attempts: int = 0
 var session_creation_pending: bool = false
 
+# Counter storage for incremental IDs
+var session_counter: int = 0
+var activity_counters: Dictionary = {"clap": 0, "wave": 0}
+
 signal motion_detected
 signal motion_timeout
 signal motion_session_started(motion_type: String)
 
 func _ready():
 	setup_http_request()
+	load_counters()
 
 func setup_http_request():
 	http_request = HTTPRequest.new()
 	add_child(http_request)
 	http_request.request_completed.connect(_on_request_completed)
 	http_request.timeout = 10.0
+
+func load_counters():
+	# Load existing counters or initialize them
+	if FileAccess.file_exists("user://motion_counters.json"):
+		var file = FileAccess.open("user://motion_counters.json", FileAccess.READ)
+		if file:
+			var json_string = file.get_as_text()
+			file.close()
+			var json = JSON.new()
+			if json.parse(json_string) == OK:
+				var data = json.data
+				session_counter = data.get("session_counter", 0)
+				activity_counters = data.get("activity_counters", {"clap": 0, "wave": 0})
+			else:
+				print("Failed to parse counters JSON")
+	else:
+		save_counters()  # Create initial file
+
+func save_counters():
+	var data = {
+		"session_counter": session_counter,
+		"activity_counters": activity_counters
+	}
+	
+	var file = FileAccess.open("user://motion_counters.json", FileAccess.WRITE)
+	if file:
+		file.store_string(JSON.stringify(data))
+		file.close()
+
+func get_next_session_id() -> String:
+	session_counter += 1
+	save_counters()
+	return "session_" + str(session_counter)
+
+func get_next_activity_id(activity_type: String) -> String:
+	if not activity_counters.has(activity_type):
+		activity_counters[activity_type] = 0
+	
+	activity_counters[activity_type] += 1
+	save_counters()
+	return activity_type + "_" + str(activity_counters[activity_type])
 
 func start_motion_detection(motion_type: String, student_id: String):
 	if is_waiting_for_motion:
@@ -40,14 +86,18 @@ func start_motion_detection(motion_type: String, student_id: String):
 		emit_signal("motion_timeout")
 		return
 	
-	current_session_id = generate_session_id()
+	current_session_id = get_next_session_id()
 	poll_attempts = 0
 	session_creation_pending = true
 	
-	print("Creating motion session: ", current_session_id)
+	print("Creating motion session: ", current_session_id, " for student: ", student_id)
 	
+	# Fixed session data structure - added studentId field
 	var session_data = {
 		"fields": {
+			"studentId": {  # <- ADD THIS FIELD
+				"stringValue": student_id
+			},
 			"status": {
 				"stringValue": "waiting"
 			},
@@ -57,14 +107,11 @@ func start_motion_detection(motion_type: String, student_id: String):
 			"detected": {
 				"booleanValue": false
 			},
-			"studentId": {
-				"stringValue": student_id
-			},
 			"timestamp": {
 				"integerValue": str(int(Time.get_unix_time_from_system()))
 			},
 			"timeoutSeconds": {
-				"integerValue": "60"
+				"integerValue": "30"
 			}
 		}
 	}
@@ -127,12 +174,12 @@ func _on_request_completed(result: int, response_code: int, headers: PackedStrin
 		print("Error response body: ", json_text)
 	
 	if response_code == 200:
-		# FIXED: Check if this was session creation
+		# Check if this was session creation
 		if session_creation_pending:
 			session_creation_pending = false
 			print("✅ Session created successfully!")
 			is_waiting_for_motion = true
-			emit_signal("motion_session_started", "clapping")
+			emit_signal("motion_session_started", "motion_activity")
 			start_polling()
 		elif is_waiting_for_motion and poll_attempts > 0:
 			# This is polling response
@@ -241,12 +288,14 @@ func save_activity_to_firestore(activity_data: Dictionary):
 		return
 	
 	var student_id = activity_data.student_id
-	var activity_id = "clapping_" + str(int(Time.get_unix_time_from_system()))
+	var activity_type = activity_data.get("activity_type", "unknown")
+	var activity_id = get_next_activity_id(activity_type)
 	
+	# Simplified activity data structure
 	var firestore_data = {
 		"fields": {
 			"activityType": {
-				"stringValue": str(activity_data.get("activity_type", "clapping"))
+				"stringValue": str(activity_type)
 			},
 			"success": {
 				"booleanValue": bool(activity_data.get("success", false))
@@ -256,12 +305,6 @@ func save_activity_to_firestore(activity_data: Dictionary):
 			},
 			"date": {
 				"stringValue": str(activity_data.get("date", Time.get_datetime_string_from_system()))
-			},
-			"studentName": {
-				"stringValue": str(activity_data.get("student_name", "Unknown"))
-			},
-			"level": {
-				"stringValue": str(activity_data.get("level", "unknown"))
 			}
 		}
 	}
@@ -279,7 +322,7 @@ func save_activity_to_firestore(activity_data: Dictionary):
 	
 	var result = activity_request.request(url, headers, HTTPClient.METHOD_PATCH, json_data)
 	if result == OK:
-		print("Activity save request sent for student: ", student_id)
+		print("Activity save request sent for student: ", student_id, " with ID: ", activity_id)
 	else:
 		push_error("Failed to send activity save request: " + str(result))
 
@@ -289,10 +332,3 @@ func _on_activity_save_completed(result: int, response_code: int, headers: Packe
 	else:
 		push_error("❌ Failed to save activity. Response code: " + str(response_code))
 		print("Response body: ", body.get_string_from_utf8())
-
-func generate_session_id() -> String:
-	var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-	var session_id = ""
-	for i in range(12):
-		session_id += chars[randi() % chars.length()]
-	return "session_" + session_id + "_" + str(int(Time.get_unix_time_from_system()))
