@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b30y6gng8yp66" path="res://games_script/Math/a_math.gd" id="1_mjahh"]
 [ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="2_fu8tq"]
 [ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="3_0jygo"]
-[ext_resource type="Texture2D" uid="uid://d4c4gl0nb1fhv" path="res://Game Assets/2.png" id="4_qj1c0"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="4_mjahh"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="5_c03ct"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="6_atill"]
 [ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="7_3485l"]
@@ -46,7 +46,7 @@ offset_left = 1617.0
 offset_top = 17.0
 offset_right = 1875.0
 offset_bottom = 275.0
-texture = ExtResource("4_qj1c0")
+texture = ExtResource("4_mjahh")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="TextureRect/Time"]
@@ -172,9 +172,9 @@ texture = ExtResource("8_sod05")
 
 [node name="TextureRect3" type="TextureRect" parent="LeftGroup"]
 layout_mode = 0
-offset_left = 433.0
+offset_left = 532.0
 offset_top = 518.0
-offset_right = 635.0
+offset_right = 734.0
 offset_bottom = 740.0
 texture = ExtResource("8_sod05")
 

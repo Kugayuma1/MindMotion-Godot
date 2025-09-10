@@ -11,6 +11,7 @@ var current_equation := ""
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn")
 var complete3_scene = preload("res://reward scene/Complete3.tscn")
+var retry_scene = preload("res://reward scene/Retry.tscn")
 
 var popup_instance: Control = null
 
@@ -304,7 +305,7 @@ func game_over(success: bool, elapsed: float = 999.0):
 		else:                 # slow but correct → 1 star
 			popup_instance = complete1_scene.instantiate()
 	else:
-		popup_instance = complete1_scene.instantiate()  # always show 1-star if failed
+		popup_instance = retry_scene.instantiate()  # always show 1-star if failed
 
 	# Add popup to scene
 	if popup_instance:

@@ -1,0 +1,180 @@
+[gd_scene load_steps=11 format=3 uid="uid://bgw586b8lmw1b"]
+
+[ext_resource type="Script" uid="uid://t305s8hupxg2" path="res://games_script/Math/b_math.gd" id="1_exbpb"]
+[ext_resource type="Texture2D" uid="uid://sv4l1ad1fx8x" path="res://Game Bg/bgforballon.png" id="1_f2w8o"]
+[ext_resource type="Texture2D" uid="uid://c5fvoymmduqk" path="res://Game Assets/Math/7.png" id="2_exbpb"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="4_4xbeo"]
+[ext_resource type="Texture2D" uid="uid://bawnnqbtdaiin" path="res://Game Assets/Math/8.png" id="5_mnnp8"]
+[ext_resource type="Texture2D" uid="uid://dg1nt766ubmo1" path="res://Game Assets/Math/9.png" id="7_15161"]
+[ext_resource type="Texture2D" uid="uid://ourr0p63kfks" path="res://Game Assets/Math/10.png" id="9_vfd0l"]
+[ext_resource type="Texture2D" uid="uid://bb1efmo43f61f" path="res://Game Assets/Math/11.png" id="11_dlxdk"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="13_notym"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="14_jo11k"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_exbpb")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_f2w8o")
+
+[node name="Balloon1" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = -54.0
+offset_top = 356.0
+offset_right = 439.0
+offset_bottom = 1270.0
+texture_normal = ExtResource("2_exbpb")
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Balloon1"]
+layout_mode = 0
+offset_left = 215.0
+offset_top = 250.0
+offset_right = 255.0
+offset_bottom = 363.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_4xbeo")
+theme_override_font_sizes/font_size = 98
+text = "2"
+
+[node name="Balloon2" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 335.0
+offset_top = 358.0
+offset_right = 828.0
+offset_bottom = 1272.0
+texture_normal = ExtResource("5_mnnp8")
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Balloon2"]
+layout_mode = 0
+offset_left = 215.0
+offset_top = 250.0
+offset_right = 255.0
+offset_bottom = 363.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_4xbeo")
+theme_override_font_sizes/font_size = 98
+text = "1"
+
+[node name="Balloon5" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 1495.0
+offset_top = 360.0
+offset_right = 1988.0
+offset_bottom = 1274.0
+texture_normal = ExtResource("11_dlxdk")
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Balloon5"]
+layout_mode = 0
+offset_left = 215.0
+offset_top = 250.0
+offset_right = 255.0
+offset_bottom = 363.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_4xbeo")
+theme_override_font_sizes/font_size = 98
+text = "3"
+
+[node name="Balloon4" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 1114.0
+offset_top = 357.0
+offset_right = 1607.0
+offset_bottom = 1271.0
+texture_normal = ExtResource("9_vfd0l")
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Balloon4"]
+layout_mode = 0
+offset_left = 215.0
+offset_top = 250.0
+offset_right = 255.0
+offset_bottom = 363.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_4xbeo")
+theme_override_font_sizes/font_size = 98
+text = "4"
+
+[node name="Balloon3" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 734.0
+offset_top = 359.0
+offset_right = 1227.0
+offset_bottom = 1273.0
+texture_normal = ExtResource("7_15161")
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Balloon3"]
+layout_mode = 0
+offset_left = 215.0
+offset_top = 250.0
+offset_right = 255.0
+offset_bottom = 363.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_4xbeo")
+theme_override_font_sizes/font_size = 98
+text = "5"
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1620.0
+offset_top = 31.0
+offset_right = 1878.0
+offset_bottom = 289.0
+texture = ExtResource("13_notym")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 105.0
+offset_right = 161.0
+offset_bottom = 181.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_4xbeo")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 606.0
+offset_top = 56.0
+offset_right = 1322.0
+offset_bottom = 309.0
+texture = ExtResource("14_jo11k")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_4xbeo")
+theme_override_font_sizes/font_size = 55
+text = "Tap the Volcano that
+starts with letter \"V\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Balloon1" to="." method="_on_ballon_1_pressed"]
+[connection signal="pressed" from="Balloon2" to="." method="_on_ballon_2_pressed"]
+[connection signal="pressed" from="Balloon5" to="." method="_on_ballon_5_pressed"]
+[connection signal="pressed" from="Balloon4" to="." method="_on_ballon_4_pressed"]
+[connection signal="pressed" from="Balloon3" to="." method="_on_ballon_3_pressed"]

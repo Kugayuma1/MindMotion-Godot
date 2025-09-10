@@ -20,11 +20,11 @@
 [ext_resource type="Texture2D" uid="uid://bvr3c0k1ony61" path="res://Game Assets/Arts/Black.png" id="21_srf2l"]
 [ext_resource type="Script" uid="uid://vqbo1cv8ma7d" path="res://games_script/Arts/LetterA/texture_button_4.gd" id="22_e0cix"]
 [ext_resource type="Script" uid="uid://dark5v3gjykbo" path="res://games_script/Arts/LetterA/polygon_2d_12.gd" id="23_g2rvk"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="23_qxbjc"]
 [ext_resource type="Script" uid="uid://bchc3cdyvnbd2" path="res://games_script/Arts/LetterA/polygon_2d_14.gd" id="25_gqfqg"]
 [ext_resource type="Script" uid="uid://ct0yqtvw14x7" path="res://games_script/Arts/LetterA/polygon_2d_15.gd" id="26_uvcr8"]
 [ext_resource type="Texture2D" uid="uid://b4fcft4nhtcia" path="res://Game Assets/Arts/subt 1.png" id="27_uvcr8"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="28_ngnm3"]
-[ext_resource type="Texture2D" uid="uid://d4c4gl0nb1fhv" path="res://Game Assets/2.png" id="29_jttwe"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -46,9 +46,9 @@ texture = ExtResource("1_imnym")
 [node name="TextureRect2" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 386.0
-offset_top = 82.0
+offset_top = 122.0
 offset_right = 1654.0
-offset_bottom = 959.0
+offset_bottom = 999.0
 texture = ExtResource("2_bt123")
 
 [node name="TextureRect3" type="TextureRect" parent="."]
@@ -72,10 +72,10 @@ anchor_left = 0.23
 anchor_top = 0.687
 anchor_right = 0.298
 anchor_bottom = 1.0
-offset_left = 530.0
-offset_top = 838.0
-offset_right = 746.0
-offset_bottom = 1118.0
+offset_left = 554.0
+offset_top = 824.0
+offset_right = 863.0
+offset_bottom = 1114.0
 texture_normal = ExtResource("4_gxa2b")
 stretch_mode = 0
 script = ExtResource("16_0iiwq")
@@ -87,10 +87,10 @@ anchor_left = 0.418
 anchor_top = 0.76
 anchor_right = 0.545
 anchor_bottom = 1.0
-offset_left = 1008.0
+offset_left = 935.0
 offset_top = 822.0
-offset_right = 1205.0
-offset_bottom = 1113.0
+offset_right = 1209.0
+offset_bottom = 1115.0
 texture_normal = ExtResource("19_bns0c")
 stretch_mode = 0
 script = ExtResource("20_reiol")
@@ -102,9 +102,9 @@ anchor_left = 0.311
 anchor_top = 0.757
 anchor_right = 0.439
 anchor_bottom = 1.0
-offset_left = 754.0
-offset_top = 826.0
-offset_right = 976.0
+offset_left = 735.0
+offset_top = 820.0
+offset_right = 1050.0
 offset_bottom = 1115.0
 texture_normal = ExtResource("5_pi75f")
 stretch_mode = 0
@@ -117,10 +117,10 @@ anchor_left = 0.527
 anchor_top = 0.755
 anchor_right = 0.655
 anchor_bottom = 1.0
-offset_left = 1214.0
-offset_top = 815.0
-offset_right = 1417.0
-offset_bottom = 1121.0
+offset_left = 1116.0
+offset_top = 823.0
+offset_right = 1396.0
+offset_bottom = 1114.0
 texture_normal = ExtResource("21_srf2l")
 stretch_mode = 0
 script = ExtResource("22_e0cix")
@@ -176,11 +176,11 @@ polygon = PackedVector2Array(696, 597, 680, 617, 668, 652, 674, 681, 688, 709, 7
 script = ExtResource("26_uvcr8")
 
 [node name="TextureRect4" type="TextureRect" parent="Node2D"]
-offset_left = 1629.0
-offset_top = -13.0
-offset_right = 1855.0
-offset_bottom = 202.0
-texture = ExtResource("29_jttwe")
+offset_left = 1643.0
+offset_top = 28.0
+offset_right = 1869.0
+offset_bottom = 243.0
+texture = ExtResource("23_qxbjc")
 expand_mode = 1
 
 [node name="TimerLabel" type="Label" parent="Node2D"]
@@ -188,6 +188,8 @@ offset_left = 1630.0
 offset_top = 14.0
 offset_right = 1861.0
 offset_bottom = 198.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("28_ngnm3")
 theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -11,6 +11,7 @@ var start_time := 0
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn")
 var complete3_scene = preload("res://reward scene/Complete3.tscn")
+var retry_scene = preload("res://reward scene/Retry.tscn")
 
 var popup_instance: Control = null
 
@@ -24,20 +25,20 @@ func _ready():
 	Global.start_time = Time.get_ticks_msec()
 
 func start_timer() -> void:
-	timer_label.text = "⏱️ 15s"
+	timer_label.text = "15s"
 	countdown = 15
 	timer_active = true
 	update_timer()
 
 func update_timer() -> void:
 	if countdown <= 0:
-		timer_label.text = "⏰ Time's up!"
+		timer_label.text = "Time's up!"
 		timer_active = false
 		ProgressManager.save_progress("reading", false)
 		game_over(false)  # ⬅️ Show 1-star popup if time runs out
 		return
 
-	timer_label.text = "⏱️ " + str(countdown) + "s"
+	timer_label.text = " " + str(countdown) + "s"
 	countdown -= 1
 	await get_tree().create_timer(1.0).timeout
 
@@ -46,17 +47,17 @@ func update_timer() -> void:
 
 func check_answer(answer: String, button: TextureButton) -> void:
 	if !timer_active:
-		feedback_label.text = "⏱️ Tapos na ang oras!"
+		feedback_label.text = "Time's Up"
 		return
 
 	if correct_answers.has(answer):
 		if !selected_correct.has(answer):
 			selected_correct.append(answer)
-			feedback_label.text = "✅ Tama! " + answer
+			feedback_label.text = "Correct!"
 			button.visible = false
 
 			if selected_correct.size() == correct_answers.size():
-				feedback_label.text = "🎉 Nakuha mo lahat!"
+				feedback_label.text = "Very Good!"
 				timer_active = false
 				ProgressManager.save_progress("reading", true)
 				game_over(true)  # ⬅️ Show star popup when complete
@@ -64,11 +65,13 @@ func check_answer(answer: String, button: TextureButton) -> void:
 				await get_tree().create_timer(1.5).timeout
 				reset_feedback_label()
 		else:
-			feedback_label.text = "👆 Na-tap mo na yan!"
+			feedback_label.text = "You've already
+			tapped that!"
 			await get_tree().create_timer(1.5).timeout
 			reset_feedback_label()
 	else:
-		feedback_label.text = "❌ Mali! Try again."
+		feedback_label.text = "Wrong! Try again, 
+		You can do it!"
 		shake_button(button)
 		await get_tree().create_timer(1.5).timeout
 		reset_feedback_label()
@@ -96,7 +99,7 @@ func game_over(success: bool):
 		else:
 			popup_instance = complete1_scene.instantiate()
 	else:
-		popup_instance = complete1_scene.instantiate()
+		popup_instance = retry_scene.instantiate()
 
 	add_child(popup_instance)  # Show popup on top
 

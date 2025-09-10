@@ -11,6 +11,7 @@ var start_time := 0
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn")
 var complete3_scene = preload("res://reward scene/Complete3.tscn")
+var retry_scene = preload("res://reward scene/Retry.tscn")
 
 var popup_instance: Control = null
 
@@ -96,7 +97,7 @@ func game_over(success: bool):
 		else:
 			popup_instance = complete1_scene.instantiate()
 	else:
-		popup_instance = complete1_scene.instantiate()
+		popup_instance = retry_scene.instantiate()
 
 	add_child(popup_instance)  # Show popup on top
 

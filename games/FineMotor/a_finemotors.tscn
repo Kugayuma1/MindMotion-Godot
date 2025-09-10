@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://drhk1wyi1g0t6" path="res://games_script/finemotor/a_finemotors.gd" id="1_fd25y"]
 [ext_resource type="Texture2D" uid="uid://cv6gcj4v05gew" path="res://Game Assets/Fine Motor Assets/Group 289730.png" id="2_525kn"]
 [ext_resource type="Texture2D" uid="uid://cob51mb16w1t3" path="res://Game Assets/Fine Motor Assets/apple.png" id="3_hcxtq"]
-[ext_resource type="Texture2D" uid="uid://d4c4gl0nb1fhv" path="res://Game Assets/2.png" id="3_okl7b"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="3_si7d1"]
 [ext_resource type="Script" uid="uid://bon6n3xrvitxf" path="res://games_script/finemotor/DraggableItem.gd" id="4_ofv2y"]
 [ext_resource type="Texture2D" uid="uid://fqn4bjfaq1af" path="res://Game Assets/Fine Motor Assets/axe.png" id="5_0vay2"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="5_rgbyd"]
@@ -42,7 +42,7 @@ offset_left = 1617.0
 offset_top = 17.0
 offset_right = 1875.0
 offset_bottom = 275.0
-texture = ExtResource("3_okl7b")
+texture = ExtResource("3_si7d1")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="Time"]

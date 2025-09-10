@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://j0vtwj1bsc8x"]
 
 [ext_resource type="Script" uid="uid://bnpkrdts57o54" path="res://games_script/Reading/b_reading.gd" id="1_f2fe5"]
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="2_jdrnc"]
+[ext_resource type="Texture2D" uid="uid://cryn74xru6pl3" path="res://Game Bg/as (1280 x 800 px) (10).png" id="2_f2fe5"]
 [ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="3_3pwhd"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="4_qljmb"]
-[ext_resource type="Texture2D" uid="uid://d4c4gl0nb1fhv" path="res://Game Assets/2.png" id="5_3q7cu"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="5_jdrnc"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="6_87e88"]
 [ext_resource type="Texture2D" uid="uid://bu6q4juh8egkf" path="res://Game Assets/Reading Assets/Rectangle 14.png" id="7_hukqg"]
 [ext_resource type="Texture2D" uid="uid://bbj31q1hj2ka3" path="res://Game Assets/Reading Assets/Group 33.png" id="8_iesgq"]
@@ -20,23 +20,37 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_f2fe5")
 
-[node name="GameBG" type="TextureRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(1.13589e-05, 0.744214, 0.904963, 1)
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = 6.0
+offset_right = 28.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("2_jdrnc")
+texture = ExtResource("2_f2fe5")
 
 [node name="AssetsBG" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 286.0
-offset_top = -78.0
-offset_right = 1699.0
-offset_bottom = 1200.0
+offset_left = 527.0
+offset_top = -35.0
+offset_right = 1388.0
+offset_bottom = 763.0
 texture = ExtResource("3_3pwhd")
+expand_mode = 1
 
 [node name="Instruction" type="Label" parent="."]
 layout_mode = 0
@@ -56,7 +70,7 @@ offset_left = 1617.0
 offset_top = 17.0
 offset_right = 1875.0
 offset_bottom = 275.0
-texture = ExtResource("5_3q7cu")
+texture = ExtResource("5_jdrnc")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="Time"]
