@@ -18,9 +18,24 @@ var original_main_text: String
 # ---------------- GAME STATE ----------------
 var game_completed := false
 
+# ---------------- POPUP SCENES ----------------
+# Preload popup star scenes (adjust the paths as needed!)
+var complete1_scene = preload("res://reward scene/Complete1.tscn")
+var complete2_scene = preload("res://reward scene/Complete2.tscn")
+var complete3_scene = preload("res://reward scene/Complete3.tscn")
+var retry_scene = preload("res://reward scene/Retry.tscn")
+var popup_instance: Control = null
+
+# ---------------- BACKGROUND CONTROL ----------------
+# Reference to main game elements that should be hidden during popup
+@onready var game_elements = []  # We'll populate this in _ready()
+
 func _ready():
 	if main_label:
 		original_main_text = main_label.text
+	
+	# Collect all main game elements to hide during popup
+	collect_game_elements()
 	
 	# Connect all color buttons
 	var color_buttons = get_tree().get_nodes_in_group("color_buttons")
@@ -36,6 +51,42 @@ func _ready():
 	print("Target Node (Node2D2): ", target_node)
 	if target_node:
 		print("Found ", get_polygon_count(), " polygons in Node2D2")
+
+# ---------------- COLLECT GAME ELEMENTS ----------------
+func collect_game_elements():
+	# Method 1: Hide all direct children of this Node2D (recommended)
+	for child in get_children():
+		game_elements.append(child)
+		
+		if has_node("TextureRect"):
+			game_elements.append($TextureRect2)
+		if has_node("TextureRect"):
+			game_elements.append($TextureRect3)
+		if has_node("TextureRect"):
+			game_elements.append($TextureRect4)
+		if timer_label:
+			game_elements.append(timer_label)
+	
+	# Method 2: If you want to be more specific, uncomment and adjust these:
+	# if timer_label:
+	# 	game_elements.append(timer_label)
+	# if main_label:
+	# 	game_elements.append(main_label)
+	# if target_node:
+	# 	game_elements.append(target_node)
+	
+	# # Add color buttons
+	# var color_buttons = get_tree().get_nodes_in_group("color_buttons")
+	# for button in color_buttons:
+	# 	game_elements.append(button)
+	
+	# # Add specific TextureRect containers if they exist
+	# if has_node("TextureRect"):
+	# 	game_elements.append($TextureRect)
+	# if has_node("TimeContainer"):  # Adjust path as needed
+	# 	game_elements.append($TimeContainer)
+	# if has_node("UIContainer"):    # Adjust path as needed
+	# 	game_elements.append($UIContainer)
 
 # ---------------- TIMER ----------------
 func start_timer() -> void:
@@ -60,7 +111,9 @@ func update_timer() -> void:
 			main_label.text = "⏰ Time's up!"
 			main_label.modulate = Color.RED
 		timer_active = false
-		game_over()
+		# Save progress as failed and show retry popup
+		ProgressManager.save_progress("coloring", false)
+		game_over(false)  # Show retry popup when time runs out
 		return
 	
 	if timer_label:
@@ -129,7 +182,7 @@ func is_point_in_polygon(point: Vector2, polygon: Polygon2D) -> bool:
 	var local_point = polygon.to_local(point)
 	return Geometry2D.is_point_in_polygon(local_point, polygon.polygon)
 
-# ---------------- SIMPLE WIN CONDITION ----------------
+# ---------------- WIN CONDITION ----------------
 func check_win_condition():
 	if game_completed:
 		return
@@ -171,7 +224,48 @@ func win_game():
 	if timer_label:
 		timer_label.text = "✅ Done in " + str(completion_time) + "s"
 	
-	show_celebration_effects()
+	# Save progress as successful
+	ProgressManager.save_progress("coloring", true)
+	
+	# Show appropriate popup based on completion time
+	game_over(true)
+
+# ---------------- POPUP SYSTEM ----------------
+func game_over(success: bool):
+	print("Game over called with success: ", success)
+	
+	# Hide all game elements
+	hide_game_elements()
+	
+	# Choose appropriate popup scene based on success and performance
+	if success:
+		# Determine star rating based on remaining time
+		if countdown >= 20:  # Completed with 20+ seconds remaining
+			popup_instance = complete3_scene.instantiate()
+		elif countdown >= 10:  # Completed with 10+ seconds remaining
+			popup_instance = complete2_scene.instantiate()
+		else:  # Completed with less than 10 seconds remaining
+			popup_instance = complete1_scene.instantiate()
+	else:
+		# Failed (time ran out)
+		popup_instance = retry_scene.instantiate()
+	
+	# Add popup to the scene tree
+	if popup_instance:
+		get_tree().current_scene.add_child(popup_instance)
+		print("Popup instantiated and added to scene")
+
+func hide_game_elements():
+	# Hide all collected game elements
+	for element in game_elements:
+		if element and is_instance_valid(element):
+			element.visible = false
+
+func show_game_elements():
+	# Show all collected game elements (for restart)
+	for element in game_elements:
+		if element and is_instance_valid(element):
+			element.visible = true
 
 # Helper function to get all polygons in a node
 func get_all_polygons_in_node(node: Node) -> Array:
@@ -190,34 +284,21 @@ func get_polygon_count() -> int:
 		return 0
 	return get_all_polygons_in_node(target_node).size()
 
-func game_over():
-	print("Game Over – Time's up!")
-	game_completed = true
-	show_game_over_effects()
-
-# ---------------- VISUAL EFFECTS ----------------
-func show_celebration_effects():
-	if main_label:
-		var tween = create_tween()
-		tween.set_loops(3)
-		tween.tween_property(main_label, "scale", Vector2(1.2, 1.2), 0.3)
-		tween.tween_property(main_label, "scale", Vector2(1.0, 1.0), 0.3)
-
-func show_game_over_effects():
-	if main_label:
-		var original_pos = main_label.position
-		var tween = create_tween()
-		tween.set_loops(5)
-		tween.tween_property(main_label, "position", original_pos + Vector2(5, 0), 0.1)
-		tween.tween_property(main_label, "position", original_pos - Vector2(5, 0), 0.1)
-		tween.tween_callback(func(): main_label.position = original_pos)
-
-# ---------------- RESTART ----------------
+# ---------------- RESTART FUNCTIONALITY ----------------
 func restart_game():
 	game_completed = false
 	timer_active = false
 	countdown = 30
 	
+	# Remove existing popup
+	if popup_instance and is_instance_valid(popup_instance):
+		popup_instance.queue_free()
+		popup_instance = null
+	
+	# Show game elements again
+	show_game_elements()
+	
+	# Reset UI elements
 	if timer_label:
 		timer_label.text = "⏱️ 30s"
 		timer_label.modulate = Color.WHITE
@@ -238,6 +319,14 @@ func restart_game():
 func _input(event):
 	if event.is_action_pressed("ui_accept") and game_completed:
 		restart_game()
+
+# ---------------- VISUAL EFFECTS ----------------
+func show_celebration_effects():
+	if main_label:
+		var tween = create_tween()
+		tween.set_loops(3)
+		tween.tween_property(main_label, "scale", Vector2(1.2, 1.2), 0.3)
+		tween.tween_property(main_label, "scale", Vector2(1.0, 1.0), 0.3)
 
 # ---------------- DEBUG FUNCTIONS ----------------
 func debug_status():

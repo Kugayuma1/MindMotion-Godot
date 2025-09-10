@@ -43,30 +43,30 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_imnym")
 
-[node name="TextureRect2" type="TextureRect" parent="."]
-layout_mode = 0
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("4_adl1h")
+
+[node name="TextureRect2" type="TextureRect" parent="Node2D"]
 offset_left = 386.0
 offset_top = 122.0
 offset_right = 1654.0
 offset_bottom = 999.0
 texture = ExtResource("2_bt123")
 
-[node name="TextureRect3" type="TextureRect" parent="."]
-layout_mode = 0
+[node name="TextureRect5" type="TextureRect" parent="Node2D"]
+z_index = 11
 offset_left = 473.0
 offset_top = -61.0
 offset_right = 1476.0
 offset_bottom = 1026.0
+mouse_filter = 2
 texture = ExtResource("3_adl1h")
 expand_mode = 1
-
-[node name="Node2D" type="Node2D" parent="."]
-script = ExtResource("4_adl1h")
 
 [node name="Node2D1" type="Node2D" parent="Node2D"]
 
 [node name="TextureButton" type="TextureButton" parent="Node2D/Node2D1"]
-z_index = 15
+z_index = 20
 anchors_preset = -1
 anchor_left = 0.23
 anchor_top = 0.687
@@ -81,7 +81,7 @@ stretch_mode = 0
 script = ExtResource("16_0iiwq")
 
 [node name="TextureButton3" type="TextureButton" parent="Node2D/Node2D1"]
-z_index = 15
+z_index = 20
 anchors_preset = -1
 anchor_left = 0.418
 anchor_top = 0.76
@@ -96,7 +96,7 @@ stretch_mode = 0
 script = ExtResource("20_reiol")
 
 [node name="TextureButton2" type="TextureButton" parent="Node2D/Node2D1"]
-z_index = 15
+z_index = 20
 anchors_preset = -1
 anchor_left = 0.311
 anchor_top = 0.757
@@ -111,7 +111,7 @@ stretch_mode = 0
 script = ExtResource("18_w0ded")
 
 [node name="TextureButton4" type="TextureButton" parent="Node2D/Node2D1"]
-z_index = 15
+z_index = 20
 anchors_preset = -1
 anchor_left = 0.527
 anchor_top = 0.755
@@ -204,16 +204,6 @@ polygon = PackedVector2Array(726, 639, 720, 644, 720, 662, 730, 673, 750, 679, 7
 z_index = 10
 position = Vector2(-1132, -14)
 polygon = PackedVector2Array(726, 639, 720, 644, 720, 662, 730, 673, 750, 679, 769, 671, 773, 661, 770, 645, 762, 635, 746, 634)
-
-[node name="TextureRect4" type="TextureRect" parent="Node2D/TimerLabel/Polygon2D16"]
-z_index = 1
-offset_left = -25.0
-offset_top = -61.0
-offset_right = 978.0
-offset_bottom = 1026.0
-mouse_filter = 2
-texture = ExtResource("3_adl1h")
-expand_mode = 1
 
 [node name="TextureRect5" type="TextureRect" parent="Node2D/TimerLabel/Polygon2D16"]
 z_index = 14
