@@ -112,7 +112,7 @@ func update_timer() -> void:
 			main_label.modulate = Color.RED
 		timer_active = false
 		# Save progress as failed and show retry popup
-		ProgressManager.save_progress("coloring", false)
+		ProgressManager.save_progress("art", false)
 		game_over(false)  # Show retry popup when time runs out
 		return
 	
@@ -225,7 +225,7 @@ func win_game():
 		timer_label.text = "✅ Done in " + str(completion_time) + "s"
 	
 	# Save progress as successful
-	ProgressManager.save_progress("coloring", true)
+	ProgressManager.save_progress("art", true)
 	
 	# Show appropriate popup based on completion time
 	game_over(true)
