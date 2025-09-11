@@ -327,10 +327,19 @@ func _on_levels_update_completed(result: int, response_code: int, _headers: Pack
 	
 	if response_code in [200, 201]:
 		print("✅ Letter stats updated successfully!")
+		
+		# NEW: Check if letter was completed and refresh cache
+		var json = JSON.new()
+		if json.parse(body_text) == OK:
+			var data = json.data
+			if data.has("fields") and data.fields.has("letterCompleted"):
+				var letter_completed = data.fields.letterCompleted.get("booleanValue", false)
+				if letter_completed:
+					print("🎉 Letter completed! Refreshing letter cache...")
+					Global.load_all_letter_completion_data()
 	else:
 		push_error("❌ Letter stats update failed %d — %s" % [response_code, body_text])
 	
-	# Clean up the temporary HTTPRequest node
 	sender.queue_free()
 
 # --- Firestore type conversion ---
@@ -346,3 +355,11 @@ func to_firestore_field(value):
 			return {"stringValue": value}
 		_:
 			return {"stringValue": str(value)}
+
+# When you detect a letter completion in your game logic:
+func on_letter_completed():
+	# Wait for Firebase update to complete
+	await get_tree().create_timer(2.0).timeout
+	
+	# Refresh the letter cache to unlock next letter
+	Global.load_all_letter_completion_data()
