@@ -1,0 +1,291 @@
+[gd_scene load_steps=8 format=3 uid="uid://cwvnb264aspus"]
+
+[ext_resource type="Script" uid="uid://bs6nolh4ppny" path="res://games_script/Math/d_math.gd" id="1_236dk"]
+[ext_resource type="Texture2D" uid="uid://di0cximhejxvm" path="res://Game Bg/Pond.png" id="2_dskjd"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="3_42nud"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="4_268p5"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="5_n58vl"]
+[ext_resource type="Texture2D" uid="uid://5lbec33bmuqc" path="res://Game Assets/Math/Rectangle 14.png" id="6_se87x"]
+[ext_resource type="Texture2D" uid="uid://cof46mffixwa3" path="res://Game Assets/Reading Assets/9.png" id="7_w5nna"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_236dk")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.752941, 0.835294, 0.254902, 1)
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_dskjd")
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+offset_left = 1620.0
+offset_top = 31.0
+offset_right = 1878.0
+offset_bottom = 289.0
+mouse_filter = 2
+texture = ExtResource("3_42nud")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 105.0
+offset_right = 161.0
+offset_bottom = 181.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_268p5")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 606.0
+offset_top = 56.0
+offset_right = 1322.0
+offset_bottom = 309.0
+mouse_filter = 2
+texture = ExtResource("5_n58vl")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_268p5")
+theme_override_font_sizes/font_size = 55
+text = "How many Ducks are
+in the pond?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button1" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.297
+anchor_top = 0.826
+anchor_right = 0.297
+anchor_bottom = 0.826
+offset_left = -0.240051
+offset_top = -0.0800171
+offset_right = 155.76
+offset_bottom = 154.92
+texture_normal = ExtResource("6_se87x")
+stretch_mode = 0
+
+[node name="Label3" type="Label" parent="Button1"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 21.0
+offset_right = 121.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_268p5")
+theme_override_font_sizes/font_size = 95
+text = "8"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.407
+anchor_top = 0.826
+anchor_right = 0.407
+anchor_bottom = 0.826
+offset_left = 0.559998
+offset_top = -0.0800171
+offset_right = 156.56
+offset_bottom = 154.92
+texture_normal = ExtResource("6_se87x")
+stretch_mode = 0
+
+[node name="Label3" type="Label" parent="Button2"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 21.0
+offset_right = 121.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_268p5")
+theme_override_font_sizes/font_size = 95
+text = "7"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button3" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.518
+anchor_top = 0.828
+anchor_right = 0.518
+anchor_bottom = 0.828
+offset_left = 0.440002
+offset_top = -0.240051
+offset_right = 156.44
+offset_bottom = 154.76
+texture_normal = ExtResource("6_se87x")
+stretch_mode = 0
+
+[node name="Label3" type="Label" parent="Button3"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 21.0
+offset_right = 121.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_268p5")
+theme_override_font_sizes/font_size = 95
+text = "12"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button4" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.632
+anchor_top = 0.828
+anchor_right = 0.632
+anchor_bottom = 0.828
+offset_left = -0.440063
+offset_top = -0.240051
+offset_right = 155.56
+offset_bottom = 154.76
+texture_normal = ExtResource("6_se87x")
+stretch_mode = 0
+
+[node name="Label3" type="Label" parent="Button4"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 21.0
+offset_right = 121.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_268p5")
+theme_override_font_sizes/font_size = 95
+text = "15"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Ducks" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Duck" type="TextureRect" parent="Ducks"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.289
+anchor_top = 0.394
+anchor_right = 0.289
+anchor_bottom = 0.394
+offset_left = 0.119995
+offset_top = 0.47998
+offset_right = 279.12
+offset_bottom = 234.48
+texture = ExtResource("7_w5nna")
+
+[node name="Duck2" type="TextureRect" parent="Ducks"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.421
+anchor_top = 0.375
+anchor_right = 0.421
+anchor_bottom = 0.375
+offset_left = 0.679932
+offset_top = -3.05176e-05
+offset_right = 279.68
+offset_bottom = 234.0
+texture = ExtResource("7_w5nna")
+
+[node name="Duck3" type="TextureRect" parent="Ducks"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.415
+anchor_top = 0.589
+anchor_right = 0.415
+anchor_bottom = 0.589
+offset_left = 0.199951
+offset_top = -0.120056
+offset_right = 279.2
+offset_bottom = 233.88
+texture = ExtResource("7_w5nna")
+
+[node name="Duck4" type="TextureRect" parent="Ducks"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.273
+anchor_top = 0.569
+anchor_right = 0.273
+anchor_bottom = 0.569
+offset_left = -0.160034
+offset_top = 0.47998
+offset_right = 278.84
+offset_bottom = 234.48
+texture = ExtResource("7_w5nna")
+
+[node name="Duck5" type="TextureRect" parent="Ducks"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.523
+anchor_top = 0.53
+anchor_right = 0.523
+anchor_bottom = 0.53
+offset_left = -0.160034
+offset_top = -0.400024
+offset_right = 278.84
+offset_bottom = 233.6
+texture = ExtResource("7_w5nna")
+
+[node name="Duck6" type="TextureRect" parent="Ducks"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.573
+anchor_top = 0.385
+anchor_right = 0.573
+anchor_bottom = 0.385
+offset_left = 0.839966
+offset_top = 0.199982
+offset_right = 279.84
+offset_bottom = 234.2
+texture = ExtResource("7_w5nna")
+
+[node name="Duck7" type="TextureRect" parent="Ducks"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.45
+anchor_right = 0.72
+anchor_bottom = 0.45
+offset_left = -0.400024
+offset_top = -3.05176e-05
+offset_right = 278.6
+offset_bottom = 234.0
+texture = ExtResource("7_w5nna")

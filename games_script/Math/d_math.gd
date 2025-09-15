@@ -1,4 +1,4 @@
-# VISUAL MATH GAME - FIXED WITH CORRECT NODE PATHS
+# DUCK COUNTING GAME
 # Attach this to your main Control node
 extends Control
 
@@ -6,7 +6,7 @@ extends Control
 var countdown := 15
 var timer_active := true
 var correct_answer := 0
-var current_equation := ""
+var current_question := "How many Ducks are in the pond?"
 
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn")
@@ -18,13 +18,13 @@ var popup_instance: Control = null
 # Track time
 var start_time: int = 0
 
-# UI References
-@onready var equation_label = $TextureRect/Holder/Label
-@onready var timer_label = $TextureRect/Time/Label
-@onready var button1 = $Button1/Label3
-@onready var button2 = $Button2/Label3  
-@onready var button3 = $Button3/Label3
-@onready var button4 = $Button4/Label3
+# UI References - adjust paths to match your scene structure
+@onready var question_label = $Holder/Label  # "How many Ducks are in the pond?" 
+@onready var timer_label = $Time/Label
+@onready var button1_label = $Button1/Label3  # Button text labels
+@onready var button2_label = $Button2/Label3  
+@onready var button3_label = $Button3/Label3
+@onready var button4_label = $Button4/Label3
 
 # Button nodes
 @onready var btn1 = $Button1
@@ -32,66 +32,62 @@ var start_time: int = 0
 @onready var btn3 = $Button3
 @onready var btn4 = $Button4
 
-# CORRECT NODE PATHS based on your scene structure
-var group1_names = ["LeftGroup/TextureRect2", "LeftGroup/TextureRect3", "LeftGroup/TextureRect4", "LeftGroup/TextureRect5"]  # LEFT SIDE - 4 avocados
-var group2_names = ["RightGroup/TextureRect6", "RightGroup/TextureRect7", "RightGroup/TextureRect8"]  # RIGHT SIDE - 3 avocados
+# Duck container - adjust path to match your scene structure
+@onready var ducks_container = $Ducks  # Container with all duck nodes
 
-var group1_avocados = []
-var group2_avocados = []
+# List of duck node names in your scene
+var duck_names = ["Duck", "Duck2", "Duck3", "Duck4", "Duck5", "Duck6", "Duck7"]  # Add more as needed
+
+var duck_nodes = []
 
 func _ready():
-	print("=== GAME STARTING WITH CORRECT PATHS ===")
+	print("=== DUCK COUNTING GAME STARTING ===")
 	Global.start_time = Time.get_ticks_msec()  # record when the game starts
 	
-	assign_avocados_to_groups()
-	setup_visual_math_game()
+	find_all_ducks()
+	setup_counting_game()
 	debug_everything()
 	start_timer()
 	setup_buttons()
 
-func assign_avocados_to_groups():
-	print("--- ASSIGNING AVOCADOS TO GROUPS (CORRECT PATHS) ---")
+func find_all_ducks():
+	print("--- FINDING ALL DUCKS ---")
 	
-	group1_avocados = []
-	group2_avocados = []
+	duck_nodes.clear()
 	
-	# Assign Group 1 avocados (LEFT SIDE)
-	for avocado_path in group1_names:
-		var avocado_node = get_node_or_null(avocado_path)
-		if avocado_node:
-			group1_avocados.append(avocado_node)
-			print("✅ Added %s to GROUP 1 (LEFT)" % avocado_path)
-		else:
-			print("❌ Could not find: %s" % avocado_path)
+	# Method 1: Try to find ducks in a container
+	if ducks_container:
+		for child in ducks_container.get_children():
+			duck_nodes.append(child)
+			print("✅ Found duck in container: %s" % child.name)
+	else:
+		# Method 2: Look for specific duck names in the scene
+		for duck_name in duck_names:
+			var duck_node = get_node_or_null(duck_name)
+			if duck_node:
+				duck_nodes.append(duck_node)
+				print("✅ Found duck by name: %s" % duck_name)
+			else:
+				print("❌ Could not find duck: %s" % duck_name)
 	
-	# Assign Group 2 avocados (RIGHT SIDE)  
-	for avocado_path in group2_names:
-		var avocado_node = get_node_or_null(avocado_path)
-		if avocado_node:
-			group2_avocados.append(avocado_node)
-			print("✅ Added %s to GROUP 2 (RIGHT)" % avocado_path)
-		else:
-			print("❌ Could not find: %s" % avocado_path)
+	print("Total ducks found: %d" % duck_nodes.size())
 	
-	print("Group 1 (LEFT) has %d avocados" % group1_avocados.size())
-	print("Group 2 (RIGHT) has %d avocados" % group2_avocados.size())
-	print("Expected equation: %d + %d = %d" % [group1_avocados.size(), group2_avocados.size(), group1_avocados.size() + group2_avocados.size()])
+	# If no ducks found, create a fallback count (for testing)
+	if duck_nodes.size() == 0:
+		print("⚠️ No ducks found! Using fallback count of 8")
+		correct_answer = 8
+	else:
+		correct_answer = duck_nodes.size()
 
-func setup_visual_math_game():
-	print("--- SETTING UP MATH GAME ---")
+func setup_counting_game():
+	print("--- SETTING UP COUNTING GAME ---")
 	
-	# Count avocados in each group
-	var group1_count = group1_avocados.size()
-	var group2_count = group2_avocados.size()
+	# Set the question
+	if question_label:
+		question_label.text = current_question
 	
-	# Calculate correct answer
-	correct_answer = group1_count + group2_count
-	
-	# Create equation
-	current_equation = "%d + %d = %d" % [group1_count, group2_count, correct_answer]
-	
-	print("Visual equation: %s" % current_equation)
-	print("Correct answer: %d" % correct_answer)
+	print("Question: %s" % current_question)
+	print("Correct answer: %d ducks" % correct_answer)
 	
 	# Generate choices for buttons
 	generate_answer_choices()
@@ -105,29 +101,32 @@ func generate_answer_choices():
 	# Generate exactly 3 wrong answers
 	var wrong_answers = []
 	
-	# Create potential wrong answers
-	var potential_wrongs = [
-		correct_answer - 3,
-		correct_answer - 2,
-		correct_answer - 1,
-		correct_answer + 1,
-		correct_answer + 2,
-		correct_answer + 3,
-		correct_answer + 4,
-		correct_answer + 5,
-		correct_answer + 6
-	]
+	# Create potential wrong answers around the correct count
+	var potential_wrongs = []
 	
-	# Filter and collect valid wrong answers
+	# Add numbers around the correct answer
+	for i in range(correct_answer - 4, correct_answer + 5):
+		if i > 0 and i != correct_answer:  # Must be positive and not correct
+			potential_wrongs.append(i)
+	
+	# Also add some random numbers in a reasonable range
+	var random_range_min = max(1, correct_answer - 6)
+	var random_range_max = correct_answer + 8
+	
+	for i in range(random_range_min, random_range_max + 1):
+		if i != correct_answer and not potential_wrongs.has(i):
+			potential_wrongs.append(i)
+	
+	# Shuffle and pick 3 wrong answers
+	potential_wrongs.shuffle()
+	
 	for wrong in potential_wrongs:
-		if wrong > 0 and wrong != correct_answer and not wrong_answers.has(wrong):
+		if wrong_answers.size() < 3:
 			wrong_answers.append(wrong)
-		if wrong_answers.size() >= 3:
-			break
 	
-	# If we don't have enough wrong answers, generate some manually
+	# If we still don't have enough wrong answers, generate some manually
 	while wrong_answers.size() < 3:
-		var new_wrong = correct_answer + wrong_answers.size() + 7
+		var new_wrong = correct_answer + wrong_answers.size() + 10
 		if new_wrong != correct_answer and not wrong_answers.has(new_wrong):
 			wrong_answers.append(new_wrong)
 	
@@ -166,7 +165,7 @@ func assign_to_buttons(choices: Array):
 		return
 	
 	var buttons = [btn1, btn2, btn3, btn4]
-	var labels = [button1, button2, button3, button4]
+	var labels = [button1_label, button2_label, button3_label, button4_label]
 	
 	for i in range(4):
 		var value = choices[i]
@@ -222,26 +221,41 @@ func _on_button_pressed(button_num: int):
 	
 	var selected_answer = clicked_button.get_meta("answer_value", -999)
 	
+	print("Button %d pressed. Selected answer: %d, Correct: %d" % [button_num, selected_answer, correct_answer])
+	
 	if selected_answer == correct_answer:
 		# Correct!
-		if equation_label:
-			equation_label.text = "✅ Tama! " + str(correct_answer)
+		if question_label:
+			question_label.text = "✅ Correct! There are " + str(correct_answer) + " ducks!"
 		timer_active = false
 		
 		# Calculate elapsed time
 		var elapsed = (Time.get_ticks_msec() - start_time) / 1000.0
 		print("🎉 CORRECT in %.2f seconds" % elapsed)
 		
-		game_over(true, elapsed)   # ✅ now passes elapsed
-		ProgressManager.save_progress("math", true)
+		# Optional: Highlight all ducks briefly
+		highlight_all_ducks()
+		
+		await get_tree().create_timer(2.0).timeout  # Show success message longer
+		game_over(true, elapsed)
+		ProgressManager.save_progress("duck_counting", true)
 	else:
-		if equation_label:
-			equation_label.text = "❌ Mali!"
+		if question_label:
+			question_label.text = "❌ Wrong! Try again!"
 		shake_button(clicked_button)
 		await get_tree().create_timer(1.5).timeout
-		if timer_active and equation_label:
-			equation_label.text = "solve"
+		if timer_active and question_label:
+			question_label.text = current_question
 
+func highlight_all_ducks():
+	# Optional: Make all ducks briefly glow or bounce
+	for duck in duck_nodes:
+		if duck:
+			var tween = create_tween()
+			tween.parallel().tween_property(duck, "modulate", Color.YELLOW, 0.3)
+			tween.parallel().tween_property(duck, "scale", Vector2(1.2, 1.2), 0.3)
+			tween.parallel().tween_property(duck, "modulate", Color.WHITE, 0.3).set_delay(0.3)
+			tween.parallel().tween_property(duck, "scale", Vector2(1.0, 1.0), 0.3).set_delay(0.3)
 
 func shake_button(button: Control) -> void:
 	if !button:
@@ -256,47 +270,45 @@ func start_timer() -> void:
 	countdown = 15
 	timer_active = true
 	if timer_label:
-		timer_label.text = "⏱️ " + str(countdown) + "s"
-	update_timer()   # ✅ start the countdown loop
+		timer_label.text = str(countdown) + "s"
+	update_timer()
 
 func update_timer() -> void:
 	if countdown <= 0:
 		timer_active = false
 		if timer_label:
-			timer_label.text = "⏰ Tapos na!"
-		if equation_label:
-			equation_label.text = "⏱️ Time's up! Answer: " + str(correct_answer)
-		ProgressManager.save_progress("math", false)
+			timer_label.text = "⏰ Done!"
+		if question_label:
+			question_label.text = "⏱️ Time's up! Answer: " + str(correct_answer) + " ducks"
+		ProgressManager.save_progress("duck_counting", false)
+		await get_tree().create_timer(2.0).timeout
 		game_over(false)
 		return
 
 	# Show time
 	if timer_label:
-		timer_label.text = "⏱️ " + str(countdown) + "s"
+		timer_label.text = str(countdown) + "s"
 	
 	countdown -= 1
 	await get_tree().create_timer(1.0).timeout
 
 	if timer_active:
-		update_timer()   # ✅ loop continues
+		update_timer()
 
-		
 func game_over(success: bool, elapsed: float = 999.0):
-	# Hide UI elements
-	if has_node("TextureRect/GameBG"): $TextureRect/GameBG.visible = false
-	if has_node("TextureRect/Time"): $TextureRect/Time.visible = false
-	if has_node("TextureRect/Holder"): $TextureRect/Holder.visible = false
-	if has_node("TextureRect/Label"): $TextureRect/Label.visible = false
-	if has_node("TextureRect/Label2"): $TextureRect/Label2.visible = false
-	if has_node("TextureRect/Label3"): $TextureRect/Label3.visible = false
-	if has_node("RightGroup"): $RightGroup.visible = false
-	if has_node("LeftGroup"): $LeftGroup.visible = false
+	timer_active = false
+	
+	# Hide game UI elements - adjust paths as needed
+	
+	if has_node("Time"): $Time.visible = false
+	if has_node("Holder"): $Holder.visible = false
+	if has_node("Ducks"): $Ducks.visible = false
 	if has_node("Button1"): $Button1.visible = false
 	if has_node("Button2"): $Button2.visible = false
 	if has_node("Button3"): $Button3.visible = false
 	if has_node("Button4"): $Button4.visible = false
 	
-	# ✅ POPUP LOGIC BASED ON COUNTDOWN (like the spelling game)
+	# Popup logic based on countdown (like the math game)
 	if success:
 		if countdown >= 10:   # finished fast → 3 stars
 			popup_instance = complete3_scene.instantiate()
@@ -305,7 +317,7 @@ func game_over(success: bool, elapsed: float = 999.0):
 		else:                 # slow but correct → 1 star
 			popup_instance = complete1_scene.instantiate()
 	else:
-		popup_instance = retry_scene.instantiate()  # always show 1-star if failed
+		popup_instance = retry_scene.instantiate()  # retry scene
 
 	# Add popup to scene
 	if popup_instance:
@@ -314,14 +326,19 @@ func game_over(success: bool, elapsed: float = 999.0):
 # DEBUG FUNCTION
 func debug_everything():
 	print("\n=== COMPLETE DEBUG INFO ===")
-	print("Group 1 (LEFT) count: %d avocados" % group1_avocados.size())
-	print("Group 2 (RIGHT) count: %d avocados" % group2_avocados.size()) 
-	print("Equation: %s" % current_equation)
+	print("Total ducks found: %d" % duck_nodes.size())
+	print("Question: %s" % current_question)
 	print("Correct answer: %d" % correct_answer)
+	
+	# List all duck nodes
+	print("--- DUCK NODES ---")
+	for i in range(duck_nodes.size()):
+		var duck = duck_nodes[i]
+		print("Duck %d: %s" % [i+1, duck.name if duck else "NULL"])
 	
 	# Check button assignments
 	var buttons = [btn1, btn2, btn3, btn4]
-	var labels = [button1, button2, button3, button4]
+	var labels = [button1_label, button2_label, button3_label, button4_label]
 	var correct_found = false
 	
 	print("--- BUTTON ANALYSIS ---")

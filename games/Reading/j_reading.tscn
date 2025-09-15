@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d3ppofvdeq42u" path="res://Game Bg/as (1280 x 800 px) (14).png" id="2_4i3k5"]
 [ext_resource type="Texture2D" uid="uid://v4ao84kfixyf" path="res://Game Assets/as (1280 x 800 px) (15) 3.png" id="3_06goe"]
 [ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="4_8at3c"]
-[ext_resource type="Texture2D" uid="uid://d4c4gl0nb1fhv" path="res://Game Assets/2.png" id="5_0a27m"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="5_ux35d"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="6_6m6yr"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="7_v6n3i"]
 
@@ -35,11 +35,16 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Jeep1" type="TextureButton" parent="TextureRect"]
-layout_mode = 0
-offset_left = 17.0
-offset_top = 639.0
-offset_right = 490.0
-offset_bottom = 1091.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.009
+anchor_top = 0.592
+anchor_right = 0.009
+anchor_bottom = 0.592
+offset_left = -0.280001
+offset_top = -0.359985
+offset_right = 472.72
+offset_bottom = 451.64
 texture_normal = ExtResource("3_06goe")
 stretch_mode = 0
 
@@ -57,11 +62,15 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Jeep2" type="TextureButton" parent="TextureRect"]
-layout_mode = 0
-offset_left = 480.0
-offset_top = 641.0
-offset_right = 953.0
-offset_bottom = 1093.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.594
+anchor_right = 0.25
+anchor_bottom = 0.594
+offset_top = -0.52002
+offset_right = 473.0
+offset_bottom = 451.48
 texture_normal = ExtResource("3_06goe")
 stretch_mode = 0
 
@@ -79,11 +88,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Jeep3" type="TextureButton" parent="TextureRect"]
-layout_mode = 0
-offset_left = 814.0
-offset_top = 367.0
-offset_right = 1287.0
-offset_bottom = 819.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.424
+anchor_top = 0.34
+anchor_right = 0.424
+anchor_bottom = 0.34
+offset_left = -0.0800781
+offset_top = -0.200012
+offset_right = 472.92
+offset_bottom = 451.8
 texture_normal = ExtResource("3_06goe")
 stretch_mode = 0
 
@@ -101,11 +115,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Jeep4" type="TextureButton" parent="TextureRect"]
-layout_mode = 0
-offset_left = 1067.0
-offset_top = 624.0
-offset_right = 1540.0
-offset_bottom = 1076.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.556
+anchor_top = 0.578
+anchor_right = 0.556
+anchor_bottom = 0.578
+offset_left = -0.520142
+offset_top = -0.23999
+offset_right = 472.48
+offset_bottom = 451.76
 texture_normal = ExtResource("3_06goe")
 stretch_mode = 0
 
@@ -123,11 +142,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Jeep5" type="TextureButton" parent="TextureRect"]
-layout_mode = 0
-offset_left = 1504.0
-offset_top = 624.0
-offset_right = 1977.0
-offset_bottom = 1076.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.783
+anchor_top = 0.578
+anchor_right = 0.783
+anchor_bottom = 0.578
+offset_left = 0.639893
+offset_top = -0.23999
+offset_right = 473.64
+offset_bottom = 451.76
 texture_normal = ExtResource("3_06goe")
 stretch_mode = 0
 
@@ -145,12 +169,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Time" type="TextureRect" parent="TextureRect"]
-layout_mode = 0
-offset_left = 1617.0
-offset_top = 17.0
-offset_right = 1875.0
-offset_bottom = 275.0
-texture = ExtResource("5_0a27m")
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -293.0
+offset_top = 34.0
+offset_right = -35.0
+offset_bottom = 292.0
+grow_horizontal = 0
+texture = ExtResource("5_ux35d")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="TextureRect/Time"]
@@ -166,11 +194,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Holder" type="TextureRect" parent="TextureRect"]
-layout_mode = 0
-offset_left = 606.0
-offset_top = 56.0
-offset_right = 1322.0
-offset_bottom = 309.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
 texture = ExtResource("7_v6n3i")
 expand_mode = 1
 

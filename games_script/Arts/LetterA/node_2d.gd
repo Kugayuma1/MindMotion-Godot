@@ -8,7 +8,7 @@ var drag_source: TextureButton
 var drag_preview: Control
 
 # ---------------- TIMER ----------------
-var countdown := 30
+var countdown := 15
 var timer_active := false
 @onready var timer_label = $TimerLabel   # Label under this Node2D
 @onready var main_label = $label_main    # Game status label
@@ -45,6 +45,7 @@ func _ready():
 	
 	# Start game
 	start_timer()
+	Global.start_time = Time.get_ticks_msec()
 	
 	# Debug info
 	print("Game Manager Ready!")
@@ -66,33 +67,11 @@ func collect_game_elements():
 			game_elements.append($TextureRect4)
 		if timer_label:
 			game_elements.append(timer_label)
-	
-	# Method 2: If you want to be more specific, uncomment and adjust these:
-	# if timer_label:
-	# 	game_elements.append(timer_label)
-	# if main_label:
-	# 	game_elements.append(main_label)
-	# if target_node:
-	# 	game_elements.append(target_node)
-	
-	# # Add color buttons
-	# var color_buttons = get_tree().get_nodes_in_group("color_buttons")
-	# for button in color_buttons:
-	# 	game_elements.append(button)
-	
-	# # Add specific TextureRect containers if they exist
-	# if has_node("TextureRect"):
-	# 	game_elements.append($TextureRect)
-	# if has_node("TimeContainer"):  # Adjust path as needed
-	# 	game_elements.append($TimeContainer)
-	# if has_node("UIContainer"):    # Adjust path as needed
-	# 	game_elements.append($UIContainer)
 
-# ---------------- TIMER ----------------
 func start_timer() -> void:
 	if timer_label:
-		timer_label.text = "⏱️ 30s"
-	countdown = 30
+		timer_label.text = "⏱️ 15s"
+	countdown = 15
 	timer_active = true
 	game_completed = false
 	update_timer()
@@ -215,7 +194,7 @@ func win_game():
 	game_completed = true
 	timer_active = false
 	
-	var completion_time = 30 - countdown
+	var completion_time = 15 - countdown
 	
 	if main_label:
 		main_label.text = "✅ Done!"
@@ -288,7 +267,7 @@ func get_polygon_count() -> int:
 func restart_game():
 	game_completed = false
 	timer_active = false
-	countdown = 30
+	countdown = 15
 	
 	# Remove existing popup
 	if popup_instance and is_instance_valid(popup_instance):
@@ -300,7 +279,7 @@ func restart_game():
 	
 	# Reset UI elements
 	if timer_label:
-		timer_label.text = "⏱️ 30s"
+		timer_label.text = "⏱️ 15s"
 		timer_label.modulate = Color.WHITE
 	if main_label:
 		main_label.text = original_main_text

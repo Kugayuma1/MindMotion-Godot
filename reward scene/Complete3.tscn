@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bgrqyyjsr0o7j"]
+[gd_scene load_steps=7 format=3 uid="uid://bgrqyyjsr0o7j"]
 
 [ext_resource type="Script" uid="uid://bmi34xogqeq3s" path="res://reward scene/reward script/complete_3.gd" id="1_wgg3s"]
 [ext_resource type="Texture2D" uid="uid://c2iuni8cud4qj" path="res://rewards/Group 146.png" id="2_3r8yk"]
 [ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="3_meyi3"]
 [ext_resource type="Texture2D" uid="uid://c0mheemniqy81" path="res://rewards/Group 5.png" id="4_kolox"]
 [ext_resource type="Texture2D" uid="uid://de66oso7wqfih" path="res://rewards/redo_btn.png" id="5_amtf8"]
+[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="6_3r8yk"]
 
 [node name="CanvasLayer" type="Control"]
 layout_mode = 3
@@ -56,6 +57,24 @@ offset_right = 522.0
 offset_bottom = 753.0
 texture_normal = ExtResource("5_amtf8")
 stretch_mode = 0
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.344
+anchor_right = 0.5
+anchor_bottom = 0.344
+offset_left = -127.0
+offset_top = 0.47998
+offset_right = 130.0
+offset_bottom = 79.48
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_3r8yk")
+theme_override_font_sizes/font_size = 75
+text = "COMPLETE"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="TextureRect/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="TextureRect/NextItem" to="." method="_on_next_item_pressed"]

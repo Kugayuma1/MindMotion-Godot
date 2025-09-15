@@ -1,0 +1,265 @@
+[gd_scene load_steps=22 format=3 uid="uid://ptv7y7cbb4pe"]
+
+[ext_resource type="Script" uid="uid://bliwna4pdeg0n" path="res://games_script/finemotor/LetterB/b_finemotor.gd" id="1_rfqty"]
+[ext_resource type="Texture2D" uid="uid://bofkcfhur10gc" path="res://Game Bg/market.png" id="2_pt4hm"]
+[ext_resource type="Texture2D" uid="uid://coiymgjav0hlh" path="res://Game Assets/market (1).png" id="3_adaxi"]
+[ext_resource type="Texture2D" uid="uid://50rgs8amnffj" path="res://Game Assets/Reading Assets/cart (1).png" id="4_ltr52"]
+[ext_resource type="Script" uid="uid://dh7oe3usdqosu" path="res://games_script/finemotor/LetterB/CartDropZone.gd" id="5_qo3sp"]
+[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="6_nb51v"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="7_55mki"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="8_cvwo8"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="9_hl7j2"]
+[ext_resource type="Texture2D" uid="uid://cpvgwsqx4r15w" path="res://Game Assets/Reading Assets/carrot.png" id="10_iqhoc"]
+[ext_resource type="Script" uid="uid://b4qvk5wmjmre2" path="res://games_script/finemotor/LetterB/carrot.gd" id="11_h5155"]
+[ext_resource type="Texture2D" uid="uid://cbdjh0ltovfwj" path="res://Game Assets/Reading Assets/banana.png" id="12_a0avy"]
+[ext_resource type="Script" uid="uid://brf4sji0ksk0i" path="res://games_script/finemotor/LetterB/banana.gd" id="13_yys8e"]
+[ext_resource type="Texture2D" uid="uid://w170kf2yikkc" path="res://Game Assets/Reading Assets/cucumber.png" id="14_0olqc"]
+[ext_resource type="Script" uid="uid://dminosk6ic2sc" path="res://games_script/finemotor/LetterB/cucumber.gd" id="15_ylq0s"]
+[ext_resource type="Texture2D" uid="uid://3ef5011qpkx4" path="res://Game Assets/Reading Assets/brocolli.png" id="16_8m1xt"]
+[ext_resource type="Script" uid="uid://brkam7q7catxo" path="res://games_script/finemotor/LetterB/broccoli.gd" id="17_iddlv"]
+[ext_resource type="Texture2D" uid="uid://dekprrj36f0xc" path="res://Game Assets/Reading Assets/blueberry.png" id="18_85u1q"]
+[ext_resource type="Script" uid="uid://cqjfbbr755rfa" path="res://games_script/finemotor/LetterB/blueberry.gd" id="19_su6nx"]
+[ext_resource type="Texture2D" uid="uid://dpq8tp2htlxtd" path="res://Game Assets/Reading Assets/coconut.png" id="20_hv2pf"]
+[ext_resource type="Script" uid="uid://bmku068an24ra" path="res://games_script/finemotor/LetterB/coconut.gd" id="21_67g3m"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rfqty")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_pt4hm")
+
+[node name="TextureRect" type="TextureRect" parent="GameBG"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.499
+anchor_top = 0.741
+anchor_right = 0.499
+anchor_bottom = 0.741
+offset_left = -962.08
+offset_top = -0.28009
+offset_right = 962.92
+offset_bottom = 283.72
+texture = ExtResource("3_adaxi")
+
+[node name="Cart" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CartDropZone" type="TextureRect" parent="Cart"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.482
+anchor_top = 0.288
+anchor_right = 0.482
+anchor_bottom = 0.288
+offset_left = -249.44
+offset_top = -0.0400085
+offset_right = 250.56
+offset_bottom = 499.96
+texture = ExtResource("4_ltr52")
+script = ExtResource("5_qo3sp")
+
+[node name="BananaLabel" type="Label" parent="Cart/CartDropZone"]
+layout_mode = 0
+offset_left = 282.0
+offset_top = 237.0
+offset_right = 428.0
+offset_bottom = 303.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_nb51v")
+theme_override_font_sizes/font_size = 35
+text = "Banana"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BroccoliLabel" type="Label" parent="Cart/CartDropZone"]
+layout_mode = 0
+offset_left = 282.0
+offset_top = 269.0
+offset_right = 428.0
+offset_bottom = 335.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_nb51v")
+theme_override_font_sizes/font_size = 35
+text = "Broccoli"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BlueberryLabel" type="Label" parent="Cart/CartDropZone"]
+layout_mode = 0
+offset_left = 282.0
+offset_top = 301.0
+offset_right = 428.0
+offset_bottom = 367.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_nb51v")
+theme_override_font_sizes/font_size = 35
+text = "Blueberry"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -294.0
+offset_top = 32.0
+offset_right = -36.0
+offset_bottom = 290.0
+grow_horizontal = 0
+texture = ExtResource("7_55mki")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 113.0
+offset_right = 164.0
+offset_bottom = 189.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_cvwo8")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+texture = ExtResource("9_hl7j2")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_cvwo8")
+theme_override_font_sizes/font_size = 55
+text = "Drag the one
+that starts at letter \"B\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Fruits" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Carrot" type="TextureRect" parent="Fruits"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.766
+anchor_right = 0.025
+anchor_bottom = 0.766
+offset_top = -0.280029
+offset_right = 248.0
+offset_bottom = 248.72
+texture = ExtResource("10_iqhoc")
+expand_mode = 1
+script = ExtResource("11_h5155")
+
+[node name="Banana" type="TextureRect" parent="Fruits"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.177
+anchor_top = 0.776
+anchor_right = 0.177
+anchor_bottom = 0.776
+offset_left = 0.160004
+offset_top = -0.0800171
+offset_right = 248.16
+offset_bottom = 248.92
+texture = ExtResource("12_a0avy")
+expand_mode = 1
+script = ExtResource("13_yys8e")
+
+[node name="Cucumber" type="TextureRect" parent="Fruits"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.331
+anchor_top = 0.766
+anchor_right = 0.331
+anchor_bottom = 0.766
+offset_left = -0.520081
+offset_top = -0.280029
+offset_right = 247.48
+offset_bottom = 248.72
+texture = ExtResource("14_0olqc")
+expand_mode = 1
+script = ExtResource("15_ylq0s")
+
+[node name="Broccoli" type="TextureRect" parent="Fruits"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.539
+anchor_top = 0.762
+anchor_right = 0.539
+anchor_bottom = 0.762
+offset_left = -0.880127
+offset_top = 0.039978
+offset_right = 247.12
+offset_bottom = 249.04
+texture = ExtResource("16_8m1xt")
+expand_mode = 1
+script = ExtResource("17_iddlv")
+
+[node name="Blueberry" type="TextureRect" parent="Fruits"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.694
+anchor_top = 0.76
+anchor_right = 0.694
+anchor_bottom = 0.76
+offset_left = -0.47998
+offset_top = 0.199951
+offset_right = 247.52
+offset_bottom = 249.2
+texture = ExtResource("18_85u1q")
+expand_mode = 1
+script = ExtResource("19_su6nx")
+
+[node name="Coconut" type="TextureRect" parent="Fruits"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.837
+anchor_top = 0.754
+anchor_right = 0.837
+anchor_bottom = 0.754
+offset_left = -0.0400391
+offset_top = -0.320007
+offset_right = 247.96
+offset_bottom = 248.68
+texture = ExtResource("20_hv2pf")
+expand_mode = 1
+script = ExtResource("21_67g3m")

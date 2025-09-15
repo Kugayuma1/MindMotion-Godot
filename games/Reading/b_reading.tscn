@@ -34,20 +34,19 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 28.0
-offset_top = 6.0
-offset_right = 28.0
-offset_bottom = 6.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("2_f2fe5")
 
 [node name="AssetsBG" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 527.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.274
+anchor_right = 0.274
+offset_left = 0.919983
 offset_top = -35.0
-offset_right = 1388.0
+offset_right = 861.92
 offset_bottom = 763.0
 texture = ExtResource("3_3pwhd")
 expand_mode = 1
@@ -65,11 +64,15 @@ text = "Instruction"
 horizontal_alignment = 1
 
 [node name="Time" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 1617.0
-offset_top = 17.0
-offset_right = 1875.0
-offset_bottom = 275.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -284.0
+offset_top = 29.0
+offset_right = -26.0
+offset_bottom = 287.0
+grow_horizontal = 0
 texture = ExtResource("5_jdrnc")
 expand_mode = 1
 
@@ -86,11 +89,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Holder" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 443.0
-offset_top = 615.0
-offset_right = 1456.0
-offset_bottom = 1076.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.495
+anchor_top = 1.0
+anchor_right = 0.495
+anchor_bottom = 1.0
+offset_left = -507.4
+offset_top = -465.0
+offset_right = 505.6
+offset_bottom = -4.0
 texture = ExtResource("6_87e88")
 expand_mode = 1
 
@@ -279,19 +287,29 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ObjectBurger" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 777.0
-offset_top = 177.0
-offset_right = 1118.0
-offset_bottom = 496.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.405
+anchor_top = 0.164
+anchor_right = 0.405
+anchor_bottom = 0.164
+offset_left = -0.600037
+offset_top = -0.12001
+offset_right = 340.4
+offset_bottom = 318.88
 texture = ExtResource("10_hn2c4")
 
 [node name="FirstLtr" type="Label" parent="."]
-layout_mode = 0
-offset_left = 707.0
-offset_top = 468.0
-offset_right = 786.0
-offset_bottom = 577.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.368
+anchor_top = 0.433
+anchor_right = 0.368
+anchor_bottom = 0.433
+offset_left = 0.439941
+offset_top = 0.359955
+offset_right = 79.4399
+offset_bottom = 109.36
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_qljmb")
 theme_override_font_sizes/font_size = 95
@@ -299,11 +317,16 @@ text = "_"
 horizontal_alignment = 1
 
 [node name="ScndLtr" type="Label" parent="."]
-layout_mode = 0
-offset_left = 793.0
-offset_top = 471.0
-offset_right = 872.0
-offset_bottom = 580.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.413
+anchor_top = 0.436
+anchor_right = 0.413
+anchor_bottom = 0.436
+offset_left = 0.039978
+offset_top = 0.119965
+offset_right = 79.04
+offset_bottom = 109.12
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_qljmb")
 theme_override_font_sizes/font_size = 95
@@ -311,11 +334,16 @@ text = "_"
 horizontal_alignment = 1
 
 [node name="ThrdLtr" type="Label" parent="."]
-layout_mode = 0
-offset_left = 871.0
-offset_top = 471.0
-offset_right = 950.0
-offset_bottom = 580.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.454
+anchor_top = 0.436
+anchor_right = 0.454
+anchor_bottom = 0.436
+offset_left = -0.680054
+offset_top = 0.119965
+offset_right = 78.3199
+offset_bottom = 109.12
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_qljmb")
 theme_override_font_sizes/font_size = 95
@@ -323,11 +351,16 @@ text = "_"
 horizontal_alignment = 1
 
 [node name="FrthLtr" type="Label" parent="."]
-layout_mode = 0
-offset_left = 957.0
-offset_top = 471.0
-offset_right = 1036.0
-offset_bottom = 580.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.498
+anchor_top = 0.436
+anchor_right = 0.498
+anchor_bottom = 0.436
+offset_left = 0.839966
+offset_top = 0.119965
+offset_right = 79.84
+offset_bottom = 109.12
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_qljmb")
 theme_override_font_sizes/font_size = 95
@@ -335,11 +368,16 @@ text = "_"
 horizontal_alignment = 1
 
 [node name="FfthLtr" type="Label" parent="."]
-layout_mode = 0
-offset_left = 1040.0
-offset_top = 471.0
-offset_right = 1119.0
-offset_bottom = 580.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.542
+anchor_top = 0.436
+anchor_right = 0.542
+anchor_bottom = 0.436
+offset_left = -0.640137
+offset_top = 0.119965
+offset_right = 78.3599
+offset_bottom = 109.12
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_qljmb")
 theme_override_font_sizes/font_size = 95
@@ -347,11 +385,16 @@ text = "_"
 horizontal_alignment = 1
 
 [node name="SixthLtr" type="Label" parent="."]
-layout_mode = 0
-offset_left = 1126.0
-offset_top = 471.0
-offset_right = 1205.0
-offset_bottom = 580.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.586
+anchor_top = 0.436
+anchor_right = 0.586
+anchor_bottom = 0.436
+offset_left = 0.880005
+offset_top = 0.119965
+offset_right = 79.88
+offset_bottom = 109.12
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_qljmb")
 theme_override_font_sizes/font_size = 95
