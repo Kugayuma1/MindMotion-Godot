@@ -307,6 +307,7 @@ func game_over(success: bool, elapsed: float = 999.0):
 	if has_node("Button2"): $Button2.visible = false
 	if has_node("Button3"): $Button3.visible = false
 	if has_node("Button4"): $Button4.visible = false
+	if has_node("Quitbtn"): $Quitbtn.visible = false
 	
 	# Popup logic based on countdown (like the math game)
 	if success:
@@ -359,3 +360,12 @@ func debug_everything():
 		print("🚨 PROBLEM: Correct answer NOT found on any button!")
 	
 	print("========================\n")
+
+
+func _on_quitbtn_pressed() -> void:
+	var letter_lower = Global.current_letter.to_lower()
+	var path = "res://scenes/Categories.tscn"
+	if ResourceLoader.exists(path):
+		get_tree().change_scene_to_file(path)
+	else:	
+		print("Scene not found: ", path)

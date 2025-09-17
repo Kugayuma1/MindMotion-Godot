@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bgw586b8lmw1b"]
+[gd_scene load_steps=12 format=3 uid="uid://bgw586b8lmw1b"]
 
 [ext_resource type="Script" uid="uid://t305s8hupxg2" path="res://games_script/Math/b_math.gd" id="1_exbpb"]
 [ext_resource type="Texture2D" uid="uid://sv4l1ad1fx8x" path="res://Game Bg/bgforballon.png" id="1_f2w8o"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dg1nt766ubmo1" path="res://Game Assets/Math/9.png" id="7_15161"]
 [ext_resource type="Texture2D" uid="uid://ourr0p63kfks" path="res://Game Assets/Math/10.png" id="9_vfd0l"]
 [ext_resource type="Texture2D" uid="uid://bb1efmo43f61f" path="res://Game Assets/Math/11.png" id="11_dlxdk"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="11_n6wtp"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="13_notym"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="14_jo11k"]
 
@@ -205,8 +206,23 @@ starts with letter \"V\""
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("11_n6wtp")
+stretch_mode = 0
+
 [connection signal="pressed" from="Balloon1" to="." method="_on_ballon_1_pressed"]
 [connection signal="pressed" from="Balloon2" to="." method="_on_ballon_2_pressed"]
 [connection signal="pressed" from="Balloon5" to="." method="_on_ballon_5_pressed"]
 [connection signal="pressed" from="Balloon4" to="." method="_on_ballon_4_pressed"]
 [connection signal="pressed" from="Balloon3" to="." method="_on_ballon_3_pressed"]
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

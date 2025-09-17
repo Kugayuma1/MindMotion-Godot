@@ -67,6 +67,8 @@ func collect_game_elements():
 			game_elements.append($TextureRect4)
 		if timer_label:
 			game_elements.append(timer_label)
+		if has_node("Quitbtn"):
+			game_elements.append($Quitbtn)
 
 func start_timer() -> void:
 	if timer_label:
@@ -325,3 +327,12 @@ func debug_status():
 func force_win_check():
 	print("🔍 FORCING WIN CHECK...")
 	check_win_condition()
+
+
+func _on_quitbtn_pressed() -> void:
+	var letter_lower = Global.current_letter.to_lower()
+	var path = "res://scenes/Categories.tscn"
+	if ResourceLoader.exists(path):
+		get_tree().change_scene_to_file(path)
+	else:	
+		print("Scene not found: ", path)

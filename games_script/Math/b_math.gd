@@ -179,6 +179,7 @@ func game_over(success: bool):
 	# Hide game UI
 	if has_node("Holder"): $Holder.visible = false
 	if has_node("Time"): $Time.visible = false
+	if has_node("Quitbtn"): $Quitbtn.visible = false
 	
 	# Hide all remaining balloons
 	if balloon1: balloon1.visible = false
@@ -232,3 +233,12 @@ func _on_balloon_4_pressed() -> void:
 
 func _on_balloon_5_pressed() -> void:
 	_on_balloon_pressed(balloon_number_mapping["balloon5"], balloon5, "balloon5")
+
+
+func _on_quitbtn_pressed() -> void:
+	var letter_lower = Global.current_letter.to_lower()
+	var path = "res://scenes/Categories.tscn"
+	if ResourceLoader.exists(path):
+		get_tree().change_scene_to_file(path)
+	else:	
+		print("Scene not found: ", path)

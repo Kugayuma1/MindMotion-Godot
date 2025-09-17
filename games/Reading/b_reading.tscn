@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://j0vtwj1bsc8x"]
+[gd_scene load_steps=12 format=3 uid="uid://j0vtwj1bsc8x"]
 
 [ext_resource type="Script" uid="uid://bnpkrdts57o54" path="res://games_script/Reading/b_reading.gd" id="1_f2fe5"]
 [ext_resource type="Texture2D" uid="uid://cryn74xru6pl3" path="res://Game Bg/as (1280 x 800 px) (10).png" id="2_f2fe5"]
@@ -6,10 +6,11 @@
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="4_qljmb"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="5_jdrnc"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="6_87e88"]
-[ext_resource type="Texture2D" uid="uid://bu6q4juh8egkf" path="res://Game Assets/Reading Assets/Rectangle 14.png" id="7_hukqg"]
-[ext_resource type="Texture2D" uid="uid://bbj31q1hj2ka3" path="res://Game Assets/Reading Assets/Group 33.png" id="8_iesgq"]
+[ext_resource type="Texture2D" uid="uid://bcd0j56cd85x0" path="res://Game Assets/Reading Assets/Group 147.png" id="7_f2fe5"]
+[ext_resource type="Texture2D" uid="uid://v3jsp4aagm5e" path="res://Game Assets/Reading Assets/Group 289737.png" id="8_jdrnc"]
 [ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="9_3vv8s"]
 [ext_resource type="Texture2D" uid="uid://hhrp1ial4en1" path="res://Game Assets/as (1280 x 800 px) (11) 4.png" id="10_hn2c4"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="11_jdrnc"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -52,11 +53,16 @@ texture = ExtResource("3_3pwhd")
 expand_mode = 1
 
 [node name="Instruction" type="Label" parent="."]
-layout_mode = 0
-offset_left = 713.0
-offset_top = 55.0
-offset_right = 1175.0
-offset_bottom = 164.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.492
+anchor_top = 0.051
+anchor_right = 0.492
+anchor_bottom = 0.051
+offset_left = -231.64
+offset_top = -0.0800018
+offset_right = 230.36
+offset_bottom = 108.92
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_qljmb")
 theme_override_font_sizes/font_size = 45
@@ -103,13 +109,18 @@ texture = ExtResource("6_87e88")
 expand_mode = 1
 
 [node name="Button1" type="TextureButton" parent="."]
-layout_mode = 0
-offset_left = 583.0
-offset_top = 681.0
-offset_right = 749.0
-offset_bottom = 838.0
-texture_normal = ExtResource("7_hukqg")
-texture_pressed = ExtResource("8_iesgq")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.304
+anchor_top = 0.631
+anchor_right = 0.304
+anchor_bottom = 0.631
+offset_left = -0.680054
+offset_top = -0.480042
+offset_right = 165.32
+offset_bottom = 156.52
+texture_normal = ExtResource("7_f2fe5")
+texture_pressed = ExtResource("8_jdrnc")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="Button1"]
@@ -126,13 +137,18 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Button2" type="TextureButton" parent="."]
-layout_mode = 0
-offset_left = 788.0
-offset_top = 681.0
-offset_right = 954.0
-offset_bottom = 838.0
-texture_normal = ExtResource("7_hukqg")
-texture_pressed = ExtResource("8_iesgq")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41
+anchor_top = 0.631
+anchor_right = 0.41
+anchor_bottom = 0.631
+offset_left = 0.799927
+offset_top = -0.480042
+offset_right = 166.8
+offset_bottom = 156.52
+texture_normal = ExtResource("7_f2fe5")
+texture_pressed = ExtResource("8_jdrnc")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="Button2"]
@@ -149,13 +165,18 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Button3" type="TextureButton" parent="."]
-layout_mode = 0
-offset_left = 974.0
-offset_top = 681.0
-offset_right = 1140.0
-offset_bottom = 838.0
-texture_normal = ExtResource("7_hukqg")
-texture_pressed = ExtResource("8_iesgq")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.507
+anchor_top = 0.631
+anchor_right = 0.507
+anchor_bottom = 0.631
+offset_left = 0.559937
+offset_top = -0.480042
+offset_right = 166.56
+offset_bottom = 156.52
+texture_normal = ExtResource("7_f2fe5")
+texture_pressed = ExtResource("8_jdrnc")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="Button3"]
@@ -172,13 +193,18 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Button4" type="TextureButton" parent="."]
-layout_mode = 0
-offset_left = 1163.0
-offset_top = 681.0
-offset_right = 1329.0
-offset_bottom = 838.0
-texture_normal = ExtResource("7_hukqg")
-texture_pressed = ExtResource("8_iesgq")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.606
+anchor_top = 0.631
+anchor_right = 0.606
+anchor_bottom = 0.631
+offset_left = -0.52002
+offset_top = -0.480042
+offset_right = 165.48
+offset_bottom = 156.52
+texture_normal = ExtResource("7_f2fe5")
+texture_pressed = ExtResource("8_jdrnc")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="Button4"]
@@ -195,13 +221,18 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Button5" type="TextureButton" parent="."]
-layout_mode = 0
-offset_left = 583.0
-offset_top = 848.0
-offset_right = 749.0
-offset_bottom = 1005.0
-texture_normal = ExtResource("7_hukqg")
-texture_pressed = ExtResource("8_iesgq")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.304
+anchor_top = 0.785
+anchor_right = 0.304
+anchor_bottom = 0.785
+offset_left = -0.680054
+offset_top = 0.199951
+offset_right = 165.32
+offset_bottom = 157.2
+texture_normal = ExtResource("7_f2fe5")
+texture_pressed = ExtResource("8_jdrnc")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="Button5"]
@@ -218,13 +249,18 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Button6" type="TextureButton" parent="."]
-layout_mode = 0
-offset_left = 790.0
-offset_top = 850.0
-offset_right = 956.0
-offset_bottom = 1007.0
-texture_normal = ExtResource("7_hukqg")
-texture_pressed = ExtResource("8_iesgq")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.411
+anchor_top = 0.787
+anchor_right = 0.411
+anchor_bottom = 0.787
+offset_left = 0.880005
+offset_top = 0.039917
+offset_right = 166.88
+offset_bottom = 157.04
+texture_normal = ExtResource("7_f2fe5")
+texture_pressed = ExtResource("8_jdrnc")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="Button6"]
@@ -241,13 +277,18 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Button7" type="TextureButton" parent="."]
-layout_mode = 0
-offset_left = 981.0
-offset_top = 852.0
-offset_right = 1147.0
-offset_bottom = 1009.0
-texture_normal = ExtResource("7_hukqg")
-texture_pressed = ExtResource("8_iesgq")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.511
+anchor_top = 0.789
+anchor_right = 0.511
+anchor_bottom = 0.789
+offset_left = -0.120056
+offset_top = -0.120056
+offset_right = 165.88
+offset_bottom = 156.88
+texture_normal = ExtResource("7_f2fe5")
+texture_pressed = ExtResource("8_jdrnc")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="Button7"]
@@ -264,13 +305,18 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Button8" type="TextureButton" parent="."]
-layout_mode = 0
-offset_left = 1168.0
-offset_top = 855.0
-offset_right = 1334.0
-offset_bottom = 1012.0
-texture_normal = ExtResource("7_hukqg")
-texture_pressed = ExtResource("8_iesgq")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.608
+anchor_top = 0.792
+anchor_right = 0.608
+anchor_bottom = 0.792
+offset_left = 0.639893
+offset_top = -0.360046
+offset_right = 166.64
+offset_bottom = 156.64
+texture_normal = ExtResource("7_f2fe5")
+texture_pressed = ExtResource("8_jdrnc")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="Button8"]
@@ -401,6 +447,20 @@ theme_override_font_sizes/font_size = 95
 text = "_"
 horizontal_alignment = 1
 
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("11_jdrnc")
+stretch_mode = 0
+
 [connection signal="pressed" from="Button1" to="." method="_on_button_1_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="Button3" to="." method="_on_button_3_pressed"]
@@ -409,3 +469,4 @@ horizontal_alignment = 1
 [connection signal="pressed" from="Button6" to="." method="_on_button_6_pressed"]
 [connection signal="pressed" from="Button7" to="." method="_on_button_7_pressed"]
 [connection signal="pressed" from="Button8" to="." method="_on_button_8_pressed"]
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

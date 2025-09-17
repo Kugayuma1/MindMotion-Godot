@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cwvnb264aspus"]
+[gd_scene load_steps=9 format=3 uid="uid://cwvnb264aspus"]
 
 [ext_resource type="Script" uid="uid://bs6nolh4ppny" path="res://games_script/Math/d_math.gd" id="1_236dk"]
 [ext_resource type="Texture2D" uid="uid://di0cximhejxvm" path="res://Game Bg/Pond.png" id="2_dskjd"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="5_n58vl"]
 [ext_resource type="Texture2D" uid="uid://5lbec33bmuqc" path="res://Game Assets/Math/Rectangle 14.png" id="6_se87x"]
 [ext_resource type="Texture2D" uid="uid://cof46mffixwa3" path="res://Game Assets/Reading Assets/9.png" id="7_w5nna"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="8_dskjd"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -38,10 +39,15 @@ texture = ExtResource("2_dskjd")
 
 [node name="Time" type="TextureRect" parent="."]
 layout_mode = 1
-offset_left = 1620.0
-offset_top = 31.0
-offset_right = 1878.0
-offset_bottom = 289.0
+anchors_preset = -1
+anchor_left = 0.978
+anchor_top = 0.029
+anchor_right = 0.978
+anchor_bottom = 0.029
+offset_left = -257.76
+offset_top = -0.320002
+offset_right = 0.239868
+offset_bottom = 257.68
 mouse_filter = 2
 texture = ExtResource("3_42nud")
 expand_mode = 1
@@ -59,11 +65,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Holder" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 606.0
-offset_top = 56.0
-offset_right = 1322.0
-offset_bottom = 309.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
 mouse_filter = 2
 texture = ExtResource("5_n58vl")
 expand_mode = 1
@@ -289,3 +300,19 @@ offset_top = -3.05176e-05
 offset_right = 278.6
 offset_bottom = 234.0
 texture = ExtResource("7_w5nna")
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("8_dskjd")
+stretch_mode = 0
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

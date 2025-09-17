@@ -90,6 +90,7 @@ func shake_button(button: TextureButton) -> void:
 func game_over(success: bool):
 	# Hide objects except background
 	if has_node("TextureRect"): $TextureRect.visible = false
+	if has_node("Quitbtn"): $Quitbtn.visible = false
 
 	if success:
 		if countdown >= 10:
@@ -123,3 +124,12 @@ func _on_volc_4_pressed() -> void:
 
 func _on_volc_5_pressed() -> void:
 	check_answer("Duck", $TextureRect/Volc5)
+
+
+func _on_quitbtn_pressed() -> void:
+	var letter_lower = Global.current_letter.to_lower()
+	var path = "res://scenes/Categories.tscn"
+	if ResourceLoader.exists(path):
+		get_tree().change_scene_to_file(path)
+	else:	
+		print("Scene not found: ", path)

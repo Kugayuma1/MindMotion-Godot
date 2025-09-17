@@ -187,6 +187,7 @@ func game_over(success: bool):
 	if has_node("Holder"): $Holder.visible = false
 	if has_node("AssetsBG"): $AssetsBG.visible = false
 	if has_node("ObjectBurger"): $ObjectBurger.visible = false
+	if has_node("Quitbtn"): $Quitbtn.visible = false
 	
 	hide_all_buttons()
 
@@ -227,3 +228,12 @@ func _on_button_7_pressed() -> void:
 
 func _on_button_8_pressed() -> void:
 	add_letter_to_answer("R")
+
+
+func _on_quitbtn_pressed() -> void:
+	var letter_lower = Global.current_letter.to_lower()
+	var path = "res://scenes/Categories.tscn"
+	if ResourceLoader.exists(path):
+		get_tree().change_scene_to_file(path)
+	else:	
+		print("Scene not found: ", path)

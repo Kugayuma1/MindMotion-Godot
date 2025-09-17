@@ -94,7 +94,8 @@ func game_over(success: bool):
 	if has_node("TextureRect/ant5"): $TextureRect/ant5.visible = false
 	if has_node("TextureRect/Holder"): $TextureRect/Holder.visible = false
 	if has_node("TextureRect/Time"): $TextureRect/Time.visible = false
-
+	if has_node("Quitbtn"): $Quitbtn.visible = false
+	
 	if success:
 		if countdown >= 10:
 			popup_instance = complete3_scene.instantiate()
@@ -127,3 +128,12 @@ func _on_ant_4_pressed() -> void:
 
 func _on_ant_5_pressed() -> void:
 	check_answer("Art", $TextureRect/ant5)
+
+
+func _on_quitbtn_pressed() -> void:
+	var letter_lower = Global.current_letter.to_lower()
+	var path = "res://scenes/Categories.tscn"
+	if ResourceLoader.exists(path):
+		get_tree().change_scene_to_file(path)
+	else:	
+		print("Scene not found: ", path)

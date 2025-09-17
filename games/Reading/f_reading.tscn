@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bktujui1micbq"]
+[gd_scene load_steps=9 format=3 uid="uid://bktujui1micbq"]
 
 [ext_resource type="Script" uid="uid://cwvycgypil5qx" path="res://games_script/Reading/f_reading.gd" id="1_41ut2"]
 [ext_resource type="Texture2D" uid="uid://bekcp1g1u5hld" path="res://Game Bg/as (1280 x 800 px) (5).png" id="2_ocver"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="5_41ut2"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="6_62tkr"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="7_ao5pq"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="8_ocver"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -219,8 +220,23 @@ text = "Tap the ant"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("8_ocver")
+stretch_mode = 0
+
 [connection signal="pressed" from="TextureRect/Fish1" to="." method="_on_fish_1_pressed"]
 [connection signal="pressed" from="TextureRect/Fish2" to="." method="_on_fish_2_pressed"]
 [connection signal="pressed" from="TextureRect/Fish3" to="." method="_on_fish_3_pressed"]
 [connection signal="pressed" from="TextureRect/Fish4" to="." method="_on_fish_4_pressed"]
 [connection signal="pressed" from="TextureRect/Fish5" to="." method="_on_fish_5_pressed"]
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://blkan68id3vtr"]
+[gd_scene load_steps=23 format=3 uid="uid://blkan68id3vtr"]
 
 [ext_resource type="Script" uid="uid://daml2muxgrgw6" path="res://games_script/finemotor/LetterC/c_finemotor.gd" id="1_018bn"]
 [ext_resource type="Texture2D" uid="uid://lxuhwshlr4l" path="res://Game Bg/bgforcat.png" id="2_77fbi"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="19_3njj2"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="20_kg65m"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="21_t2foo"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="22_77fbi"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -223,3 +224,19 @@ text = "Tap the Volcano that
 starts with letter \"V\""
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("22_77fbi")
+stretch_mode = 0
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

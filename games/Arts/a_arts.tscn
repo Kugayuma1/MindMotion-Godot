@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bykhkmswih4qa"]
+[gd_scene load_steps=27 format=3 uid="uid://bykhkmswih4qa"]
 
 [ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_imnym"]
 [ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="2_bt123"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" uid="uid://dark5v3gjykbo" path="res://games_script/Arts/LetterA/polygon_2d_12.gd" id="23_g2rvk"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="23_qxbjc"]
 [ext_resource type="Script" uid="uid://bchc3cdyvnbd2" path="res://games_script/Arts/LetterA/polygon_2d_14.gd" id="25_gqfqg"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="26_mh6vr"]
 [ext_resource type="Script" uid="uid://ct0yqtvw14x7" path="res://games_script/Arts/LetterA/polygon_2d_15.gd" id="26_uvcr8"]
 [ext_resource type="Texture2D" uid="uid://b4fcft4nhtcia" path="res://Game Assets/Arts/subt 1.png" id="27_uvcr8"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="28_ngnm3"]
@@ -226,3 +227,18 @@ text = "Color By Number:
 Ambulance"
 horizontal_alignment = 1
 justification_flags = 171
+
+[node name="Quitbtn" type="TextureButton" parent="Node2D"]
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 66.0
+offset_top = 68.0
+offset_right = 171.0
+offset_bottom = 178.0
+texture_normal = ExtResource("26_mh6vr")
+stretch_mode = 0
+
+[connection signal="pressed" from="Node2D/Quitbtn" to="Node2D" method="_on_quitbtn_pressed"]

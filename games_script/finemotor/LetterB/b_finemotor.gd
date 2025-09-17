@@ -226,6 +226,7 @@ func game_over(success: bool):
 	if has_node("Holder"): $Holder.visible = false
 	if has_node("Time"): $Time.visible = false
 	if has_node("Fruits"): $Fruits.visible = false
+	if has_node("Quitbtn"): $Quitbtn.visible = false
 	
 	var popup_instance: Node = null
 	
@@ -246,10 +247,10 @@ func game_over(success: bool):
 	# Save progress
 	if success:
 		print("🎉 Letter B game completed successfully!")
-		ProgressManager.save_progress("letter_b", true)
+		ProgressManager.save_progress("fine_motor", true)
 	else:
 		print("⏰ Game over - Time's up!")
-		ProgressManager.save_progress("letter_b", false)
+		ProgressManager.save_progress("fine_motor", false)
 
 func reset_feedback_label() -> void:
 	if feedback_label and timer_active:
@@ -258,3 +259,12 @@ func reset_feedback_label() -> void:
 # Call this function when an item is dropped on the cart
 func _on_cart_drop_zone_item_dropped(item_name: String, item_node: Node):
 	on_item_dropped_on_cart(item_name, item_node)
+
+
+func _on_quitbtn_pressed() -> void:
+	var letter_lower = Global.current_letter.to_lower()
+	var path = "res://scenes/Categories.tscn"
+	if ResourceLoader.exists(path):
+		get_tree().change_scene_to_file(path)
+	else:	
+		print("Scene not found: ", path)

@@ -123,6 +123,7 @@ func game_over(success: bool):
 	if has_node("Time"): $Time.visible = false
 	if has_node("Children"): $Children.visible = false
 	if has_node("Item"): $Item.visible = false
+	if has_node("Quitbtn"): $Quitbtn.visible = false
 	
 	var popup_instance: Node = null
 	
@@ -151,3 +152,12 @@ func game_over(success: bool):
 func reset_feedback_label() -> void:
 	if feedback_label and timer_active:
 		feedback_label.text = "Drag the object"
+
+
+func _on_quitbtn_pressed() -> void:
+	var letter_lower = Global.current_letter.to_lower()
+	var path = "res://scenes/Categories.tscn"
+	if ResourceLoader.exists(path):
+		get_tree().change_scene_to_file(path)
+	else:	
+		print("Scene not found: ", path)
