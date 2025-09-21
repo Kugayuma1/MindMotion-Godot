@@ -1,0 +1,217 @@
+[gd_scene load_steps=9 format=3 uid="uid://b6wrbhi2c5e5g"]
+
+[ext_resource type="Texture2D" uid="uid://djuf4lgb1re05" path="res://Game Bg/Background.png" id="1_7gmuv"]
+[ext_resource type="Script" uid="uid://dkre1q5q8mha7" path="res://games_script/Math/c_math.gd" id="1_l0xlc"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="2_l0xlc"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_gne7b"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="4_lmw0w"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="5_t0yua"]
+[ext_resource type="Texture2D" uid="uid://3sdt1pqe08m" path="res://Game Assets/Math/Assets.png" id="6_cg05q"]
+[ext_resource type="Texture2D" uid="uid://bt713jyw1bxmq" path="res://Game Assets/Math/Chicken.png" id="7_e0sc8"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l0xlc")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_7gmuv")
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.978
+anchor_top = 0.029
+anchor_right = 0.978
+anchor_bottom = 0.029
+offset_left = -257.76
+offset_top = -0.320002
+offset_right = 0.239868
+offset_bottom = 257.68
+mouse_filter = 2
+texture = ExtResource("2_l0xlc")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 105.0
+offset_right = 161.0
+offset_bottom = 181.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_gne7b")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+mouse_filter = 2
+texture = ExtResource("4_lmw0w")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_gne7b")
+theme_override_font_sizes/font_size = 55
+text = "Give the farmer
+a 3 Chickens"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("5_t0yua")
+stretch_mode = 0
+
+[node name="Dropzone" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Farmer" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.134
+anchor_top = 0.715
+anchor_right = 0.134
+anchor_bottom = 0.715
+offset_left = -257.28
+offset_top = -424.2
+offset_right = 462.72
+offset_bottom = 295.8
+texture = ExtResource("6_cg05q")
+
+[node name="Label2" type="Label" parent="Dropzone/Farmer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.607
+anchor_top = 0.147
+anchor_right = 0.607
+anchor_bottom = 0.147
+offset_left = -101.04
+offset_top = -46.84
+offset_right = 100.96
+offset_bottom = 47.16
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_gne7b")
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Draggable" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Chicken" type="TextureRect" parent="Draggable"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41
+anchor_top = 0.868
+anchor_right = 0.41
+anchor_bottom = 0.868
+offset_left = -144.2
+offset_top = -144.44
+offset_right = 143.8
+offset_bottom = 143.56
+texture = ExtResource("7_e0sc8")
+expand_mode = 1
+
+[node name="Chicken2" type="TextureRect" parent="Draggable"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.551
+anchor_top = 0.841
+anchor_right = 0.551
+anchor_bottom = 0.841
+offset_left = -143.92
+offset_top = -144.28
+offset_right = 144.08
+offset_bottom = 143.72
+texture = ExtResource("7_e0sc8")
+expand_mode = 1
+
+[node name="Chicken3" type="TextureRect" parent="Draggable"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.691
+anchor_top = 0.854
+anchor_right = 0.691
+anchor_bottom = 0.854
+offset_left = -143.72
+offset_top = -144.32
+offset_right = 144.28
+offset_bottom = 143.68
+texture = ExtResource("7_e0sc8")
+expand_mode = 1
+
+[node name="Chicken4" type="TextureRect" parent="Draggable"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.816
+anchor_top = 0.821
+anchor_right = 0.816
+anchor_bottom = 0.821
+offset_left = -143.72
+offset_top = -143.68
+offset_right = 144.28
+offset_bottom = 144.32
+texture = ExtResource("7_e0sc8")
+expand_mode = 1
+
+[node name="Chicken5" type="TextureRect" parent="Draggable"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.94
+anchor_top = 0.87
+anchor_right = 0.94
+anchor_bottom = 0.87
+offset_left = -143.8
+offset_top = -143.6
+offset_right = 144.2
+offset_bottom = 144.4
+texture = ExtResource("7_e0sc8")
+expand_mode = 1

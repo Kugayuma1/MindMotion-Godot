@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvqowc7fq2e74"
-path="res://.godot/imported/7.png-a46035ad3f619739970dfe5be7716568.ctex"
+uid="uid://dfwtg4y5e376p"
+path="res://.godot/imported/MathEbg.png-d4df8e3b3c3d3a19f334c5c24d205af8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Fine Motor Assets/7.png"
-dest_files=["res://.godot/imported/7.png-a46035ad3f619739970dfe5be7716568.ctex"]
+source_file="res://Game Assets/Math/MathEbg.png"
+dest_files=["res://.godot/imported/MathEbg.png-d4df8e3b3c3d3a19f334c5c24d205af8.ctex"]
 
 [params]
 

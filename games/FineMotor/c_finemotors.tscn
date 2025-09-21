@@ -224,6 +224,7 @@ text = "Tap the Volcano that
 starts with letter \"V\""
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="Quitbtn" type="TextureButton" parent="."]
 layout_mode = 1

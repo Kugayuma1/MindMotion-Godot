@@ -68,6 +68,7 @@ theme_override_fonts/font = ExtResource("4_qljmb")
 theme_override_font_sizes/font_size = 45
 text = "Instruction"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="Time" type="TextureRect" parent="."]
 layout_mode = 1

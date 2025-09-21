@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdqe1uuk2xd23"
-path="res://.godot/imported/4.png-785eca6419a79a5a9997db2cf0fd0df0.ctex"
+uid="uid://dcow6tbewafbu"
+path="res://.godot/imported/Background (2).png-16550b11fa07bf8f9b8c2e578e5c4ba4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Fine Motor Assets/4.png"
-dest_files=["res://.godot/imported/4.png-785eca6419a79a5a9997db2cf0fd0df0.ctex"]
+source_file="res://Game Bg/Background (2).png"
+dest_files=["res://.godot/imported/Background (2).png-16550b11fa07bf8f9b8c2e578e5c4ba4.ctex"]
 
 [params]
 

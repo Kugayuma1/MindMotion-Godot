@@ -131,6 +131,7 @@ theme_override_font_sizes/font_size = 40
 text = "Drag the correct picture phrase"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="DropZone" type="Control" parent="."]
 anchors_preset = 0

@@ -226,6 +226,7 @@ theme_override_font_sizes/font_size = 35
 text = "Color By Number:
 Ambulance"
 horizontal_alignment = 1
+autowrap_mode = 3
 justification_flags = 171
 
 [node name="Quitbtn" type="TextureButton" parent="Node2D"]

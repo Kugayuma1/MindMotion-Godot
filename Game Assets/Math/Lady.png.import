@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdqe1uuk2xd23"
-path="res://.godot/imported/4.png-785eca6419a79a5a9997db2cf0fd0df0.ctex"
+uid="uid://bnslsp30r2bk2"
+path="res://.godot/imported/Lady.png-f77692a87625b56bab0cf1a67b709cd9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Fine Motor Assets/4.png"
-dest_files=["res://.godot/imported/4.png-785eca6419a79a5a9997db2cf0fd0df0.ctex"]
+source_file="res://Game Assets/Math/Lady.png"
+dest_files=["res://.godot/imported/Lady.png-f77692a87625b56bab0cf1a67b709cd9.ctex"]
 
 [params]
 

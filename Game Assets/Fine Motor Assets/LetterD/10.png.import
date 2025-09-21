@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdqe1uuk2xd23"
-path="res://.godot/imported/4.png-785eca6419a79a5a9997db2cf0fd0df0.ctex"
+uid="uid://vlm8txsb7rms"
+path="res://.godot/imported/10.png-3a1276f5a5b7a3f56ee75e48720a1abd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Fine Motor Assets/4.png"
-dest_files=["res://.godot/imported/4.png-785eca6419a79a5a9997db2cf0fd0df0.ctex"]
+source_file="res://Game Assets/Fine Motor Assets/LetterD/10.png"
+dest_files=["res://.godot/imported/10.png-3a1276f5a5b7a3f56ee75e48720a1abd.ctex"]
 
 [params]
 

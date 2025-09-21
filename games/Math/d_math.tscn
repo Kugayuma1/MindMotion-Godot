@@ -92,6 +92,7 @@ text = "How many Ducks are
 in the pond?"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="Button1" type="TextureButton" parent="."]
 layout_mode = 1

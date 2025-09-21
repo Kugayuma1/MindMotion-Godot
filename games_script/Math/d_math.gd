@@ -41,7 +41,6 @@ var duck_names = ["Duck", "Duck2", "Duck3", "Duck4", "Duck5", "Duck6", "Duck7"] 
 var duck_nodes = []
 
 func _ready():
-	print("=== DUCK COUNTING GAME STARTING ===")
 	Global.start_time = Time.get_ticks_msec()  # record when the game starts
 	
 	find_all_ducks()
@@ -51,7 +50,6 @@ func _ready():
 	setup_buttons()
 
 func find_all_ducks():
-	print("--- FINDING ALL DUCKS ---")
 	
 	duck_nodes.clear()
 	
@@ -93,7 +91,6 @@ func setup_counting_game():
 	generate_answer_choices()
 
 func generate_answer_choices():
-	print("--- GENERATING ANSWER CHOICES ---")
 	
 	# ALWAYS start with the correct answer
 	var choices = [correct_answer]

@@ -167,6 +167,7 @@ text = "Drag the one
 that starts at letter \"B\""
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="Fruits" type="Control" parent="."]
 layout_mode = 1

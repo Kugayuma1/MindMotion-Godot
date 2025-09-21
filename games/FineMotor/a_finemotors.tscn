@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://fqn4bjfaq1af" path="res://Game Assets/Fine Motor Assets/axe.png" id="5_0vay2"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="5_rgbyd"]
 [ext_resource type="Texture2D" uid="uid://bq412ttb3k7ib" path="res://Game Assets/Fine Motor Assets/ant.png" id="7_m4h7x"]
-[ext_resource type="Texture2D" uid="uid://bokh5jyck76ni" path="res://Game Assets/Fine Motor Assets/4.png" id="9_h8q7g"]
+[ext_resource type="Texture2D" uid="uid://cdqe1uuk2xd23" path="res://Game Assets/Fine Motor Assets/4.png" id="9_h8q7g"]
 [ext_resource type="Texture2D" uid="uid://ifsbhbm4hnh7" path="res://Game Assets/Fine Motor Assets/Group 289731.png" id="11_n2rjy"]
 [ext_resource type="Script" uid="uid://83nboghqvi4f" path="res://games_script/finemotor/LetterA/ChildTarget.gd" id="12_thu6e"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="13_cgv8t"]
@@ -87,6 +87,7 @@ theme_override_fonts/font = ExtResource("13_cgv8t")
 theme_override_font_sizes/font_size = 55
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="Table" type="TextureRect" parent="."]
 layout_mode = 1

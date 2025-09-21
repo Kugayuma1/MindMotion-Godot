@@ -1,0 +1,386 @@
+[gd_scene load_steps=17 format=3 uid="uid://bnfa772ihqdv8"]
+
+[ext_resource type="Script" uid="uid://k34h7xu1jldo" path="res://games_script/finemotor/d_finemotors.gd" id="1_4gb7b"]
+[ext_resource type="Texture2D" uid="uid://dcow6tbewafbu" path="res://Game Bg/Background (2).png" id="1_14x2l"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="2_4gb7b"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_bidkw"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="4_bkpj1"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="5_c2ie7"]
+[ext_resource type="Texture2D" uid="uid://c208qs2futhcf" path="res://Game Assets/Fine Motor Assets/LetterD/3.png" id="6_jgayp"]
+[ext_resource type="Texture2D" uid="uid://btyo26w34gp0r" path="res://Game Assets/Fine Motor Assets/LetterD/4.png" id="7_twdf5"]
+[ext_resource type="Texture2D" uid="uid://c1vdd2qkbdf7n" path="res://Game Assets/Fine Motor Assets/LetterD/5.png" id="8_2k4as"]
+[ext_resource type="Texture2D" uid="uid://b7mni33viasen" path="res://Game Assets/Fine Motor Assets/LetterD/6.png" id="9_18n5e"]
+[ext_resource type="Texture2D" uid="uid://dyckbocti4q2i" path="res://Game Assets/Fine Motor Assets/LetterD/7.png" id="10_s8qs3"]
+[ext_resource type="Texture2D" uid="uid://ca5n08xd2c2oa" path="res://Game Assets/Fine Motor Assets/LetterD/11.png" id="11_64ble"]
+[ext_resource type="Texture2D" uid="uid://cs8akvkab8fwr" path="res://Game Assets/Fine Motor Assets/LetterD/8.png" id="12_xatn6"]
+[ext_resource type="Texture2D" uid="uid://cfydiylmrsn1x" path="res://Game Assets/Fine Motor Assets/LetterD/9.png" id="13_3ni2w"]
+[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="13_bidkw"]
+[ext_resource type="Texture2D" uid="uid://vlm8txsb7rms" path="res://Game Assets/Fine Motor Assets/LetterD/10.png" id="14_p8m5p"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4gb7b")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.760784, 0.607843, 0.611765, 1)
+
+[node name="GameBG" type="TextureRect" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.073
+anchor_top = 0.601
+anchor_right = 0.073
+anchor_bottom = 0.601
+offset_left = -280.16
+offset_top = -578.08
+offset_right = 1484.84
+offset_bottom = 440.92
+texture = ExtResource("1_14x2l")
+expand_mode = 1
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.978
+anchor_top = 0.029
+anchor_right = 0.978
+anchor_bottom = 0.029
+offset_left = -257.76
+offset_top = -0.320002
+offset_right = 0.239868
+offset_bottom = 257.68
+mouse_filter = 2
+texture = ExtResource("2_4gb7b")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 105.0
+offset_right = 161.0
+offset_bottom = 181.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_bidkw")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+mouse_filter = 2
+texture = ExtResource("4_bkpj1")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_bidkw")
+theme_override_font_sizes/font_size = 55
+text = "Give the kids the kind 
+of Donuts they like"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("5_c2ie7")
+stretch_mode = 0
+
+[node name="Draggables" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Donut1" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 14.35
+anchor_top = 19.675
+anchor_right = 14.35
+anchor_bottom = 19.675
+offset_left = -49.0
+offset_top = -44.0001
+offset_right = 49.0
+offset_bottom = 43.9999
+texture = ExtResource("6_jgayp")
+expand_mode = 1
+
+[node name="Donut2" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 14.344
+anchor_top = 17.225
+anchor_right = 14.344
+anchor_bottom = 17.225
+offset_left = -42.76
+offset_top = -38.0
+offset_right = 55.24
+offset_bottom = 50.0
+texture = ExtResource("7_twdf5")
+expand_mode = 1
+
+[node name="Donut3" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 9.092
+anchor_top = 19.575
+anchor_right = 9.092
+anchor_bottom = 19.575
+offset_left = -52.68
+offset_top = -40.0
+offset_right = 45.32
+offset_bottom = 48.0
+texture = ExtResource("8_2k4as")
+expand_mode = 1
+
+[node name="Donut4" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 9.275
+anchor_top = 17.425
+anchor_right = 9.275
+anchor_bottom = 17.425
+offset_left = -49.0
+offset_top = -44.0001
+offset_right = 49.0
+offset_bottom = 43.9999
+texture = ExtResource("9_18n5e")
+expand_mode = 1
+
+[node name="DropZone" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Kid1" type="TextureRect" parent="DropZone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 22.75
+anchor_top = 20.875
+anchor_right = 22.75
+anchor_bottom = 20.875
+offset_left = -254.0
+offset_top = -254.0
+offset_right = 246.0
+offset_bottom = 246.0
+texture = ExtResource("10_s8qs3")
+
+[node name="TextureRect" type="TextureRect" parent="DropZone/Kid1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.308
+anchor_right = 0.308
+offset_left = -90.0
+offset_top = -37.0
+offset_right = 90.0
+offset_bottom = 143.0
+texture = ExtResource("11_64ble")
+expand_mode = 1
+
+[node name="Donut" type="TextureRect" parent="DropZone/Kid1/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 14.35
+anchor_top = 19.675
+anchor_right = 14.35
+anchor_bottom = 19.675
+offset_left = -2533.0
+offset_top = -3493.5
+offset_right = -2465.0
+offset_bottom = -3432.5
+texture = ExtResource("6_jgayp")
+expand_mode = 1
+
+[node name="TyLabel" type="Label" parent="DropZone/Kid1/TextureRect"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 54.0
+offset_right = 129.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_bidkw")
+theme_override_font_sizes/font_size = 25
+autowrap_mode = 3
+
+[node name="Kid2" type="TextureRect" parent="DropZone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 29.975
+anchor_top = 20.775
+anchor_right = 29.975
+anchor_bottom = 20.775
+offset_left = -259.0
+offset_top = -252.0
+offset_right = 241.0
+offset_bottom = 248.0
+texture = ExtResource("12_xatn6")
+
+[node name="TextureRect" type="TextureRect" parent="DropZone/Kid2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.308
+anchor_right = 0.308
+offset_left = -90.0
+offset_top = -37.0
+offset_right = 90.0
+offset_bottom = 143.0
+texture = ExtResource("11_64ble")
+expand_mode = 1
+
+[node name="Donut" type="TextureRect" parent="DropZone/Kid2/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 14.344
+anchor_top = 17.225
+anchor_right = 14.344
+anchor_bottom = 17.225
+offset_left = -2527.92
+offset_top = -3051.5
+offset_right = -2460.92
+offset_bottom = -2991.5
+texture = ExtResource("7_twdf5")
+expand_mode = 1
+
+[node name="TyLabel" type="Label" parent="DropZone/Kid2/TextureRect"]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 55.0
+offset_right = 133.0
+offset_bottom = 107.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_bidkw")
+theme_override_font_sizes/font_size = 25
+autowrap_mode = 3
+
+[node name="Kid3" type="TextureRect" parent="DropZone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 36.775
+anchor_top = 20.875
+anchor_right = 36.775
+anchor_bottom = 20.875
+offset_left = -249.0
+offset_top = -254.0
+offset_right = 251.0
+offset_bottom = 246.0
+texture = ExtResource("13_3ni2w")
+
+[node name="TextureRect" type="TextureRect" parent="DropZone/Kid3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.308
+anchor_right = 0.308
+offset_left = -90.0
+offset_top = -37.0
+offset_right = 90.0
+offset_bottom = 143.0
+texture = ExtResource("11_64ble")
+expand_mode = 1
+
+[node name="Donut" type="TextureRect" parent="DropZone/Kid3/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 9.092
+anchor_top = 19.575
+anchor_right = 9.092
+anchor_bottom = 19.575
+offset_left = -1585.56
+offset_top = -3480.5
+offset_right = -1515.56
+offset_bottom = -3417.5
+texture = ExtResource("8_2k4as")
+expand_mode = 1
+
+[node name="TyLabel" type="Label" parent="DropZone/Kid3/TextureRect"]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 49.0
+offset_right = 130.0
+offset_bottom = 101.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_bidkw")
+theme_override_font_sizes/font_size = 25
+autowrap_mode = 3
+
+[node name="Kid4" type="TextureRect" parent="DropZone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 36.775
+anchor_top = 20.875
+anchor_right = 36.775
+anchor_bottom = 20.875
+offset_left = 26.0
+offset_top = -257.0
+offset_right = 526.0
+offset_bottom = 243.0
+texture = ExtResource("14_p8m5p")
+
+[node name="TextureRect" type="TextureRect" parent="DropZone/Kid4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.308
+anchor_right = 0.308
+offset_left = -90.0
+offset_top = -37.0
+offset_right = 90.0
+offset_bottom = 143.0
+texture = ExtResource("11_64ble")
+expand_mode = 1
+
+[node name="Donut" type="TextureRect" parent="DropZone/Kid4/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 9.275
+anchor_top = 17.425
+anchor_right = 9.275
+anchor_bottom = 17.425
+offset_left = -1613.5
+offset_top = -3088.5
+offset_right = -1548.5
+offset_bottom = -3030.5
+texture = ExtResource("9_18n5e")
+expand_mode = 1
+
+[node name="TyLabel" type="Label" parent="DropZone/Kid4/TextureRect"]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 54.0
+offset_right = 135.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_bidkw")
+theme_override_font_sizes/font_size = 25
+autowrap_mode = 3

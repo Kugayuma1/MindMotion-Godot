@@ -220,6 +220,7 @@ theme_override_font_sizes/font_size = 55
 text = "Tap the ant"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="Quitbtn" type="TextureButton" parent="."]
 layout_mode = 1

@@ -7,7 +7,7 @@
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="5_c03ct"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="6_atill"]
 [ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="7_3485l"]
-[ext_resource type="Texture2D" uid="uid://bokh5jyck76ni" path="res://Game Assets/Fine Motor Assets/4.png" id="8_sod05"]
+[ext_resource type="Texture2D" uid="uid://cdqe1uuk2xd23" path="res://Game Assets/Fine Motor Assets/4.png" id="8_sod05"]
 [ext_resource type="Texture2D" uid="uid://5lbec33bmuqc" path="res://Game Assets/Math/Rectangle 14.png" id="9_mhmmd"]
 [ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="10_fu8tq"]
 
@@ -97,6 +97,7 @@ theme_override_font_sizes/font_size = 55
 text = "solve"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="Label" type="Label" parent="TextureRect"]
 layout_mode = 1

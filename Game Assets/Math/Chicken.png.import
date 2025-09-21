@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ydbanaphr7c4"
-path="res://.godot/imported/10.png-13bb49fd24d0652824cae1ef79aee665.ctex"
+uid="uid://bt713jyw1bxmq"
+path="res://.godot/imported/Chicken.png-0d1f8406954340c875449d22f214a95d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Fine Motor Assets/10.png"
-dest_files=["res://.godot/imported/10.png-13bb49fd24d0652824cae1ef79aee665.ctex"]
+source_file="res://Game Assets/Math/Chicken.png"
+dest_files=["res://.godot/imported/Chicken.png-0d1f8406954340c875449d22f214a95d.ctex"]
 
 [params]
 
