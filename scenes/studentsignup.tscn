@@ -278,7 +278,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_bhbxs")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_sa0uy")
 text = "Agree to our"
 
-[node name="Terms" type="Button" parent="Container/Password"]
+[node name="TermsButton" type="Button" parent="Container/Password"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -316,7 +316,7 @@ theme_override_colors/font_color = Color(0.247059, 0.270588, 0.32549, 1)
 theme_override_font_sizes/font_size = 18
 text = "and"
 
-[node name="Privacy" type="Button" parent="Container/Password"]
+[node name="PrivacyButton" type="Button" parent="Container/Password"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -371,5 +371,7 @@ stretch_mode = 5
 
 [connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
 [connection signal="item_selected" from="Container/Gender" to="." method="_on_gender_item_selected"]
+[connection signal="pressed" from="Container/Password/TermsButton" to="." method="_on_terms_button_pressed"]
+[connection signal="pressed" from="Container/Password/PrivacyButton" to="." method="_on_privacy_button_pressed"]
 [connection signal="pressed" from="Container/Signup" to="." method="_on_signup_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]

@@ -33,6 +33,13 @@ func _ready():
 	# Connect to all draggable items to handle their drop events
 	setup_draggable_items()
 
+func refresh_cache_after_completion(stage_name: String, completed: bool):
+	"""Refresh Global's cache immediately after game completion"""
+	if completed:
+		# Update cache immediately for this stage
+		Global.update_stage_completion_immediately(Global.current_letter, stage_name, true)
+		print("Cache refreshed: %s.%s = completed" % [Global.current_letter, stage_name])
+		
 func setup_draggable_items():
 	# Get all draggable items
 	var draggable_items = []
@@ -145,9 +152,11 @@ func game_over(success: bool):
 	if success:
 		print("🎉 Game completed successfully!")
 		ProgressManager.save_progress("fine_motor", true)
+		Global.refresh_everything_after_stage_completion("fine_motor", true)
 	else:
 		print("⏰ Game over - Time's up!")
 		ProgressManager.save_progress("fine_motor", false)
+		Global.refresh_everything_after_stage_completion("fine_motor", false)
 
 func reset_feedback_label() -> void:
 	if feedback_label and timer_active:

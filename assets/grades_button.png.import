@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx1em40ew6na3"
-path="res://.godot/imported/bee.png-037003ea6f0be4156d97c8ee1e8ccf55.ctex"
+uid="uid://davnsauwujssh"
+path="res://.godot/imported/grades_button.png-8e9c82d6f5e417d70edc2fed9a4e50e0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Arts/bee.png"
-dest_files=["res://.godot/imported/bee.png-037003ea6f0be4156d97c8ee1e8ccf55.ctex"]
+source_file="res://assets/grades_button.png"
+dest_files=["res://.godot/imported/grades_button.png-8e9c82d6f5e417d70edc2fed9a4e50e0.ctex"]
 
 [params]
 

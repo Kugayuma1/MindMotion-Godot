@@ -228,6 +228,7 @@ offset_right = -104.5
 offset_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_colors/font_disabled_color = Color(0.247059, 0.270588, 0.32549, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.247059, 0.270588, 0.32549, 1)
 theme_override_colors/font_hover_color = Color(0.247059, 0.270588, 0.32549, 1)
 theme_override_colors/icon_hover_pressed_color = Color(0.247059, 0.270588, 0.32549, 1)
@@ -241,7 +242,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_4lr3p")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ejske")
 text = "Agree to our"
 
-[node name="Terms" type="Button" parent="Container/Confirm"]
+[node name="TermsButton" type="Button" parent="Container/Confirm"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -279,7 +280,7 @@ theme_override_colors/font_color = Color(0.247059, 0.270588, 0.32549, 1)
 theme_override_font_sizes/font_size = 18
 text = "and"
 
-[node name="Privacy" type="Button" parent="Container/Confirm"]
+[node name="PrivacyButton" type="Button" parent="Container/Confirm"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

@@ -23,6 +23,7 @@ func _ready():
 	original_feedback_text = feedback_label.text
 	start_timer()
 	Global.start_time = Time.get_ticks_msec()
+	
 
 func start_timer() -> void:
 	timer_label.text = "⏱️ 15s"
@@ -35,6 +36,7 @@ func update_timer() -> void:
 		timer_label.text = "⏰ Time's up!"
 		timer_active = false
 		ProgressManager.save_progress("reading", false)
+		Global.refresh_everything_after_stage_completion("reading", false)
 		game_over(false)  # ⬅️ Show 1-star popup if time runs out
 		return
 
@@ -60,6 +62,7 @@ func check_answer(answer: String, button: TextureButton) -> void:
 				feedback_label.text = "🎉 Nakuha mo lahat!"
 				timer_active = false
 				ProgressManager.save_progress("reading", true)
+				Global.refresh_everything_after_stage_completion("reading", true)
 				game_over(true)  # ⬅️ Show star popup when complete
 			else:
 				await get_tree().create_timer(1.5).timeout

@@ -7,6 +7,8 @@ extends Control
 @onready var password_input = $Container/Password
 @onready var age_input = $Container/Age
 @onready var agreement_checkbox = $Container/Password/Agree
+@onready var terms_button = $Container/Password/TermsButton
+@onready var privacy_button = $Container/Password/PrivacyButton
 @onready var http_request = $HTTPRequest
 var signup_loading_dialog: AcceptDialog = null
 
@@ -19,8 +21,13 @@ enum Stage { SIGNUP, STORE_DATA, CREATE_PROGRESS, CREATE_STAGES }
 var current_stage: Stage
 var temp_uid = ""
 var temp_id_token = ""
+var temp_refresh_token = ""
 var stages_to_create = ["reading", "fine_motor", "math", "art"]
 var current_stage_index = 0
+
+# Terms and Privacy tracking
+var terms_read = false
+var privacy_read = false
 
 # Debug helper
 func debug_print(message: String, icon: String = "📋"):
@@ -28,6 +35,9 @@ func debug_print(message: String, icon: String = "📋"):
 
 func _ready():
 	setup_ui()
+	setup_terms_privacy_buttons()
+	# Restore data if returning from terms/privacy screens
+	restore_signup_data()
 
 func setup_ui():
 	$Container/Hello.text = "Hello %s!" % Global.user_type.capitalize()
@@ -36,35 +46,127 @@ func setup_ui():
 	gender_option.add_item("Female")
 	gender_option.selected = 0
 	gender_option.item_selected.connect(_on_gender_item_selected)
+	
+	# Disable agreement checkbox initially but preserve its styling
+	agreement_checkbox.disabled = true
+	agreement_checkbox.button_pressed = false
+	# Keep the checkbox visually unchanged when disabled
+	agreement_checkbox.modulate = Color.WHITE
+
+func setup_terms_privacy_buttons():
+	# Connect to your existing buttons
+	if terms_button:
+		terms_button.pressed.connect(_on_terms_button_pressed)
+	if privacy_button:
+		privacy_button.pressed.connect(_on_privacy_button_pressed)
+
+func restore_signup_data():
+	# Restore form data when returning from terms/privacy screens
+	if Global.temp_signup_data and Global.temp_signup_data.get("return_scene") == "student_signup":
+		name_input.text = Global.temp_signup_data.get("name", "")
+		email_input.text = Global.temp_signup_data.get("email", "")
+		password_input.text = Global.temp_signup_data.get("password", "")
+		age_input.text = Global.temp_signup_data.get("age", "")
+		gender_option.selected = Global.temp_signup_data.get("gender", 0)
+		terms_read = Global.temp_signup_data.get("terms_read", false)
+		privacy_read = Global.temp_signup_data.get("privacy_read", false)
+		update_agreement_checkbox()
+		# Clear the temp data
+		Global.temp_signup_data = {}
+
+func _on_terms_button_pressed():
+	# Store current signup data and navigate to terms screen
+	Global.temp_signup_data = {
+		"name": name_input.text,
+		"email": email_input.text,
+		"password": password_input.text,
+		"age": age_input.text,
+		"gender": gender_option.selected,
+		"terms_read": terms_read,
+		"privacy_read": privacy_read,
+		"return_scene": "student_signup"
+	}
+	get_tree().change_scene_to_file("res://scenes/TermsScreen.tscn")
+
+func _on_privacy_button_pressed():
+	# Store current signup data and navigate to privacy screen
+	Global.temp_signup_data = {
+		"name": name_input.text,
+		"email": email_input.text,
+		"password": password_input.text,
+		"age": age_input.text,
+		"gender": gender_option.selected,
+		"terms_read": terms_read,
+		"privacy_read": privacy_read,
+		"return_scene": "student_signup"
+	}
+	get_tree().change_scene_to_file("res://scenes/PrivacyScreen.tscn")
+
+func update_agreement_checkbox():
+	# Enable the main agreement checkbox only if both terms and privacy are read
+	agreement_checkbox.disabled = not (terms_read and privacy_read)
+	# Always keep the checkbox visually normal
+	agreement_checkbox.modulate = Color.WHITE
+	
+	if terms_read and privacy_read:
+		agreement_checkbox.button_pressed = true
+		debug_print("Agreement checkbox enabled and checked", "✅")
+	else:
+		agreement_checkbox.button_pressed = false
+
+# Email validation function
+func is_valid_email(email: String) -> bool:
+	var email_regex = RegEx.new()
+	email_regex.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+	return email_regex.search(email) != null
 
 # Input Validation
 func validate_inputs() -> bool:
 	var name = name_input.text.strip_edges()
 	var email = email_input.text.strip_edges()
 	var password = password_input.text.strip_edges()
+	var age = age_input.text.strip_edges()
 	
 	if name == "" or email == "" or password == "":
-		debug_print("Please fill in all required fields", "⚠️")
+		show_error_dialog("Please fill in all required fields")
+		return false
+	
+	if not is_valid_email(email):
+		show_error_dialog("Please enter a valid email address (e.g., user@example.com)")
+		return false
+	
+	if age == "" or not age.is_valid_int() or int(age) < 3 or int(age) > 18:
+		show_error_dialog("Please enter a valid age between 3 and 18")
+		return false
+	
+	if password.length() < 6:
+		show_error_dialog("Password must be at least 6 characters long")
 		return false
 	
 	if gender_option.selected == 0:
-		debug_print("Please select a gender", "⚠️")
+		show_error_dialog("Please select a gender")
+		return false
+	
+	if not terms_read or not privacy_read:
+		show_error_dialog("You must read and agree to both Terms & Conditions and Privacy Policy")
 		return false
 	
 	if not agreement_checkbox.button_pressed:
-		debug_print("You must agree to Terms and Privacy Policy", "⚠️")
+		show_error_dialog("You must check the agreement checkbox")
 		return false
 	
 	return true
 
-# HTTP Request Helper
+# Email validation function
 func make_request(url: String, payload: Dictionary, headers: Array = []):
 	var default_headers = ["Content-Type: application/json"]
 	if temp_id_token != "":
 		default_headers.append("Authorization: Bearer %s" % temp_id_token)
 	
 	var final_headers = default_headers + headers
-	http_request.request(url, final_headers, HTTPClient.METHOD_PATCH if "documents" in url else HTTPClient.METHOD_POST, JSON.stringify(payload))
+	var method = HTTPClient.METHOD_GET if payload.is_empty() else (HTTPClient.METHOD_PATCH if "documents" in url else HTTPClient.METHOD_POST)
+	var body = "" if payload.is_empty() else JSON.stringify(payload)
+	http_request.request(url, final_headers, method, body)
 
 # Event Handlers
 func _on_back_pressed():
@@ -74,7 +176,9 @@ func _on_signup_pressed():
 	if not validate_inputs():
 		return
 	
+	show_signup_loading("Creating your account...")
 	current_stage = Stage.SIGNUP
+	
 	var signup_url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + FIREBASE_API_KEY
 	var payload = {
 		"email": email_input.text.strip_edges(),
@@ -102,33 +206,38 @@ func handle_signup_response(response_code: int, response: Dictionary):
 		debug_print("Student signup successful", "✅")
 		temp_uid = response["localId"]
 		temp_id_token = response["idToken"]
+		temp_refresh_token = response.get("refreshToken", "")
 		
-		# Set user info
-		Global.firebase_id_token = temp_id_token
+		# Set user info with Firebase UID
 		Global.set_user_type("student")
-		Global.set_user_info(temp_uid, response["email"], name_input.text)
+		Global.set_user_info(temp_uid, response["email"], name_input.text, temp_id_token, temp_refresh_token)
 		
 		# Show loading state as we start creating documents
-		show_signup_loading("Creating your profile...")
+		update_signup_loading("Creating your profile...")
 		
 		current_stage = Stage.STORE_DATA
 		create_user_document()
 	else:
-		debug_print("Signup failed: %s" % str(response), "❌")
+		hide_signup_loading()
+		handle_signup_error(response)
 
 func handle_store_data_response(response_code: int, response: Dictionary):
 	if response_code == 200:
 		debug_print("Student data stored successfully", "✅")
+		update_signup_loading("Setting up your activities...")
 		current_stage = Stage.CREATE_PROGRESS
 		create_initial_progress_data()
 	else:
 		debug_print("Failed to store user data: %s" % str(response), "❌")
+		hide_signup_loading()
+		show_error_dialog("Failed to create your profile. Please try again.")
 
 func handle_create_progress_response(response_code: int, response: Dictionary):
 	var success = response_code == 200
 	debug_print("Initial progress data: %s" % ("created" if success else "failed"), "✅" if success else "❌")
 	
 	# Proceed to create stages regardless
+	update_signup_loading("Preparing learning stages...")
 	current_stage = Stage.CREATE_STAGES
 	current_stage_index = 0
 	create_next_stage_document()
@@ -142,19 +251,22 @@ func handle_create_stages_response(response_code: int, response: Dictionary):
 	current_stage_index += 1
 	
 	if current_stage_index < stages_to_create.size():
+		var progress_text = "Creating activities... (%d/%d)" % [current_stage_index + 1, stages_to_create.size()]
+		update_signup_loading(progress_text)
 		create_next_stage_document()
 	else:
 		finish_signup_process()
 
 # Document Creation Methods
 func create_user_document():
+	# Use Firebase's internal UID as document ID
 	var doc_url = "%s/users/%s" % [FIRESTORE_URL, temp_uid]
 	var student_data = {
 		"fields": {
-			"name": {"stringValue": name_input.text},
-			"email": {"stringValue": email_input.text},
+			"name": {"stringValue": name_input.text.strip_edges()},
+			"email": {"stringValue": email_input.text.strip_edges()},
 			"userType": {"stringValue": "student"},
-			"age": {"integerValue": str(age_input.text.strip_edges())},
+			"age": {"integerValue": age_input.text.strip_edges()},
 			"gender": {"stringValue": gender_option.get_item_text(gender_option.selected)},
 			"createdAt": {"integerValue": str(int(Time.get_unix_time_from_system()))}
 		}
@@ -164,7 +276,7 @@ func create_user_document():
 func create_initial_progress_data():
 	debug_print("Creating initial progress data for letter A", "📊")
 	
-	var progress_url = "%s/users/%s/progress/A" % [FIRESTORE_URL, temp_uid]
+	var progress_url = "%s/users/%s/progress/A" % [FIRESTORE_URL, temp_uid]  # Use Firebase UID
 	var progress_data = {
 		"fields": {
 			"averageTime": {"integerValue": "0"},
@@ -178,7 +290,7 @@ func create_next_stage_document():
 	var stage_name = stages_to_create[current_stage_index]
 	debug_print("Creating stage document: %s" % stage_name, "📝")
 	
-	var stage_url = "%s/users/%s/progress/A/levels/%s" % [FIRESTORE_URL, temp_uid, stage_name]
+	var stage_url = "%s/users/%s/progress/A/levels/%s" % [FIRESTORE_URL, temp_uid, stage_name]  # Use Firebase UID
 	var stage_data = {
 		"fields": {
 			"everCompleted": {"booleanValue": false},
@@ -194,27 +306,27 @@ func create_next_stage_document():
 func finish_signup_process():
 	debug_print("All signup documents created successfully!", "🎉")
 	
-	# Show loading state
-	show_signup_loading("Finalizing your account...")
+	update_signup_loading("Finalizing your account...")
 	
-	# Wait for data to load properly
-	await load_new_student_data()
+	# Brief wait for Firebase to propagate the data
+	await get_tree().create_timer(2.0).timeout
+	
+	# Load data with verification
+	await load_new_student_data_with_verification()
 	
 	hide_signup_loading()
 	get_tree().change_scene_to_file("res://scenes/StudentMain.tscn")
 
-func load_new_student_data():
-	debug_print("Loading initial data for new student...", "📡")
+func load_new_student_data_with_verification():
+	debug_print("Loading and verifying new student data...", "📡")
 	
-	update_signup_loading("Loading your progress...")
+	update_signup_loading("Verifying your account...")
 	
-	# For new students, we know A should be available and others locked
-	# But still load from Firebase to be consistent
+	# Load from Firebase
 	Global.load_all_letter_completion_data()
 	
-	# Wait for letter cache
 	var wait_time = 0.0
-	var max_wait = 8.0  # Shorter for new accounts since we just created the data
+	var max_wait = 10.0
 	
 	while not Global.is_letter_cache_loaded and wait_time < max_wait:
 		await get_tree().process_frame
@@ -224,43 +336,59 @@ func load_new_student_data():
 		if int(wait_time) % 2 == 0:
 			update_signup_loading("Setting up activities... %d seconds" % int(wait_time))
 	
+	# Verify the data is correct
 	if Global.is_letter_cache_loaded:
-		debug_print("New student cache loaded successfully", "✅")
+		var letter_a_status = Global.letter_completion_cache.get("A", false)
+		debug_print("Letter A status: %s" % str(letter_a_status), "✅")
+		
+		# A should be unlocked for new users (even if not completed)
+		if not letter_a_status and not Global.letter_completion_cache.has("A"):
+			Global.letter_completion_cache["A"] = true  # Force unlock A
+			debug_print("Forced Letter A unlock for new user", "🔧")
 	else:
-		debug_print("Cache timeout for new student - using defaults", "⚠️")
+		debug_print("Cache timeout - using safe defaults", "⚠️")
 		Global.set_default_letter_cache()
 	
-	# Load stage data for A (since that's what new students will access)
-	update_signup_loading("Preparing activities...")
-	Global.load_letter_stages_on_demand("A")
-	await get_tree().create_timer(1.0).timeout  # Brief wait for A stages
+	debug_print("New student verification complete", "✅")
+
+func handle_signup_error(response: Dictionary):
+	var error_message = "Signup failed. Please try again."
 	
-	debug_print("New student data loading complete", "✅")
+	if response and response.has("error") and response.error.has("message"):
+		var firebase_error = response.error.message
+		if "EMAIL_EXISTS" in firebase_error:
+			error_message = "An account with this email already exists."
+		elif "INVALID_EMAIL" in firebase_error:
+			error_message = "Please enter a valid email address."
+		elif "WEAK_PASSWORD" in firebase_error:
+			error_message = "Password is too weak. Please choose a stronger password."
+		elif "TOO_MANY_ATTEMPTS_TRY_LATER" in firebase_error:
+			error_message = "Too many attempts. Please try again later."
 	
+	show_error_dialog(error_message)
+
 func show_signup_loading(message: String):
 	# Disable signup button if it exists
-	var signup_button = get_node_or_null("Container/SignupButton")  # Adjust path as needed
+	var signup_button = get_node_or_null("Container/SignupButton")
 	if signup_button:
 		signup_button.disabled = true
 		signup_button.text = "Creating Account..."
 	
-	# Create loading dialog
-	signup_loading_dialog = AcceptDialog.new()
-	signup_loading_dialog.name = "SignupLoadingDialog"
-	add_child(signup_loading_dialog)
+	# Create or update loading dialog
+	if signup_loading_dialog == null:
+		signup_loading_dialog = AcceptDialog.new()
+		signup_loading_dialog.name = "SignupLoadingDialog"
+		add_child(signup_loading_dialog)
+		signup_loading_dialog.title = "Creating Account"
+		signup_loading_dialog.get_ok_button().visible = false
+		signup_loading_dialog.close_requested.connect(_on_signup_loading_dialog_closed)
+	
 	signup_loading_dialog.dialog_text = message + "\n\nPlease wait..."
-	signup_loading_dialog.title = "Creating Account"
-	signup_loading_dialog.get_ok_button().visible = false
-	signup_loading_dialog.close_requested.connect(_on_signup_loading_dialog_closed)
-	signup_loading_dialog.popup_centered()
+	if not signup_loading_dialog.visible:
+		signup_loading_dialog.popup_centered()
 	
 	# Disable form inputs to prevent changes during loading
-	name_input.editable = false
-	email_input.editable = false
-	password_input.editable = false
-	age_input.editable = false
-	gender_option.disabled = true
-	
+	set_inputs_enabled(false)
 
 func update_signup_loading(message: String):
 	if signup_loading_dialog and is_instance_valid(signup_loading_dialog):
@@ -272,12 +400,34 @@ func hide_signup_loading():
 		signup_loading_dialog = null
 	
 	# Re-enable form (though user will navigate away)
-	name_input.editable = true
-	email_input.editable = true
-	password_input.editable = true
-	age_input.editable = true
-	gender_option.disabled = false
+	set_inputs_enabled(true)
 	
+	var signup_button = get_node_or_null("Container/SignupButton")
+	if signup_button:
+		signup_button.disabled = false
+		signup_button.text = "Sign Up"
+
+func set_inputs_enabled(enabled: bool):
+	name_input.editable = enabled
+	email_input.editable = enabled
+	password_input.editable = enabled
+	age_input.editable = enabled
+	gender_option.disabled = not enabled
+	agreement_checkbox.disabled = not enabled
+	terms_button.disabled = not enabled
+	privacy_button.disabled = not enabled
+
+func show_error_dialog(message: String):
+	var error_dialog = AcceptDialog.new()
+	add_child(error_dialog)
+	error_dialog.dialog_text = message
+	error_dialog.title = "Error"
+	error_dialog.popup_centered()
+	
+	# Auto-cleanup when closed
+	error_dialog.confirmed.connect(func(): error_dialog.queue_free())
+	error_dialog.close_requested.connect(func(): error_dialog.queue_free())
+
 func _on_signup_loading_dialog_closed():
 	# Don't allow closing during signup
 	if signup_loading_dialog and is_instance_valid(signup_loading_dialog):

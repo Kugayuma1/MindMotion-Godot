@@ -1,4 +1,13 @@
-[gd_scene format=3 uid="uid://cdepj04shy5u2"]
+[gd_scene load_steps=9 format=3 uid="uid://cdepj04shy5u2"]
+
+[ext_resource type="Script" uid="uid://cfwmhx6di5y4a" path="res://scripts/teacher_main.gd" id="1_eafnc"]
+[ext_resource type="Texture2D" uid="uid://diy6w4rj2rm83" path="res://assets/left_wave.png" id="1_jrgrb"]
+[ext_resource type="Texture2D" uid="uid://cwgfqyonunybf" path="res://assets/right_wave.png" id="2_eafnc"]
+[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="3_pn6o5"]
+[ext_resource type="Texture2D" uid="uid://b2dj0gyhhl3k0" path="res://assets/activities_button.png" id="4_5fnfh"]
+[ext_resource type="Texture2D" uid="uid://davnsauwujssh" path="res://assets/grades_button.png" id="5_f0sme"]
+[ext_resource type="Texture2D" uid="uid://c1l5u5cyfjroa" path="res://assets/students_button.png" id="6_qlwhp"]
+[ext_resource type="Texture2D" uid="uid://bf7ykt1047iwe" path="res://assets/logout_button.png" id="7_lekex"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -7,6 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_eafnc")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -16,12 +26,115 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Left Wave" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 1.0
+offset_top = -621.0
+offset_right = 659.0
+offset_bottom = 620.0
+grow_vertical = 2
+texture = ExtResource("1_jrgrb")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Right Wave" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -610.0
+offset_top = -571.0
+offset_right = 1.0
+offset_bottom = 566.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("2_eafnc")
+expand_mode = 5
+stretch_mode = 5
+
 [node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 515.0
-offset_top = 421.0
-offset_right = 1427.0
-offset_bottom = 558.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -282.0
+offset_top = 65.0
+offset_right = 310.0
+offset_bottom = 170.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.811765, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_pn6o5")
 theme_override_font_sizes/font_size = 100
-text = "TANGINAMO ONIN"
+text = "Welcome Teacher!"
+
+[node name="Activities" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -380.0
+offset_top = -340.0
+offset_right = -20.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("4_5fnfh")
+stretch_mode = 5
+
+[node name="Grades" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = -340.0
+offset_right = 430.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("5_f0sme")
+stretch_mode = 5
+
+[node name="Students" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -380.0
+offset_top = 80.0
+offset_right = -20.0
+offset_bottom = 451.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("6_qlwhp")
+stretch_mode = 5
+
+[node name="Logout" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = 80.0
+offset_right = 430.0
+offset_bottom = 451.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("7_lekex")
+stretch_mode = 5
+
+[connection signal="pressed" from="Students" to="." method="_on_students_pressed"]
+[connection signal="pressed" from="Logout" to="." method="_on_logout_pressed"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx1em40ew6na3"
-path="res://.godot/imported/bee.png-037003ea6f0be4156d97c8ee1e8ccf55.ctex"
+uid="uid://b2dj0gyhhl3k0"
+path="res://.godot/imported/activities_button.png-d5a5c7450c57d8545e74c81cf8fac3ec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Arts/bee.png"
-dest_files=["res://.godot/imported/bee.png-037003ea6f0be4156d97c8ee1e8ccf55.ctex"]
+source_file="res://assets/activities_button.png"
+dest_files=["res://.godot/imported/activities_button.png-d5a5c7450c57d8545e74c81cf8fac3ec.ctex"]
 
 [params]
 

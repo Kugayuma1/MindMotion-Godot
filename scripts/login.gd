@@ -15,6 +15,9 @@ func _ready():
 	$Container/HelloLabel.text = "Hello %s!" % Global.user_type.capitalize()
 	if login_button:
 		original_login_text = login_button.text
+	
+	# Connect to Global's authentication signals
+	Global.authentication_failed.connect(_on_authentication_failed)
 
 func _on_back_pressed():
 	get_tree().change_scene_to_file("res://scenes/Welcome.tscn")
@@ -55,14 +58,41 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 		else:
 			hide_loading()
 			print("Login failed:", response)
+			
+			# Show user-friendly error message
+			var error_message = "Login failed. Please check your credentials."
+			if response and response.has("error") and response.error.has("message"):
+				var firebase_error = response.error.message
+				if "INVALID_PASSWORD" in firebase_error or "EMAIL_NOT_FOUND" in firebase_error:
+					error_message = "Invalid email or password."
+				elif "USER_DISABLED" in firebase_error:
+					error_message = "This account has been disabled."
+				elif "TOO_MANY_ATTEMPTS_TRY_LATER" in firebase_error:
+					error_message = "Too many failed attempts. Please try again later."
+			
+			show_error_dialog(error_message)
 	else: # forgot_password
-		print("Password reset email sent to:", email_input.text if response_code == 200 else "Failed:", response)
+		hide_loading()
+		if response_code == 200:
+			show_info_dialog("Password reset email sent to: " + email_input.text)
+		else:
+			show_error_dialog("Failed to send password reset email. Please check your email address.")
 
 func handle_login_success(response: Dictionary):
 	print("Login successful! User:", response["localId"])
 	
-	Global.firebase_id_token = response["idToken"]
-	Global.set_user_info(response["localId"], response["email"], "")
+	# Extract tokens from response
+	var id_token = response.get("idToken", "")
+	var refresh_token = response.get("refreshToken", "")
+	
+	# Set user info with both tokens
+	Global.set_user_info(
+		response["localId"], 
+		response["email"], 
+		"",  # Name will be loaded from Firestore if needed
+		id_token,
+		refresh_token
+	)
 	
 	if Global.user_type == "student":
 		await load_student_data()
@@ -75,34 +105,23 @@ func load_student_data():
 	update_loading("Loading your progress...")
 	Global.load_all_letter_completion_data()
 	
-	# Wait for letter cache
+	# Wait for letter cache with better timeout handling
 	var wait_time = 0.0
-	while not Global.is_letter_cache_loaded and wait_time < 10.0:
+	while not Global.is_letter_cache_loaded and wait_time < 15.0:  # Increased timeout
 		await get_tree().process_frame
 		wait_time += 0.1
 		await get_tree().create_timer(0.1).timeout
-		if int(wait_time) % 2 == 0:
+		if int(wait_time) % 3 == 0:
 			update_loading("Loading progress... %d seconds" % int(wait_time))
 	
 	if not Global.is_letter_cache_loaded:
+		print("⚠️ Letter cache timeout - using safe defaults")
 		Global.set_default_letter_cache()
 	
-	# Load priority stage data
-	update_loading("Loading activities...")
-	var priority_letters = ["A"]
-	if Global.current_letter != "" and Global.current_letter != "A":
-		priority_letters.append(Global.current_letter)
-	
-	for letter in ["B", "C", "D", "E", "F"]:
-		if Global.is_letter_unlocked(letter) and priority_letters.size() < 4:
-			priority_letters.append(letter)
-	
-	for letter in priority_letters:
-		Global.load_letter_stages_on_demand(letter)
-	
-	await get_tree().create_timer(1.5).timeout
+	# Don't pre-load stage data - let it load on-demand
+	# This reduces login time and prevents sync issues
 	update_loading("Almost ready...")
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(1.0).timeout
 	hide_loading()
 
 func show_loading(message: String):
@@ -135,3 +154,33 @@ func set_inputs_enabled(enabled: bool):
 		login_button.disabled = not enabled
 	email_input.editable = enabled
 	password_input.editable = enabled
+
+func show_error_dialog(message: String):
+	var error_dialog = AcceptDialog.new()
+	add_child(error_dialog)
+	error_dialog.dialog_text = message
+	error_dialog.title = "Error"
+	error_dialog.popup_centered()
+	
+	# Auto-cleanup when closed
+	error_dialog.confirmed.connect(func(): error_dialog.queue_free())
+	error_dialog.close_requested.connect(func(): error_dialog.queue_free())
+
+func show_info_dialog(message: String):
+	var info_dialog = AcceptDialog.new()
+	add_child(info_dialog)
+	info_dialog.dialog_text = message
+	info_dialog.title = "Information"
+	info_dialog.popup_centered()
+	
+	# Auto-cleanup when closed
+	info_dialog.confirmed.connect(func(): info_dialog.queue_free())
+	info_dialog.close_requested.connect(func(): info_dialog.queue_free())
+
+func _on_authentication_failed():
+	hide_loading()
+	show_error_dialog("Your session has expired. Please log in again.")
+	
+	# Clear the form
+	email_input.text = ""
+	password_input.text = ""

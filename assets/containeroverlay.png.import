@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx1em40ew6na3"
-path="res://.godot/imported/bee.png-037003ea6f0be4156d97c8ee1e8ccf55.ctex"
+uid="uid://dnr7xeju4nvmr"
+path="res://.godot/imported/containeroverlay.png-a051771ad3aeba0c64fec7155e591515.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Arts/bee.png"
-dest_files=["res://.godot/imported/bee.png-037003ea6f0be4156d97c8ee1e8ccf55.ctex"]
+source_file="res://assets/containeroverlay.png"
+dest_files=["res://.godot/imported/containeroverlay.png-a051771ad3aeba0c64fec7155e591515.ctex"]
 
 [params]
 

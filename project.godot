@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Global="*res://global/global.gd"
 ProgressManager="*res://global/ProgressManager.gd"
+InternetManager="*res://global/InternetManager.tscn"
 
 [display]
 

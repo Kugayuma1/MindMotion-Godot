@@ -52,6 +52,7 @@ func _ready():
 	print("Target Node (Node2D2): ", target_node)
 	if target_node:
 		print("Found ", get_polygon_count(), " polygons in Node2D2")
+		
 
 # ---------------- COLLECT GAME ELEMENTS ----------------
 func collect_game_elements():
@@ -94,6 +95,7 @@ func update_timer() -> void:
 		timer_active = false
 		# Save progress as failed and show retry popup
 		ProgressManager.save_progress("art", false)
+		Global.refresh_everything_after_stage_completion("art", false)
 		game_over(false)  # Show retry popup when time runs out
 		return
 	
@@ -207,7 +209,7 @@ func win_game():
 	
 	# Save progress as successful
 	ProgressManager.save_progress("art", true)
-	
+	Global.refresh_everything_after_stage_completion("art", true)
 	# Show appropriate popup based on completion time
 	game_over(true)
 

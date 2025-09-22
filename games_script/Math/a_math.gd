@@ -48,6 +48,7 @@ func _ready():
 	debug_everything()
 	start_timer()
 	setup_buttons()
+	
 
 func assign_avocados_to_groups():
 	print("--- ASSIGNING AVOCADOS TO GROUPS (CORRECT PATHS) ---")
@@ -234,6 +235,7 @@ func _on_button_pressed(button_num: int):
 		
 		game_over(true, elapsed)   # ✅ now passes elapsed
 		ProgressManager.save_progress("math", true)
+		Global.refresh_everything_after_stage_completion("math", true)
 	else:
 		if equation_label:
 			equation_label.text = "❌ Mali!"
@@ -267,6 +269,7 @@ func update_timer() -> void:
 		if equation_label:
 			equation_label.text = "⏱️ Time's up! Answer: " + str(correct_answer)
 		ProgressManager.save_progress("math", false)
+		Global.refresh_everything_after_stage_completion("math", false)
 		game_over(false)
 		return
 

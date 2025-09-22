@@ -57,48 +57,42 @@ func _ready():
 	setup_carousel()
 	current_index = Global.current_index 
 	
-	# ✅ ALWAYS connect to the signal FIRST
+	# FIREBASE-ONLY: Always connect to the signal FIRST
 	if not Global.letter_cache_updated.is_connected(_on_letter_cache_updated):
 		Global.letter_cache_updated.connect(_on_letter_cache_updated)
-		debug_print("Connected to letter cache signal", "🔗")
+		debug_print("Connected to Firebase letter cache signal", "🔗")
 	
 	# Show immediate safe UI
 	update_letters_with_safe_defaults()
 	
-	# Then handle cache properly
-	handle_cache_and_update_ui()
+	# Then handle Firebase cache properly
+	handle_firebase_cache_and_update_ui()
 	
 	# Connect button signals
 	left_button.pressed.connect(_on_any_button_pressed.bind(left_button))
 	center_button.pressed.connect(_on_any_button_pressed.bind(center_button))
 	right_button.pressed.connect(_on_any_button_pressed.bind(right_button))
 
-# Enhanced signal handler
+# Enhanced signal handler for Firebase updates
 func _on_letter_cache_updated():
-	debug_print("Letter cache updated signal received - refreshing UI...", "🔄")
 	update_letters_with_lock_status()
-	
-	# Double check A is correct
-	var center_letter = letters[current_index]
-	if center_letter == "A":
-		debug_print("Center is A - should be unlocked: %s" % str(Global.is_letter_unlocked("A")), "🔍")
 
-# Fix the cache handling function
-func handle_cache_and_update_ui():
-	debug_print("Letter Carousel: Initializing with proper cache handling...")
+# FIREBASE-ONLY: Handle cache and UI updates
+func handle_firebase_cache_and_update_ui():
+	debug_print("Letter Carousel: Initializing with Firebase-only cache handling...")
 	
 	# Show safe defaults first (A unlocked, others based on actual cache)
 	update_letters_with_safe_defaults()
 	
 	if Global.is_letter_cache_loaded:
-		debug_print("Cache already loaded - updating UI immediately", "✅")
+		debug_print("Firebase cache already loaded - updating UI immediately", "✅")
 		update_letters_with_lock_status()
 	else:
-		debug_print("Cache not ready - waiting for signal", "⏳")
+		debug_print("Firebase cache not ready - waiting for signal", "⏳")
 		
-		# For logged in users, the cache should load via signal
-		# For offline users, set defaults
-		if not Global.is_logged_in:
+		# For authenticated users, Firebase cache will load via signal
+		# For unauthenticated users, set defaults (A unlocked only)
+		if not Global.is_authenticated():
 			Global.set_default_letter_cache()
 			update_letters_with_lock_status()
 
@@ -107,19 +101,19 @@ func update_letters_with_safe_defaults():
 	debug_print("Updating with safe defaults...")
 	
 	# Update letter text
-	var prev_index = (current_index - 1 + letters.size()) % letters.size()
-	var next_index = (current_index + 1) % letters.size()
+	var prev_index = (int(current_index) - 1 + letters.size()) % letters.size()
+	var next_index = (int(current_index) + 1) % letters.size()
 	
 	left_label.text = letters[prev_index]
 	center_label.text = letters[current_index]
 	right_label.text = letters[next_index]
 	
-	# Apply safe visual defaults - A is always unlocked, others check cache or default to locked
+	# Apply safe visual defaults - A is always unlocked, others check Firebase cache or default to locked
 	apply_safe_button_visual(left_button, left_lock, letters[prev_index])
 	apply_safe_button_visual(center_button, center_lock, letters[current_index])
 	apply_safe_button_visual(right_button, right_lock, letters[next_index])
 
-# New function for safe visual application
+# FIREBASE-ONLY: Safe visual application
 func apply_safe_button_visual(button: TextureButton, lock_icon: TextureRect, letter: String):
 	if not button:
 		return
@@ -131,7 +125,7 @@ func apply_safe_button_visual(button: TextureButton, lock_icon: TextureRect, let
 	elif Global.is_letter_cache_loaded:
 		is_unlocked = Global.is_letter_unlocked(letter)
 	else:
-		# Cache not loaded - default to locked unless it's A
+		# Firebase cache not loaded - default to locked unless it's A
 		is_unlocked = false
 	
 	button.modulate = unlocked_modulate if is_unlocked else locked_modulate
@@ -140,7 +134,7 @@ func apply_safe_button_visual(button: TextureButton, lock_icon: TextureRect, let
 	
 	debug_print("Visual applied: %s = %s" % [letter, "unlocked" if is_unlocked else "locked"])
 
-# Make sure this function works correctly
+# FIREBASE-ONLY: Apply button visual from Firebase cache
 func apply_button_visual(button: TextureButton, lock_icon: TextureRect, letter: String):
 	if not button:
 		return
@@ -179,13 +173,13 @@ func is_letter_unlocked(letter: String) -> bool:
 		return true
 	return Global.is_letter_unlocked(letter)
 
-# Add debugging to the lock status update
+# FIREBASE-ONLY: Update letters with lock status from Firebase cache
 func update_letters_with_lock_status():
-	debug_print("Updating letters with lock status from cache...")
+	debug_print("Updating letters with lock status from Firebase cache...")
 	
 	# Update the letters displayed
-	var prev_index = (current_index - 1 + letters.size()) % letters.size()
-	var next_index = (current_index + 1) % letters.size()
+	var prev_index = (int(current_index) - 1 + letters.size()) % letters.size()
+	var next_index = (int(current_index) + 1) % letters.size()
 	
 	var left_letter = letters[prev_index]
 	var center_letter = letters[current_index]
@@ -244,7 +238,7 @@ func _on_any_button_pressed(clicked_button: TextureButton):
 		if is_letter_unlocked(center_letter):
 			Global.current_index = current_index
 			Global.current_letter = center_letter
-			# Preload stage data for smoother transition
+			# FIREBASE-ONLY: Preload stage data for smoother transition
 			Global.preload_letter_stages(center_letter)
 			var categories_scene = load("res://scenes/Categories.tscn").instantiate()
 			get_tree().root.add_child(categories_scene)
@@ -280,7 +274,7 @@ func slide_left():
 		return
 		
 	is_animating = true
-	current_index = (current_index + 1) % letters.size()
+	current_index = (int(current_index) + 1) % letters.size()
 	
 	tween = create_tween()
 	tween.set_parallel(true)
@@ -333,7 +327,7 @@ func slide_right():
 		return
 		
 	is_animating = true
-	current_index = (current_index - 1 + letters.size()) % letters.size()
+	current_index = (int(current_index) - 1 + letters.size()) % letters.size()
 	
 	tween = create_tween()
 	tween.set_parallel(true)
@@ -381,13 +375,16 @@ func finish_slide_right():
 	await tween.finished
 	is_animating = false
 
-# Call this when returning from a completed letter to refresh the carousel
+# FIREBASE-ONLY: Call this when returning from a completed letter to refresh the carousel
 func refresh_carousel():
 	debug_print("Refreshing letter carousel after letter completion...", "🔄")
 	
-	# Reload letter cache
-	if Global.is_logged_in:
+	# FIREBASE-ONLY: Reload from Firebase instead of local storage
+	if Global.is_authenticated():
 		Global.load_all_letter_completion_data()
+	else:
+		# For offline users, just use defaults
+		Global.set_default_letter_cache()
 	
 	# Update UI with new states
 	update_letters_with_lock_status()

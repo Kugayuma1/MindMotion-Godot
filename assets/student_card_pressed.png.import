@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx1em40ew6na3"
-path="res://.godot/imported/bee.png-037003ea6f0be4156d97c8ee1e8ccf55.ctex"
+uid="uid://fhc7ucsvu84t"
+path="res://.godot/imported/student_card_pressed.png-568a14ce8d70bef73c597b1a049e3c21.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Arts/bee.png"
-dest_files=["res://.godot/imported/bee.png-037003ea6f0be4156d97c8ee1e8ccf55.ctex"]
+source_file="res://assets/student_card_pressed.png"
+dest_files=["res://.godot/imported/student_card_pressed.png-568a14ce8d70bef73c597b1a049e3c21.ctex"]
 
 [params]
 

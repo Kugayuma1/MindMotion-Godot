@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx1em40ew6na3"
-path="res://.godot/imported/bee.png-037003ea6f0be4156d97c8ee1e8ccf55.ctex"
+uid="uid://8c8pdo5we8ap"
+path="res://.godot/imported/boy_avatar.png-4ae21515619500d4b63dbe95f1c69b8d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Arts/bee.png"
-dest_files=["res://.godot/imported/bee.png-037003ea6f0be4156d97c8ee1e8ccf55.ctex"]
+source_file="res://assets/boy_avatar.png"
+dest_files=["res://.godot/imported/boy_avatar.png-4ae21515619500d4b63dbe95f1c69b8d.ctex"]
 
 [params]
 
