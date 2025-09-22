@@ -186,5 +186,20 @@ func _on_authentication_failed():
 	password_input.text = ""
 
 
-func _on_signup_pressed() -> void:
-	pass # Replace with function body.
+func _on_signup_pressed():
+	# Navigate to the appropriate signup screen based on user type
+	var signup_scene = ""
+	
+	if Global.user_type == "student":
+		signup_scene = "res://scenes/studentsignup.tscn"
+	elif Global.user_type == "teacher":
+		signup_scene = "res://scenes/teachersignup.tscn"
+	else:
+		# Fallback - shouldn't happen if user_type is set properly
+		signup_scene = "res://scenes/studentsignup.tscn"
+	
+	# Clear any existing temporary signup data
+	Global.temp_signup_data = {}
+	
+	# Simple scene change
+	get_tree().change_scene_to_file(signup_scene)

@@ -95,6 +95,7 @@ func _on_agree_toggled(checked: bool):
 		if Global.temp_signup_data:
 			Global.temp_signup_data["terms_read"] = true
 		# Brief delay so user sees the checkbox get checked
+		await get_tree().create_timer(0.5).timeout
 		navigate_back_to_signup()
 	else:
 		# If unchecked, remove the terms_read flag
@@ -103,14 +104,14 @@ func _on_agree_toggled(checked: bool):
 
 func navigate_back_to_signup():
 	# Determine which signup screen to return to
-	var return_scene = "res://scenes/StudentSignup.tscn"  # default
+	var return_scene = "res://scenes/studentsignup.tscn"  # default
 	
 	if Global.temp_signup_data and Global.temp_signup_data.has("return_scene"):
 		var scene_name = Global.temp_signup_data["return_scene"]
 		if scene_name == "teacher_signup":
-			return_scene = "res://scenes/TeacherSignup.tscn"
+			return_scene = "res://scenes/teachersignup.tscn"
 		elif scene_name == "student_signup":
-			return_scene = "res://scenes/StudentSignup.tscn"
+			return_scene = "res://scenes/studentsignup.tscn"
 	
 	get_tree().change_scene_to_file(return_scene)
 	

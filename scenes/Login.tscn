@@ -245,4 +245,5 @@ stretch_mode = 5
 [connection signal="pressed" from="Container/Password/Hide" to="." method="_on_hide_pressed"]
 [connection signal="pressed" from="Container/Forget" to="." method="_on_forget_pressed"]
 [connection signal="pressed" from="Container/Login" to="." method="_on_login_pressed"]
+[connection signal="pressed" from="Container/Signup" to="." method="_on_signup_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
