@@ -184,3 +184,7 @@ func _on_authentication_failed():
 	# Clear the form
 	email_input.text = ""
 	password_input.text = ""
+
+
+func _on_signup_pressed() -> void:
+	pass # Replace with function body.

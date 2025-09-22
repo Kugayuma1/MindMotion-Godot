@@ -207,10 +207,12 @@ func game_over(success: bool):
 	# Save progress
 	if success:
 		print("🎉 Game completed successfully!")
-		ProgressManager.save_progress("balloon_pop", true)
+		ProgressManager.save_progress("math", true)
+		Global.refresh_everything_after_stage_completion("math", true)
 	else:
 		print("⏰ Game over - Time's up!")
-		ProgressManager.save_progress("balloon_pop", false)
+		ProgressManager.save_progress("math", false)
+		Global.refresh_everything_after_stage_completion("math", false)
 
 func reset_feedback_label() -> void:
 	if feedback_label and timer_active:

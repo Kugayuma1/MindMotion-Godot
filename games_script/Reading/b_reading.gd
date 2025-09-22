@@ -60,6 +60,7 @@ func update_timer() -> void:
 		timer_label.text = "⏰ Time's up!"
 		timer_active = false
 		ProgressManager.save_progress("reading", false)
+		Global.refresh_everything_after_stage_completion("reading", false)
 		game_over(false)
 		return
 
@@ -132,6 +133,7 @@ func check_answer() -> void:
 		feedback_label.text = "🎉BURGER!"
 		timer_active = false
 		ProgressManager.save_progress("reading", true)
+		Global.refresh_everything_after_stage_completion("reading", true)
 		await get_tree().create_timer(2.0).timeout
 		game_over(true)
 	else:

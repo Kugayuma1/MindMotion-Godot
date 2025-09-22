@@ -153,7 +153,6 @@ func _on_agree_toggled(checked: bool):
 		if Global.temp_signup_data:
 			Global.temp_signup_data["privacy_read"] = true
 		# Brief delay so user sees the checkbox get checked
-		await get_tree().create_timer(0.5).timeout
 		navigate_back_to_signup()
 	else:
 		# If unchecked, remove the privacy_read flag
