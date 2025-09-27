@@ -1,0 +1,257 @@
+[gd_scene load_steps=8 format=3 uid="uid://js4yvt8vjj07"]
+
+[ext_resource type="Script" uid="uid://gjjrnornyqy2" path="res://games_script/Math/u_math.gd" id="1_6qhme"]
+[ext_resource type="Texture2D" uid="uid://djgcamo4yk7nw" path="res://Game Bg/mathbg/8.png" id="1_b7y2w"]
+[ext_resource type="Texture2D" uid="uid://baqiyjtnvbamw" path="res://Game Assets/as (1280 x 800 px) (39) 5.png" id="2_6qhme"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_1unbs"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="4_voj1d"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="5_prbt4"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="6_f14x2"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6qhme")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_b7y2w")
+
+[node name="Umbrella1" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.116
+anchor_top = 0.47
+anchor_right = 0.116
+anchor_bottom = 0.47
+offset_left = -244.72
+offset_top = -243.6
+offset_right = 243.28
+offset_bottom = 244.4
+texture_normal = ExtResource("2_6qhme")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Umbrella1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.572
+anchor_top = 0.46
+anchor_right = 0.572
+anchor_bottom = 0.46
+offset_left = -50.808
+offset_top = -56.44
+offset_right = 51.192
+offset_bottom = 56.56
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_1unbs")
+theme_override_font_sizes/font_size = 98
+text = "6"
+
+[node name="Umbrella2" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.298
+anchor_top = 0.785
+anchor_right = 0.298
+anchor_bottom = 0.785
+offset_left = -239.16
+offset_top = -239.8
+offset_right = 240.84
+offset_bottom = 240.2
+texture_normal = ExtResource("2_6qhme")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Umbrella2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.572
+anchor_top = 0.46
+anchor_right = 0.572
+anchor_bottom = 0.46
+offset_left = -50.808
+offset_top = -56.44
+offset_right = 51.192
+offset_bottom = 56.56
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_1unbs")
+theme_override_font_sizes/font_size = 98
+text = "7"
+
+[node name="Umbrella3" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.519
+anchor_top = 0.492
+anchor_right = 0.519
+anchor_bottom = 0.492
+offset_left = -243.48
+offset_top = -244.36
+offset_right = 244.52
+offset_bottom = 243.64
+texture_normal = ExtResource("2_6qhme")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Umbrella3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.572
+anchor_top = 0.46
+anchor_right = 0.572
+anchor_bottom = 0.46
+offset_left = -50.808
+offset_top = -56.44
+offset_right = 51.192
+offset_bottom = 56.56
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_1unbs")
+theme_override_font_sizes/font_size = 98
+text = "10"
+
+[node name="Umbrella4" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.728
+anchor_top = 0.793
+anchor_right = 0.728
+anchor_bottom = 0.793
+offset_left = -218.76
+offset_top = -219.44
+offset_right = 219.24
+offset_bottom = 218.56
+texture_normal = ExtResource("2_6qhme")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Umbrella4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.572
+anchor_top = 0.46
+anchor_right = 0.572
+anchor_bottom = 0.46
+offset_left = -50.808
+offset_top = -56.44
+offset_right = 51.192
+offset_bottom = 56.56
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_1unbs")
+theme_override_font_sizes/font_size = 98
+text = "9"
+
+[node name="Umbrella5" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.906
+anchor_top = 0.453
+anchor_right = 0.906
+anchor_bottom = 0.453
+offset_left = -236.52
+offset_top = -206.24
+offset_right = 199.48
+offset_bottom = 229.76
+texture_normal = ExtResource("2_6qhme")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Umbrella5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.572
+anchor_top = 0.46
+anchor_right = 0.572
+anchor_bottom = 0.46
+offset_left = -50.808
+offset_top = -56.44
+offset_right = 51.192
+offset_bottom = 56.56
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_1unbs")
+theme_override_font_sizes/font_size = 98
+text = "8"
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -282.0
+offset_top = 33.0
+offset_right = -24.0
+offset_bottom = 291.0
+grow_horizontal = 0
+texture = ExtResource("4_voj1d")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.521
+anchor_top = 0.57
+anchor_right = 0.521
+anchor_bottom = 0.57
+offset_left = -33.418
+offset_top = -38.06
+offset_right = 33.582
+offset_bottom = 37.94
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_1unbs")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+texture = ExtResource("5_prbt4")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_1unbs")
+theme_override_font_sizes/font_size = 55
+text = "Tap the Umbrella
+ in order 6-10"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("6_f14x2")
+stretch_mode = 0
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

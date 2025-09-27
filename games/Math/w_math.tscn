@@ -1,0 +1,250 @@
+[gd_scene load_steps=10 format=3 uid="uid://el43dqe2ff2q"]
+
+[ext_resource type="Script" uid="uid://xp0egc0hg5qq" path="res://games_script/Math/w_math.gd" id="1_tihvf"]
+[ext_resource type="Texture2D" uid="uid://4084xwlt133p" path="res://Game Bg/mathbg/9.png" id="1_vtpjv"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="2_tihvf"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_kyv1e"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="4_31g78"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="5_dlalv"]
+[ext_resource type="Texture2D" uid="uid://ca5n08xd2c2oa" path="res://Game Assets/Fine Motor Assets/LetterD/11.png" id="6_505bh"]
+[ext_resource type="Texture2D" uid="uid://bypcrkbm4qmyc" path="res://Game Assets/Math/mathsha/25.png" id="7_65g8j"]
+[ext_resource type="Texture2D" uid="uid://c2v46fu8msndu" path="res://Game Assets/Math/mathsha/24.png" id="8_wgjq4"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tihvf")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_vtpjv")
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.911
+anchor_top = 0.148
+anchor_right = 0.911
+anchor_bottom = 0.148
+offset_left = -129.12
+offset_top = -128.84
+offset_right = 128.88
+offset_bottom = 129.16
+mouse_filter = 2
+texture = ExtResource("2_tihvf")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.554
+anchor_right = 0.5
+anchor_bottom = 0.554
+offset_left = -48.9999
+offset_top = -37.932
+offset_right = 48.0001
+offset_bottom = 42.068
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_kyv1e")
+theme_override_font_sizes/font_size = 35
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+mouse_filter = 2
+texture = ExtResource("4_31g78")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_kyv1e")
+theme_override_font_sizes/font_size = 55
+text = "Give the Man a
+4 Wheels"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("5_dlalv")
+stretch_mode = 0
+
+[node name="Dropzone" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.254
+anchor_top = 0.348
+anchor_right = 0.254
+anchor_bottom = 0.348
+offset_left = -154.68
+offset_top = -154.84
+offset_right = 154.32
+offset_bottom = 154.16
+texture = ExtResource("6_505bh")
+expand_mode = 1
+flip_h = true
+
+[node name="Man" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.735
+anchor_top = 0.633
+anchor_right = 0.735
+anchor_bottom = 0.633
+offset_left = -1405.2
+offset_top = -329.64
+offset_right = -678.2
+offset_bottom = 397.36
+texture = ExtResource("7_65g8j")
+
+[node name="Label2" type="Label" parent="Dropzone/Man"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.664
+anchor_right = 0.664
+offset_left = -98.728
+offset_top = -45.0
+offset_right = 98.272
+offset_bottom = 58.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_kyv1e")
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Draggables" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Wheel1" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.872
+anchor_right = 0.502
+anchor_bottom = 0.872
+offset_left = -127.84
+offset_top = -127.76
+offset_right = 128.16
+offset_bottom = 128.24
+texture = ExtResource("8_wgjq4")
+expand_mode = 1
+
+[node name="Wheel2" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.532
+anchor_top = 0.631
+anchor_right = 0.532
+anchor_bottom = 0.631
+offset_left = -128.44
+offset_top = -128.48
+offset_right = 127.56
+offset_bottom = 127.52
+texture = ExtResource("8_wgjq4")
+expand_mode = 1
+
+[node name="Wheel3" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.67
+anchor_top = 0.631
+anchor_right = 0.67
+anchor_bottom = 0.631
+offset_left = -128.4
+offset_top = -127.48
+offset_right = 127.6
+offset_bottom = 128.52
+texture = ExtResource("8_wgjq4")
+expand_mode = 1
+
+[node name="Wheel4" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.653
+anchor_top = 0.873
+anchor_right = 0.653
+anchor_bottom = 0.873
+offset_left = -127.76
+offset_top = -127.84
+offset_right = 128.24
+offset_bottom = 128.16
+texture = ExtResource("8_wgjq4")
+expand_mode = 1
+
+[node name="Wheel5" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.803
+anchor_top = 0.874
+anchor_right = 0.803
+anchor_bottom = 0.874
+offset_left = -128.76
+offset_top = -127.92
+offset_right = 127.24
+offset_bottom = 128.08
+texture = ExtResource("8_wgjq4")
+expand_mode = 1
+
+[node name="Wheel6" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.808
+anchor_top = 0.626
+anchor_right = 0.808
+anchor_bottom = 0.626
+offset_left = -128.36
+offset_top = -128.08
+offset_right = 127.64
+offset_bottom = 127.92
+texture = ExtResource("8_wgjq4")
+expand_mode = 1

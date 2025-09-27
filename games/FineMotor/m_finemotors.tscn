@@ -1,0 +1,239 @@
+[gd_scene load_steps=15 format=3 uid="uid://233iw2dptk1"]
+
+[ext_resource type="Script" uid="uid://beu4jtrfkiolw" path="res://games_script/finemotor/m_finemotors.gd" id="1_wa0ft"]
+[ext_resource type="Texture2D" uid="uid://bhvwate3gwgnh" path="res://Game Bg/FineM.png" id="1_ybosu"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="2_wa0ft"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_1jp78"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="4_hlxx7"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="5_1a5p4"]
+[ext_resource type="Texture2D" uid="uid://dcj4wyn641jwe" path="res://Game Assets/Fine Motor Assets/LetterM/Mailbox (2).png" id="6_8axqh"]
+[ext_resource type="Texture2D" uid="uid://h0yqjmncmhsj" path="res://Game Assets/Fine Motor Assets/LetterM/Mailbox (3).png" id="7_71nfi"]
+[ext_resource type="Texture2D" uid="uid://co85syrgp5h1j" path="res://Game Assets/Fine Motor Assets/LetterM/Mailbox (4).png" id="8_1duaa"]
+[ext_resource type="Texture2D" uid="uid://cu7465f0x70sq" path="res://Game Assets/Fine Motor Assets/LetterM/Mailbox.png" id="9_v285x"]
+[ext_resource type="Texture2D" uid="uid://cd038amlv2aqr" path="res://Game Assets/Fine Motor Assets/LetterM/Mail (2).png" id="10_hp3ee"]
+[ext_resource type="Texture2D" uid="uid://d3ens8c6qi813" path="res://Game Assets/Fine Motor Assets/LetterM/Mail (3).png" id="11_47hs2"]
+[ext_resource type="Texture2D" uid="uid://cla6qs4lk3oew" path="res://Game Assets/Fine Motor Assets/LetterM/Mail (4).png" id="12_x4ojy"]
+[ext_resource type="Texture2D" uid="uid://385m6m6pdos0" path="res://Game Assets/Fine Motor Assets/LetterM/Mail.png" id="13_6h82e"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wa0ft")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ybosu")
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+texture = ExtResource("2_wa0ft")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_1jp78")
+theme_override_font_sizes/font_size = 55
+text = "Give the Gardener his
+things"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.917
+anchor_top = 0.142
+anchor_right = 0.917
+anchor_bottom = 0.142
+offset_left = -128.64
+offset_top = -129.36
+offset_right = 129.36
+offset_bottom = 128.64
+grow_horizontal = 0
+texture = ExtResource("4_hlxx7")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.494
+anchor_top = 0.554
+anchor_right = 0.494
+anchor_bottom = 0.554
+offset_left = -33.452
+offset_top = -37.932
+offset_right = 33.548
+offset_bottom = 38.068
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_1jp78")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("5_1a5p4")
+stretch_mode = 0
+
+[node name="Dropzone" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MailboxGreen" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.209
+anchor_top = 0.6
+anchor_right = 0.209
+anchor_bottom = 0.6
+offset_left = -122.28
+offset_top = -123.0
+offset_right = 123.72
+offset_bottom = 123.0
+texture = ExtResource("6_8axqh")
+expand_mode = 1
+
+[node name="MailboxBlue" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.315
+anchor_top = 0.602
+anchor_right = 0.315
+anchor_bottom = 0.602
+offset_left = -122.8
+offset_top = -123.16
+offset_right = 123.2
+offset_bottom = 122.84
+texture = ExtResource("7_71nfi")
+expand_mode = 1
+
+[node name="MailboxGray" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.788
+anchor_top = 0.604
+anchor_right = 0.788
+anchor_bottom = 0.604
+offset_left = -122.96
+offset_top = -123.32
+offset_right = 123.04
+offset_bottom = 122.68
+texture = ExtResource("8_1duaa")
+expand_mode = 1
+
+[node name="MailboxRed" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.902
+anchor_top = 0.604
+anchor_right = 0.902
+anchor_bottom = 0.604
+offset_left = -123.84
+offset_top = -123.32
+offset_right = 122.16
+offset_bottom = 122.68
+texture = ExtResource("9_v285x")
+expand_mode = 1
+
+[node name="Draggables" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GreenMail" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.431
+anchor_top = 0.916
+anchor_right = 0.431
+anchor_bottom = 0.916
+offset_left = -100.52
+offset_top = -101.28
+offset_right = 101.48
+offset_bottom = 100.72
+texture = ExtResource("10_hp3ee")
+expand_mode = 1
+
+[node name="BlueMail" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.312
+anchor_top = 0.911
+anchor_right = 0.312
+anchor_bottom = 0.911
+offset_left = -101.04
+offset_top = -100.88
+offset_right = 100.96
+offset_bottom = 101.12
+texture = ExtResource("11_47hs2")
+expand_mode = 1
+
+[node name="GrayMail" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.69
+anchor_top = 0.916
+anchor_right = 0.69
+anchor_bottom = 0.916
+offset_left = -101.8
+offset_top = -101.28
+offset_right = 100.2
+offset_bottom = 100.72
+texture = ExtResource("12_x4ojy")
+expand_mode = 1
+
+[node name="RedMail" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.568
+anchor_top = 0.915
+anchor_right = 0.568
+anchor_bottom = 0.915
+offset_left = -101.56
+offset_top = -101.2
+offset_right = 100.44
+offset_bottom = 100.8
+texture = ExtResource("13_6h82e")
+expand_mode = 1
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

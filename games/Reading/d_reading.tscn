@@ -1,0 +1,153 @@
+[gd_scene load_steps=9 format=3 uid="uid://dqj3u4qniicc3"]
+
+[ext_resource type="Texture2D" uid="uid://dioswc807cy3h" path="res://Game Assets/Reading Assets/cattt.png" id="1_gapsd"]
+[ext_resource type="Script" uid="uid://dxk3jli0cy0t6" path="res://games_script/Reading/d_reading.gd" id="1_y1621"]
+[ext_resource type="Texture2D" uid="uid://djhssy782wfxl" path="res://Game Assets/Reading Assets/fisshhh.png" id="2_y1621"]
+[ext_resource type="Texture2D" uid="uid://crgbsmst8jdk3" path="res://Game Assets/Reading Assets/doggg.png" id="3_sevi8"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="4_e0mu3"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="5_kgrxt"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="6_g7n7y"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="7_6gfp7"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y1621")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.851686, 0.901689, 1, 1)
+
+[node name="Cat" type="TextureButton" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.281
+anchor_top = 0.607
+anchor_right = 0.281
+anchor_bottom = 0.607
+offset_left = -203.52
+offset_top = -342.56
+offset_right = 202.48
+offset_bottom = 343.44
+texture_normal = ExtResource("1_gapsd")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Fish" type="TextureButton" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.501
+anchor_top = 0.607
+anchor_right = 0.501
+anchor_bottom = 0.607
+offset_left = -203.92
+offset_top = -342.56
+offset_right = 202.08
+offset_bottom = 343.44
+texture_normal = ExtResource("2_y1621")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Dog" type="TextureButton" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.606
+anchor_right = 0.72
+anchor_bottom = 0.606
+offset_left = -202.4
+offset_top = -343.48
+offset_right = 203.6
+offset_bottom = 342.52
+texture_normal = ExtResource("3_sevi8")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+mouse_filter = 2
+texture = ExtResource("4_e0mu3")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_kgrxt")
+theme_override_font_sizes/font_size = 55
+text = "I am an animal 
+that barks!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.978
+anchor_top = 0.029
+anchor_right = 0.978
+anchor_bottom = 0.029
+offset_left = -257.76
+offset_top = -0.320002
+offset_right = 0.239868
+offset_bottom = 257.68
+mouse_filter = 2
+texture = ExtResource("6_g7n7y")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 105.0
+offset_right = 161.0
+offset_bottom = 181.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_kgrxt")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("7_6gfp7")
+stretch_mode = 0
+
+[connection signal="pressed" from="Cat" to="." method="_on_cat_pressed"]
+[connection signal="pressed" from="Fish" to="." method="_on_fish_pressed"]
+[connection signal="pressed" from="Dog" to="." method="_on_dog_pressed"]
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

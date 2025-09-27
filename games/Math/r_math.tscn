@@ -1,0 +1,225 @@
+[gd_scene load_steps=10 format=3 uid="uid://bw5qdrjfp2lvo"]
+
+[ext_resource type="Texture2D" uid="uid://cl2jrpj7p8qye" path="res://Game Bg/mathbg/6.png" id="1_5ta4e"]
+[ext_resource type="Script" uid="uid://cytqwux4w2330" path="res://games_script/Math/r_math.gd" id="1_dx24i"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="2_dx24i"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_lqqix"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="4_qb08j"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="5_a1pep"]
+[ext_resource type="Texture2D" uid="uid://ca5n08xd2c2oa" path="res://Game Assets/Fine Motor Assets/LetterD/11.png" id="6_vh60b"]
+[ext_resource type="Texture2D" uid="uid://bnslsp30r2bk2" path="res://Game Assets/Math/Lady.png" id="7_b4mmj"]
+[ext_resource type="Texture2D" uid="uid://dr2wrxasec6" path="res://Game Assets/Math/mathsha/16.png" id="8_b8sc6"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dx24i")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -258.0
+offset_bottom = 145.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_5ta4e")
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.911
+anchor_top = 0.148
+anchor_right = 0.911
+anchor_bottom = 0.148
+offset_left = -129.12
+offset_top = -128.84
+offset_right = 128.88
+offset_bottom = 129.16
+mouse_filter = 2
+texture = ExtResource("2_dx24i")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.554
+anchor_right = 0.5
+anchor_bottom = 0.554
+offset_left = -48.9999
+offset_top = -37.932
+offset_right = 48.0001
+offset_bottom = 42.068
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_lqqix")
+theme_override_font_sizes/font_size = 35
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+mouse_filter = 2
+texture = ExtResource("4_qb08j")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_lqqix")
+theme_override_font_sizes/font_size = 55
+text = "Give the Lady a
+4 Roses"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("5_a1pep")
+stretch_mode = 0
+
+[node name="Dropzone" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.628
+anchor_top = 0.353
+anchor_right = 0.628
+anchor_bottom = 0.353
+offset_left = -153.76
+offset_top = -126.24
+offset_right = 155.24
+offset_bottom = 182.76
+texture = ExtResource("6_vh60b")
+expand_mode = 1
+
+[node name="Lady" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.735
+anchor_top = 0.633
+anchor_right = 0.735
+anchor_bottom = 0.633
+offset_left = -363.2
+offset_top = -329.64
+offset_right = 363.8
+offset_bottom = 397.36
+texture = ExtResource("7_b4mmj")
+
+[node name="Label2" type="Label" parent="Dropzone/Lady"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.215
+anchor_top = 0.05
+anchor_right = 0.215
+anchor_bottom = 0.05
+offset_left = -98.305
+offset_top = -51.35
+offset_right = 98.695
+offset_bottom = 51.65
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_lqqix")
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Draggables" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Rose1" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.277
+anchor_top = 0.592
+anchor_right = 0.277
+anchor_bottom = 0.592
+offset_left = -128.84
+offset_top = -128.36
+offset_right = 127.16
+offset_bottom = 127.64
+texture = ExtResource("8_b8sc6")
+expand_mode = 1
+
+[node name="Rose2" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.347
+anchor_top = 0.592
+anchor_right = 0.347
+anchor_bottom = 0.594
+offset_left = -128.24
+offset_top = -126.36
+offset_right = 127.76
+offset_bottom = 127.48
+texture = ExtResource("8_b8sc6")
+expand_mode = 1
+
+[node name="Rose3" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.42
+anchor_top = 0.588
+anchor_right = 0.42
+anchor_bottom = 0.588
+offset_left = -128.4
+offset_top = -128.04
+offset_right = 127.6
+offset_bottom = 127.96
+texture = ExtResource("8_b8sc6")
+expand_mode = 1
+
+[node name="Rose4" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.495
+anchor_top = 0.588
+anchor_right = 0.495
+anchor_bottom = 0.588
+offset_left = -127.4
+offset_top = -128.04
+offset_right = 128.6
+offset_bottom = 127.96
+texture = ExtResource("8_b8sc6")
+expand_mode = 1

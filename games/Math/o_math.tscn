@@ -1,0 +1,243 @@
+[gd_scene load_steps=8 format=3 uid="uid://1yuvvlv3nph7"]
+
+[ext_resource type="Script" uid="uid://cabbl4ih70k7k" path="res://games_script/Math/o_math.gd" id="1_5b354"]
+[ext_resource type="Texture2D" uid="uid://crp3gm48pmduw" path="res://Game Bg/mathbg/5.png" id="1_66aeu"]
+[ext_resource type="Texture2D" uid="uid://su0fap63k13p" path="res://Game Assets/Math/mathsha/13.png" id="2_5b354"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_l1xyy"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="4_88pqy"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="5_58x10"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="6_62m4s"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5b354")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -77.0
+offset_top = -78.0
+offset_right = 51.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_66aeu")
+
+[node name="Onion1" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.27
+anchor_top = 0.688
+anchor_right = 0.27
+anchor_bottom = 0.688
+offset_left = -135.4
+offset_top = -159.04
+offset_right = 135.6
+offset_bottom = 111.96
+texture_normal = ExtResource("2_5b354")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Onion1"]
+layout_mode = 0
+offset_left = 101.0
+offset_top = 121.0
+offset_right = 159.0
+offset_bottom = 234.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_l1xyy")
+theme_override_font_sizes/font_size = 98
+text = "8"
+
+[node name="Onion2" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.372
+anchor_top = 0.622
+anchor_right = 0.372
+anchor_bottom = 0.622
+offset_left = -136.24
+offset_top = -154.76
+offset_right = 134.76
+offset_bottom = 116.24
+texture_normal = ExtResource("2_5b354")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Onion2"]
+layout_mode = 0
+offset_left = 101.0
+offset_top = 121.0
+offset_right = 159.0
+offset_bottom = 234.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_l1xyy")
+theme_override_font_sizes/font_size = 98
+text = "6"
+
+[node name="Onion3" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.487
+anchor_top = 0.672
+anchor_right = 0.487
+anchor_bottom = 0.672
+offset_left = -155.04
+offset_top = -135.76
+offset_right = 115.96
+offset_bottom = 135.24
+texture_normal = ExtResource("2_5b354")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Onion3"]
+layout_mode = 0
+offset_left = 101.0
+offset_top = 121.0
+offset_right = 159.0
+offset_bottom = 234.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_l1xyy")
+theme_override_font_sizes/font_size = 98
+text = "9"
+
+[node name="Onion4" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.591
+anchor_top = 0.593
+anchor_right = 0.591
+anchor_bottom = 0.593
+offset_left = -134.72
+offset_top = -135.44
+offset_right = 136.28
+offset_bottom = 135.56
+texture_normal = ExtResource("2_5b354")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Onion4"]
+layout_mode = 0
+offset_left = 78.0
+offset_top = 121.0
+offset_right = 180.0
+offset_bottom = 234.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_l1xyy")
+theme_override_font_sizes/font_size = 98
+text = "10"
+
+[node name="Onion5" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.702
+anchor_top = 0.682
+anchor_right = 0.702
+anchor_bottom = 0.682
+offset_left = -134.84
+offset_top = -135.56
+offset_right = 136.16
+offset_bottom = 135.44
+texture_normal = ExtResource("2_5b354")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Onion5"]
+layout_mode = 0
+offset_left = 101.0
+offset_top = 121.0
+offset_right = 159.0
+offset_bottom = 234.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_l1xyy")
+theme_override_font_sizes/font_size = 98
+text = "7"
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.92
+anchor_top = 0.15
+anchor_right = 0.92
+anchor_bottom = 0.15
+offset_left = -128.4
+offset_top = -129.0
+offset_right = 129.6
+offset_bottom = 129.0
+grow_horizontal = 0
+texture = ExtResource("4_88pqy")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.498
+anchor_top = 0.55
+anchor_right = 0.498
+anchor_bottom = 0.55
+offset_left = -33.484
+offset_top = -37.9
+offset_right = 33.516
+offset_bottom = 38.1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_l1xyy")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+texture = ExtResource("5_58x10")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.513
+anchor_top = 0.476
+anchor_right = 0.513
+anchor_bottom = 0.476
+offset_left = -262.308
+offset_top = -81.428
+offset_right = 262.692
+offset_bottom = 81.572
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_l1xyy")
+theme_override_font_sizes/font_size = 55
+text = "Tap the Onion
+ in order 10-15"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("6_62m4s")
+stretch_mode = 0
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

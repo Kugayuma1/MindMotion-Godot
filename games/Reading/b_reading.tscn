@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://j0vtwj1bsc8x"]
+[gd_scene load_steps=13 format=3 uid="uid://j0vtwj1bsc8x"]
 
 [ext_resource type="Script" uid="uid://bnpkrdts57o54" path="res://games_script/Reading/b_reading.gd" id="1_f2fe5"]
 [ext_resource type="Texture2D" uid="uid://cryn74xru6pl3" path="res://Game Bg/as (1280 x 800 px) (10).png" id="2_f2fe5"]
@@ -11,6 +11,7 @@
 [ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="9_3vv8s"]
 [ext_resource type="Texture2D" uid="uid://hhrp1ial4en1" path="res://Game Assets/as (1280 x 800 px) (11) 4.png" id="10_hn2c4"]
 [ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="11_jdrnc"]
+[ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="12_3pwhd"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -28,7 +29,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1.13589e-05, 0.744214, 0.904963, 1)
+color = Color(0.572152, 0.894521, 1, 1)
 
 [node name="GameBG" type="TextureRect" parent="."]
 layout_mode = 1
@@ -43,12 +44,14 @@ texture = ExtResource("2_f2fe5")
 [node name="AssetsBG" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.274
-anchor_right = 0.274
-offset_left = 0.919983
-offset_top = -35.0
-offset_right = 861.92
-offset_bottom = 763.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -568.0
+offset_top = -599.0
+offset_right = 624.0
+offset_bottom = 663.0
 texture = ExtResource("3_3pwhd")
 expand_mode = 1
 
@@ -462,6 +465,21 @@ offset_bottom = 109.96
 texture_normal = ExtResource("11_jdrnc")
 stretch_mode = 0
 
+[node name="Clearbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.668
+anchor_top = 0.5
+anchor_right = 0.668
+anchor_bottom = 0.5
+offset_left = -35.5601
+offset_top = -37.0
+offset_right = 36.4399
+offset_bottom = 37.0
+texture_normal = ExtResource("12_3pwhd")
+ignore_texture_size = true
+stretch_mode = 0
+
 [connection signal="pressed" from="Button1" to="." method="_on_button_1_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="Button3" to="." method="_on_button_3_pressed"]
@@ -471,3 +489,4 @@ stretch_mode = 0
 [connection signal="pressed" from="Button7" to="." method="_on_button_7_pressed"]
 [connection signal="pressed" from="Button8" to="." method="_on_button_8_pressed"]
 [connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]
+[connection signal="pressed" from="Clearbtn" to="." method="_on_clearbtn_pressed"]

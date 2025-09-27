@@ -249,7 +249,8 @@ func update_instruction(text: String):
 func win_game():
 	game_active = false
 	game_timer.stop()
-	
+	ProgressManager.save_progress("reading", true)
+	Global.refresh_everything_after_stage_completion("reading", true)
 	# Calculate star rating based on time remaining
 	var star_rating = calculate_star_rating()
 	show_completion_screen(true, star_rating)
@@ -257,7 +258,8 @@ func win_game():
 func game_over():
 	game_active = false
 	game_timer.stop()
-	
+	ProgressManager.save_progress("reading", false)
+	Global.refresh_everything_after_stage_completion("reading", false)
 	show_completion_screen(false, 0)
 
 func calculate_star_rating() -> int:

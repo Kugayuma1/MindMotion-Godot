@@ -1,0 +1,209 @@
+[gd_scene load_steps=13 format=3 uid="uid://ct5287q68657t"]
+
+[ext_resource type="Texture2D" uid="uid://b8yxubc5vq2n4" path="res://Game Bg/FineG.png" id="1_6bp40"]
+[ext_resource type="Script" uid="uid://d0xmsfsoqkuvo" path="res://games_script/finemotor/g_finemotors.gd" id="1_6xsf0"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="2_6xsf0"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_imshj"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="4_m658t"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="5_n5bbw"]
+[ext_resource type="Texture2D" uid="uid://nscn21pt1jvv" path="res://Game Assets/Fine Motor Assets/LetterG/gardener.png" id="6_wsdoc"]
+[ext_resource type="Texture2D" uid="uid://73jxsq7377e1" path="res://Game Assets/Fine Motor Assets/LetterG/decoy (2).png" id="7_le33h"]
+[ext_resource type="Texture2D" uid="uid://duqq2nbn2o5pr" path="res://Game Assets/Fine Motor Assets/LetterG/decoy.png" id="8_qjga0"]
+[ext_resource type="Texture2D" uid="uid://dky3g32kjr620" path="res://Game Assets/Fine Motor Assets/LetterG/gardenertool (2).png" id="9_ukb1n"]
+[ext_resource type="Texture2D" uid="uid://cfrlj45aivqoj" path="res://Game Assets/Fine Motor Assets/LetterG/gardenertool (3).png" id="10_ymel3"]
+[ext_resource type="Texture2D" uid="uid://defse7mawk5gy" path="res://Game Assets/Fine Motor Assets/LetterG/gardenertool.png" id="11_5ld0e"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6xsf0")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_6bp40")
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+texture = ExtResource("2_6xsf0")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_imshj")
+theme_override_font_sizes/font_size = 55
+text = "Give the Gardener his
+things"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.917
+anchor_top = 0.142
+anchor_right = 0.917
+anchor_bottom = 0.142
+offset_left = -128.64
+offset_top = -129.36
+offset_right = 129.36
+offset_bottom = 128.64
+grow_horizontal = 0
+texture = ExtResource("4_m658t")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.494
+anchor_top = 0.554
+anchor_right = 0.494
+anchor_bottom = 0.554
+offset_left = -33.452
+offset_top = -37.932
+offset_right = 33.548
+offset_bottom = 38.068
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_imshj")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("5_n5bbw")
+stretch_mode = 0
+
+[node name="Dropzone" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Gardener" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.277
+anchor_top = 0.613
+anchor_right = 0.277
+anchor_bottom = 0.613
+offset_left = -295.84
+offset_top = -295.04
+offset_right = 295.16
+offset_bottom = 295.96
+texture = ExtResource("6_wsdoc")
+expand_mode = 1
+
+[node name="Draggables" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Decoy" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.533
+anchor_top = 0.797
+anchor_right = 0.533
+anchor_bottom = 0.797
+offset_left = -100.36
+offset_top = -100.76
+offset_right = 101.64
+offset_bottom = 101.24
+texture = ExtResource("7_le33h")
+expand_mode = 1
+
+[node name="Decoy2" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.95
+anchor_top = 0.581
+anchor_right = 0.95
+anchor_bottom = 0.581
+offset_left = -144.0
+offset_top = -143.48
+offset_right = 143.0
+offset_bottom = 143.52
+texture = ExtResource("8_qjga0")
+expand_mode = 1
+
+[node name="Gardentools" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.881
+anchor_top = 0.795
+anchor_right = 0.881
+anchor_bottom = 0.795
+offset_left = -174.52
+offset_top = -86.6
+offset_right = 121.48
+offset_bottom = 209.4
+texture = ExtResource("9_ukb1n")
+expand_mode = 1
+
+[node name="Gardentools2" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.645
+anchor_top = 0.553
+anchor_right = 0.645
+anchor_bottom = 0.553
+offset_left = -153.4
+offset_top = -144.24
+offset_right = 152.6
+offset_bottom = 193.76
+texture = ExtResource("10_ymel3")
+expand_mode = 1
+
+[node name="Gardentools3" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.708
+anchor_top = 0.809
+anchor_right = 0.708
+anchor_bottom = 0.809
+offset_left = -97.36
+offset_top = -106.72
+offset_right = 95.64
+offset_bottom = 106.28
+texture = ExtResource("11_5ld0e")
+expand_mode = 1
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

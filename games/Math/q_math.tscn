@@ -1,0 +1,331 @@
+[gd_scene load_steps=9 format=3 uid="uid://bmevk3xms2jov"]
+
+[ext_resource type="Script" uid="uid://debb28gr7s3qg" path="res://games_script/Math/q_math.gd" id="1_ekmc0"]
+[ext_resource type="Texture2D" uid="uid://cjvvqudpqtouw" path="res://Game Bg/as (1280 x 800 px) (3).png" id="1_ewfeu"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="2_ekmc0"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_p36uw"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="4_148mr"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="5_h7ybl"]
+[ext_resource type="Texture2D" uid="uid://dtunsuhlr3uc7" path="res://Game Assets/Math/mathsha/15.png" id="6_01oeb"]
+[ext_resource type="Texture2D" uid="uid://5lbec33bmuqc" path="res://Game Assets/Math/Rectangle 14.png" id="7_fdiu7"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ekmc0")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 62.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ewfeu")
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.978
+anchor_top = 0.029
+anchor_right = 0.978
+anchor_bottom = 0.029
+offset_left = -257.76
+offset_top = -0.320002
+offset_right = 0.239868
+offset_bottom = 257.68
+mouse_filter = 2
+texture = ExtResource("2_ekmc0")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 105.0
+offset_right = 161.0
+offset_bottom = 181.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_p36uw")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+mouse_filter = 2
+texture = ExtResource("4_148mr")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_p36uw")
+theme_override_font_sizes/font_size = 55
+text = "How many Quail
+are in the Forest"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("5_h7ybl")
+stretch_mode = 0
+
+[node name="Quail" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Quail1" type="TextureRect" parent="Quail"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.183
+anchor_top = 0.665
+anchor_right = 0.183
+anchor_bottom = 0.665
+offset_left = -166.36
+offset_top = -168.2
+offset_right = 165.64
+offset_bottom = 168.8
+texture = ExtResource("6_01oeb")
+expand_mode = 1
+
+[node name="Quail2" type="TextureRect" parent="Quail"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.312
+anchor_top = 0.5
+anchor_right = 0.312
+anchor_bottom = 0.5
+offset_left = -166.04
+offset_top = -180.0
+offset_right = 165.96
+offset_bottom = 157.0
+texture = ExtResource("6_01oeb")
+expand_mode = 1
+
+[node name="Quail3" type="TextureRect" parent="Quail"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.672
+anchor_top = 0.5
+anchor_right = 0.672
+anchor_bottom = 0.5
+offset_left = -508.24
+offset_top = -13.0
+offset_right = -176.24
+offset_bottom = 324.0
+texture = ExtResource("6_01oeb")
+expand_mode = 1
+
+[node name="Quail4" type="TextureRect" parent="Quail"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.494
+anchor_top = 0.644
+anchor_right = 0.494
+anchor_bottom = 0.644
+offset_left = 187.52
+offset_top = -326.52
+offset_right = 519.52
+offset_bottom = 10.4799
+texture = ExtResource("6_01oeb")
+expand_mode = 1
+
+[node name="Quail5" type="TextureRect" parent="Quail"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.872
+anchor_top = 0.655
+anchor_right = 0.872
+anchor_bottom = 0.655
+offset_left = -166.24
+offset_top = -168.4
+offset_right = 165.76
+offset_bottom = 168.6
+texture = ExtResource("6_01oeb")
+expand_mode = 1
+
+[node name="Quail6" type="TextureRect" parent="Quail"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.715
+anchor_top = 0.683
+anchor_right = 0.715
+anchor_bottom = 0.683
+offset_left = -165.8
+offset_top = -168.64
+offset_right = 166.2
+offset_bottom = 168.36
+texture = ExtResource("6_01oeb")
+expand_mode = 1
+
+[node name="Quail7" type="TextureRect" parent="Quail"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.539
+anchor_top = 0.5
+anchor_right = 0.539
+anchor_bottom = 0.5
+offset_left = -165.88
+offset_top = -182.0
+offset_right = 166.12
+offset_bottom = 155.0
+texture = ExtResource("6_01oeb")
+expand_mode = 1
+
+[node name="Quail8" type="TextureRect" parent="Quail"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.364
+anchor_top = 0.668
+anchor_right = 0.364
+anchor_bottom = 0.668
+offset_left = -166.88
+offset_top = -168.44
+offset_right = 165.12
+offset_bottom = 168.56
+texture = ExtResource("6_01oeb")
+expand_mode = 1
+
+[node name="Button1" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.297
+anchor_top = 0.826
+anchor_right = 0.297
+anchor_bottom = 0.826
+offset_left = -0.240051
+offset_top = -0.0800171
+offset_right = 155.76
+offset_bottom = 154.92
+texture_normal = ExtResource("7_fdiu7")
+stretch_mode = 0
+
+[node name="Label3" type="Label" parent="Button1"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 21.0
+offset_right = 121.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_p36uw")
+theme_override_font_sizes/font_size = 95
+text = "8"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.407
+anchor_top = 0.826
+anchor_right = 0.407
+anchor_bottom = 0.826
+offset_left = 0.559998
+offset_top = -0.0800171
+offset_right = 156.56
+offset_bottom = 154.92
+texture_normal = ExtResource("7_fdiu7")
+stretch_mode = 0
+
+[node name="Label3" type="Label" parent="Button2"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 21.0
+offset_right = 121.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_p36uw")
+theme_override_font_sizes/font_size = 95
+text = "7"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button3" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.518
+anchor_top = 0.828
+anchor_right = 0.518
+anchor_bottom = 0.828
+offset_left = 0.440002
+offset_top = -0.240051
+offset_right = 156.44
+offset_bottom = 154.76
+texture_normal = ExtResource("7_fdiu7")
+stretch_mode = 0
+
+[node name="Label3" type="Label" parent="Button3"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 21.0
+offset_right = 121.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_p36uw")
+theme_override_font_sizes/font_size = 95
+text = "12"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button4" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.632
+anchor_top = 0.828
+anchor_right = 0.632
+anchor_bottom = 0.828
+offset_left = -0.440063
+offset_top = -0.240051
+offset_right = 155.56
+offset_bottom = 154.76
+texture_normal = ExtResource("7_fdiu7")
+stretch_mode = 0
+
+[node name="Label3" type="Label" parent="Button4"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 21.0
+offset_right = 121.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_p36uw")
+theme_override_font_sizes/font_size = 95
+text = "15"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

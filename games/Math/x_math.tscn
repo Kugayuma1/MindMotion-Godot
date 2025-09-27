@@ -1,0 +1,315 @@
+[gd_scene load_steps=9 format=3 uid="uid://ce46x7gvlh8uu"]
+
+[ext_resource type="Script" uid="uid://xjd4gvjtehe4" path="res://games_script/Math/x_math.gd" id="1_v5l38"]
+[ext_resource type="Texture2D" uid="uid://b0qion1sfecbw" path="res://Game Bg/mathbg/10.png" id="2_anmp7"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="3_yjysr"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="4_qf2so"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="5_1juqa"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="6_kjosw"]
+[ext_resource type="Texture2D" uid="uid://bnrmes1dxe43c" path="res://Game Assets/Math/mathsha/26.png" id="7_b1qkl"]
+[ext_resource type="Texture2D" uid="uid://5lbec33bmuqc" path="res://Game Assets/Math/Rectangle 14.png" id="8_4wbik"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v5l38")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_anmp7")
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.978
+anchor_top = 0.029
+anchor_right = 0.978
+anchor_bottom = 0.029
+offset_left = -257.76
+offset_top = -0.320002
+offset_right = 0.239868
+offset_bottom = 257.68
+mouse_filter = 2
+texture = ExtResource("3_yjysr")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 94.0
+offset_top = 105.0
+offset_right = 161.0
+offset_bottom = 181.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_qf2so")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+mouse_filter = 2
+texture = ExtResource("5_1juqa")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_qf2so")
+theme_override_font_sizes/font_size = 55
+text = "How many Xylophone
+are in the room"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("6_kjosw")
+stretch_mode = 0
+
+[node name="Xylophone" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Xylophone1" type="TextureRect" parent="Xylophone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.139
+anchor_top = 0.663
+anchor_right = 0.139
+anchor_bottom = 0.663
+offset_left = -165.88
+offset_top = -168.04
+offset_right = 166.12
+offset_bottom = 168.96
+texture = ExtResource("7_b1qkl")
+expand_mode = 1
+
+[node name="Xylophone2" type="TextureRect" parent="Xylophone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.161
+anchor_top = 0.5
+anchor_right = 0.161
+anchor_bottom = 0.5
+offset_left = -165.12
+offset_top = -163.0
+offset_right = 166.88
+offset_bottom = 174.0
+texture = ExtResource("7_b1qkl")
+expand_mode = 1
+
+[node name="Xylophone3" type="TextureRect" parent="Xylophone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.335
+anchor_top = 0.638
+anchor_right = 0.335
+anchor_bottom = 0.638
+offset_left = -165.2
+offset_top = -168.04
+offset_right = 166.8
+offset_bottom = 168.96
+texture = ExtResource("7_b1qkl")
+expand_mode = 1
+
+[node name="Xylophone4" type="TextureRect" parent="Xylophone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.376
+anchor_top = 0.498
+anchor_right = 0.376
+anchor_bottom = 0.498
+offset_left = -166.92
+offset_top = -168.84
+offset_right = 165.08
+offset_bottom = 168.16
+texture = ExtResource("7_b1qkl")
+expand_mode = 1
+
+[node name="Xylophone5" type="TextureRect" parent="Xylophone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.535
+anchor_top = 0.65
+anchor_right = 0.535
+anchor_bottom = 0.65
+offset_left = -165.2
+offset_top = -168.0
+offset_right = 166.8
+offset_bottom = 169.0
+texture = ExtResource("7_b1qkl")
+expand_mode = 1
+
+[node name="Xylophone6" type="TextureRect" parent="Xylophone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.627
+anchor_top = 0.503
+anchor_right = 0.627
+anchor_bottom = 0.503
+offset_left = -165.84
+offset_top = -168.24
+offset_right = 166.16
+offset_bottom = 168.76
+texture = ExtResource("7_b1qkl")
+expand_mode = 1
+
+[node name="Xylophone7" type="TextureRect" parent="Xylophone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.79
+anchor_top = 0.638
+anchor_right = 0.79
+anchor_bottom = 0.638
+offset_left = -165.8
+offset_top = -168.04
+offset_right = 166.2
+offset_bottom = 168.96
+texture = ExtResource("7_b1qkl")
+expand_mode = 1
+
+[node name="Button1" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.297
+anchor_top = 0.826
+anchor_right = 0.297
+anchor_bottom = 0.826
+offset_left = -0.240051
+offset_top = -0.0800171
+offset_right = 155.76
+offset_bottom = 154.92
+texture_normal = ExtResource("8_4wbik")
+stretch_mode = 0
+
+[node name="Label3" type="Label" parent="Button1"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 21.0
+offset_right = 121.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_qf2so")
+theme_override_font_sizes/font_size = 95
+text = "8"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.407
+anchor_top = 0.826
+anchor_right = 0.407
+anchor_bottom = 0.826
+offset_left = 0.559998
+offset_top = -0.0800171
+offset_right = 156.56
+offset_bottom = 154.92
+texture_normal = ExtResource("8_4wbik")
+stretch_mode = 0
+
+[node name="Label3" type="Label" parent="Button2"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 21.0
+offset_right = 121.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_qf2so")
+theme_override_font_sizes/font_size = 95
+text = "7"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button3" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.518
+anchor_top = 0.828
+anchor_right = 0.518
+anchor_bottom = 0.828
+offset_left = 0.440002
+offset_top = -0.240051
+offset_right = 156.44
+offset_bottom = 154.76
+texture_normal = ExtResource("8_4wbik")
+stretch_mode = 0
+
+[node name="Label3" type="Label" parent="Button3"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 21.0
+offset_right = 121.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_qf2so")
+theme_override_font_sizes/font_size = 95
+text = "12"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button4" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.632
+anchor_top = 0.828
+anchor_right = 0.632
+anchor_bottom = 0.828
+offset_left = -0.440063
+offset_top = -0.240051
+offset_right = 155.56
+offset_bottom = 154.76
+texture_normal = ExtResource("8_4wbik")
+stretch_mode = 0
+
+[node name="Label3" type="Label" parent="Button4"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 21.0
+offset_right = 121.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_qf2so")
+theme_override_font_sizes/font_size = 95
+text = "15"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

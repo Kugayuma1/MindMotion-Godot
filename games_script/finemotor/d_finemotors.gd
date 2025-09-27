@@ -257,9 +257,11 @@ func show_completion_screen(success: bool, stars: int):
 	if success:
 		print("🎉 Game completed successfully!")
 		ProgressManager.save_progress("fine_motor", true)
+		Global.refresh_everything_after_stage_completion("fine_motor", true)
 	else:
 		print("⏰ Game over - Time's up!")
 		ProgressManager.save_progress("fine_motor", false)
+		Global.refresh_everything_after_stage_completion("fine_motor", false)
 		
 	var popup_instance: Node = null
 	if success:

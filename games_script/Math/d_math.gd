@@ -235,7 +235,8 @@ func _on_button_pressed(button_num: int):
 		
 		await get_tree().create_timer(2.0).timeout  # Show success message longer
 		game_over(true, elapsed)
-		ProgressManager.save_progress("duck_counting", true)
+		ProgressManager.save_progress("math", true)
+		Global.refresh_everything_after_stage_completion("math", true)
 	else:
 		if question_label:
 			question_label.text = "❌ Wrong! Try again!"
@@ -277,7 +278,8 @@ func update_timer() -> void:
 			timer_label.text = "⏰ Done!"
 		if question_label:
 			question_label.text = "⏱️ Time's up! Answer: " + str(correct_answer) + " ducks"
-		ProgressManager.save_progress("duck_counting", false)
+		ProgressManager.save_progress("math", false)
+		Global.refresh_everything_after_stage_completion("math", false)
 		await get_tree().create_timer(2.0).timeout
 		game_over(false)
 		return

@@ -216,7 +216,12 @@ func update_timer_display():
 
 func win_game():
 	game_active = false
-	game_timer.stop() # 🛠 FIXED: stop timer immediately when winning
+	game_timer.stop() # 🛠 stop timer immediately when winning
+
+	# ✅ Save successful progress
+	ProgressManager.save_progress("math", true)
+	Global.refresh_everything_after_stage_completion("math", true)
+
 	var star_rating = calculate_star_rating()
 	show_completion_screen(true, star_rating)
 
@@ -225,6 +230,10 @@ func game_over():
 	game_timer.stop()
 	update_lady_message("game_over")
 	await get_tree().create_timer(1.0).timeout
+
+	# ✅ Save failed progress
+	ProgressManager.save_progress("math", false)
+
 	show_completion_screen(false, 0)
 
 func calculate_star_rating() -> int:

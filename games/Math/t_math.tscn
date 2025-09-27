@@ -1,0 +1,261 @@
+[gd_scene load_steps=12 format=3 uid="uid://b8j26s3ndww41"]
+
+[ext_resource type="Texture2D" uid="uid://c376iyypiutt7" path="res://Game Bg/mathbg/7.png" id="1_gc5y8"]
+[ext_resource type="Script" uid="uid://dj5fade2wu20y" path="res://games_script/Math/t_math.gd" id="1_jpm5m"]
+[ext_resource type="Texture2D" uid="uid://dte7dsxv82gok" path="res://Game Assets/Math/mathsha/18.png" id="2_jpm5m"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_12fgu"]
+[ext_resource type="Texture2D" uid="uid://cexy7x7rcjp0u" path="res://Game Assets/Math/mathsha/19.png" id="4_4p258"]
+[ext_resource type="Texture2D" uid="uid://bwhhuyl4lc1dd" path="res://Game Assets/Math/mathsha/20.png" id="5_vattx"]
+[ext_resource type="Texture2D" uid="uid://boek4dnqfalpt" path="res://Game Assets/Math/mathsha/21.png" id="6_o13dy"]
+[ext_resource type="Texture2D" uid="uid://mic7ljsx2p78" path="res://Game Assets/Math/mathsha/22.png" id="7_xpxc2"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="8_kqpxd"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="9_4dvv7"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="10_fc0hp"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jpm5m")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_gc5y8")
+
+[node name="Truck1" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.116
+anchor_top = 0.506
+anchor_right = 0.116
+anchor_bottom = 0.506
+offset_left = -206.72
+offset_top = -206.48
+offset_right = 207.28
+offset_bottom = 207.52
+texture_normal = ExtResource("2_jpm5m")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Truck1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.572
+anchor_top = 0.46
+anchor_right = 0.572
+anchor_bottom = 0.46
+offset_left = -50.808
+offset_top = -56.44
+offset_right = 51.192
+offset_bottom = 56.56
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_12fgu")
+theme_override_font_sizes/font_size = 98
+text = "17"
+
+[node name="Truck2" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.326
+anchor_top = 0.644
+anchor_right = 0.326
+anchor_bottom = 0.644
+offset_left = -227.92
+offset_top = -205.52
+offset_right = 186.08
+offset_bottom = 208.48
+texture_normal = ExtResource("4_4p258")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Truck2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.572
+anchor_top = 0.46
+anchor_right = 0.572
+anchor_bottom = 0.46
+offset_left = -50.808
+offset_top = -56.44
+offset_right = 51.192
+offset_bottom = 56.56
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_12fgu")
+theme_override_font_sizes/font_size = 98
+text = "18"
+
+[node name="Truck3" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.531
+anchor_top = 0.509
+anchor_right = 0.531
+anchor_bottom = 0.509
+offset_left = -207.52
+offset_top = -206.72
+offset_right = 206.48
+offset_bottom = 207.28
+texture_normal = ExtResource("5_vattx")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Truck3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.572
+anchor_top = 0.46
+anchor_right = 0.572
+anchor_bottom = 0.46
+offset_left = -50.808
+offset_top = -56.44
+offset_right = 51.192
+offset_bottom = 56.56
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_12fgu")
+theme_override_font_sizes/font_size = 98
+text = "19"
+
+[node name="Truck4" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.721
+anchor_top = 0.651
+anchor_right = 0.721
+anchor_bottom = 0.651
+offset_left = -234.32
+offset_top = -201.08
+offset_right = 179.68
+offset_bottom = 212.92
+texture_normal = ExtResource("6_o13dy")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Truck4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.587
+anchor_top = 0.5
+anchor_right = 0.587
+anchor_bottom = 0.5
+offset_left = -57.018
+offset_top = -73.0
+offset_right = 44.982
+offset_bottom = 40.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_12fgu")
+theme_override_font_sizes/font_size = 98
+text = "20"
+
+[node name="Truck5" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.905
+anchor_top = 0.5
+anchor_right = 0.905
+anchor_bottom = 0.5
+offset_left = -206.6
+offset_top = -207.0
+offset_right = 207.4
+offset_bottom = 207.0
+texture_normal = ExtResource("7_xpxc2")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Truck5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.572
+anchor_top = 0.46
+anchor_right = 0.572
+anchor_bottom = 0.46
+offset_left = -50.808
+offset_top = -56.44
+offset_right = 51.192
+offset_bottom = 56.56
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_12fgu")
+theme_override_font_sizes/font_size = 98
+text = "16"
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -282.0
+offset_top = 33.0
+offset_right = -24.0
+offset_bottom = 291.0
+grow_horizontal = 0
+texture = ExtResource("8_kqpxd")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.486
+anchor_top = 0.562
+anchor_right = 0.486
+anchor_bottom = 0.562
+offset_left = -33.388
+offset_top = -37.996
+offset_right = 33.612
+offset_bottom = 38.004
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_12fgu")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+texture = ExtResource("9_4dvv7")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_12fgu")
+theme_override_font_sizes/font_size = 55
+text = "Tap the Trucks
+ in order 16-20"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("10_fc0hp")
+stretch_mode = 0
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

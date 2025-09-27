@@ -318,9 +318,11 @@ func show_completion_screen(success: bool, stars: int):
 	if success:
 		print("🎉 Game completed successfully!")
 		ProgressManager.save_progress("math", true)
+		Global.refresh_everything_after_stage_completion("math", true)
 	else:
 		print("⏰ Game over - Time's up!")
 		ProgressManager.save_progress("math", false)
+		Global.refresh_everything_after_stage_completion("math", false)
 	
 	var popup_instance: Node = null
 	

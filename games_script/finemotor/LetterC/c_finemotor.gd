@@ -145,9 +145,11 @@ func game_over(success: bool):
 	if success:
 		print("🎉 Game completed successfully!")
 		ProgressManager.save_progress("fine_motor", true)
+		Global.refresh_everything_after_stage_completion("fine_motor", true)
 	else:
 		print("⏰ Game over - Time's up!")
 		ProgressManager.save_progress("fine_motor", false)
+		Global.refresh_everything_after_stage_completion("fine_motor", false)
 
 func reset_feedback_label() -> void:
 	if feedback_label and timer_active:

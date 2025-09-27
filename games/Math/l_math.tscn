@@ -1,0 +1,217 @@
+[gd_scene load_steps=8 format=3 uid="uid://dkutu6ly7xej0"]
+
+[ext_resource type="Script" uid="uid://ci86q8w27q1rf" path="res://games_script/Math/l_math.gd" id="1_caq6k"]
+[ext_resource type="Texture2D" uid="uid://dyg0ngcs8y4qk" path="res://Game Bg/mathbg/3.png" id="1_kwjl1"]
+[ext_resource type="Texture2D" uid="uid://c8r58hxa6lpki" path="res://Game Assets/Math/mathsha/10.png" id="2_caq6k"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_0wk02"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="4_2c2ae"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="5_8witc"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="6_r2mbn"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_caq6k")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_kwjl1")
+
+[node name="Lollipop1" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.33
+anchor_bottom = 0.33
+offset_left = 202.0
+offset_top = 299.6
+offset_right = 616.0
+offset_bottom = 713.6
+texture_normal = ExtResource("2_caq6k")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Lollipop1"]
+layout_mode = 0
+offset_left = 158.0
+offset_top = 73.0
+offset_right = 260.0
+offset_bottom = 186.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_0wk02")
+theme_override_font_sizes/font_size = 98
+text = "11"
+
+[node name="Lollipop2" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.33
+anchor_bottom = 0.33
+offset_left = 471.0
+offset_top = 303.6
+offset_right = 885.0
+offset_bottom = 717.6
+texture_normal = ExtResource("2_caq6k")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Lollipop2"]
+layout_mode = 0
+offset_left = 158.0
+offset_top = 73.0
+offset_right = 260.0
+offset_bottom = 186.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_0wk02")
+theme_override_font_sizes/font_size = 98
+text = "12"
+
+[node name="Lollipop3" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.33
+anchor_bottom = 0.33
+offset_left = 761.0
+offset_top = 305.6
+offset_right = 1175.0
+offset_bottom = 719.6
+texture_normal = ExtResource("2_caq6k")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Lollipop3"]
+layout_mode = 0
+offset_left = 158.0
+offset_top = 73.0
+offset_right = 260.0
+offset_bottom = 186.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_0wk02")
+theme_override_font_sizes/font_size = 98
+text = "14"
+
+[node name="Lollipop4" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.33
+anchor_bottom = 0.33
+offset_left = 1044.0
+offset_top = 309.6
+offset_right = 1458.0
+offset_bottom = 723.6
+texture_normal = ExtResource("2_caq6k")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Lollipop4"]
+layout_mode = 0
+offset_left = 158.0
+offset_top = 73.0
+offset_right = 260.0
+offset_bottom = 186.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_0wk02")
+theme_override_font_sizes/font_size = 98
+text = "13"
+
+[node name="Lollipop5" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.33
+anchor_bottom = 0.33
+offset_left = 1327.0
+offset_top = 305.6
+offset_right = 1741.0
+offset_bottom = 719.6
+texture_normal = ExtResource("2_caq6k")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Lollipop5"]
+layout_mode = 0
+offset_left = 158.0
+offset_top = 73.0
+offset_right = 260.0
+offset_bottom = 186.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_0wk02")
+theme_override_font_sizes/font_size = 98
+text = "15"
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -282.0
+offset_top = 33.0
+offset_right = -24.0
+offset_bottom = 291.0
+grow_horizontal = 0
+texture = ExtResource("4_2c2ae")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 109.0
+offset_right = 163.0
+offset_bottom = 185.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_0wk02")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+texture = ExtResource("5_8witc")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_0wk02")
+theme_override_font_sizes/font_size = 55
+text = "Tap the Lollipop
+ in order 11-15"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("6_r2mbn")
+stretch_mode = 0
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

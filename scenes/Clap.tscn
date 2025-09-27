@@ -1,6 +1,31 @@
-[gd_scene load_steps=2 format=3 uid="uid://dpecsqdt1si6t"]
+[gd_scene load_steps=8 format=3 uid="uid://dpecsqdt1si6t"]
 
 [ext_resource type="Script" uid="uid://bo3q8gtw7k6cv" path="res://scripts/clap.gd" id="1_oeafa"]
+[ext_resource type="Texture2D" uid="uid://ckbw7fan2ff4c" path="res://Game Bg/Gross-motorbg.png" id="2_3shlw"]
+[ext_resource type="Texture2D" uid="uid://ccc1iyvp0m8ri" path="res://Gross-Motor Assets/Clapping/1.png" id="3_7nelu"]
+[ext_resource type="Texture2D" uid="uid://btgavpn68f7er" path="res://Gross-Motor Assets/Clapping/2.png" id="4_pudmh"]
+[ext_resource type="Texture2D" uid="uid://0dllcwoislrh" path="res://Gross-Motor Assets/Clapping/3.png" id="5_1jy1a"]
+[ext_resource type="Texture2D" uid="uid://b0n0o08xx1pjn" path="res://Gross-Motor Assets/Clapping/4.png" id="6_ul1ef"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1oxa6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_7nelu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_pudmh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1jy1a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ul1ef")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -19,15 +44,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_3shlw")
+
 [node name="InstructionLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -199.0
-offset_top = 129.0
+offset_top = 75.0
 offset_right = 173.0
-offset_bottom = 266.0
+offset_bottom = 212.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 100
@@ -35,17 +69,24 @@ text = "Do Clap"
 
 [node name="StatusLabel" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.26
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -186.0
-offset_top = -68.5
-offset_right = 186.0
-offset_bottom = 68.5
+anchor_bottom = 0.26
+offset_left = -200.0
+offset_top = -68.8
+offset_right = 172.0
+offset_bottom = 68.2
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
 text = "     ..."
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(922, 654)
+scale = Vector2(1.295, 1.295)
+sprite_frames = SubResource("SpriteFrames_1oxa6")
+autoplay = "default"
+frame_progress = 0.767407
