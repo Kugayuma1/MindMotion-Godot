@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://gxau3y2w6e86"]
+[gd_scene load_steps=6 format=3 uid="uid://gxau3y2w6e86"]
 
 [ext_resource type="Texture2D" uid="uid://diy6w4rj2rm83" path="res://assets/left_wave.png" id="1_2lxme"]
-[ext_resource type="Script" uid="uid://hetboifjccci" path="res://dashboard/student_list.gd" id="1_fi1m4"]
+[ext_resource type="Script" uid="uid://hetboifjccci" path="res://dashboard/script/student_list.gd" id="1_fi1m4"]
 [ext_resource type="Texture2D" uid="uid://cwgfqyonunybf" path="res://assets/right_wave.png" id="2_fi1m4"]
 [ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="3_fla65"]
+[ext_resource type="Texture2D" uid="uid://de66oso7wqfih" path="res://rewards/redo_btn.png" id="5_fla65"]
 
 [node name="StudentList" type="Control"]
 layout_mode = 3
@@ -62,6 +63,19 @@ offset_bottom = 133.0
 texture_normal = ExtResource("3_fla65")
 stretch_mode = 5
 
+[node name="RefreshButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -148.0
+offset_top = 35.0
+offset_right = -53.0
+offset_bottom = 133.0
+grow_horizontal = 0
+texture_normal = ExtResource("5_fla65")
+stretch_mode = 5
+
 [node name="MainContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -90,3 +104,4 @@ theme_override_constants/v_separation = 20
 columns = 2
 
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="RefreshButton" to="." method="_on_refresh_button_pressed"]

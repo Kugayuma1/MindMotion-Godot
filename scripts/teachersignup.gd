@@ -170,7 +170,12 @@ func handle_signup_response(response_code: int, response: Dictionary):
 		
 		# Set user info with Firebase UID
 		Global.set_user_type("teacher")
+		print("DEBUG: User type set to: ", Global.user_type)
+		
 		Global.set_user_info(temp_uid, response["email"], name_input.text, temp_id_token, temp_refresh_token)
+		print("DEBUG: User info set - ID: ", temp_uid)
+		print("DEBUG: Is authenticated: ", Global.is_authenticated())
+		print("DEBUG: Students cache ready: ", Global.is_students_cache_ready())
 		
 		update_loading("Creating your profile...")
 		current_stage = Stage.STORE_DATA
@@ -179,15 +184,63 @@ func handle_signup_response(response_code: int, response: Dictionary):
 		hide_loading()
 		handle_signup_error(response)
 
+
 func handle_store_data_response(response_code: int, response: Dictionary):
-	hide_loading()
-	
 	if response_code == 200:
 		print("Teacher data stored successfully.")
+		update_loading("Loading students data...")
+
+		# Force fresh fetch
+		Global.refresh_students_cache()
+		
+		# ✅ Always wait for students cache (even if it was already ready)
+		await Global.wait_for_students_cache()
+		
+		print("DEBUG: Students loaded:", Global.get_students_cache().size())
+		hide_loading()
 		get_tree().change_scene_to_file("res://scenes/TeacherMain.tscn")
 	else:
-		print("Failed to store teacher data:", response)
+		hide_loading()
 		show_error_dialog("Failed to create your profile. Please try again.")
+
+func await_students_cache_then_proceed():
+	print("DEBUG: Starting await_students_cache_then_proceed")
+	print("DEBUG: User type: ", Global.user_type)
+	print("DEBUG: Is authenticated: ", Global.is_authenticated())
+	
+	# Connect to the students cache signal if not already connected
+	if not Global.students_cache_updated.is_connected(_on_students_loaded):
+		Global.students_cache_updated.connect(_on_students_loaded)
+		print("DEBUG: Connected to students_cache_updated signal")
+	
+	# ALWAYS force a fresh fetch during signup, don't rely on potentially stale cache
+	if Global.user_type == "teacher" and Global.is_authenticated():
+		print("DEBUG: Forcing fresh students cache fetch during signup...")
+		Global.refresh_students_cache()  # This will trigger students_cache_updated when done
+	else:
+		print("DEBUG: Authentication or user type issue")
+		hide_loading()
+		show_error_dialog("Authentication issue. Please try logging in again.")
+
+func _on_students_loaded():
+	print("DEBUG: _on_students_loaded called")
+	var students = Global.get_students_cache()
+	print("DEBUG: Students loaded - count: ", students.size())
+	
+	# Print first few students for debugging
+	for i in range(min(3, students.size())):
+		print("DEBUG: Student %d: %s" % [i, students[i].name])
+	
+	hide_loading()
+	
+	# Disconnect the signal to avoid duplicate calls
+	if Global.students_cache_updated.is_connected(_on_students_loaded):
+		Global.students_cache_updated.disconnect(_on_students_loaded)
+		print("DEBUG: Disconnected from students_cache_updated signal")
+	
+	# Now proceed to the main teacher dashboard
+	print("DEBUG: Proceeding to TeacherMain.tscn with %d students" % students.size())
+	get_tree().change_scene_to_file("res://scenes/TeacherMain.tscn")
 
 func create_teacher_document():
 	# Use Firebase's internal UID as document ID

@@ -6,15 +6,17 @@ const FIRESTORE_URL = "https://firestore.googleapis.com/v1/projects/" + FIREBASE
 
 var http_request: HTTPRequest
 var current_session_id: String = ""
+var current_student_id: String = ""
 var is_waiting_for_motion: bool = false
 var poll_timer: Timer
 var max_poll_attempts: int = 20
 var poll_attempts: int = 0
 var session_creation_pending: bool = false
 
-# Counter storage for incremental IDs
+# Per-user counters instead of global ones
 var session_counter: int = 0
-var activity_counters: Dictionary = {"clap": 0, "wave": 0}
+var activity_counter: int = 0
+var counters_loaded: bool = false
 
 signal motion_detected
 signal motion_timeout
@@ -22,7 +24,7 @@ signal motion_session_started(motion_type: String)
 
 func _ready():
 	setup_http_request()
-	load_counters()
+	load_counters_from_firestore()
 
 func setup_http_request():
 	http_request = HTTPRequest.new()
@@ -30,46 +32,125 @@ func setup_http_request():
 	http_request.request_completed.connect(_on_request_completed)
 	http_request.timeout = 10.0
 
-func load_counters():
-	# Load existing counters or initialize them
-	if FileAccess.file_exists("user://motion_counters.json"):
-		var file = FileAccess.open("user://motion_counters.json", FileAccess.READ)
-		if file:
-			var json_string = file.get_as_text()
-			file.close()
-			var json = JSON.new()
-			if json.parse(json_string) == OK:
-				var data = json.data
-				session_counter = data.get("session_counter", 0)
-				activity_counters = data.get("activity_counters", {"clap": 0, "wave": 0})
-			else:
-				print("Failed to parse counters JSON")
-	else:
-		save_counters()  # Create initial file
+func load_counters_from_firestore():
+	# Load per-user counters from metadata
+	var current_user_id = Global.get_current_user_id()  # You'll need to implement this
+	if current_user_id == "":
+		push_error("No current user ID available")
+		session_counter = 0
+		activity_counter = 0
+		counters_loaded = true
+		return
+	
+	var counters_url = FIRESTORE_URL + "users/" + current_user_id + "/metadata/counters"
+	var headers = ["Authorization: Bearer " + Global.firebase_id_token]
+	
+	var counters_request = HTTPRequest.new()
+	add_child(counters_request)
+	counters_request.request_completed.connect(_on_counters_loaded)
+	
+	var result = counters_request.request(counters_url, headers, HTTPClient.METHOD_GET)
+	if result != OK:
+		print("Failed to load counters, starting from 0")
+		session_counter = 0
+		activity_counter = 0
+		counters_loaded = true
 
-func save_counters():
-	var data = {
-		"session_counter": session_counter,
-		"activity_counters": activity_counters
+func _on_counters_loaded(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
+	if response_code == 200:
+		var json_text = body.get_string_from_utf8()
+		var json = JSON.new()
+		if json.parse(json_text) == OK:
+			var data = json.data
+			if data.has("fields"):
+				# Load both counters from single document
+				if data.fields.has("sessionCounter") and data.fields.sessionCounter.has("integerValue"):
+					session_counter = int(data.fields.sessionCounter.integerValue)
+				else:
+					session_counter = 0
+				
+				if data.fields.has("activityCounter") and data.fields.activityCounter.has("integerValue"):
+					activity_counter = int(data.fields.activityCounter.integerValue)
+				else:
+					activity_counter = 0
+				
+				print("Loaded per-user counters - Sessions: ", session_counter, ", Activities: ", activity_counter)
+			else:
+				session_counter = 0
+				activity_counter = 0
+		else:
+			session_counter = 0
+			activity_counter = 0
+	else:
+		# Document doesn't exist yet - start from 0
+		session_counter = 0
+		activity_counter = 0
+	
+	# Clean up request node
+	for child in get_children():
+		if child is HTTPRequest and child != http_request:
+			child.queue_free()
+			break
+	
+	counters_loaded = true
+	print("Counters loaded - Sessions: ", session_counter, ", Activities: ", activity_counter)
+
+func save_counters_to_firestore():
+	var current_user_id = Global.get_current_user_id()
+	if current_user_id == "":
+		push_error("No current user ID available")
+		return
+	
+	var counter_data = {
+		"fields": {
+			"sessionCounter": {
+				"integerValue": str(session_counter)
+			},
+			"activityCounter": {
+				"integerValue": str(activity_counter)
+			},
+			"lastUpdated": {
+				"timestampValue": Time.get_datetime_string_from_system().replace(" ", "T") + "Z"
+			}
+		}
 	}
 	
-	var file = FileAccess.open("user://motion_counters.json", FileAccess.WRITE)
-	if file:
-		file.store_string(JSON.stringify(data))
-		file.close()
+	var url = FIRESTORE_URL + "users/" + current_user_id + "/metadata/counters"
+	var json_data = JSON.stringify(counter_data)
+	var headers = [
+		"Authorization: Bearer " + Global.firebase_id_token,
+		"Content-Type: application/json"
+	]
+	
+	var counter_request = HTTPRequest.new()
+	add_child(counter_request)
+	
+	var result = counter_request.request(url, headers, HTTPClient.METHOD_PATCH, json_data)
+	if result == OK:
+		print("Per-user counters saved - Sessions: ", session_counter, ", Activities: ", activity_counter)
+	
+	# Auto-cleanup
+	await get_tree().create_timer(2.0).timeout
+	if counter_request and is_instance_valid(counter_request):
+		counter_request.queue_free()
 
 func get_next_session_id() -> String:
+	if not counters_loaded:
+		push_error("Counters not loaded yet!")
+		return "error_" + str(randi())
+	
 	session_counter += 1
-	save_counters()
-	return "session_" + str(session_counter)
+	save_counters_to_firestore()
+	return str(session_counter)
 
 func get_next_activity_id(activity_type: String) -> String:
-	if not activity_counters.has(activity_type):
-		activity_counters[activity_type] = 0
+	if not counters_loaded:
+		push_error("Counters not loaded yet!")
+		return "error_" + str(randi())
 	
-	activity_counters[activity_type] += 1
-	save_counters()
-	return activity_type + "_" + str(activity_counters[activity_type])
+	activity_counter += 1
+	save_counters_to_firestore()
+	return str(activity_counter)
 
 func start_motion_detection(motion_type: String, student_id: String):
 	if is_waiting_for_motion:
@@ -86,18 +167,21 @@ func start_motion_detection(motion_type: String, student_id: String):
 		emit_signal("motion_timeout")
 		return
 	
+	if not counters_loaded:
+		push_error("Counters not loaded yet")
+		emit_signal("motion_timeout")
+		return
+	
+	current_student_id = student_id
 	current_session_id = get_next_session_id()
 	poll_attempts = 0
 	session_creation_pending = true
 	
 	print("Creating motion session: ", current_session_id, " for student: ", student_id)
 	
-	# Fixed session data structure - added studentId field
+	# Updated session data structure - no studentId field since it's in the path
 	var session_data = {
 		"fields": {
-			"studentId": {  # <- ADD THIS FIELD
-				"stringValue": student_id
-			},
 			"status": {
 				"stringValue": "waiting"
 			},
@@ -116,7 +200,8 @@ func start_motion_detection(motion_type: String, student_id: String):
 		}
 	}
 	
-	var url = FIRESTORE_URL + "motion_sessions/" + current_session_id
+	# Create session in user-scoped path
+	var url = FIRESTORE_URL + "users/" + student_id + "/motion_sessions/" + current_session_id
 	var json_data = JSON.stringify(session_data)
 	
 	print("Session URL: ", url)
@@ -158,7 +243,8 @@ func _poll_session_status():
 		_motion_completed(false)
 		return
 	
-	var url = FIRESTORE_URL + "motion_sessions/" + current_session_id
+	# Poll user-scoped session
+	var url = FIRESTORE_URL + "users/" + current_student_id + "/motion_sessions/" + current_session_id
 	var headers = ["Authorization: Bearer " + Global.firebase_id_token]
 	
 	var result = http_request.request(url, headers, HTTPClient.METHOD_GET)
@@ -241,6 +327,7 @@ func _motion_completed(success: bool):
 		cleanup_session_async()
 	
 	current_session_id = ""
+	current_student_id = ""
 	poll_attempts = 0
 	
 	if success:
@@ -249,7 +336,7 @@ func _motion_completed(success: bool):
 		emit_signal("motion_timeout")
 
 func cleanup_session_async():
-	var url = FIRESTORE_URL + "motion_sessions/" + current_session_id
+	var url = FIRESTORE_URL + "users/" + current_student_id + "/motion_sessions/" + current_session_id
 	var headers = ["Authorization: Bearer " + Global.firebase_id_token]
 	
 	var cleanup_request = HTTPRequest.new()
@@ -266,6 +353,7 @@ func cleanup_session_async():
 func cleanup_session():
 	is_waiting_for_motion = false
 	current_session_id = ""
+	current_student_id = ""
 	poll_attempts = 0
 	session_creation_pending = false
 	
@@ -285,6 +373,10 @@ func save_activity_to_firestore(activity_data: Dictionary):
 	
 	if not Global or Global.firebase_id_token == "":
 		push_error("Cannot save activity - missing Firebase token")
+		return
+	
+	if not counters_loaded:
+		push_error("Counters not loaded yet")
 		return
 	
 	var student_id = activity_data.student_id

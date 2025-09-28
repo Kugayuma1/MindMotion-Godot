@@ -1,0 +1,97 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfv46tjby6w6f"]
+
+[ext_resource type="Script" uid="uid://h2ut8iwe0ix8" path="res://dashboard/script/cognitive_activities.gd" id="1_hcmcy"]
+[ext_resource type="Texture2D" uid="uid://diy6w4rj2rm83" path="res://assets/left_wave.png" id="1_yhged"]
+[ext_resource type="Texture2D" uid="uid://cwgfqyonunybf" path="res://assets/right_wave.png" id="2_hcmcy"]
+[ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="3_6ipgc"]
+[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="4_ha0ih"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hcmcy")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Left Wave" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 1.0
+offset_top = -621.0
+offset_right = 659.0
+offset_bottom = 620.0
+grow_vertical = 2
+texture = ExtResource("1_yhged")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Right Wave" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -610.0
+offset_top = -584.0
+offset_right = 1.0
+offset_bottom = 585.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("2_hcmcy")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="BackButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 38.0
+offset_right = 153.0
+offset_bottom = 136.0
+texture_normal = ExtResource("3_6ipgc")
+stretch_mode = 5
+
+[node name="Activities" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -101.0
+offset_top = 70.0
+offset_right = 101.0
+offset_bottom = 155.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_ha0ih")
+theme_override_font_sizes/font_size = 80
+text = "Activity"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -377.0
+offset_top = -377.0
+offset_right = 384.0
+offset_bottom = 457.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ActivitiesGrid" type="GridContainer" parent="ScrollContainer"]
+layout_mode = 2
+theme_override_constants/v_separation = 75
