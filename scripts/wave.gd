@@ -85,7 +85,7 @@ func _on_motion_session_started(motion_type: String):
 func _on_motion_detected():
 	session_timer.stop()
 	
-	instruction_label.text = "Fantastic! 🌊"
+	instruction_label.text = "Fantastic!"
 	status_label.text = "Perfect waving detected!"
 	
 	# Save activity record for teacher dashboard

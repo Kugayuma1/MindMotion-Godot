@@ -94,12 +94,79 @@ func handle_login_success(response: Dictionary):
 		refresh_token
 	)
 	
+	# Validate user type by fetching user data from Firestore
+	update_loading("Verifying user type...")
+	await verify_user_type_and_proceed()
+	
+func verify_user_type_and_proceed():
+	# Make a request to Firestore to get user data
+	var firestore_url = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents/users/" + Global.user_id
+	
+	# Create a new HTTP request for Firestore
+	var firestore_request = HTTPRequest.new()
+	add_child(firestore_request)
+	
+	# Set up headers with authentication
+	var headers = [
+		"Content-Type: application/json",
+		"Authorization: Bearer " + Global.firebase_id_token
+	]
+	
+	firestore_request.request_completed.connect(_on_firestore_verification_completed)
+	firestore_request.request(firestore_url, headers, HTTPClient.METHOD_GET)
+
+func _on_firestore_verification_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
+	var response = JSON.parse_string(body.get_string_from_utf8())
+	
+	if response_code == 200 and response.has("fields"):
+		var user_data = response.fields
+		var database_user_type = ""
+		
+		# Extract userType from Firestore response
+		if user_data.has("userType") and user_data.userType.has("stringValue"):
+			database_user_type = user_data.userType.stringValue
+		
+		print("Database user type: ", database_user_type)
+		print("Selected user type: ", Global.user_type)
+		
+		# Check if the user type matches
+		if database_user_type == Global.user_type:
+			# User type matches, proceed with normal login flow
+			await proceed_with_verified_login()
+		else:
+			# User type mismatch
+			hide_loading()
+			var error_message = ""
+			if database_user_type == "student" and Global.user_type == "teacher":
+				error_message = "This account is registered as a Student. Please use the Student login."
+			elif database_user_type == "teacher" and Global.user_type == "student":
+				error_message = "This account is registered as a Teacher. Please use the Teacher login."
+			else:
+				error_message = "User type mismatch. Please check your account type."
+			
+			show_error_dialog(error_message)
+			
+			# Clear user data since login should not proceed
+			Global.clearData()
+	else:
+		hide_loading()
+		show_error_dialog("Unable to verify user type. Please try again.")
+		Global.clearData()
+	
+	# Clean up the temporary HTTP request
+	var firestore_request = get_children().filter(func(child): return child is HTTPRequest and child != http_request)
+	if firestore_request.size() > 0:
+		firestore_request[0].queue_free()
+
+func proceed_with_verified_login():
+	# Original logic for proceeding after successful verification
 	if Global.user_type == "student":
 		await load_student_data()
 		get_tree().change_scene_to_file("res://scenes/StudentMain.tscn")
 	else:
 		hide_loading()
 		get_tree().change_scene_to_file("res://scenes/TeacherMain.tscn")
+
 
 func load_student_data():
 	update_loading("Loading your progress...")

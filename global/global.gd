@@ -296,6 +296,23 @@ func logout() -> void:
 	students_cache.clear()
 	is_students_cache_loaded = false
 	clear_auth_data()
+	
+func clearData() -> void:
+	user_id = ""
+	user_email = ""
+	user_name = ""
+	firebase_id_token = ""
+	firebase_refresh_token = ""
+	token_expires_at = 0
+	is_logged_in = false
+	letter_completion_cache.clear()
+	is_letter_cache_loaded = false
+	stage_completion_cache.clear()
+	stage_cache_loading_letters.clear()
+	refresh_callbacks.clear()
+	students_cache.clear()
+	is_students_cache_loaded = false
+	clear_auth_data()
 
 # LETTER COMPLETION MANAGEMENT
 func load_all_letter_completion_data():
