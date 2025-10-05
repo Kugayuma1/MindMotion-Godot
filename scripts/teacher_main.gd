@@ -2,16 +2,18 @@ extends Control
 
 @onready var students_button = $Students  # Your students button
 @onready var logout_button = $Logout      # Your logout button
-
+@onready var volume_settings_button = $VolumeSettings
 # Optional: Add a status label to show student count
 @onready var status_label = $StatusLabel       # Add this if you want to show student count
 
 var last_student_count = 0
+var dialog_theme = preload("res://assets/main_theme.tres")
 
 func _ready():
 	# Connect buttons
 	students_button.pressed.connect(_on_students_pressed)
 	logout_button.pressed.connect(_on_logout_pressed)
+	volume_settings_button.pressed.connect(_on_volume_settings_pressed)
 	
 	# Connect to student cache updates to show notifications
 	Global.students_cache_updated.connect(_on_students_updated)
@@ -34,6 +36,9 @@ func _on_students_pressed():
 		hide_loading_dialog()
 	
 	get_tree().change_scene_to_file("res://dashboard/scene/StudentList.tscn")
+	
+func _on_volume_settings_pressed():
+	get_tree().change_scene_to_file("res://scenes/settings.tscn")
 
 func _on_students_updated():
 	update_student_status()

@@ -1,0 +1,31 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://diyo8tx30yyrx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xgdp2"]
+content_margin_left = 25.0
+bg_color = Color(0.886275, 0.960784, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.470588, 0.745098, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64js0"]
+content_margin_left = 25.0
+content_margin_top = 20.0
+bg_color = Color(0.886275, 0.960784, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.470588, 0.745098, 1)
+border_blend = true
+
+[resource]
+AcceptDialog/colors/title_color = Color(0, 0, 0, 1)
+AcceptDialog/colors/title_outline_modulate = Color(0.345098, 0.345098, 0.345098, 1)
+AcceptDialog/font_sizes/title_font_size = 20
+AcceptDialog/styles/embedded_border = SubResource("StyleBoxFlat_xgdp2")
+AcceptDialog/styles/panel = SubResource("StyleBoxFlat_64js0")
+Label/colors/font_color = Color(0.345098, 0.345098, 0.345098, 1)
+Label/font_sizes/font_size = 20

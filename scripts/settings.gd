@@ -88,8 +88,10 @@ func _on_sound_drag_ended(value_changed: bool):
 
 func _on_back_pressed():
 	AudioManager.play_sound("button_click")
-	# Return to previous scene or close settings
-	get_tree().change_scene_to_file("res://scenes/StudentMain.tscn")
+	if Global.user_type == "student":
+		get_tree().change_scene_to_file("res://scenes/StudentMain.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/TeacherMain.tscn")
 
 func update_labels():
 	master_label.text = str(int(master_slider.value)) + "%"

@@ -7,6 +7,7 @@ extends Control
 
 const FIREBASE_API_KEY = "AIzaSyC7bPi7suzy8DmMFSgP7n090t7zHXzI5Bk"
 
+var dialog_theme = preload("res://assets/main_theme.tres")
 var current_request_type: String = ""
 var loading_dialog: AcceptDialog = null
 var original_login_text: String = ""
@@ -198,10 +199,13 @@ func show_loading(message: String):
 	
 	loading_dialog = AcceptDialog.new()
 	add_child(loading_dialog)
+	loading_dialog.theme = dialog_theme
 	loading_dialog.dialog_text = message + "\n\nPlease wait..."
 	loading_dialog.title = "Loading"
 	loading_dialog.get_ok_button().visible = false
 	loading_dialog.close_requested.connect(func(): loading_dialog.popup_centered())
+	loading_dialog.min_size = Vector2(350, 150)  # Width x Height
+	loading_dialog.size = Vector2(350, 150)
 	loading_dialog.popup_centered()
 
 func update_loading(message: String):
@@ -225,8 +229,11 @@ func set_inputs_enabled(enabled: bool):
 func show_error_dialog(message: String):
 	var error_dialog = AcceptDialog.new()
 	add_child(error_dialog)
+	error_dialog.theme = dialog_theme
 	error_dialog.dialog_text = message
 	error_dialog.title = "Error"
+	loading_dialog.min_size = Vector2(350, 150)  # Width x Height
+	loading_dialog.size = Vector2(350, 150)
 	error_dialog.popup_centered()
 	
 	# Auto-cleanup when closed
@@ -236,8 +243,11 @@ func show_error_dialog(message: String):
 func show_info_dialog(message: String):
 	var info_dialog = AcceptDialog.new()
 	add_child(info_dialog)
+	info_dialog.theme = dialog_theme
 	info_dialog.dialog_text = message
 	info_dialog.title = "Information"
+	loading_dialog.min_size = Vector2(350, 150)  # Width x Height
+	loading_dialog.size = Vector2(350, 150)	
 	info_dialog.popup_centered()
 	
 	# Auto-cleanup when closed

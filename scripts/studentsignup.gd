@@ -11,6 +11,7 @@ extends Control
 @onready var privacy_button = $Container/Password/PrivacyButton
 @onready var http_request = $HTTPRequest
 var signup_loading_dialog: AcceptDialog = null
+var dialog_theme = preload("res://assets/main_theme.tres")
 
 # Constants
 const FIREBASE_API_KEY = "AIzaSyC7bPi7suzy8DmMFSgP7n090t7zHXzI5Bk"
@@ -379,12 +380,15 @@ func show_signup_loading(message: String):
 		signup_loading_dialog = AcceptDialog.new()
 		signup_loading_dialog.name = "SignupLoadingDialog"
 		add_child(signup_loading_dialog)
+		signup_loading_dialog.theme = dialog_theme
 		signup_loading_dialog.title = "Creating Account"
 		signup_loading_dialog.get_ok_button().visible = false
 		signup_loading_dialog.close_requested.connect(_on_signup_loading_dialog_closed)
 	
 	signup_loading_dialog.dialog_text = message + "\n\nPlease wait..."
 	if not signup_loading_dialog.visible:
+		signup_loading_dialog.min_size = Vector2(350, 150)  # Width x Height
+		signup_loading_dialog.size = Vector2(350, 150)
 		signup_loading_dialog.popup_centered()
 	
 	# Disable form inputs to prevent changes during loading
@@ -420,8 +424,11 @@ func set_inputs_enabled(enabled: bool):
 func show_error_dialog(message: String):
 	var error_dialog = AcceptDialog.new()
 	add_child(error_dialog)
+	error_dialog.theme = dialog_theme
 	error_dialog.dialog_text = message
 	error_dialog.title = "Error"
+	error_dialog.min_size = Vector2(350, 150)  # Width x Height
+	error_dialog.size = Vector2(350, 150)
 	error_dialog.popup_centered()
 	
 	# Auto-cleanup when closed

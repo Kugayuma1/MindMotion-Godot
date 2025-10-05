@@ -4,6 +4,7 @@ extends Control
 var letters = []
 var current_index = 0
 var selected_letter = ""
+var dialog_theme = preload("res://assets/main_theme.tres")
 
 # Button references
 @onready var left_button: TextureButton = $LeftButton
@@ -262,8 +263,11 @@ func show_lock_message(letter: String):
 	# Create a simple dialog
 	var dialog = AcceptDialog.new()
 	add_child(dialog)
+	dialog.theme = dialog_theme
 	dialog.dialog_text = "🔒 Letter Locked!\n\n" + lock_message
 	dialog.title = "Unlock Required"
+	dialog.min_size = Vector2(350, 150)  # Width x Height
+	dialog.size = Vector2(350, 150)	
 	dialog.popup_centered()
 	
 	dialog.confirmed.connect(func(): dialog.queue_free())

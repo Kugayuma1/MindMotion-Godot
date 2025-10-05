@@ -18,6 +18,7 @@ var temp_uid = ""
 var temp_id_token = ""
 var temp_refresh_token = ""
 var loading_dialog: AcceptDialog = null
+var dialog_theme = preload("res://assets/main_theme.tres")
 
 # Terms and Privacy tracking
 var terms_read = false
@@ -282,10 +283,13 @@ func show_loading(message: String):
 	
 	loading_dialog = AcceptDialog.new()
 	add_child(loading_dialog)
+	loading_dialog.theme = dialog_theme
 	loading_dialog.dialog_text = message + "\n\nPlease wait..."
 	loading_dialog.title = "Creating Account"
 	loading_dialog.get_ok_button().visible = false
 	loading_dialog.close_requested.connect(_on_loading_dialog_close)
+	loading_dialog.min_size = Vector2(350, 150)  # Width x Height
+	loading_dialog.size = Vector2(350, 150)
 	loading_dialog.popup_centered()
 
 func update_loading(message: String):
@@ -310,10 +314,13 @@ func set_inputs_enabled(enabled: bool):
 func show_error_dialog(message: String):
 	var error_dialog = AcceptDialog.new()
 	add_child(error_dialog)
+	error_dialog.theme = dialog_theme
 	error_dialog.dialog_text = message
 	error_dialog.title = "Error"
 	error_dialog.confirmed.connect(_on_error_dialog_closed.bind(error_dialog))
 	error_dialog.close_requested.connect(_on_error_dialog_closed.bind(error_dialog))
+	error_dialog.min_size = Vector2(350, 150)  # Width x Height
+	error_dialog.size = Vector2(350, 150)	
 	error_dialog.popup_centered()
 
 func _on_loading_dialog_close():
