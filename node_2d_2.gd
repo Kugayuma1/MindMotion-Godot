@@ -8,7 +8,7 @@ var drag_source: TextureButton
 var drag_preview: Control
 
 # ---------------- TIMER ----------------
-var countdown := 30
+var countdown := 15
 var timer_active := false
 # Use get_node with error handling instead of @onready
 var timer_label: Label
@@ -19,6 +19,18 @@ var timer_tween: Tween  # Keep reference to timer tween
 
 # ---------------- GAME STATE ----------------
 var game_completed := false
+
+# ---------------- POPUP SCENES ----------------
+# Preload popup star scenes (adjust the paths as needed!)
+var complete1_scene = preload("res://reward scene/Complete1.tscn")
+var complete2_scene = preload("res://reward scene/Complete2.tscn")
+var complete3_scene = preload("res://reward scene/Complete3.tscn")
+var retry_scene = preload("res://reward scene/Retry.tscn")
+var popup_instance: Control = null
+
+# ---------------- BACKGROUND CONTROL ----------------
+# Reference to main game elements that should be hidden during popup
+@onready var game_elements = []  # We'll populate this in _ready()
 
 func _ready():
 	# Wait one frame to ensure all nodes are ready
@@ -49,6 +61,9 @@ func _ready():
 		print("❌ Main label not found! Looking for any label with 'main' in the name...")
 		main_label = find_node_containing_name("main")
 	
+	# Collect all main game elements to hide during popup
+	collect_game_elements()
+	
 	# Connect all color buttons
 	var color_buttons = get_tree().get_nodes_in_group("color_buttons")
 	for button in color_buttons:
@@ -59,6 +74,7 @@ func _ready():
 	
 	# Start game
 	start_timer()
+	Global.start_time = Time.get_ticks_msec()
 	
 	# Debug collision shapes
 	debug_draw_polygon_bounds()
@@ -75,6 +91,24 @@ func _ready():
 		var all_polygons = get_tree().get_nodes_in_group("colorable_polygons")
 		print("Total polygons in scene: ", all_polygons.size())
 	print("========================\n")
+
+# ---------------- COLLECT GAME ELEMENTS ----------------
+func collect_game_elements():
+	# Hide all direct children EXCEPT the background "Bg" TextureRect
+	for child in get_children():
+		# Skip popup instances
+		if child.name.contains("Complete") or child.name.contains("Retry"):
+			continue
+		
+		# KEEP the background TextureRect called "Bg" visible
+		if child.name == "Bg" and child is TextureRect:
+			print("Keeping background TextureRect 'Bg' visible during popup")
+			continue
+		
+		# Hide everything else
+		game_elements.append(child)
+	
+	print("Collected ", game_elements.size(), " game elements to hide during popup (keeping 'Bg' visible)")
 
 # ---------------- INDIVIDUAL LABEL MANAGEMENT ----------------
 # This function is called by the polygon when it gets colored
@@ -110,13 +144,13 @@ func on_polygon_reset(polygon_unique_id: String):
 func start_timer() -> void:
 	print("🕐 Starting timer...")
 	if timer_label:
-		timer_label.text = "⏱️ 30s"
+		timer_label.text = "⏱️ 15s"
 		timer_label.visible = true
 		print("✅ Timer label set to: ", timer_label.text)
 	else:
 		print("❌ Timer label not found!")
 		
-	countdown = 30
+	countdown = 15
 	timer_active = true
 	game_completed = false
 	
@@ -154,7 +188,10 @@ func time_up():
 		main_label.text = "⏰ Time's up!"
 		main_label.modulate = Color.RED
 	timer_active = false
-	game_over()
+	# Save progress as failed and show retry popup
+	ProgressManager.save_progress("art", false)
+	Global.refresh_everything_after_stage_completion("art", false)
+	game_over(false)  # Show retry popup when time runs out
 
 # ---------------- DRAG & DROP LOGIC ----------------
 func _on_color_button_pressed(button: TextureButton):
@@ -345,7 +382,7 @@ func win_game():
 	game_completed = true
 	timer_active = false
 	
-	var completion_time = 30 - countdown
+	var completion_time = 15 - countdown
 	
 	if main_label:
 		main_label.text = "✅ Done!"
@@ -355,7 +392,48 @@ func win_game():
 		timer_label.text = "✅ Done in " + str(completion_time) + "s"
 		timer_label.modulate = Color.GREEN
 	
-	show_celebration_effects()
+	# Save progress as successful
+	ProgressManager.save_progress("art", true)
+	Global.refresh_everything_after_stage_completion("art", true)
+	# Show appropriate popup based on completion time
+	game_over(true)
+
+# ---------------- POPUP SYSTEM ----------------
+func game_over(success: bool):
+	print("Game over called with success: ", success)
+	
+	# Hide all game elements
+	hide_game_elements()
+	
+	# Choose appropriate popup scene based on success and performance
+	if success:
+		# Determine star rating based on remaining time
+		if countdown >= 10:  # Completed with 10+ seconds remaining
+			popup_instance = complete3_scene.instantiate()
+		elif countdown >= 5:  # Completed with 5+ seconds remaining
+			popup_instance = complete2_scene.instantiate()
+		else:  # Completed with less than 5 seconds remaining
+			popup_instance = complete1_scene.instantiate()
+	else:
+		# Failed (time ran out)
+		popup_instance = retry_scene.instantiate()
+	
+	# Add popup to the scene tree
+	if popup_instance:
+		get_tree().current_scene.add_child(popup_instance)
+		print("Popup instantiated and added to scene")
+
+func hide_game_elements():
+	# Hide all collected game elements
+	for element in game_elements:
+		if element and is_instance_valid(element):
+			element.visible = false
+
+func show_game_elements():
+	# Show all collected game elements (for restart)
+	for element in game_elements:
+		if element and is_instance_valid(element):
+			element.visible = true
 
 # Helper function to get all polygons in a node
 func get_all_polygons_in_node(node: Node) -> Array:
@@ -374,7 +452,7 @@ func get_polygon_count() -> int:
 		return 0
 	return get_all_polygons_in_node(target_node).size()
 
-func game_over():
+func time_up_old():
 	print("Game Over – Time's up!")
 	game_completed = true
 	show_game_over_effects()
@@ -415,10 +493,18 @@ func restart_game():
 	print("🔄 Restarting game...")
 	game_completed = false
 	timer_active = false
-	countdown = 30
+	countdown = 15
+	
+	# Remove existing popup
+	if popup_instance and is_instance_valid(popup_instance):
+		popup_instance.queue_free()
+		popup_instance = null
+	
+	# Show game elements again
+	show_game_elements()
 	
 	if timer_label:
-		timer_label.text = "⏱️ 30s"
+		timer_label.text = "⏱️ 15s"
 		timer_label.modulate = Color.WHITE
 		timer_label.visible = true
 	if main_label:

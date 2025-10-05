@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://modwddsugd0m"]
+
+[ext_resource type="Script" uid="uid://c6fwa87ebm22o" path="res://rewards/rewardscript/rewards_a.gd" id="1_x8ht2"]
+[ext_resource type="Texture2D" uid="uid://doh371opjpeu" path="res://rewards/rewardpieces/MathEbg (4).png" id="2_qo8kc"]
+[ext_resource type="Script" uid="uid://cm8iweikl58rl" path="res://reward scene/board.gd" id="7_oipxb"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x8ht2")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_qo8kc")
+
+[node name="Board" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -6.0
+offset_right = -3.0
+offset_bottom = -229.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_oipxb")
+
+[node name="StickerContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_top = 788.0
+offset_right = 1907.0
+offset_bottom = 1082.0
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
+
+[node name="StickerGrid" type="GridContainer" parent="StickerContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 16

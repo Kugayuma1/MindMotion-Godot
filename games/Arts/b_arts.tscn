@@ -1,6 +1,7 @@
-[gd_scene load_steps=32 format=3 uid="uid://cmxfxje2enjmc"]
+[gd_scene load_steps=35 format=3 uid="uid://cmxfxje2enjmc"]
 
 [ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_hjm35"]
+[ext_resource type="Script" uid="uid://cejuv3u8ksju7" path="res://games_script/Arts/b_arts.gd" id="1_xlvnm"]
 [ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="2_6he3h"]
 [ext_resource type="Script" uid="uid://d15hb7to3hva3" path="res://node_2d_2.gd" id="3_gumnl"]
 [ext_resource type="Script" uid="uid://csjqrlsu1yaiw" path="res://polygon_2d.gd" id="4_v33d3"]
@@ -11,13 +12,10 @@
 [ext_resource type="Script" uid="uid://cfifbi42vus1a" path="res://polygon_2d_6.gd" id="9_fankn"]
 [ext_resource type="Script" uid="uid://cbvycqtjd457r" path="res://polygon_2d_7.gd" id="10_xnq6q"]
 [ext_resource type="Script" uid="uid://bnsoojhoy0atc" path="res://polygon_2d_8.gd" id="11_qtsj3"]
-[ext_resource type="Texture2D" uid="uid://c0o18p3vnkr1l" path="res://Game Assets/Arts/Red.png" id="12_dqxce"]
 [ext_resource type="Script" uid="uid://dd2hl5jffy827" path="res://games_script/Arts/LetterA/texture_button.gd" id="13_r5r0e"]
-[ext_resource type="Texture2D" uid="uid://b78ibc2kn5i7i" path="res://Game Assets/Arts/Blue.png" id="14_231rb"]
 [ext_resource type="Script" uid="uid://r5eur67urdng" path="res://games_script/Arts/LetterA/texture_button_3.gd" id="15_1n4fr"]
-[ext_resource type="Texture2D" uid="uid://bfy5xt28jb22w" path="res://Game Assets/Arts/Yellow.png" id="16_tgtfs"]
 [ext_resource type="Script" uid="uid://ckenedttsudc5" path="res://games_script/Arts/LetterA/texture_button_2.gd" id="17_cu0wi"]
-[ext_resource type="Texture2D" uid="uid://bvr3c0k1ony61" path="res://Game Assets/Arts/Black.png" id="18_bn038"]
+[ext_resource type="Texture2D" uid="uid://dar0xbmdwsoyw" path="res://Game Assets/Arts/black.png" id="18_bn038"]
 [ext_resource type="Script" uid="uid://vqbo1cv8ma7d" path="res://games_script/Arts/LetterA/texture_button_4.gd" id="19_5gd3a"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="20_v3yyl"]
 [ext_resource type="Texture2D" uid="uid://b4fcft4nhtcia" path="res://Game Assets/Arts/subt 1.png" id="21_y60mp"]
@@ -29,18 +27,34 @@
 [ext_resource type="Script" uid="uid://cpaj2cp8lkam2" path="res://games/Arts/y_2_3.gd" id="27_r5r0e"]
 [ext_resource type="Script" uid="uid://cghtc5oersgrv" path="res://games/Arts/y_2_2.gd" id="28_231rb"]
 [ext_resource type="Script" uid="uid://lvxfgqhoo4ua" path="res://games/Arts/y_2_1.gd" id="29_1n4fr"]
+[ext_resource type="AudioStream" uid="uid://btup4le1jicaq" path="res://Game Assets/Arts/bgm/artsbgm.mp3" id="30_b4myp"]
 [ext_resource type="Script" uid="uid://xfoxuo8gipre" path="res://games/Arts/b_3_2.gd" id="30_tgtfs"]
 [ext_resource type="Script" uid="uid://dj40fobvghore" path="res://games/Arts/b_3_1.gd" id="31_cu0wi"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="31_fankn"]
 
-[node name="Control" type="Control"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_miyh4"]
+load_path = "res://.godot/imported/red.png-dfa5a4939a447e636d902ca7ea351061.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xlvnm"]
+load_path = "res://.godot/imported/blue.png-3dded87510c145240332f20fd2874d1a.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b4myp"]
+load_path = "res://.godot/imported/yellow.png-422e0e7dcaefe23c87793bdbd026301c.ctex"
+
+[node name="Control2" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+script = ExtResource("1_xlvnm")
 
 [node name="Bg" type="TextureRect" parent="."]
+clip_contents = true
+layout_direction = 4
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -57,6 +71,7 @@ offset_top = 122.0
 offset_right = 1654.0
 offset_bottom = 999.0
 texture = ExtResource("2_6he3h")
+expand_mode = 1
 
 [node name="Node2D2" type="Node2D" parent="."]
 position = Vector2(468, -73)
@@ -264,61 +279,70 @@ texture = ExtResource("21_y60mp")
 
 [node name="TextureButton" type="TextureButton" parent="Node2D2/Node2D1"]
 z_index = 15
-anchors_preset = -1
-anchor_left = 0.23
-anchor_top = 0.687
-anchor_right = 0.298
-anchor_bottom = 1.0
-offset_left = 103.0
-offset_top = 903.0
-offset_right = 412.0
-offset_bottom = 1193.0
-texture_normal = ExtResource("12_dqxce")
+custom_minimum_size = Vector2(350, 150)
+offset_left = 1104.0
+offset_top = 422.0
+offset_right = 1454.0
+offset_bottom = 572.0
+texture_normal = SubResource("CompressedTexture2D_miyh4")
+ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("13_r5r0e")
 
 [node name="TextureButton3" type="TextureButton" parent="Node2D2/Node2D1"]
 z_index = 15
-anchors_preset = -1
-anchor_left = 0.418
-anchor_top = 0.76
-anchor_right = 0.545
-anchor_bottom = 1.0
-offset_left = 484.0
-offset_top = 901.0
-offset_right = 758.0
-offset_bottom = 1194.0
-texture_normal = ExtResource("14_231rb")
+custom_minimum_size = Vector2(350, 150)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1107.0
+offset_top = 688.0
+offset_right = 1457.0
+offset_bottom = 838.0
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = SubResource("CompressedTexture2D_xlvnm")
+ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("15_1n4fr")
 
 [node name="TextureButton2" type="TextureButton" parent="Node2D2/Node2D1"]
 z_index = 15
-anchors_preset = -1
-anchor_left = 0.311
-anchor_top = 0.757
-anchor_right = 0.439
-anchor_bottom = 1.0
-offset_left = 284.0
-offset_top = 899.0
-offset_right = 599.0
-offset_bottom = 1194.0
-texture_normal = ExtResource("16_tgtfs")
+custom_minimum_size = Vector2(350, 150)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1102.0
+offset_top = 562.0
+offset_right = 1452.0
+offset_bottom = 712.0
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = SubResource("CompressedTexture2D_b4myp")
+ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("17_cu0wi")
 
 [node name="TextureButton4" type="TextureButton" parent="Node2D2/Node2D1"]
 z_index = 15
-anchors_preset = -1
-anchor_left = 0.527
-anchor_top = 0.755
-anchor_right = 0.655
-anchor_bottom = 1.0
-offset_left = 665.0
-offset_top = 902.0
-offset_right = 945.0
-offset_bottom = 1193.0
+custom_minimum_size = Vector2(350, 150)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1107.0
+offset_top = 826.0
+offset_right = 1457.0
+offset_bottom = 976.0
+grow_horizontal = 0
+grow_vertical = 2
 texture_normal = ExtResource("18_bn038")
+ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("19_5gd3a")
 
@@ -338,10 +362,10 @@ justification_flags = 171
 
 [node name="TimerLabel" type="Label" parent="Node2D2"]
 z_index = 30
-offset_left = 1214.0
-offset_top = 105.0
-offset_right = 1445.0
-offset_bottom = 289.0
+offset_left = 1208.0
+offset_top = 108.0
+offset_right = 1439.0
+offset_bottom = 292.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("22_rvfpq")
 theme_override_font_sizes/font_size = 50
@@ -373,10 +397,32 @@ texture = ExtResource("23_l1yr3")
 expand_mode = 1
 
 [node name="TextureRect5" type="TextureRect" parent="Control"]
-layout_mode = 0
-offset_left = 1688.0
-offset_top = 7.0
-offset_right = 1914.0
-offset_bottom = 222.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 45.05
+anchor_top = 2.912
+anchor_right = 45.05
+anchor_bottom = 2.912
+offset_left = -117.0
+offset_top = -105.48
+offset_right = 109.0
+offset_bottom = 109.52
+grow_horizontal = 0
 texture = ExtResource("20_v3yyl")
 expand_mode = 1
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("30_b4myp")
+volume_db = 10.0
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 45.0
+offset_right = 149.0
+offset_bottom = 154.0
+texture_normal = ExtResource("31_fankn")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

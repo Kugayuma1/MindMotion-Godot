@@ -25,34 +25,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Left Wave" type="TextureRect" parent="."]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -624.0
-offset_right = 657.0
-offset_bottom = 620.0
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 646.0
 grow_vertical = 2
 texture = ExtResource("1_ay21k")
-expand_mode = 5
-stretch_mode = 5
+expand_mode = 1
+stretch_mode = 6
 
-[node name="TextureRect2" type="TextureRect" parent="."]
+[node name="Right Wave" type="TextureRect" parent="."]
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = 11
 anchor_left = 1.0
-anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -608.0
-offset_top = -663.0
-offset_bottom = 665.0
+anchor_bottom = 1.0
+offset_left = -572.0
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("2_hhgdh")
-expand_mode = 5
-stretch_mode = 5
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Logo" type="TextureRect" parent="."]
 layout_mode = 1

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://btup4le1jicaq"
+path="res://.godot/imported/artsbgm.mp3-d4a9da072915d10d09e85fff27f66266.mp3str"
+
+[deps]
+
+source_file="res://Game Assets/Arts/bgm/artsbgm.mp3"
+dest_files=["res://.godot/imported/artsbgm.mp3-d4a9da072915d10d09e85fff27f66266.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

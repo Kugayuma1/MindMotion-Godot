@@ -441,3 +441,7 @@ func _on_back_pressed():
 func _exit_tree():
 	if Global.letter_cache_updated.is_connected(_on_letter_cache_updated):
 		Global.letter_cache_updated.disconnect(_on_letter_cache_updated)
+
+
+func _on_trophy_pressed() -> void:
+	get_tree().change_scene_to_file("res://reward scene/rewards_a.tscn")
