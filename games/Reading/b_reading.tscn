@@ -1,17 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://j0vtwj1bsc8x"]
+[gd_scene load_steps=10 format=3 uid="uid://b5ybvddvho38c"]
 
-[ext_resource type="Script" uid="uid://bnpkrdts57o54" path="res://games_script/Reading/b_reading.gd" id="1_f2fe5"]
-[ext_resource type="Texture2D" uid="uid://cryn74xru6pl3" path="res://Game Bg/as (1280 x 800 px) (10).png" id="2_f2fe5"]
-[ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="3_3pwhd"]
-[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="4_qljmb"]
-[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="5_jdrnc"]
-[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="6_87e88"]
-[ext_resource type="Texture2D" uid="uid://bcd0j56cd85x0" path="res://Game Assets/Reading Assets/Group 147.png" id="7_f2fe5"]
-[ext_resource type="Texture2D" uid="uid://v3jsp4aagm5e" path="res://Game Assets/Reading Assets/Group 289737.png" id="8_jdrnc"]
-[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="9_3vv8s"]
-[ext_resource type="Texture2D" uid="uid://hhrp1ial4en1" path="res://Game Assets/as (1280 x 800 px) (11) 4.png" id="10_hn2c4"]
-[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="11_jdrnc"]
-[ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="12_3pwhd"]
+[ext_resource type="Script" uid="uid://bijx48k63jeda" path="res://games_script/Reading/b_reading.gd" id="1_mkf3m"]
+[ext_resource type="Texture2D" uid="uid://dkb5uaqbfwkw8" path="res://Game Assets/Reading Assets/Logoqzmd/Logoqz.png" id="1_whjan"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="2_mkf3m"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_yy8xk"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="4_ku71x"]
+[ext_resource type="Texture2D" uid="uid://dryaecrim14cv" path="res://Game Assets/Reading Assets/Logoqzmd/Group 289738.png" id="5_17c4t"]
+[ext_resource type="Texture2D" uid="uid://hhrp1ial4en1" path="res://Game Assets/as (1280 x 800 px) (11) 4.png" id="6_ld4jf"]
+[ext_resource type="Texture2D" uid="uid://cck863lth1t51" path="res://Game Assets/Reading Assets/Logoqzmd/Group 42.png" id="7_uxy6p"]
+[ext_resource type="Texture2D" uid="uid://bxq5j0heyknjq" path="res://Game Assets/Reading Assets/Logoqzmd/Rectangle 86.png" id="8_bik03"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -20,16 +17,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_f2fe5")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.572152, 0.894521, 1, 1)
+script = ExtResource("1_mkf3m")
 
 [node name="GameBG" type="TextureRect" parent="."]
 layout_mode = 1
@@ -38,418 +26,516 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("2_f2fe5")
-
-[node name="AssetsBG" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -568.0
-offset_top = -599.0
-offset_right = 624.0
-offset_bottom = 663.0
-texture = ExtResource("3_3pwhd")
-expand_mode = 1
-
-[node name="Instruction" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.492
-anchor_top = 0.051
-anchor_right = 0.492
-anchor_bottom = 0.051
-offset_left = -231.64
-offset_top = -0.0800018
-offset_right = 230.36
-offset_bottom = 108.92
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_qljmb")
-theme_override_font_sizes/font_size = 45
-text = "Instruction"
-horizontal_alignment = 1
-autowrap_mode = 3
+texture = ExtResource("1_whjan")
 
 [node name="Time" type="TextureRect" parent="."]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -284.0
-offset_top = 29.0
-offset_right = -26.0
-offset_bottom = 287.0
-grow_horizontal = 0
-texture = ExtResource("5_jdrnc")
+anchors_preset = -1
+anchor_left = 0.978
+anchor_top = 0.029
+anchor_right = 0.978
+anchor_bottom = 0.029
+offset_left = -257.76
+offset_top = -0.320002
+offset_right = 0.239868
+offset_bottom = 257.68
+mouse_filter = 2
+texture = ExtResource("2_mkf3m")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="Time"]
 layout_mode = 0
-offset_left = 76.0
-offset_top = 113.0
-offset_right = 181.0
-offset_bottom = 191.0
+offset_left = 94.0
+offset_top = 105.0
+offset_right = 161.0
+offset_bottom = 181.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_qljmb")
+theme_override_fonts/font = ExtResource("3_yy8xk")
 theme_override_font_sizes/font_size = 45
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Holder" type="TextureRect" parent="."]
+[node name="ItemHolder" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.495
-anchor_top = 1.0
-anchor_right = 0.495
-anchor_bottom = 1.0
-offset_left = -507.4
-offset_top = -465.0
-offset_right = 505.6
-offset_bottom = -4.0
-texture = ExtResource("6_87e88")
+anchor_left = 0.49
+anchor_top = -0.08
+anchor_right = 0.49
+anchor_bottom = -0.08
+offset_left = -244.8
+offset_top = 0.400009
+offset_right = 246.2
+offset_bottom = 701.4
+texture = ExtResource("5_17c4t")
+
+[node name="TextureRect" type="TextureRect" parent="ItemHolder"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.511
+anchor_top = 0.651
+anchor_right = 0.511
+anchor_bottom = 0.651
+offset_left = -146.901
+offset_top = -137.351
+offset_right = 147.099
+offset_bottom = 137.649
+texture = ExtResource("6_ld4jf")
 expand_mode = 1
 
-[node name="Button1" type="TextureButton" parent="."]
+[node name="LetterHolders" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FirstLetter" type="TextureRect" parent="LetterHolders"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.304
-anchor_top = 0.631
-anchor_right = 0.304
-anchor_bottom = 0.631
-offset_left = -0.680054
-offset_top = -0.480042
-offset_right = 165.32
-offset_bottom = 156.52
-texture_normal = ExtResource("7_f2fe5")
-texture_pressed = ExtResource("8_jdrnc")
-stretch_mode = 0
+anchor_left = 0.363
+anchor_top = 0.625
+anchor_right = 0.363
+anchor_bottom = 0.625
+offset_left = -42.96
+offset_top = -43.0
+offset_right = 42.04
+offset_bottom = 42.0
+texture = ExtResource("7_uxy6p")
+expand_mode = 1
 
-[node name="Label" type="Label" parent="Button1"]
-layout_mode = 0
-offset_left = 39.0
-offset_top = 34.0
-offset_right = 123.0
-offset_bottom = 127.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("9_3vv8s")
-theme_override_font_sizes/font_size = 90
-text = "G"
+[node name="Label" type="Label" parent="LetterHolders/FirstLetter"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+offset_left = -22.01
+offset_top = -29.5
+offset_right = 21.99
+offset_bottom = 32.5
+theme_override_colors/font_color = Color(0.564706, 0.298039, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_yy8xk")
+theme_override_font_sizes/font_size = 35
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button2" type="TextureButton" parent="."]
+[node name="SecondLetter" type="TextureRect" parent="LetterHolders"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.41
-anchor_top = 0.631
-anchor_right = 0.41
-anchor_bottom = 0.631
-offset_left = 0.799927
-offset_top = -0.480042
-offset_right = 166.8
-offset_bottom = 156.52
-texture_normal = ExtResource("7_f2fe5")
-texture_pressed = ExtResource("8_jdrnc")
-stretch_mode = 0
+anchor_left = 0.415
+anchor_top = 0.625
+anchor_right = 0.415
+anchor_bottom = 0.625
+offset_left = -42.8
+offset_top = -43.0
+offset_right = 42.2
+offset_bottom = 42.0
+texture = ExtResource("7_uxy6p")
+expand_mode = 1
 
-[node name="Label" type="Label" parent="Button2"]
-layout_mode = 0
-offset_left = 39.0
-offset_top = 34.0
-offset_right = 123.0
-offset_bottom = 127.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("9_3vv8s")
-theme_override_font_sizes/font_size = 90
-text = "H"
+[node name="Label" type="Label" parent="LetterHolders/SecondLetter"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+offset_left = -22.01
+offset_top = -29.5
+offset_right = 21.99
+offset_bottom = 32.5
+theme_override_colors/font_color = Color(0.564706, 0.298039, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_yy8xk")
+theme_override_font_sizes/font_size = 35
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button3" type="TextureButton" parent="."]
+[node name="ThirdLetter" type="TextureRect" parent="LetterHolders"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.507
-anchor_top = 0.631
-anchor_right = 0.507
-anchor_bottom = 0.631
-offset_left = 0.559937
-offset_top = -0.480042
-offset_right = 166.56
-offset_bottom = 156.52
-texture_normal = ExtResource("7_f2fe5")
-texture_pressed = ExtResource("8_jdrnc")
-stretch_mode = 0
+anchor_left = 0.468
+anchor_top = 0.625
+anchor_right = 0.468
+anchor_bottom = 0.625
+offset_left = -42.5601
+offset_top = -43.0
+offset_right = 42.4399
+offset_bottom = 42.0
+texture = ExtResource("7_uxy6p")
+expand_mode = 1
 
-[node name="Label" type="Label" parent="Button3"]
-layout_mode = 0
-offset_left = 39.0
-offset_top = 34.0
-offset_right = 123.0
-offset_bottom = 127.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("9_3vv8s")
-theme_override_font_sizes/font_size = 90
-text = "U"
+[node name="Label" type="Label" parent="LetterHolders/ThirdLetter"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+offset_left = -22.01
+offset_top = -29.5
+offset_right = 21.99
+offset_bottom = 32.5
+theme_override_colors/font_color = Color(0.564706, 0.298039, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_yy8xk")
+theme_override_font_sizes/font_size = 35
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button4" type="TextureButton" parent="."]
+[node name="FourthLetter" type="TextureRect" parent="LetterHolders"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.606
-anchor_top = 0.631
-anchor_right = 0.606
-anchor_bottom = 0.631
-offset_left = -0.52002
-offset_top = -0.480042
-offset_right = 165.48
-offset_bottom = 156.52
-texture_normal = ExtResource("7_f2fe5")
-texture_pressed = ExtResource("8_jdrnc")
-stretch_mode = 0
+anchor_left = 0.52
+anchor_top = 0.625
+anchor_right = 0.52
+anchor_bottom = 0.625
+offset_left = -42.4001
+offset_top = -43.0
+offset_right = 42.5999
+offset_bottom = 42.0
+texture = ExtResource("7_uxy6p")
+expand_mode = 1
 
-[node name="Label" type="Label" parent="Button4"]
-layout_mode = 0
-offset_left = 39.0
-offset_top = 34.0
-offset_right = 123.0
-offset_bottom = 127.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("9_3vv8s")
-theme_override_font_sizes/font_size = 90
-text = "E"
+[node name="Label" type="Label" parent="LetterHolders/FourthLetter"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+offset_left = -22.01
+offset_top = -29.5
+offset_right = 21.99
+offset_bottom = 32.5
+theme_override_colors/font_color = Color(0.564706, 0.298039, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_yy8xk")
+theme_override_font_sizes/font_size = 35
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button5" type="TextureButton" parent="."]
+[node name="FifthLetter" type="TextureRect" parent="LetterHolders"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.304
-anchor_top = 0.785
-anchor_right = 0.304
-anchor_bottom = 0.785
-offset_left = -0.680054
-offset_top = 0.199951
-offset_right = 165.32
-offset_bottom = 157.2
-texture_normal = ExtResource("7_f2fe5")
-texture_pressed = ExtResource("8_jdrnc")
-stretch_mode = 0
+anchor_left = 0.573
+anchor_top = 0.625
+anchor_right = 0.573
+anchor_bottom = 0.625
+offset_left = -42.16
+offset_top = -43.0
+offset_right = 42.84
+offset_bottom = 42.0
+texture = ExtResource("7_uxy6p")
+expand_mode = 1
 
-[node name="Label" type="Label" parent="Button5"]
-layout_mode = 0
-offset_left = 39.0
-offset_top = 34.0
-offset_right = 123.0
-offset_bottom = 127.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("9_3vv8s")
-theme_override_font_sizes/font_size = 90
+[node name="Label" type="Label" parent="LetterHolders/FifthLetter"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+offset_left = -22.01
+offset_top = -29.5
+offset_right = 21.99
+offset_bottom = 32.5
+theme_override_colors/font_color = Color(0.564706, 0.298039, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_yy8xk")
+theme_override_font_sizes/font_size = 35
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SixthLetter" type="TextureRect" parent="LetterHolders"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.625
+anchor_top = 0.625
+anchor_right = 0.625
+anchor_bottom = 0.625
+offset_left = -42.0
+offset_top = -43.0
+offset_right = 43.0
+offset_bottom = 42.0
+texture = ExtResource("7_uxy6p")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="LetterHolders/SixthLetter"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+offset_left = -22.01
+offset_top = -29.5
+offset_right = 21.99
+offset_bottom = 32.5
+theme_override_colors/font_color = Color(0.564706, 0.298039, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_yy8xk")
+theme_override_font_sizes/font_size = 35
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LetterButtons" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LetterButton" type="TextureRect" parent="LetterButtons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 18.437
+anchor_top = 20.137
+anchor_right = 18.437
+anchor_bottom = 20.137
+offset_left = -58.48
+offset_top = -58.48
+offset_right = 58.52
+offset_bottom = 58.52
+texture = ExtResource("8_bik03")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="LetterButtons/LetterButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+offset_left = -22.202
+offset_top = -37.5
+offset_right = 21.798
+offset_bottom = 37.5
+theme_override_colors/font_color = Color(0.564706, 0.298039, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_yy8xk")
+theme_override_font_sizes/font_size = 65
+text = "C"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LetterButton2" type="TextureRect" parent="LetterButtons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 21.962
+anchor_top = 20.162
+anchor_right = 21.962
+anchor_bottom = 20.162
+offset_left = -58.4801
+offset_top = -58.48
+offset_right = 58.5199
+offset_bottom = 58.52
+texture = ExtResource("8_bik03")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="LetterButtons/LetterButton2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+offset_left = -22.202
+offset_top = -37.5
+offset_right = 21.798
+offset_bottom = 37.5
+theme_override_colors/font_color = Color(0.564706, 0.298039, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_yy8xk")
+theme_override_font_sizes/font_size = 65
 text = "B"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button6" type="TextureButton" parent="."]
+[node name="LetterButton3" type="TextureRect" parent="LetterButtons"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.411
-anchor_top = 0.787
-anchor_right = 0.411
-anchor_bottom = 0.787
-offset_left = 0.880005
-offset_top = 0.039917
-offset_right = 166.88
-offset_bottom = 157.04
-texture_normal = ExtResource("7_f2fe5")
-texture_pressed = ExtResource("8_jdrnc")
-stretch_mode = 0
+anchor_left = 25.487
+anchor_top = 20.187
+anchor_right = 25.487
+anchor_bottom = 20.187
+offset_left = -58.48
+offset_top = -58.48
+offset_right = 58.52
+offset_bottom = 58.52
+texture = ExtResource("8_bik03")
+expand_mode = 1
 
-[node name="Label" type="Label" parent="Button6"]
-layout_mode = 0
-offset_left = 39.0
-offset_top = 34.0
-offset_right = 123.0
-offset_bottom = 127.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("9_3vv8s")
-theme_override_font_sizes/font_size = 90
+[node name="Label" type="Label" parent="LetterButtons/LetterButton3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+offset_left = -22.202
+offset_top = -37.5
+offset_right = 21.798
+offset_bottom = 37.5
+theme_override_colors/font_color = Color(0.564706, 0.298039, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_yy8xk")
+theme_override_font_sizes/font_size = 65
 text = "R"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button7" type="TextureButton" parent="."]
+[node name="LetterButton4" type="TextureRect" parent="LetterButtons"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.511
-anchor_top = 0.789
-anchor_right = 0.511
-anchor_bottom = 0.789
-offset_left = -0.120056
-offset_top = -0.120056
-offset_right = 165.88
-offset_bottom = 156.88
-texture_normal = ExtResource("7_f2fe5")
-texture_pressed = ExtResource("8_jdrnc")
-stretch_mode = 0
+anchor_left = 29.012
+anchor_top = 20.212
+anchor_right = 29.012
+anchor_bottom = 20.212
+offset_left = -58.48
+offset_top = -58.4801
+offset_right = 58.52
+offset_bottom = 58.5199
+texture = ExtResource("8_bik03")
+expand_mode = 1
 
-[node name="Label" type="Label" parent="Button7"]
-layout_mode = 0
-offset_left = 39.0
-offset_top = 34.0
-offset_right = 123.0
-offset_bottom = 127.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("9_3vv8s")
-theme_override_font_sizes/font_size = 90
-text = "M"
+[node name="Label" type="Label" parent="LetterButtons/LetterButton4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+offset_left = -22.202
+offset_top = -37.5
+offset_right = 21.798
+offset_bottom = 37.5
+theme_override_colors/font_color = Color(0.564706, 0.298039, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_yy8xk")
+theme_override_font_sizes/font_size = 65
+text = "U"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button8" type="TextureButton" parent="."]
+[node name="LetterButton5" type="TextureRect" parent="LetterButtons"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.608
-anchor_top = 0.792
-anchor_right = 0.608
-anchor_bottom = 0.792
-offset_left = 0.639893
-offset_top = -0.360046
-offset_right = 166.64
-offset_bottom = 156.64
-texture_normal = ExtResource("7_f2fe5")
-texture_pressed = ExtResource("8_jdrnc")
-stretch_mode = 0
+anchor_left = 18.437
+anchor_top = 23.637
+anchor_right = 18.437
+anchor_bottom = 23.637
+offset_left = -58.48
+offset_top = -58.48
+offset_right = 58.52
+offset_bottom = 58.52
+texture = ExtResource("8_bik03")
+expand_mode = 1
 
-[node name="Label" type="Label" parent="Button8"]
-layout_mode = 0
-offset_left = 39.0
-offset_top = 34.0
-offset_right = 123.0
-offset_bottom = 127.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("9_3vv8s")
-theme_override_font_sizes/font_size = 90
+[node name="Label" type="Label" parent="LetterButtons/LetterButton5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+offset_left = -22.202
+offset_top = -37.5
+offset_right = 21.798
+offset_bottom = 37.5
+theme_override_colors/font_color = Color(0.564706, 0.298039, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_yy8xk")
+theme_override_font_sizes/font_size = 65
+text = "A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LetterButton6" type="TextureRect" parent="LetterButtons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 21.962
+anchor_top = 23.662
+anchor_right = 21.962
+anchor_bottom = 23.662
+offset_left = -58.4801
+offset_top = -58.48
+offset_right = 58.5199
+offset_bottom = 58.52
+texture = ExtResource("8_bik03")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="LetterButtons/LetterButton6"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+offset_left = -22.202
+offset_top = -37.5
+offset_right = 21.798
+offset_bottom = 37.5
+theme_override_colors/font_color = Color(0.564706, 0.298039, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_yy8xk")
+theme_override_font_sizes/font_size = 65
 text = "R"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ObjectBurger" type="TextureRect" parent="."]
+[node name="LetterButton7" type="TextureRect" parent="LetterButtons"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.405
-anchor_top = 0.164
-anchor_right = 0.405
-anchor_bottom = 0.164
-offset_left = -0.600037
-offset_top = -0.12001
-offset_right = 340.4
-offset_bottom = 318.88
-texture = ExtResource("10_hn2c4")
+anchor_left = 25.537
+anchor_top = 23.662
+anchor_right = 25.537
+anchor_bottom = 23.662
+offset_left = -58.48
+offset_top = -58.48
+offset_right = 58.52
+offset_bottom = 58.52
+texture = ExtResource("8_bik03")
+expand_mode = 1
 
-[node name="FirstLtr" type="Label" parent="."]
+[node name="Label" type="Label" parent="LetterButtons/LetterButton7"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.368
-anchor_top = 0.433
-anchor_right = 0.368
-anchor_bottom = 0.433
-offset_left = 0.439941
-offset_top = 0.359955
-offset_right = 79.4399
-offset_bottom = 109.36
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_qljmb")
-theme_override_font_sizes/font_size = 95
-text = "_"
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+offset_left = -22.202
+offset_top = -37.5
+offset_right = 21.798
+offset_bottom = 37.5
+theme_override_colors/font_color = Color(0.564706, 0.298039, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_yy8xk")
+theme_override_font_sizes/font_size = 65
+text = "G"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ScndLtr" type="Label" parent="."]
+[node name="LetterButton8" type="TextureRect" parent="LetterButtons"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.413
-anchor_top = 0.436
-anchor_right = 0.413
-anchor_bottom = 0.436
-offset_left = 0.039978
-offset_top = 0.119965
-offset_right = 79.04
-offset_bottom = 109.12
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_qljmb")
-theme_override_font_sizes/font_size = 95
-text = "_"
-horizontal_alignment = 1
+anchor_left = 29.062
+anchor_top = 23.687
+anchor_right = 29.062
+anchor_bottom = 23.687
+offset_left = -58.4801
+offset_top = -58.48
+offset_right = 58.5199
+offset_bottom = 58.52
+texture = ExtResource("8_bik03")
+expand_mode = 1
 
-[node name="ThrdLtr" type="Label" parent="."]
+[node name="Label" type="Label" parent="LetterButtons/LetterButton8"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.454
-anchor_top = 0.436
-anchor_right = 0.454
-anchor_bottom = 0.436
-offset_left = -0.680054
-offset_top = 0.119965
-offset_right = 78.3199
-offset_bottom = 109.12
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_qljmb")
-theme_override_font_sizes/font_size = 95
-text = "_"
+anchor_left = 0.506
+anchor_top = 0.5
+anchor_right = 0.506
+anchor_bottom = 0.5
+offset_left = -22.202
+offset_top = -37.5
+offset_right = 21.798
+offset_bottom = 37.5
+theme_override_colors/font_color = Color(0.564706, 0.298039, 0.145098, 1)
+theme_override_fonts/font = ExtResource("3_yy8xk")
+theme_override_font_sizes/font_size = 65
+text = "E"
 horizontal_alignment = 1
-
-[node name="FrthLtr" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.498
-anchor_top = 0.436
-anchor_right = 0.498
-anchor_bottom = 0.436
-offset_left = 0.839966
-offset_top = 0.119965
-offset_right = 79.84
-offset_bottom = 109.12
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_qljmb")
-theme_override_font_sizes/font_size = 95
-text = "_"
-horizontal_alignment = 1
-
-[node name="FfthLtr" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.542
-anchor_top = 0.436
-anchor_right = 0.542
-anchor_bottom = 0.436
-offset_left = -0.640137
-offset_top = 0.119965
-offset_right = 78.3599
-offset_bottom = 109.12
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_qljmb")
-theme_override_font_sizes/font_size = 95
-text = "_"
-horizontal_alignment = 1
-
-[node name="SixthLtr" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.586
-anchor_top = 0.436
-anchor_right = 0.586
-anchor_bottom = 0.436
-offset_left = 0.880005
-offset_top = 0.119965
-offset_right = 79.88
-offset_bottom = 109.12
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_qljmb")
-theme_override_font_sizes/font_size = 95
-text = "_"
-horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Quitbtn" type="TextureButton" parent="."]
 layout_mode = 1
@@ -462,31 +548,7 @@ offset_left = 0.719994
 offset_top = -0.0400009
 offset_right = 105.72
 offset_bottom = 109.96
-texture_normal = ExtResource("11_jdrnc")
+texture_normal = ExtResource("4_ku71x")
 stretch_mode = 0
 
-[node name="Clearbtn" type="TextureButton" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.668
-anchor_top = 0.5
-anchor_right = 0.668
-anchor_bottom = 0.5
-offset_left = -35.5601
-offset_top = -37.0
-offset_right = 36.4399
-offset_bottom = 37.0
-texture_normal = ExtResource("12_3pwhd")
-ignore_texture_size = true
-stretch_mode = 0
-
-[connection signal="pressed" from="Button1" to="." method="_on_button_1_pressed"]
-[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
-[connection signal="pressed" from="Button3" to="." method="_on_button_3_pressed"]
-[connection signal="pressed" from="Button4" to="." method="_on_button_4_pressed"]
-[connection signal="pressed" from="Button5" to="." method="_on_button_5_pressed"]
-[connection signal="pressed" from="Button6" to="." method="_on_button_6_pressed"]
-[connection signal="pressed" from="Button7" to="." method="_on_button_7_pressed"]
-[connection signal="pressed" from="Button8" to="." method="_on_button_8_pressed"]
 [connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]
-[connection signal="pressed" from="Clearbtn" to="." method="_on_clearbtn_pressed"]

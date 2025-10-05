@@ -1,0 +1,284 @@
+[gd_scene load_steps=17 format=3 uid="uid://nrqgkbkccgcd"]
+
+[ext_resource type="Script" uid="uid://ca35ilqmovxjy" path="res://games_script/finemotor/y_finemotors.gd" id="1_aqfhx"]
+[ext_resource type="Texture2D" uid="uid://b04hm3jpg0kfb" path="res://Game Assets/Fine Motor Assets/BG/27.png" id="1_muks0"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="2_aqfhx"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_gorva"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="4_887wa"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="5_xm1k6"]
+[ext_resource type="Texture2D" uid="uid://cw80twgkuwdj2" path="res://Game Assets/Fine Motor Assets/Group 289733.png" id="6_tl1fg"]
+[ext_resource type="Texture2D" uid="uid://b4dxem1ug0428" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/50.png" id="7_cr6o1"]
+[ext_resource type="Texture2D" uid="uid://cj4p867wbyju8" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/52.png" id="8_aix24"]
+[ext_resource type="Texture2D" uid="uid://7c3l85o7go6x" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/53.png" id="9_ecf2t"]
+[ext_resource type="Texture2D" uid="uid://di6v2t6464e0s" path="res://Game Assets/Fine Motor Assets/16.png" id="10_q0cm4"]
+[ext_resource type="Texture2D" uid="uid://dcf65sregxmo5" path="res://Game Assets/Fine Motor Assets/155.png" id="11_sbeqs"]
+[ext_resource type="Texture2D" uid="uid://wfusaxmcheo6" path="res://Game Assets/Fine Motor Assets/124.png" id="12_u4w1u"]
+[ext_resource type="Texture2D" uid="uid://70qpitp4f8s3" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/31.png" id="13_wt5ap"]
+[ext_resource type="Texture2D" uid="uid://1eml2ts3wlmw" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/51.png" id="14_e134j"]
+[ext_resource type="Texture2D" uid="uid://d4kh0jrstp66f" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/49.png" id="15_4u03p"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aqfhx")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_muks0")
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+texture = ExtResource("2_aqfhx")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_gorva")
+theme_override_font_sizes/font_size = 55
+text = "Drag the Yellow objects to the kid"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.917
+anchor_top = 0.142
+anchor_right = 0.917
+anchor_bottom = 0.142
+offset_left = -128.64
+offset_top = -129.36
+offset_right = 129.36
+offset_bottom = 128.64
+grow_horizontal = 0
+texture = ExtResource("4_887wa")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.494
+anchor_top = 0.554
+anchor_right = 0.494
+anchor_bottom = 0.554
+offset_left = -33.452
+offset_top = -37.932
+offset_right = 33.548
+offset_bottom = 38.068
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_gorva")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("5_xm1k6")
+stretch_mode = 0
+
+[node name="Dropzone" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Kid" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.159
+anchor_top = 0.672
+anchor_right = 0.159
+anchor_bottom = 0.672
+offset_left = -253.28
+offset_top = -441.76
+offset_right = 222.72
+offset_bottom = 339.24
+texture = ExtResource("6_tl1fg")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Dropzone/Kid"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.651
+anchor_top = 0.227
+anchor_right = 0.651
+anchor_bottom = 0.227
+offset_left = -131.903
+offset_top = -44.268
+offset_right = 120.097
+offset_bottom = 33.732
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_gorva")
+theme_override_font_sizes/font_size = 35
+text = "I want yellow"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Draggables" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="YellowToy" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.511
+anchor_top = 0.632
+anchor_right = 0.511
+anchor_bottom = 0.632
+offset_left = -71.1201
+offset_top = -71.5601
+offset_right = 72.8799
+offset_bottom = 72.4399
+texture = ExtResource("7_cr6o1")
+expand_mode = 1
+
+[node name="Decoy" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.516
+anchor_top = 0.806
+anchor_right = 0.516
+anchor_bottom = 0.806
+offset_left = -72.7201
+offset_top = -72.48
+offset_right = 71.2799
+offset_bottom = 71.52
+texture = ExtResource("8_aix24")
+expand_mode = 1
+
+[node name="Decoy2" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.697
+anchor_top = 0.434
+anchor_right = 0.697
+anchor_bottom = 0.434
+offset_left = -71.24
+offset_top = -71.72
+offset_right = 72.76
+offset_bottom = 72.28
+texture = ExtResource("9_ecf2t")
+expand_mode = 1
+
+[node name="Decoy3" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.518
+anchor_top = 0.432
+anchor_right = 0.518
+anchor_bottom = 0.432
+offset_left = -72.56
+offset_top = -71.56
+offset_right = 71.44
+offset_bottom = 72.44
+texture = ExtResource("10_q0cm4")
+expand_mode = 1
+
+[node name="Decoy4" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.335
+anchor_top = 0.627
+anchor_right = 0.335
+anchor_bottom = 0.627
+offset_left = -72.2
+offset_top = -72.16
+offset_right = 71.8
+offset_bottom = 71.84
+texture = ExtResource("11_sbeqs")
+expand_mode = 1
+
+[node name="Decoy5" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.696
+anchor_top = 0.809
+anchor_right = 0.696
+anchor_bottom = 0.809
+offset_left = -71.3201
+offset_top = -71.72
+offset_right = 72.6799
+offset_bottom = 72.28
+texture = ExtResource("12_u4w1u")
+expand_mode = 1
+
+[node name="YellowToy2" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.33
+anchor_top = 0.434
+anchor_right = 0.33
+anchor_bottom = 0.434
+offset_left = -72.6
+offset_top = -71.72
+offset_right = 71.4
+offset_bottom = 72.28
+texture = ExtResource("13_wt5ap")
+expand_mode = 1
+
+[node name="YellowToy3" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.342
+anchor_top = 0.806
+anchor_right = 0.342
+anchor_bottom = 0.806
+offset_left = -72.64
+offset_top = -72.48
+offset_right = 71.36
+offset_bottom = 71.52
+texture = ExtResource("14_e134j")
+expand_mode = 1
+
+[node name="YellowToy4" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.699
+anchor_top = 0.631
+anchor_right = 0.699
+anchor_bottom = 0.631
+offset_left = -72.0801
+offset_top = -72.48
+offset_right = 71.9199
+offset_bottom = 71.52
+texture = ExtResource("15_4u03p")
+expand_mode = 1

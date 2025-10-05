@@ -81,7 +81,7 @@ func _on_timer_tick():
 
 func update_timer_display():
 	if timer_display:
-		timer_display.text = "⏱️ " + str(time_remaining) + "s"
+		timer_display.text = "" + str(time_remaining) + "s"
 
 func win_game():
 	game_active = false

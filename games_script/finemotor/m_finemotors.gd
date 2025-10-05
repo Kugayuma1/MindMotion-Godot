@@ -3,8 +3,8 @@
 extends Control
 
 # Game settings
-var game_duration := 20 # seconds
-var time_remaining := 20
+var game_duration := 15 # seconds
+var time_remaining := 15
 var game_active := false
 var mails_sorted := 0
 var total_mails := 4  # Green, Red, Blue, Gray

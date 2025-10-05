@@ -51,7 +51,7 @@ func update_timer() -> void:
 # 🐶 Check answer logic
 func check_answer(choice: String, node: Control) -> void:
 	if !timer_active:
-		feedback_label.text = "⏱️ Game Over!"
+		feedback_label.text = "Game Over!"
 		return
 
 	if choice == correct_answer:
@@ -63,10 +63,10 @@ func check_answer(choice: String, node: Control) -> void:
 		await get_tree().create_timer(2.0).timeout
 		game_over(true)
 	else:
-		feedback_label.text = "❌ Try again."
+		feedback_label.text = "Try again."
 		shake_button(node)
 		await get_tree().create_timer(1.5).timeout
-		feedback_label.text = "🔍 Who barks?"
+		feedback_label.text = "Who barks?"
 
 # 🔔 Tween shake effect for wrong answers
 func shake_button(node: Control) -> void:

@@ -1,0 +1,209 @@
+[gd_scene load_steps=8 format=3 uid="uid://c2k8xtgemrf05"]
+
+[ext_resource type="Script" uid="uid://cks6uftudtu6p" path="res://games_script/finemotor/o_finemotors.gd" id="1_ewwcr"]
+[ext_resource type="Texture2D" uid="uid://dbspyn4kvlwow" path="res://Game Assets/Fine Motor Assets/BG/19.png" id="1_ivgbm"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="2_ewwcr"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_osdw5"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="4_kgd7b"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="5_mow14"]
+[ext_resource type="Texture2D" uid="uid://bvq85jxq8bm5a" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/28.png" id="6_hjqn3"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ewwcr")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.286275, 0.8, 0.941176, 1)
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ivgbm")
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.511
+anchor_top = 0.05
+anchor_right = 0.511
+anchor_bottom = 0.05
+offset_left = -264.12
+offset_right = 264.88
+offset_bottom = 187.0
+texture = ExtResource("2_ewwcr")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.517
+anchor_top = 0.543
+anchor_right = 0.517
+anchor_bottom = 0.543
+offset_left = -264.493
+offset_top = -86.541
+offset_right = 260.507
+offset_bottom = 76.459
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_osdw5")
+theme_override_font_sizes/font_size = 40
+text = "Drag the Octopus to the fisherman"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.917
+anchor_top = 0.142
+anchor_right = 0.917
+anchor_bottom = 0.142
+offset_left = -128.64
+offset_top = -129.36
+offset_right = 129.36
+offset_bottom = 128.64
+grow_horizontal = 0
+texture = ExtResource("4_kgd7b")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.494
+anchor_top = 0.554
+anchor_right = 0.494
+anchor_bottom = 0.554
+offset_left = -33.452
+offset_top = -37.932
+offset_right = 33.548
+offset_bottom = 38.068
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_osdw5")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("5_mow14")
+stretch_mode = 0
+
+[node name="Draggables" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Octopus" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.133
+anchor_top = 0.875
+anchor_right = 0.133
+anchor_bottom = 0.875
+offset_left = -117.36
+offset_top = -122.0
+offset_right = 118.64
+offset_bottom = 123.0
+texture = ExtResource("6_hjqn3")
+expand_mode = 1
+
+[node name="Octopus2" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.289
+anchor_top = 0.882
+anchor_right = 0.289
+anchor_bottom = 0.882
+offset_left = -117.88
+offset_top = -122.56
+offset_right = 118.12
+offset_bottom = 122.44
+texture = ExtResource("6_hjqn3")
+expand_mode = 1
+
+[node name="Octopus3" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.453
+anchor_top = 0.89
+anchor_right = 0.453
+anchor_bottom = 0.89
+offset_left = -118.76
+offset_top = -122.2
+offset_right = 117.24
+offset_bottom = 122.8
+texture = ExtResource("6_hjqn3")
+expand_mode = 1
+
+[node name="Octopus4" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.639
+anchor_top = 0.89
+anchor_right = 0.639
+anchor_bottom = 0.89
+offset_left = -117.88
+offset_top = -122.2
+offset_right = 118.12
+offset_bottom = 122.8
+texture = ExtResource("6_hjqn3")
+expand_mode = 1
+
+[node name="Octopus5" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.847
+anchor_top = 0.882
+anchor_right = 0.847
+anchor_bottom = 0.882
+offset_left = -118.24
+offset_top = -122.56
+offset_right = 117.76
+offset_bottom = 122.44
+texture = ExtResource("6_hjqn3")
+expand_mode = 1
+
+[node name="Dropzone" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Fisherman" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 23.512
+anchor_top = 8.35
+anchor_right = 23.512
+anchor_bottom = 8.35
+offset_left = -245.48
+offset_top = -219.0
+offset_right = 255.52
+offset_bottom = 163.0

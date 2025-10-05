@@ -1,7 +1,13 @@
 extends Control
 
-var correct_answer = "BURGER"
-var current_answer = ""
+# Game configuration
+var correct_answer = "BURGER"  # The word to guess
+var answer_length = 6  # Number of letter slots
+var available_letters = ["C", "B", "R", "U", "A", "R", "G", "E"]  # Letters shown to player
+
+# Game state
+var current_answer = []  # Array to track filled letters
+var current_slot_index = 0  # Which slot to fill next
 var countdown := 15
 var timer_active = true
 
@@ -13,188 +19,229 @@ var retry_scene = preload("res://reward scene/Retry.tscn")
 
 var popup_instance: Control = null
 
-# UI References
-@onready var feedback_label = $Instruction
-@onready var timer_label = $Time/Label
+# Node references
+@onready var timer_label = $Time/Label  # Adjust path based on your timer UI
+@onready var letter_holders = [
+	$LetterHolders/FirstLetter/Label,
+	$LetterHolders/SecondLetter/Label,
+	$LetterHolders/ThirdLetter/Label,
+	$LetterHolders/FourthLetter/Label,
+	$LetterHolders/FifthLetter/Label,
+	$LetterHolders/SixthLetter/Label
+]
 
-# Letter display labels
-@onready var first_ltr = $FirstLtr
-@onready var second_ltr = $ScndLtr
-@onready var third_ltr = $ThrdLtr
-@onready var fourth_ltr = $FrthLtr
-@onready var fifth_ltr = $FfthLtr
-@onready var sixth_ltr = $SixthLtr
+@onready var letter_holder_controls = [
+	$LetterHolders/FirstLetter,
+	$LetterHolders/SecondLetter,
+	$LetterHolders/ThirdLetter,
+	$LetterHolders/FourthLetter,
+	$LetterHolders/FifthLetter,
+	$LetterHolders/SixthLetter
+]
 
-# Letter buttons
-@onready var button1 = $Button1  # G
-@onready var button2 = $Button2  # H
-@onready var button3 = $Button3  # U
-@onready var button4 = $Button4  # E
-@onready var button5 = $Button5  # B
-@onready var button6 = $Button6  # R
-@onready var button7 = $Button7  # M
-@onready var button8 = $Button8  # R
+@onready var letter_buttons = [
+	$LetterButtons/LetterButton,
+	$LetterButtons/LetterButton2,
+	$LetterButtons/LetterButton3,
+	$LetterButtons/LetterButton4,
+	$LetterButtons/LetterButton5,
+	$LetterButtons/LetterButton6,
+	$LetterButtons/LetterButton7,
+	$LetterButtons/LetterButton8
+]
+
+var button_letters = {}  # Maps TextureRect to its letter
+var slot_to_button = {}  # Maps slot index to the button that filled it
 
 func _ready():
-	current_answer = ""
+	setup_game()
+	setup_letter_holder_inputs()
 	start_timer()
 	Global.start_time = Time.get_ticks_msec()
-	show_initial_dashes()
 
-func show_initial_dashes():
-	if first_ltr: first_ltr.text = "_"
-	if second_ltr: second_ltr.text = "_"
-	if third_ltr: third_ltr.text = "_"
-	if fourth_ltr: fourth_ltr.text = "_"
-	if fifth_ltr: fifth_ltr.text = "_"
-	if sixth_ltr: sixth_ltr.text = "_"
+func setup_game() -> void:
+	current_answer.clear()
+	current_slot_index = 0
+	button_letters.clear()
+	slot_to_button.clear()
+	
+	# Clear all letter holder labels
+	for label in letter_holders:
+		label.text = ""
+	
+	# Set up letter buttons with available letters
+	for i in range(letter_buttons.size()):
+		if i < available_letters.size():
+			var button = letter_buttons[i]
+			var label = button.get_node("Label")
+			label.text = available_letters[i]
+			button.visible = true
+			
+			# Store the letter for this TextureRect
+			button_letters[button] = available_letters[i]
+			
+			# Make TextureRect clickable
+			button.gui_input.connect(_on_letter_button_input.bind(button))
+
+func setup_letter_holder_inputs() -> void:
+	# Make letter holders clickable for deletion
+	for i in range(letter_holder_controls.size()):
+		var holder = letter_holder_controls[i]
+		holder.gui_input.connect(_on_letter_holder_input.bind(i))
 
 func start_timer() -> void:
-	timer_label.text = "⏱️ 15s"
+	timer_label.text = "15s"
 	countdown = 15
 	timer_active = true
 	update_timer()
 
 func update_timer() -> void:
 	if countdown <= 0:
-		timer_label.text = "⏰ Time's up!"
+		timer_label.text = "Time's up!"
 		timer_active = false
 		ProgressManager.save_progress("reading", false)
 		Global.refresh_everything_after_stage_completion("reading", false)
 		game_over(false)
 		return
 
-	timer_label.text = "⏱️ " + str(countdown) + "s"
+	timer_label.text = " " + str(countdown) + "s"
 	countdown -= 1
 	await get_tree().create_timer(1.0).timeout
 
 	if timer_active:
 		update_timer()
 
-func add_letter_to_answer(letter: String) -> void:
-	if !timer_active:
-		feedback_label.text = "⏱️ Tapos na ang oras!"
-		return
+func _on_letter_button_input(event: InputEvent, button: TextureRect) -> void:
+	if event is InputEventMouseButton:
+		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			if !timer_active:
+				return
+			
+			# Check if we still have empty slots
+			if current_slot_index >= answer_length:
+				return
+			
+			# Check if this button is still visible (not already used)
+			if !button.visible:
+				return
+			
+			# Get the letter for this button
+			var letter = button_letters.get(button, "")
+			if letter == "":
+				return
+			
+			# Add letter to current answer
+			current_answer.append(letter)
+			
+			# Update the label in the current slot
+			letter_holders[current_slot_index].text = letter
+			
+			# Map this slot to the button for deletion later
+			slot_to_button[current_slot_index] = button
+			
+			# Hide the button that was pressed
+			button.visible = false
+			
+			# Move to next slot
+			current_slot_index += 1
+			
+			# Check if word is complete
+			if current_slot_index >= answer_length:
+				check_complete_answer()
+
+func _on_letter_holder_input(event: InputEvent, slot_index: int) -> void:
+	if event is InputEventMouseButton:
+		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			if !timer_active:
+				return
+			
+			# Check if this slot has a letter
+			if letter_holders[slot_index].text == "":
+				return
+			
+			# Get the button that filled this slot
+			var button = slot_to_button.get(slot_index)
+			if button == null:
+				return
+			
+			# Clear the slot
+			letter_holders[slot_index].text = ""
+			
+			# Show the button again
+			button.visible = true
+			
+			# Remove from current answer
+			current_answer.remove_at(slot_index)
+			
+			# Remove from slot mapping
+			slot_to_button.erase(slot_index)
+			
+			# Shift all letters after this slot to the left
+			for i in range(slot_index, answer_length - 1):
+				if i + 1 < answer_length and letter_holders[i + 1].text != "":
+					# Move letter from next slot to current slot
+					letter_holders[i].text = letter_holders[i + 1].text
+					
+					# Update slot mapping
+					if slot_to_button.has(i + 1):
+						slot_to_button[i] = slot_to_button[i + 1]
+						slot_to_button.erase(i + 1)
+					
+					# Clear the next slot
+					letter_holders[i + 1].text = ""
+			
+			# Update current slot index
+			current_slot_index = current_answer.size()
+
+func check_complete_answer() -> void:
+	var player_word = "".join(current_answer)
 	
-	if current_answer.length() < 6:  # BURGER has 6 letters
-		current_answer += letter
-		update_letter_display()
-		
-		# Check if we have 6 letters
-		if current_answer.length() == 6:
-			check_answer()
-		else:
-			feedback_label.text = "Keep going! " + str(6 - current_answer.length()) + " more letters"
-
-func update_letter_display() -> void:
-	# Update only the filled positions, keep remaining as dashes
-	for i in range(6):  # BURGER has 6 letters
-		if i < current_answer.length():
-			var letter = current_answer[i]
-			match i:
-				0:
-					if first_ltr: first_ltr.text = letter
-				1:
-					if second_ltr: second_ltr.text = letter
-				2:
-					if third_ltr: third_ltr.text = letter
-				3:
-					if fourth_ltr: fourth_ltr.text = letter
-				4:
-					if fifth_ltr: fifth_ltr.text = letter
-				5:
-					if sixth_ltr: sixth_ltr.text = letter
-		else:
-			# Keep remaining positions as dashes
-			match i:
-				0:
-					if first_ltr: first_ltr.text = "_"
-				1:
-					if second_ltr: second_ltr.text = "_"
-				2:
-					if third_ltr: third_ltr.text = "_"
-				3:
-					if fourth_ltr: fourth_ltr.text = "_"
-				4:
-					if fifth_ltr: fifth_ltr.text = "_"
-				5:
-					if sixth_ltr: sixth_ltr.text = "_"
-
-func clear_all_letters() -> void:
-	if first_ltr: first_ltr.text = ""
-	if second_ltr: second_ltr.text = ""
-	if third_ltr: third_ltr.text = ""
-	if fourth_ltr: fourth_ltr.text = ""
-	if fifth_ltr: fifth_ltr.text = ""
-	if sixth_ltr: sixth_ltr.text = ""
-
-func check_answer() -> void:
-	if current_answer == correct_answer:
-		feedback_label.text = "🎉BURGER!"
+	if player_word == correct_answer:
+		# Correct answer!
 		timer_active = false
 		ProgressManager.save_progress("reading", true)
 		Global.refresh_everything_after_stage_completion("reading", true)
-		await get_tree().create_timer(2.0).timeout
+		await get_tree().create_timer(0.5).timeout
 		game_over(true)
 	else:
-		feedback_label.text = "❌Try again."
-		await get_tree().create_timer(2.0).timeout
-		reset_game()
+		# Wrong answer - shake and reset
+		shake_letter_holders()
+		await get_tree().create_timer(1.0).timeout
+		reset_answer()
 
-func reset_game() -> void:
-	current_answer = ""
-	show_initial_dashes()
-	show_all_buttons()
-	feedback_label.text = "Tap the letters to spell BURGER!"
+func reset_answer() -> void:
+	# Clear current answer
+	current_answer.clear()
+	current_slot_index = 0
+	slot_to_button.clear()
+	
+	# Clear letter holder labels
+	for label in letter_holders:
+		label.text = ""
+	
+	# Show all buttons again
+	for button in letter_buttons:
+		button.visible = true
 
-func show_all_buttons() -> void:
-	if button1: button1.visible = true
-	if button2: button2.visible = true
-	if button3: button3.visible = true
-	if button4: button4.visible = true
-	if button5: button5.visible = true
-	if button6: button6.visible = true
-	if button7: button7.visible = true
-	if button8: button8.visible = true
-
-func hide_all_buttons() -> void:
-	if button1: button1.visible = false
-	if button2: button2.visible = false
-	if button3: button3.visible = false
-	if button4: button4.visible = false
-	if button5: button5.visible = false
-	if button6: button6.visible = false
-	if button7: button7.visible = false
-	if button8: button8.visible = false
-
-func shake_button(button: TextureButton) -> void:
-	if !button:
-		return
-	var original_pos = button.position
-	var tween = create_tween()
-	tween.tween_property(button, "position", original_pos + Vector2(-10, 0), 0.05)
-	tween.tween_property(button, "position", original_pos + Vector2(10, 0), 0.05).set_delay(0.05)
-	tween.tween_property(button, "position", original_pos, 0.05).set_delay(0.10)
+func shake_letter_holders() -> void:
+	for i in range(letter_holders.size()):
+		var holder = letter_holders[i].get_parent()  # Get the Control node
+		var original_pos = holder.position
+		var tween = create_tween()
+		tween.tween_property(holder, "position", original_pos + Vector2(-10, 0), 0.05)
+		tween.tween_property(holder, "position", original_pos + Vector2(10, 0), 0.05).set_delay(0.05)
+		tween.tween_property(holder, "position", original_pos, 0.05).set_delay(0.10)
 
 func game_over(success: bool):
 	# Hide UI elements
-	if has_node("Instruction"): $Instruction.visible = false
+	if has_node("LetterHolders"): $LetterHolders.visible = false
+	if has_node("LetterButtons"): $LetterButtons.visible = false
+	if has_node("ItemHolder"): $ItemHolder.visible = false
 	if has_node("Time"): $Time.visible = false
-	if has_node("FrstLtr"): $FrstLtr.visible = false
-	if has_node("ScndLtr"): $ScndLtr.visible = false
-	if has_node("ThrdLtr"): $ThrdLtr.visible = false
-	if has_node("FrthLtr"): $FrthLtr.visible = false
-	if has_node("FfthLtr"): $FfthLtr.visible = false
-	if has_node("SixthLtr"): $SixthLtr.visible = false
-	if has_node("Holder"): $Holder.visible = false
-	if has_node("AssetsBG"): $AssetsBG.visible = false
-	if has_node("ObjectBurger"): $ObjectBurger.visible = false
 	if has_node("Quitbtn"): $Quitbtn.visible = false
 	
-	hide_all_buttons()
-
-	# Choose popup based on performance
 	if success:
+		# Award stars based on remaining time
 		if countdown >= 10:
 			popup_instance = complete3_scene.instantiate()
 		elif countdown >= 5:
@@ -204,33 +251,7 @@ func game_over(success: bool):
 	else:
 		popup_instance = retry_scene.instantiate()
 
-	if popup_instance:
-		add_child(popup_instance)
-
-func _on_button_1_pressed() -> void:
-	add_letter_to_answer("G")
-
-func _on_button_2_pressed() -> void:
-	add_letter_to_answer("H")
-
-func _on_button_3_pressed() -> void:
-	add_letter_to_answer("U")
-
-func _on_button_4_pressed() -> void:
-	add_letter_to_answer("E")
-
-func _on_button_5_pressed() -> void:
-	add_letter_to_answer("B")
-
-func _on_button_6_pressed() -> void:
-	add_letter_to_answer("R")
-
-func _on_button_7_pressed() -> void:
-	add_letter_to_answer("M")
-
-func _on_button_8_pressed() -> void:
-	add_letter_to_answer("R")
-
+	add_child(popup_instance)
 
 func _on_quitbtn_pressed() -> void:
 	var letter_lower = Global.current_letter.to_lower()

@@ -1,0 +1,239 @@
+[gd_scene load_steps=15 format=3 uid="uid://bi0ms48i5arhc"]
+
+[ext_resource type="Script" uid="uid://b8o84e4ts767r" path="res://games_script/finemotor/h_finemotors.gd" id="1_clnia"]
+[ext_resource type="Texture2D" uid="uid://dy5ay0recmevy" path="res://Game Assets/Fine Motor Assets/BG/12.png" id="1_uj2mm"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="2_clnia"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_dbnb3"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="4_cgrcp"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="5_yku7l"]
+[ext_resource type="Texture2D" uid="uid://ch4vtqkmqqv3u" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/4.png" id="6_g384j"]
+[ext_resource type="Texture2D" uid="uid://ccej7mnwkkad5" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/3.png" id="7_andvk"]
+[ext_resource type="Texture2D" uid="uid://chjdmiinmsva0" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/2.png" id="8_f1xce"]
+[ext_resource type="Texture2D" uid="uid://d0e0geg5x5yc2" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/1.png" id="9_godfs"]
+[ext_resource type="Texture2D" uid="uid://dhfc6gm3oud02" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/5.png" id="10_yw7aw"]
+[ext_resource type="Texture2D" uid="uid://dpndm2unyqkxx" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/7.png" id="11_rek3m"]
+[ext_resource type="Texture2D" uid="uid://cdydopvkdq64j" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/6.png" id="12_3444h"]
+[ext_resource type="Texture2D" uid="uid://c5b4caoo7k5r" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/8.png" id="13_75noy"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_clnia")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_uj2mm")
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+texture = ExtResource("2_clnia")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_dbnb3")
+theme_override_font_sizes/font_size = 55
+text = "Match the Hearts to
+the cupid arrows"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.917
+anchor_top = 0.142
+anchor_right = 0.917
+anchor_bottom = 0.142
+offset_left = -128.64
+offset_top = -129.36
+offset_right = 129.36
+offset_bottom = 128.64
+grow_horizontal = 0
+texture = ExtResource("4_cgrcp")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.494
+anchor_top = 0.554
+anchor_right = 0.494
+anchor_bottom = 0.554
+offset_left = -33.452
+offset_top = -37.932
+offset_right = 33.548
+offset_bottom = 38.068
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_dbnb3")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("5_yku7l")
+stretch_mode = 0
+
+[node name="Dropzone" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CupidPink" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.859
+anchor_top = 0.555
+anchor_right = 0.859
+anchor_bottom = 0.555
+offset_left = -173.28
+offset_top = -173.4
+offset_right = 171.72
+offset_bottom = 172.6
+texture = ExtResource("6_g384j")
+expand_mode = 1
+
+[node name="CupidBlue" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.191
+anchor_top = 0.453
+anchor_right = 0.191
+anchor_bottom = 0.453
+offset_left = -162.72
+offset_top = -162.24
+offset_right = 161.28
+offset_bottom = 162.76
+texture = ExtResource("7_andvk")
+expand_mode = 1
+
+[node name="CupidPurple" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.417
+anchor_top = 0.524
+anchor_right = 0.417
+anchor_bottom = 0.524
+offset_left = -171.64
+offset_top = -172.92
+offset_right = 173.36
+offset_bottom = 173.08
+texture = ExtResource("8_f1xce")
+expand_mode = 1
+
+[node name="CupidRed" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.653
+anchor_top = 0.465
+anchor_right = 0.653
+anchor_bottom = 0.465
+offset_left = -171.76
+offset_top = -173.2
+offset_right = 173.24
+offset_bottom = 172.8
+texture = ExtResource("9_godfs")
+expand_mode = 1
+
+[node name="Draggables" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BlueHeart" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.425
+anchor_top = 0.855
+anchor_right = 0.425
+anchor_bottom = 0.855
+offset_left = -134.0
+offset_top = -134.4
+offset_right = 134.0
+offset_bottom = 133.6
+texture = ExtResource("10_yw7aw")
+expand_mode = 1
+
+[node name="RedHeart" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.242
+anchor_top = 0.846
+anchor_right = 0.242
+anchor_bottom = 0.846
+offset_left = -135.64
+offset_top = -135.68
+offset_right = 136.36
+offset_bottom = 136.32
+texture = ExtResource("11_rek3m")
+expand_mode = 1
+
+[node name="PurpleHeart" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.796
+anchor_top = 0.854
+anchor_right = 0.796
+anchor_bottom = 0.854
+offset_left = -136.32
+offset_top = -136.32
+offset_right = 136.68
+offset_bottom = 136.68
+texture = ExtResource("12_3444h")
+expand_mode = 1
+
+[node name="PinkHeart" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.612
+anchor_top = 0.848
+anchor_right = 0.612
+anchor_bottom = 0.848
+offset_left = -136.04
+offset_top = -135.84
+offset_right = 134.96
+offset_bottom = 135.16
+texture = ExtResource("13_75noy")
+expand_mode = 1
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

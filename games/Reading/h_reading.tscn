@@ -1,0 +1,163 @@
+[gd_scene load_steps=10 format=3 uid="uid://dpfvcdq8qr6hq"]
+
+[ext_resource type="Script" uid="uid://dnxtf7pushbr6" path="res://games_script/Reading/h_reading.gd" id="1_65ho0"]
+[ext_resource type="Texture2D" uid="uid://uellerbhhm0a" path="res://Game Assets/Reading Assets/Logoqzmd/RDNGBG.png" id="1_lrw80"]
+[ext_resource type="Texture2D" uid="uid://c2nao1ur8sbjg" path="res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/32.png" id="2_65ho0"]
+[ext_resource type="Texture2D" uid="uid://cq70cno3ne4go" path="res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/31.png" id="3_8ub67"]
+[ext_resource type="Texture2D" uid="uid://t0885xh3k4lq" path="res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/33.png" id="4_ky8ai"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="5_vkrev"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="6_i4unk"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="7_qrr32"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="8_jfhhb"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_65ho0")
+
+[node name="ColorRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_lrw80")
+
+[node name="Bear" type="TextureButton" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.29
+anchor_top = 0.765
+anchor_right = 0.29
+anchor_bottom = 0.765
+offset_left = -231.8
+offset_top = -219.2
+offset_right = 230.2
+offset_bottom = 218.8
+texture_normal = ExtResource("2_65ho0")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Horse" type="TextureButton" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.493
+anchor_top = 0.766
+anchor_right = 0.493
+anchor_bottom = 0.766
+offset_left = -231.56
+offset_top = -219.28
+offset_right = 230.44
+offset_bottom = 218.72
+texture_normal = ExtResource("3_8ub67")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Rat" type="TextureButton" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.698
+anchor_top = 0.766
+anchor_right = 0.698
+anchor_bottom = 0.766
+offset_left = -231.16
+offset_top = -219.28
+offset_right = 230.84
+offset_bottom = 218.72
+texture_normal = ExtResource("4_ky8ai")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+mouse_filter = 2
+texture = ExtResource("5_vkrev")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -253.0
+offset_top = -87.5
+offset_right = 272.0
+offset_bottom = 75.5
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_i4unk")
+theme_override_font_sizes/font_size = 50
+text = "The one that eats grass!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.978
+anchor_top = 0.029
+anchor_right = 0.978
+anchor_bottom = 0.029
+offset_left = -257.76
+offset_top = -0.320002
+offset_right = 0.239868
+offset_bottom = 257.68
+mouse_filter = 2
+texture = ExtResource("7_qrr32")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.554
+anchor_right = 0.5
+anchor_bottom = 0.554
+offset_left = -34.9999
+offset_top = -37.932
+offset_right = 32.0001
+offset_bottom = 38.068
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_i4unk")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("8_jfhhb")
+stretch_mode = 0
+
+[connection signal="pressed" from="Bear" to="." method="_on_bear_pressed"]
+[connection signal="pressed" from="Horse" to="." method="_on_horse_pressed"]
+[connection signal="pressed" from="Rat" to="." method="_on_rat_pressed"]
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

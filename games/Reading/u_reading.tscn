@@ -1,0 +1,165 @@
+[gd_scene load_steps=10 format=3 uid="uid://cm8f4ty6ri05u"]
+
+[ext_resource type="Texture2D" uid="uid://uellerbhhm0a" path="res://Game Assets/Reading Assets/Logoqzmd/RDNGBG.png" id="1_rkk23"]
+[ext_resource type="Script" uid="uid://dh08sw11j3q0i" path="res://games_script/Reading/u_reading.gd" id="1_wwbb1"]
+[ext_resource type="Texture2D" uid="uid://7m0vt36cobcg" path="res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/37.png" id="2_wwbb1"]
+[ext_resource type="Texture2D" uid="uid://cmjif4kwonm07" path="res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/38.png" id="3_ryuwe"]
+[ext_resource type="Texture2D" uid="uid://npunui3bapni" path="res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/39.png" id="4_614nu"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="5_rfsgf"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="6_qo3pr"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="7_frokc"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="8_dghbi"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wwbb1")
+
+[node name="ColorRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_rkk23")
+
+[node name="House" type="TextureButton" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.29
+anchor_top = 0.765
+anchor_right = 0.29
+anchor_bottom = 0.765
+offset_left = -231.8
+offset_top = -219.2
+offset_right = 230.2
+offset_bottom = 218.8
+texture_normal = ExtResource("2_wwbb1")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Uniform" type="TextureButton" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.493
+anchor_top = 0.766
+anchor_right = 0.493
+anchor_bottom = 0.766
+offset_left = -231.56
+offset_top = -219.28
+offset_right = 230.44
+offset_bottom = 218.72
+texture_normal = ExtResource("3_ryuwe")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Out" type="TextureButton" parent="."]
+z_index = 5
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.698
+anchor_top = 0.766
+anchor_right = 0.698
+anchor_bottom = 0.766
+offset_left = -231.16
+offset_top = -219.28
+offset_right = 230.84
+offset_bottom = 218.72
+texture_normal = ExtResource("4_614nu")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+mouse_filter = 2
+texture = ExtResource("5_rfsgf")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.476
+anchor_right = 0.5
+anchor_bottom = 0.476
+offset_left = -253.0
+offset_top = -81.428
+offset_right = 272.0
+offset_bottom = 81.572
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_qo3pr")
+theme_override_font_sizes/font_size = 50
+text = "The one you wears at School"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.978
+anchor_top = 0.029
+anchor_right = 0.978
+anchor_bottom = 0.029
+offset_left = -257.76
+offset_top = -0.320002
+offset_right = 0.239868
+offset_bottom = 257.68
+mouse_filter = 2
+texture = ExtResource("7_frokc")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.554
+anchor_right = 0.5
+anchor_bottom = 0.554
+offset_left = -34.9999
+offset_top = -37.932
+offset_right = 32.0001
+offset_bottom = 38.068
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_qo3pr")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("8_dghbi")
+stretch_mode = 0
+
+[connection signal="pressed" from="House" to="." method="_on_house_pressed"]
+[connection signal="pressed" from="Uniform" to="." method="_on_uniform_pressed"]
+[connection signal="pressed" from="Out" to="." method="_on_out_pressed"]
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

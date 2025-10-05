@@ -1,0 +1,207 @@
+[gd_scene load_steps=8 format=3 uid="uid://ci6i3ewjnvn3h"]
+
+[ext_resource type="Script" uid="uid://b3miwwde7jvtn" path="res://games_script/finemotor/s_finemotors.gd" id="1_7unqn"]
+[ext_resource type="Texture2D" uid="uid://cxhdam28608cm" path="res://Game Assets/Fine Motor Assets/BG/23.png" id="1_ml862"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="2_7unqn"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_pk25l"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="4_yhndg"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="5_5fnn8"]
+[ext_resource type="Texture2D" uid="uid://0m8viv4vk32w" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/42.png" id="6_ndw0y"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7unqn")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ml862")
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+texture = ExtResource("2_7unqn")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_pk25l")
+theme_override_font_sizes/font_size = 55
+text = "Tap all the Stars"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.917
+anchor_top = 0.142
+anchor_right = 0.917
+anchor_bottom = 0.142
+offset_left = -128.64
+offset_top = -129.36
+offset_right = 129.36
+offset_bottom = 128.64
+grow_horizontal = 0
+texture = ExtResource("4_yhndg")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.494
+anchor_top = 0.554
+anchor_right = 0.494
+anchor_bottom = 0.554
+offset_left = -33.452
+offset_top = -37.932
+offset_right = 33.548
+offset_bottom = 38.068
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_pk25l")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("5_5fnn8")
+stretch_mode = 0
+
+[node name="Remove" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Star" type="TextureRect" parent="Remove"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.163
+anchor_top = 0.406
+anchor_right = 0.163
+anchor_bottom = 0.406
+offset_left = -132.96
+offset_top = -136.48
+offset_right = 134.04
+offset_bottom = 136.52
+texture = ExtResource("6_ndw0y")
+expand_mode = 1
+
+[node name="Star2" type="TextureRect" parent="Remove"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.239
+anchor_top = 0.777
+anchor_right = 0.239
+anchor_bottom = 0.777
+offset_left = -132.88
+offset_top = -136.16
+offset_right = 134.12
+offset_bottom = 136.84
+texture = ExtResource("6_ndw0y")
+expand_mode = 1
+
+[node name="Star3" type="TextureRect" parent="Remove"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.383
+anchor_top = 0.476
+anchor_right = 0.383
+anchor_bottom = 0.476
+offset_left = -134.36
+offset_top = -136.08
+offset_right = 132.64
+offset_bottom = 136.92
+texture = ExtResource("6_ndw0y")
+expand_mode = 1
+
+[node name="Star4" type="TextureRect" parent="Remove"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.544
+anchor_top = 0.75
+anchor_right = 0.544
+anchor_bottom = 0.75
+offset_left = -133.48
+offset_top = -136.0
+offset_right = 133.52
+offset_bottom = 137.0
+texture = ExtResource("6_ndw0y")
+expand_mode = 1
+
+[node name="Star5" type="TextureRect" parent="Remove"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.714
+anchor_top = 0.475
+anchor_right = 0.714
+anchor_bottom = 0.475
+offset_left = -132.88
+offset_top = -137.0
+offset_right = 134.12
+offset_bottom = 136.0
+texture = ExtResource("6_ndw0y")
+expand_mode = 1
+
+[node name="Star6" type="TextureRect" parent="Remove"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.858
+anchor_top = 0.85
+anchor_right = 0.858
+anchor_bottom = 0.85
+offset_left = -134.36
+offset_top = -137.0
+offset_right = 132.64
+offset_bottom = 136.0
+texture = ExtResource("6_ndw0y")
+expand_mode = 1
+
+[node name="Star7" type="TextureRect" parent="Remove"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.934
+anchor_top = 0.411
+anchor_right = 0.934
+anchor_bottom = 0.411
+offset_left = -134.28
+offset_top = -136.88
+offset_right = 132.72
+offset_bottom = 136.12
+texture = ExtResource("6_ndw0y")
+expand_mode = 1

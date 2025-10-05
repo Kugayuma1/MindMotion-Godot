@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://dqj3u4qniicc3"]
+[gd_scene load_steps=10 format=3 uid="uid://dqj3u4qniicc3"]
 
-[ext_resource type="Texture2D" uid="uid://dioswc807cy3h" path="res://Game Assets/Reading Assets/cattt.png" id="1_gapsd"]
 [ext_resource type="Script" uid="uid://dxk3jli0cy0t6" path="res://games_script/Reading/d_reading.gd" id="1_y1621"]
-[ext_resource type="Texture2D" uid="uid://djhssy782wfxl" path="res://Game Assets/Reading Assets/fisshhh.png" id="2_y1621"]
-[ext_resource type="Texture2D" uid="uid://crgbsmst8jdk3" path="res://Game Assets/Reading Assets/doggg.png" id="3_sevi8"]
+[ext_resource type="Texture2D" uid="uid://uellerbhhm0a" path="res://Game Assets/Reading Assets/Logoqzmd/RDNGBG.png" id="2_sevi8"]
+[ext_resource type="Texture2D" uid="uid://c7m8gc2f4us46" path="res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/35.png" id="3_e0mu3"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="4_e0mu3"]
+[ext_resource type="Texture2D" uid="uid://2csy70go1hl6" path="res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/36.png" id="4_kgrxt"]
+[ext_resource type="Texture2D" uid="uid://bhvos3k4nfq80" path="res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/34.png" id="5_g7n7y"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="5_kgrxt"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="6_g7n7y"]
 [ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="7_6gfp7"]
@@ -18,7 +19,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_y1621")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,21 +27,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.851686, 0.901689, 1, 1)
+texture = ExtResource("2_sevi8")
 
 [node name="Cat" type="TextureButton" parent="."]
 z_index = 5
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.281
-anchor_top = 0.607
-anchor_right = 0.281
-anchor_bottom = 0.607
-offset_left = -203.52
-offset_top = -342.56
-offset_right = 202.48
-offset_bottom = 343.44
-texture_normal = ExtResource("1_gapsd")
+anchor_left = 0.29
+anchor_top = 0.765
+anchor_right = 0.29
+anchor_bottom = 0.765
+offset_left = -231.8
+offset_top = -219.2
+offset_right = 230.2
+offset_bottom = 218.8
+texture_normal = ExtResource("3_e0mu3")
 ignore_texture_size = true
 stretch_mode = 0
 
@@ -48,15 +49,15 @@ stretch_mode = 0
 z_index = 5
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.501
-anchor_top = 0.607
-anchor_right = 0.501
-anchor_bottom = 0.607
-offset_left = -203.92
-offset_top = -342.56
-offset_right = 202.08
-offset_bottom = 343.44
-texture_normal = ExtResource("2_y1621")
+anchor_left = 0.493
+anchor_top = 0.766
+anchor_right = 0.493
+anchor_bottom = 0.766
+offset_left = -231.56
+offset_top = -219.28
+offset_right = 230.44
+offset_bottom = 218.72
+texture_normal = ExtResource("4_kgrxt")
 ignore_texture_size = true
 stretch_mode = 0
 
@@ -64,15 +65,15 @@ stretch_mode = 0
 z_index = 5
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.72
-anchor_top = 0.606
-anchor_right = 0.72
-anchor_bottom = 0.606
-offset_left = -202.4
-offset_top = -343.48
-offset_right = 203.6
-offset_bottom = 342.52
-texture_normal = ExtResource("3_sevi8")
+anchor_left = 0.698
+anchor_top = 0.766
+anchor_right = 0.698
+anchor_bottom = 0.766
+offset_left = -231.16
+offset_top = -219.28
+offset_right = 230.84
+offset_bottom = 218.72
+texture_normal = ExtResource("5_g7n7y")
 ignore_texture_size = true
 stretch_mode = 0
 
@@ -92,16 +93,21 @@ texture = ExtResource("4_e0mu3")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="Holder"]
-layout_mode = 0
-offset_left = 105.0
-offset_top = 39.0
-offset_right = 630.0
-offset_bottom = 202.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.476
+anchor_right = 0.5
+anchor_bottom = 0.476
+offset_left = -253.0
+offset_top = -81.428
+offset_right = 272.0
+offset_bottom = 81.572
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("5_kgrxt")
-theme_override_font_sizes/font_size = 55
+theme_override_font_sizes/font_size = 50
 text = "I am an animal 
-that barks!"
+that barks"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -122,11 +128,16 @@ texture = ExtResource("6_g7n7y")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="Time"]
-layout_mode = 0
-offset_left = 94.0
-offset_top = 105.0
-offset_right = 161.0
-offset_bottom = 181.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.494
+anchor_top = 0.554
+anchor_right = 0.494
+anchor_bottom = 0.554
+offset_left = -33.4519
+offset_top = -37.932
+offset_right = 33.5481
+offset_bottom = 38.068
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("5_kgrxt")
 theme_override_font_sizes/font_size = 45

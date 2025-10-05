@@ -1,0 +1,245 @@
+[gd_scene load_steps=10 format=3 uid="uid://pah7eqgmi12j"]
+
+[ext_resource type="Texture2D" uid="uid://c6qcsbofa7u8a" path="res://Game Assets/Fine Motor Assets/BG/25.png" id="1_bdpnq"]
+[ext_resource type="Script" uid="uid://ckjj1ycg878ih" path="res://games_script/finemotor/v_finemotors.gd" id="1_w0ijl"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="2_w0ijl"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_6ui8f"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="4_pxgwm"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="5_n7i2a"]
+[ext_resource type="Texture2D" uid="uid://bnslsp30r2bk2" path="res://Game Assets/Math/Lady.png" id="6_rgwvn"]
+[ext_resource type="Texture2D" uid="uid://dk4s5h4nwv6s3" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/43.png" id="7_hbhek"]
+[ext_resource type="Texture2D" uid="uid://b7ox2sjk36m2e" path="res://Game Assets/Fine Motor Assets/BG/Assetsforthis/44.png" id="8_nau8c"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w0ijl")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_bdpnq")
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+texture = ExtResource("2_w0ijl")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_6ui8f")
+theme_override_font_sizes/font_size = 55
+text = "Give the lady all of the red Vases"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.917
+anchor_top = 0.142
+anchor_right = 0.917
+anchor_bottom = 0.142
+offset_left = -128.64
+offset_top = -129.36
+offset_right = 129.36
+offset_bottom = 128.64
+grow_horizontal = 0
+texture = ExtResource("4_pxgwm")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.494
+anchor_top = 0.554
+anchor_right = 0.494
+anchor_bottom = 0.554
+offset_left = -33.452
+offset_top = -37.932
+offset_right = 33.548
+offset_bottom = 38.068
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_6ui8f")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("5_n7i2a")
+stretch_mode = 0
+
+[node name="Dropzone" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Lady" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.878
+anchor_top = 0.665
+anchor_right = 0.878
+anchor_bottom = 0.665
+offset_left = -359.76
+offset_top = -366.2
+offset_right = 358.24
+offset_bottom = 366.8
+texture = ExtResource("6_rgwvn")
+expand_mode = 1
+
+[node name="Draggables" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Vase" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.371
+anchor_top = 0.825
+anchor_right = 0.371
+anchor_bottom = 0.825
+offset_left = -89.3201
+offset_top = -97.0001
+offset_right = 89.6799
+offset_bottom = 96.9999
+texture = ExtResource("7_hbhek")
+expand_mode = 1
+
+[node name="Vase2" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.455
+anchor_top = 0.827
+anchor_right = 0.455
+anchor_bottom = 0.827
+offset_left = -89.6
+offset_top = -97.16
+offset_right = 89.4
+offset_bottom = 96.84
+texture = ExtResource("7_hbhek")
+expand_mode = 1
+
+[node name="Vase3" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.534
+anchor_top = 0.823
+anchor_right = 0.534
+anchor_bottom = 0.823
+offset_left = -89.28
+offset_top = -96.84
+offset_right = 89.72
+offset_bottom = 97.16
+texture = ExtResource("7_hbhek")
+expand_mode = 1
+
+[node name="Vase4" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.617
+anchor_top = 0.827
+anchor_right = 0.617
+anchor_bottom = 0.827
+offset_left = -89.6401
+offset_top = -97.16
+offset_right = 89.3599
+offset_bottom = 96.84
+texture = ExtResource("7_hbhek")
+expand_mode = 1
+
+[node name="Decoy" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.368
+anchor_top = 0.589
+anchor_right = 0.368
+anchor_bottom = 0.589
+offset_left = -89.5602
+offset_top = -97.1201
+offset_right = 89.4398
+offset_bottom = 96.8799
+texture = ExtResource("8_nau8c")
+expand_mode = 1
+
+[node name="Decoy2" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.452
+anchor_top = 0.591
+anchor_right = 0.452
+anchor_bottom = 0.591
+offset_left = -89.84
+offset_top = -97.28
+offset_right = 89.16
+offset_bottom = 96.72
+texture = ExtResource("8_nau8c")
+expand_mode = 1
+
+[node name="Decoy3" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.531
+anchor_top = 0.587
+anchor_right = 0.531
+anchor_bottom = 0.587
+offset_left = -89.5201
+offset_top = -96.96
+offset_right = 89.4799
+offset_bottom = 97.04
+texture = ExtResource("8_nau8c")
+expand_mode = 1
+
+[node name="Decoy4" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.614
+anchor_top = 0.591
+anchor_right = 0.614
+anchor_bottom = 0.591
+offset_left = -89.8801
+offset_top = -97.28
+offset_right = 89.1199
+offset_bottom = 96.72
+texture = ExtResource("8_nau8c")
+expand_mode = 1

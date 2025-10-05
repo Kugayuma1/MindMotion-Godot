@@ -238,11 +238,11 @@ func _on_button_pressed(button_num: int):
 		Global.refresh_everything_after_stage_completion("math", true)
 	else:
 		if equation_label:
-			equation_label.text = "❌ Mali!"
+			equation_label.text = "Wrong, Try Again!"
 		shake_button(clicked_button)
 		await get_tree().create_timer(1.5).timeout
 		if timer_active and equation_label:
-			equation_label.text = "solve"
+			equation_label.text = ""
 
 
 func shake_button(button: Control) -> void:
@@ -258,16 +258,16 @@ func start_timer() -> void:
 	countdown = 15
 	timer_active = true
 	if timer_label:
-		timer_label.text = "⏱️ " + str(countdown) + "s"
+		timer_label.text = "" + str(countdown) + "s"
 	update_timer()   # ✅ start the countdown loop
 
 func update_timer() -> void:
 	if countdown <= 0:
 		timer_active = false
 		if timer_label:
-			timer_label.text = "⏰ Tapos na!"
+			timer_label.text = "Time's Up"
 		if equation_label:
-			equation_label.text = "⏱️ Time's up! Answer: " + str(correct_answer)
+			equation_label.text = "Time's up! Answer: " + str(correct_answer)
 		ProgressManager.save_progress("math", false)
 		Global.refresh_everything_after_stage_completion("math", false)
 		game_over(false)
@@ -275,7 +275,7 @@ func update_timer() -> void:
 
 	# Show time
 	if timer_label:
-		timer_label.text = "⏱️ " + str(countdown) + "s"
+		timer_label.text = " " + str(countdown) + "s"
 	
 	countdown -= 1
 	await get_tree().create_timer(1.0).timeout
