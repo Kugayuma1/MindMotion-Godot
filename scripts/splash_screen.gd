@@ -2,8 +2,10 @@ extends Control
 
 func _ready():
 	# Wait a bit so splash logo shows
+	AudioManager.play_music("menu")
 	await get_tree().create_timer(5.0).timeout
 	_check_and_continue()
+	
 
 func _check_and_continue():
 	if InternetManager.is_online():

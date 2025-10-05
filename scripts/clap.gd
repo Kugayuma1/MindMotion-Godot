@@ -19,6 +19,7 @@ signal motion_completed(success: bool)
 signal scene_finished
 
 func _ready():
+	AudioManager.play_temp_music("motion")
 	setup_motion_manager()
 	setup_timer()
 	connect_signals()
@@ -85,6 +86,7 @@ func _on_motion_session_started(motion_type: String):
 func _on_motion_detected():
 	session_timer.stop()
 	
+	
 	instruction_label.text = "Great Job! 🎉"
 	status_label.text = "Perfect clapping detected!"
 	
@@ -94,7 +96,9 @@ func _on_motion_detected():
 	# Show success for 3 seconds then finish
 	await get_tree().create_timer(3.0).timeout
 	emit_signal("motion_completed", true)
+	AudioManager.stop_music(false)
 	finish_scene()
+	AudioManager.resume_previous_music(true)	
 
 func _on_motion_timeout():
 	_on_session_timeout()
@@ -107,11 +111,13 @@ func _on_session_timeout():
 	
 	# Save activity record
 	save_student_activity(false)
-	
+
 	# Show message for 2 seconds then finish
 	await get_tree().create_timer(1.0).timeout
 	emit_signal("motion_completed", false)
 	finish_scene()
+	AudioManager.stop_music(false)
+	AudioManager.resume_previous_music(true)
 
 func save_student_activity(success: bool):
 	# Save to your existing Firestore structure for teacher dashboard

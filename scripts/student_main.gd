@@ -6,7 +6,7 @@ func _on_play_pressed():
 
 
 func _on_setting_pressed():
-	print("Settings feature is coming soon!")
+	get_tree().change_scene_to_file("res://scenes/settings.tscn")
 
 
 func _on_quit_pressed():

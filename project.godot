@@ -21,6 +21,8 @@ Global="*res://global/global.gd"
 ProgressManager="*res://global/ProgressManager.gd"
 InternetManager="*res://global/InternetManager.tscn"
 StudentData="*res://global/StudentData.gd"
+AudioManager="*res://global/AudioManager.gd"
+SceneTransition="*res://global/SceneTransition.gd"
 
 [display]
 

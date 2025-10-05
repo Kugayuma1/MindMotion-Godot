@@ -19,6 +19,7 @@ var popup_instance: Control = null
 @onready var timer_label = $TextureRect/Time/Label
 
 func _ready():
+	AudioManager.play_temp_music("game")
 	selected_correct.clear()
 	original_feedback_text = feedback_label.text
 	start_timer()
@@ -89,6 +90,7 @@ func shake_button(button: TextureButton) -> void:
 
 # 🎯 Game over function (popup logic)
 func game_over(success: bool):
+	
 	# Hide objects except background
 	if has_node("TextureRect/ant1"): $TextureRect/ant1.visible = false
 	if has_node("TextureRect/ant2"): $TextureRect/ant2.visible = false
@@ -98,6 +100,7 @@ func game_over(success: bool):
 	if has_node("TextureRect/Holder"): $TextureRect/Holder.visible = false
 	if has_node("TextureRect/Time"): $TextureRect/Time.visible = false
 	if has_node("Quitbtn"): $Quitbtn.visible = false
+	
 	
 	if success:
 		if countdown >= 10:
@@ -134,6 +137,7 @@ func _on_ant_5_pressed() -> void:
 
 
 func _on_quitbtn_pressed() -> void:
+	AudioManager.resume_previous_music() 
 	var letter_lower = Global.current_letter.to_lower()
 	var path = "res://scenes/Categories.tscn"
 	if ResourceLoader.exists(path):

@@ -34,9 +34,15 @@ var refresh_http_request: HTTPRequest
 var is_refreshing_token = false
 var refresh_callbacks = []
 
+# Audio preferences
+var master_volume: float = 1.0
+var music_volume: float = 1.0  
+var sound_volume: float = 1.0
+
 # File paths - ONLY for auth and UI preferences
 const AUTH_SAVE_PATH = "user://auth_data.save"
 const UI_PREFS_PATH = "user://ui_preferences.save"
+const AUDIO_PREFS_PATH = "user://audio_preferences.save"
 
 # Constants
 const FIREBASE_API_KEY = "AIzaSyC7bPi7suzy8DmMFSgP7n090t7zHXzI5Bk"
@@ -78,7 +84,10 @@ func _ready():
 func save_ui_preferences():
 	var prefs_data = {
 		"current_letter": current_letter,
-		"current_index": current_index
+		"current_index": current_index,
+		"master_volume": master_volume,
+		"music_volume": music_volume,
+		"sound_volume": sound_volume
 	}
 	save_data_to_file(UI_PREFS_PATH, prefs_data)
 
@@ -88,9 +97,22 @@ func load_ui_preferences():
 	if not prefs_data.is_empty():
 		current_letter = prefs_data.get("current_letter", "A")
 		current_index = prefs_data.get("current_index", 0)
+		master_volume = prefs_data.get("master_volume", 1.0)
+		music_volume = prefs_data.get("music_volume", 1.0)
+		sound_volume = prefs_data.get("sound_volume", 1.0)
 	else:
 		current_letter = "A"
 		current_index = 0
+		master_volume = 1.0
+		music_volume = 1.0
+		sound_volume = 1.0
+	
+	# Update AudioManager immediately if it exists
+	if AudioManager:
+		AudioManager.master_volume = master_volume
+		AudioManager.music_volume = music_volume
+		AudioManager.sound_volume = sound_volume
+		AudioManager.update_volumes()
 
 # TOKEN MANAGEMENT
 func _check_token_expiry():
@@ -615,3 +637,30 @@ func wait_for_students_cache() -> void:
 
 func get_current_user_id() -> String:
 	return user_id
+
+func set_master_volume(volume: float):
+	master_volume = clamp(volume, 0.0, 1.0)
+	if AudioManager:
+		AudioManager.set_master_volume(master_volume)
+	save_ui_preferences()
+
+func set_music_volume(volume: float):
+	music_volume = clamp(volume, 0.0, 1.0)
+	if AudioManager:
+		AudioManager.set_music_volume(music_volume)
+	save_ui_preferences()
+
+func set_sound_volume(volume: float):
+	sound_volume = clamp(volume, 0.0, 1.0)
+	if AudioManager:
+		AudioManager.set_sound_volume(sound_volume)
+	save_ui_preferences()
+
+func get_master_volume_percent() -> int:
+	return int(master_volume * 100)
+
+func get_music_volume_percent() -> int:
+	return int(music_volume * 100)
+
+func get_sound_volume_percent() -> int:
+	return int(sound_volume * 100)

@@ -6,16 +6,19 @@ extends Node
 var current_student_id: String = ""
 var student_cognitive_data: Dictionary = {}
 var student_motion_data: Dictionary = {}
+var student_voice_data: Dictionary = {}
 
 # HTTP request nodes
 var cognitive_http_request: HTTPRequest
 var motion_http_request: HTTPRequest
 var letter_progress_http_request: HTTPRequest
+var voice_http_request: HTTPRequest
 
 # Signals
 signal cognitive_data_loaded(data: Dictionary)
 signal motion_data_loaded(data: Dictionary) 
 signal letter_progress_loaded(letter: String, data: Dictionary)
+signal voice_data_loaded(data: Dictionary)
 
 func _ready():
 	# Initialize HTTP requests
@@ -30,6 +33,10 @@ func _ready():
 	letter_progress_http_request = HTTPRequest.new()
 	add_child(letter_progress_http_request)
 	letter_progress_http_request.request_completed.connect(_on_letter_progress_completed)
+	
+	voice_http_request = HTTPRequest.new()
+	add_child(voice_http_request)
+	voice_http_request.request_completed.connect(_on_voice_data_completed)
 
 # Set which student we're viewing
 func set_current_student(student_id: String):
@@ -37,6 +44,7 @@ func set_current_student(student_id: String):
 		current_student_id = student_id
 		student_cognitive_data.clear()
 		student_motion_data.clear()
+		student_voice_data.clear()
 	else:
 		current_student_id = student_id
 
@@ -69,6 +77,20 @@ func load_student_motion_data():
 	
 	var url = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents/users/%s/activities" % current_student_id
 	return Global.make_authenticated_request(motion_http_request, url, HTTPClient.METHOD_GET)
+
+# Load voice activities data
+func load_student_voice_data():
+	if current_student_id.is_empty():
+		print("ERROR: No student ID set for voice data")
+		return false
+	
+	print("DEBUG: Loading voice data for student: %s" % current_student_id)
+	var url = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents/users/%s/voice_data" % current_student_id
+	print("DEBUG: Voice request URL: %s" % url)
+	
+	var success = Global.make_authenticated_request(voice_http_request, url, HTTPClient.METHOD_GET)
+	print("DEBUG: Voice request initiated: %s" % success)
+	return success
 
 # Process cognitive data response
 func _on_cognitive_data_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
@@ -126,6 +148,32 @@ func _on_motion_data_completed(result: int, response_code: int, headers: PackedS
 		student_motion_data = {}
 		motion_data_loaded.emit(student_motion_data)
 
+# Process voice data response
+func _on_voice_data_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
+	var response_text = body.get_string_from_utf8()
+	
+	print("DEBUG: Voice HTTP Request completed")
+	print("DEBUG: Voice Result code: %d" % result)
+	print("DEBUG: Voice Response code: %d" % response_code)
+	
+	if response_code == 200:
+		print("DEBUG: Parsing voice JSON response...")
+		var json = JSON.new()
+		if json.parse(response_text) == OK:
+			print("DEBUG: Voice JSON parsed successfully")
+			process_voice_data(json.data)
+		else:
+			print("DEBUG: Voice JSON parsing failed")
+			student_voice_data = {}
+			voice_data_loaded.emit(student_voice_data)
+	elif response_code == 401:
+		print("DEBUG: Voice auth failed, refreshing token...")
+	else:
+		print("DEBUG: Voice HTTP request failed with code: %d" % response_code)
+		print("DEBUG: Voice Response body: %s" % response_text)
+		student_voice_data = {}
+		voice_data_loaded.emit(student_voice_data)
+
 # Process cognitive data from Firebase
 func process_cognitive_data(data: Dictionary):
 	student_cognitive_data.clear()
@@ -171,6 +219,40 @@ func process_motion_data(data: Dictionary):
 		student_motion_data[activity_type].sort_custom(func(a, b): return a.timestamp > b.timestamp)
 	
 	motion_data_loaded.emit(student_motion_data)
+
+# Process voice data from Firebase
+func process_voice_data(data: Dictionary):
+	student_voice_data.clear()
+	
+	print("DEBUG: Processing voice data: %s" % var_to_str(data))
+	
+	if data.has("documents"):
+		print("DEBUG: Found %d voice documents" % data.documents.size())
+		for doc in data.documents:
+			var voice_id = doc.name.split("/")[-1]  # Extract voice ID
+			var doc_data = extract_document_fields(doc)
+			print("DEBUG: Voice ID %s data: %s" % [voice_id, var_to_str(doc_data)])
+			
+			# Group by date
+			var date = doc_data.get("date", "Unknown")
+			if not student_voice_data.has(date):
+				student_voice_data[date] = []
+			
+			student_voice_data[date].append({
+				"voice_id": voice_id,
+				"word": doc_data.get("word", ""),
+				"timestamp": doc_data.get("timestamp", 0),
+				"date": date
+			})
+	else:
+		print("DEBUG: No voice documents found in response")
+	
+	# Sort each date's words by timestamp (newest first)
+	for date in student_voice_data.keys():
+		student_voice_data[date].sort_custom(func(a, b): return a.timestamp > b.timestamp)
+	
+	print("DEBUG: Final voice data: %s" % var_to_str(student_voice_data))
+	voice_data_loaded.emit(student_voice_data)
 
 # Extract fields from Firebase document
 func extract_document_fields(doc: Dictionary) -> Dictionary:
@@ -241,3 +323,6 @@ func get_current_student_cognitive_data() -> Dictionary:
 
 func get_current_student_motion_data() -> Dictionary:
 	return student_motion_data.duplicate()
+
+func get_current_student_voice_data() -> Dictionary:
+	return student_voice_data.duplicate()

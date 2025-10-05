@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dfpv5vpg4t710"
+path="res://.godot/imported/spotifydown.com - Ditto.mp3-baa0da4dc87da3ab6f0178ce318df7e0.mp3str"
+
+[deps]
+
+source_file="res://audio/music/spotifydown.com - Ditto.mp3"
+dest_files=["res://.godot/imported/spotifydown.com - Ditto.mp3-baa0da4dc87da3ab6f0178ce318df7e0.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
