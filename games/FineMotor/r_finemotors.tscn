@@ -93,20 +93,6 @@ theme_override_font_sizes/font_size = 45
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Quitbtn" type="TextureButton" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.034
-anchor_top = 0.063
-anchor_right = 0.034
-anchor_bottom = 0.063
-offset_left = 0.719994
-offset_top = -0.0400009
-offset_right = 105.72
-offset_bottom = 109.96
-texture_normal = ExtResource("5_5ab8g")
-stretch_mode = 0
-
 [node name="Dropzone" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -234,3 +220,19 @@ offset_right = 169.04
 offset_bottom = 168.36
 texture = ExtResource("13_orf5n")
 expand_mode = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("5_5ab8g")
+stretch_mode = 0
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

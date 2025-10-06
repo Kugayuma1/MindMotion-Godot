@@ -1,0 +1,277 @@
+[gd_scene load_steps=9 format=3 uid="uid://yqprs2ohrwai"]
+
+[ext_resource type="Script" uid="uid://cilsv0ajcqal" path="res://games_script/Reading/r_reading.gd" id="1_77ini"]
+[ext_resource type="Texture2D" uid="uid://ddn4fgqnfu3g7" path="res://Game Bg/mathbg/34.png" id="1_baca2"]
+[ext_resource type="Texture2D" uid="uid://drjwtnbyh8q6y" path="res://Game Assets/Reading Assets/Assetsulit/1Assetsnanaman/readingassets (1).png" id="2_77ini"]
+[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="3_xrik1"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="4_8c3es"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="5_nukf2"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="6_etk0o"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="7_0bt55"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_77ini")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_baca2")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Rabbit1" type="TextureButton" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.168
+anchor_top = 0.776
+anchor_right = 0.168
+anchor_bottom = 0.776
+offset_left = -211.224
+offset_top = -212.304
+offset_right = 209.776
+offset_bottom = 211.696
+texture_normal = ExtResource("2_77ini")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="TextureRect/Rabbit1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.783
+anchor_right = 0.5
+anchor_bottom = 0.783
+offset_left = -84.5
+offset_top = -33.992
+offset_right = 64.5
+offset_bottom = 34.008
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_xrik1")
+theme_override_font_sizes/font_size = 65
+text = "Violin"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Rabbit2" type="TextureButton" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.332
+anchor_top = 0.575
+anchor_right = 0.332
+anchor_bottom = 0.575
+offset_left = -210.776
+offset_top = -212.425
+offset_right = 210.224
+offset_bottom = 211.575
+texture_normal = ExtResource("2_77ini")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="TextureRect/Rabbit2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.783
+anchor_right = 0.5
+anchor_bottom = 0.783
+offset_left = -84.5
+offset_top = -33.992
+offset_right = 64.5
+offset_bottom = 34.008
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_xrik1")
+theme_override_font_sizes/font_size = 65
+text = "Rocket"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Rabbit3" type="TextureButton" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.486
+anchor_top = 0.771
+anchor_right = 0.486
+anchor_bottom = 0.771
+offset_left = -210.148
+offset_top = -211.909
+offset_right = 210.852
+offset_bottom = 212.091
+texture_normal = ExtResource("2_77ini")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="TextureRect/Rabbit3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.783
+anchor_right = 0.5
+anchor_bottom = 0.783
+offset_left = -84.5
+offset_top = -33.992
+offset_right = 64.5
+offset_bottom = 34.008
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_xrik1")
+theme_override_font_sizes/font_size = 65
+text = "Round"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Rabbit4" type="TextureButton" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.643
+anchor_top = 0.568
+anchor_right = 0.643
+anchor_bottom = 0.568
+offset_left = -211.274
+offset_top = -211.872
+offset_right = 209.726
+offset_bottom = 212.128
+texture_normal = ExtResource("2_77ini")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="TextureRect/Rabbit4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.783
+anchor_right = 0.5
+anchor_bottom = 0.783
+offset_left = -84.5
+offset_top = -33.992
+offset_right = 64.5
+offset_bottom = 34.008
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_xrik1")
+theme_override_font_sizes/font_size = 65
+text = "Books"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Rabbit5" type="TextureButton" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.796
+anchor_top = 0.783
+anchor_right = 0.796
+anchor_bottom = 0.783
+offset_left = -210.728
+offset_top = -211.857
+offset_right = 210.272
+offset_bottom = 212.143
+texture_normal = ExtResource("2_77ini")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="TextureRect/Rabbit5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.783
+anchor_right = 0.5
+anchor_bottom = 0.783
+offset_left = -84.5
+offset_top = -33.992
+offset_right = 64.5
+offset_bottom = 34.008
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_xrik1")
+theme_override_font_sizes/font_size = 65
+text = "Race"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Time" type="TextureRect" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.843
+anchor_right = 0.843
+offset_left = 0.125854
+offset_top = 17.0
+offset_right = 258.126
+offset_bottom = 275.0
+texture = ExtResource("4_8c3es")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="TextureRect/Time"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 113.0
+offset_right = 164.0
+offset_bottom = 189.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_nukf2")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Holder" type="TextureRect" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.503
+anchor_top = 0.052
+anchor_right = 0.503
+anchor_bottom = 0.052
+offset_left = -358.754
+offset_top = -0.108002
+offset_right = 357.246
+offset_bottom = 252.892
+texture = ExtResource("6_etk0o")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="TextureRect/Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 633.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_nukf2")
+theme_override_font_sizes/font_size = 55
+text = "Tap the Rabbit that
+starts with letter \"R\""
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("7_0bt55")
+stretch_mode = 0
+
+[connection signal="pressed" from="TextureRect/Rabbit1" to="." method="_on_rabbit_1_pressed"]
+[connection signal="pressed" from="TextureRect/Rabbit2" to="." method="_on_rabbit_2_pressed"]
+[connection signal="pressed" from="TextureRect/Rabbit3" to="." method="_on_rabbit_3_pressed"]
+[connection signal="pressed" from="TextureRect/Rabbit4" to="." method="_on_rabbit_4_pressed"]
+[connection signal="pressed" from="TextureRect/Rabbit5" to="." method="_on_rabbit_5_pressed"]
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]
