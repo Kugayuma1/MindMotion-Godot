@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://du8wavjv3hn85"]
+[gd_scene load_steps=23 format=3 uid="uid://du8wavjv3hn85"]
 
 [ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_1cgyr"]
 [ext_resource type="Script" uid="uid://b1n40wq8c2wsy" path="res://games_script/Arts/LetterC/c_arts.gd" id="1_d3nbv"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://ci4get31p6a6p" path="res://Game Assets/Arts/Lady.png" id="18_4coq3"]
 [ext_resource type="Texture2D" uid="uid://b4fcft4nhtcia" path="res://Game Assets/Arts/subt 1.png" id="19_2yl3m"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="20_c137a"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="22_igkmn"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -289,3 +290,15 @@ offset_right = 1906.0
 offset_bottom = 239.0
 texture = ExtResource("20_c137a")
 expand_mode = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 45.0
+offset_right = 149.0
+offset_bottom = 154.0
+texture_normal = ExtResource("22_igkmn")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

@@ -37,9 +37,9 @@ script = ExtResource("7_oipxb")
 
 [node name="StickerContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
-offset_top = 788.0
+offset_top = 852.0
 offset_right = 1907.0
-offset_bottom = 1082.0
+offset_bottom = 1043.0
 horizontal_scroll_mode = 2
 vertical_scroll_mode = 0
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b4nfsbkt6lbw1"]
+[gd_scene load_steps=25 format=3 uid="uid://b4nfsbkt6lbw1"]
 
 [ext_resource type="Script" uid="uid://cfq7gauojler1" path="res://games_script/Arts/LetterI/control.gd" id="1_s2omi"]
 [ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="2_4h5sc"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://r8cbrabkre1h" path="res://Game Assets/Arts/MathEbg (15).png" id="18_ggkhd"]
 [ext_resource type="Texture2D" uid="uid://ylsf8eqsiv0e" path="res://Game Assets/Arts/MathEbg (14).png" id="19_lopgo"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="20_lgriy"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="21_4h5sc"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kbjwm"]
 load_path = "res://.godot/imported/red.png-dfa5a4939a447e636d902ca7ea351061.ctex"
@@ -50,6 +51,7 @@ texture = ExtResource("2_4h5sc")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 386.0
 offset_top = 119.0
 offset_right = 1654.0
@@ -300,6 +302,7 @@ vertical_alignment = 1
 justification_flags = 171
 
 [node name="window" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 620.0
 offset_top = 511.0
 offset_right = 929.0
@@ -318,9 +321,22 @@ texture = ExtResource("19_lopgo")
 expand_mode = 1
 
 [node name="TextureRect5" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 1692.0
 offset_top = 4.0
 offset_right = 1918.0
 offset_bottom = 219.0
 texture = ExtResource("20_lgriy")
 expand_mode = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 45.0
+offset_right = 149.0
+offset_bottom = 154.0
+texture_normal = ExtResource("21_4h5sc")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

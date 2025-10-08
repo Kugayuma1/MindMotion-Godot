@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cc50ghk1fo4ih"]
+[gd_scene load_steps=25 format=3 uid="uid://cc50ghk1fo4ih"]
 
 [ext_resource type="Script" uid="uid://dy3rdencncncj" path="res://games/Arts/control.gd" id="1_jdiac"]
 [ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="2_wgrpx"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://b4fcft4nhtcia" path="res://Game Assets/Arts/subt 1.png" id="18_02iav"]
 [ext_resource type="Texture2D" uid="uid://k0lg68ke3k7q" path="res://Game Assets/Arts/MathEbg (13).png" id="19_st5xh"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="20_ew6lw"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="21_wgrpx"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1up7h"]
 load_path = "res://.godot/imported/red.png-dfa5a4939a447e636d902ca7ea351061.ctex"
@@ -339,3 +340,15 @@ offset_right = 1918.0
 offset_bottom = 219.0
 texture = ExtResource("20_ew6lw")
 expand_mode = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 45.0
+offset_right = 149.0
+offset_bottom = 154.0
+texture_normal = ExtResource("21_wgrpx")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

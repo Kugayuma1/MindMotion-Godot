@@ -20,6 +20,7 @@ var popup_instance: Control = null
 @onready var timer_label = $Time/Label      # Timer label
 
 func _ready():
+	AudioManager.play_temp_music("game")
 	completed_matches.clear()
 	
 	# Store original feedback text for reset

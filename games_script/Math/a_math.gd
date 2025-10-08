@@ -40,6 +40,7 @@ var group1_avocados = []
 var group2_avocados = []
 
 func _ready():
+	AudioManager.play_temp_music("game")
 	print("=== GAME STARTING WITH CORRECT PATHS ===")
 	Global.start_time = Time.get_ticks_msec()  # record when the game starts
 	

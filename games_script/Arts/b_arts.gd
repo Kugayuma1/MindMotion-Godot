@@ -34,6 +34,7 @@ var popup_instance: Control = null
 @export var auto_detect_backgrounds: bool = true  # Automatically detect backgrounds
 
 func _ready():
+	AudioManager.play_temp_music("game")
 	if main_label:
 		original_main_text = main_label.text
 	
