@@ -11,7 +11,6 @@ func _ready():
 	if agree_checkbox and not agree_checkbox.toggled.is_connected(_on_agree_toggled):
 		agree_checkbox.toggled.connect(_on_agree_toggled)
 
-
 func load_privacy_text():
 	var privacy_content = """[center][b][font_size=24]Privacy Policy[/font_size][/b][/center]
 
@@ -153,7 +152,7 @@ func _on_agree_toggled(checked: bool):
 		if Global.temp_signup_data:
 			Global.temp_signup_data["privacy_read"] = true
 		# Brief delay so user sees the checkbox get checked
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.1).timeout
 		navigate_back_to_signup()
 	else:
 		# If unchecked, remove the privacy_read flag

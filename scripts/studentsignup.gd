@@ -37,6 +37,7 @@ func debug_print(message: String, icon: String = "📋"):
 func _ready():
 	setup_ui()
 	setup_terms_privacy_buttons()
+	gender_option.theme = dialog_theme
 	# Restore data if returning from terms/privacy screens
 	restore_signup_data()
 
@@ -426,7 +427,7 @@ func show_error_dialog(message: String):
 	add_child(error_dialog)
 	error_dialog.theme = dialog_theme
 	error_dialog.dialog_text = message
-	error_dialog.title = "Error"
+	error_dialog.title = "Notice"
 	error_dialog.min_size = Vector2(350, 150)  # Width x Height
 	error_dialog.size = Vector2(350, 150)
 	error_dialog.popup_centered()
