@@ -5,6 +5,7 @@ extends Control
 @onready var name_input = $Container/Name
 @onready var email_input = $Container/Email
 @onready var password_input = $Container/Password
+@onready var hide_button = $Container/Password/Hide
 @onready var age_input = $Container/Age
 @onready var agreement_checkbox = $Container/Password/Agree
 @onready var terms_button = $Container/Password/TermsButton
@@ -12,6 +13,8 @@ extends Control
 @onready var http_request = $HTTPRequest
 var signup_loading_dialog: AcceptDialog = null
 var dialog_theme = preload("res://assets/main_theme.tres")
+var eye_open_icon = preload("res://assets/eye.png")
+var eye_closed_icon = preload("res://assets/eyeofthetiger.png")
 
 # Constants
 const FIREBASE_API_KEY = "AIzaSyC7bPi7suzy8DmMFSgP7n090t7zHXzI5Bk"
@@ -38,6 +41,9 @@ func _ready():
 	setup_ui()
 	setup_terms_privacy_buttons()
 	gender_option.theme = dialog_theme
+	
+	if hide_button:
+		hide_button.texture_normal = eye_closed_icon
 	# Restore data if returning from terms/privacy screens
 	restore_signup_data()
 
@@ -440,3 +446,13 @@ func _on_signup_loading_dialog_closed():
 	# Don't allow closing during signup
 	if signup_loading_dialog and is_instance_valid(signup_loading_dialog):
 		signup_loading_dialog.popup_centered()
+
+
+func _on_hide_pressed() :
+	password_input.secret = !password_input.secret
+	
+	if hide_button:
+		if password_input.secret:
+			hide_button.texture_normal = eye_closed_icon  # Password hidden, show crossed eye
+		else:
+			hide_button.texture_normal = eye_open_icon

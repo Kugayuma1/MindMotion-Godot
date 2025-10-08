@@ -3,6 +3,8 @@ extends Control
 @onready var name_input = $Container/Name
 @onready var email_input = $Container/Email
 @onready var password_input = $Container/Password
+@onready var hide_button = $Container/Password/Hide
+@onready var hidden_button = $Container/Confirm/Hidden
 @onready var confirm_password_input = $Container/Confirm
 @onready var agreement_checkbox = $Container/Confirm/Agree
 @onready var terms_button = $Container/Confirm/TermsButton
@@ -19,6 +21,8 @@ var temp_id_token = ""
 var temp_refresh_token = ""
 var loading_dialog: AcceptDialog = null
 var dialog_theme = preload("res://assets/main_theme.tres")
+var eye_open_icon = preload("res://assets/eye.png")
+var eye_closed_icon = preload("res://assets/eyeofthetiger.png")
 
 # Terms and Privacy tracking
 var terms_read = false
@@ -27,6 +31,12 @@ var privacy_read = false
 func _ready():
 	setup_ui()
 	setup_terms_privacy_buttons()
+	
+	if hide_button:
+		hide_button.texture_normal = eye_closed_icon
+	
+	if hidden_button:
+		hidden_button.texture_normal = eye_closed_icon
 	# Restore data if returning from terms/privacy screens
 	restore_signup_data()
 
@@ -330,3 +340,21 @@ func _on_loading_dialog_close():
 func _on_error_dialog_closed(dialog: AcceptDialog):
 	if dialog and is_instance_valid(dialog):
 		dialog.queue_free()
+
+func _on_hide_pressed() -> void:
+	password_input.secret = !password_input.secret
+	
+	if hide_button:
+		if password_input.secret:
+			hide_button.texture_normal = eye_closed_icon  # Password hidden, show crossed eye
+		else:
+			hide_button.texture_normal = eye_open_icon
+
+func _on_hidden_pressed() -> void:
+	confirm_password_input.secret = !confirm_password_input.secret
+	
+	if hidden_button:
+		if password_input.secret:
+			hidden_button.texture_normal = eye_closed_icon  # Password hidden, show crossed eye
+		else:
+			hidden_button.texture_normal = eye_open_icon

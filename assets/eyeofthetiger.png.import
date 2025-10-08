@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bfgu80h1o6vii"
-path="res://.godot/imported/eyeofthetiger.png-16e4b848bf8eb65cc4fe202c70fc6499.ctex"
+path="res://.godot/imported/eyeofthetiger.png-8f0d7a27ae4c9ada0b871f7331d4ab53.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://eyeofthetiger.png"
-dest_files=["res://.godot/imported/eyeofthetiger.png-16e4b848bf8eb65cc4fe202c70fc6499.ctex"]
+source_file="res://assets/eyeofthetiger.png"
+dest_files=["res://.godot/imported/eyeofthetiger.png-8f0d7a27ae4c9ada0b871f7331d4ab53.ctex"]
 
 [params]
 

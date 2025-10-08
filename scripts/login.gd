@@ -3,11 +3,14 @@ extends Control
 @onready var password_input = $Container/Password
 @onready var email_input = $Container/Email
 @onready var login_button = $Container/LoginButton
+@onready var hide_button = $Container/Password/Hide
 @onready var http_request = $HTTPRequest
 
 const FIREBASE_API_KEY = "AIzaSyC7bPi7suzy8DmMFSgP7n090t7zHXzI5Bk"
 
 var dialog_theme = preload("res://assets/main_theme.tres")
+var eye_open_icon = preload("res://assets/eye.png")
+var eye_closed_icon = preload("res://assets/eyeofthetiger.png")
 var current_request_type: String = ""
 var loading_dialog: AcceptDialog = null
 var original_login_text: String = ""
@@ -16,7 +19,9 @@ func _ready():
 	$Container/HelloLabel.text = "Hello %s!" % Global.user_type.capitalize()
 	if login_button:
 		original_login_text = login_button.text
-	
+		
+	if hide_button:
+		hide_button.texture_normal = eye_closed_icon
 	# Connect to Global's authentication signals
 	Global.authentication_failed.connect(_on_authentication_failed)
 
@@ -45,6 +50,12 @@ func _on_forget_pressed():
 
 func _on_hide_pressed():
 	password_input.secret = !password_input.secret
+	
+	if hide_button:
+		if password_input.secret:
+			hide_button.texture_normal = eye_closed_icon  # Password hidden, show crossed eye
+		else:
+			hide_button.texture_normal = eye_open_icon  # Password visible, show open eye
 
 func make_request(endpoint: String, data: Dictionary):
 	var url = "https://identitytoolkit.googleapis.com/v1/accounts:%s?key=%s" % [endpoint, FIREBASE_API_KEY]
