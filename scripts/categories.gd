@@ -2,6 +2,7 @@ extends Control
 
 # Store stage completion status
 var stage_completion = {}
+var is_transitioning = false
 
 # Simple debug helper - just consolidates print statements
 func debug_print(message: String, icon: String = "📋"):
@@ -35,6 +36,10 @@ func load_stage_completion_from_cache():
 	update_button_states()
 
 func update_button_states():
+	# Don't update if we're transitioning scenes
+	if is_transitioning:
+		return
+		
 	var reading_done = stage_completion.get("reading", false)
 	var fine_motor_done = stage_completion.get("fine_motor", false)
 	var math_done = stage_completion.get("math", false)
@@ -85,6 +90,8 @@ func is_stage_unlocked(stage_name: String) -> bool:
 
 # Consolidated button handlers
 func _on_back_pressed():
+	is_transitioning = true
+	_disconnect_signals()
 	get_tree().change_scene_to_file("res://scenes/LevelSelection.tscn")
 
 func _on_reading_pressed():
@@ -109,10 +116,14 @@ func try_load_locked_stage(stage: String, display_name: String, requirement: Str
 	return true
 
 func load_stage_scene(stage: String, folder: String, filename: String):
+	is_transitioning = true
+	_disconnect_signals()
+	
 	var path = "res://games/%s/%s_%s.tscn" % [folder, Global.current_letter.to_lower(), filename]
 	if ResourceLoader.exists(path):
 		get_tree().change_scene_to_file(path)
 	else:
+		is_transitioning = false
 		show_dialog("❌ Scene for letter %s not found." % Global.current_letter, "Scene not found")
 
 func show_dialog(text: String, title: String):
@@ -126,8 +137,13 @@ func show_dialog(text: String, title: String):
 
 # FIREBASE-ONLY: This gets called when Global's stage cache updates from Firebase
 func _on_stage_cache_updated(letter: String):
-	if letter == Global.current_letter:
+	if letter == Global.current_letter and not is_transitioning:
+		load_stage_completion_from_cache()
 		update_button_states()
+
+func _disconnect_signals():
+	if Global.stage_cache_updated.is_connected(_on_stage_cache_updated):
+		Global.stage_cache_updated.disconnect(_on_stage_cache_updated)
 
 func debug_print_states():
 	debug_print("=== DEBUG STATES ===")
@@ -135,3 +151,7 @@ func debug_print_states():
 	for stage in ["reading", "fine_motor", "math", "art"]:
 		debug_print("%s: unlocked=%s, completed=%s" % [stage, is_stage_unlocked(stage), stage_completion.get(stage, false)])
 	debug_print("====================")
+
+func _exit_tree():
+	# Clean disconnect when scene is destroyed
+	_disconnect_signals()

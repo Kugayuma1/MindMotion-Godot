@@ -5,6 +5,7 @@ var letters = []
 var current_index = 0
 var selected_letter = ""
 var dialog_theme = preload("res://assets/main_theme.tres")
+var is_transitioning = false  # Prevent updates during scene transition
 
 # Button references
 @onready var left_button: TextureButton = $LeftButton
@@ -76,6 +77,9 @@ func _ready():
 
 # Enhanced signal handler for Firebase updates
 func _on_letter_cache_updated():
+	# Don't update UI if we're transitioning away
+	if is_transitioning:
+		return
 	update_letters_with_lock_status()
 
 # FIREBASE-ONLY: Handle cache and UI updates
@@ -99,6 +103,9 @@ func handle_firebase_cache_and_update_ui():
 
 # Fix the safe defaults function  
 func update_letters_with_safe_defaults():
+	if is_transitioning:
+		return
+		
 	debug_print("Updating with safe defaults...")
 	
 	# Update letter text
@@ -116,7 +123,7 @@ func update_letters_with_safe_defaults():
 
 # FIREBASE-ONLY: Safe visual application
 func apply_safe_button_visual(button: TextureButton, lock_icon: TextureRect, letter: String):
-	if not button:
+	if not button or is_transitioning:
 		return
 	
 	var is_unlocked = false
@@ -137,7 +144,7 @@ func apply_safe_button_visual(button: TextureButton, lock_icon: TextureRect, let
 
 # FIREBASE-ONLY: Apply button visual from Firebase cache
 func apply_button_visual(button: TextureButton, lock_icon: TextureRect, letter: String):
-	if not button:
+	if not button or is_transitioning:
 		return
 	
 	var is_unlocked = Global.is_letter_unlocked(letter)
@@ -176,6 +183,9 @@ func is_letter_unlocked(letter: String) -> bool:
 
 # FIREBASE-ONLY: Update letters with lock status from Firebase cache
 func update_letters_with_lock_status():
+	if is_transitioning:
+		return
+		
 	debug_print("Updating letters with lock status from Firebase cache...")
 	
 	# Update the letters displayed
@@ -227,23 +237,27 @@ func update_label_references():
 
 # Simplified update function
 func update_letters():
+	if is_transitioning:
+		return
 	update_letters_with_lock_status()
 
 func _on_any_button_pressed(clicked_button: TextureButton):
-	if is_animating:
+	if is_animating or is_transitioning:
 		return
 	
 	if clicked_button.scale == large_scale:
 		var center_letter = letters[current_index]
 		
 		if is_letter_unlocked(center_letter):
+			is_transitioning = true
+			_disconnect_signals()
+			
 			Global.current_index = current_index
 			Global.current_letter = center_letter
 			# FIREBASE-ONLY: Preload stage data for smoother transition
 			Global.preload_letter_stages(center_letter)
-			var categories_scene = load("res://scenes/Categories.tscn").instantiate()
-			get_tree().root.add_child(categories_scene)
-			queue_free()
+			
+			get_tree().change_scene_to_file("res://scenes/Categories.tscn")
 		else:
 			show_lock_message(center_letter)
 	else:
@@ -266,7 +280,7 @@ func show_lock_message(letter: String):
 	dialog.theme = dialog_theme
 	dialog.dialog_text = "🔒 Letter Locked!\n\n" + lock_message
 	dialog.title = "Unlock Required"
-	dialog.min_size = Vector2(350, 150)  # Width x Height
+	dialog.min_size = Vector2(350, 150)
 	dialog.size = Vector2(350, 150)	
 	dialog.popup_centered()
 	
@@ -274,7 +288,7 @@ func show_lock_message(letter: String):
 	dialog.close_requested.connect(func(): dialog.queue_free())
 
 func slide_left():
-	if is_animating:
+	if is_animating or is_transitioning:
 		return
 		
 	is_animating = true
@@ -327,7 +341,7 @@ func finish_slide_left():
 	is_animating = false
 
 func slide_right():
-	if is_animating:
+	if is_animating or is_transitioning:
 		return
 		
 	is_animating = true
@@ -381,6 +395,9 @@ func finish_slide_right():
 
 # FIREBASE-ONLY: Call this when returning from a completed letter to refresh the carousel
 func refresh_carousel():
+	if is_transitioning:
+		return
+		
 	debug_print("Refreshing letter carousel after letter completion...", "🔄")
 	
 	# FIREBASE-ONLY: Reload from Firebase instead of local storage
@@ -394,6 +411,9 @@ func refresh_carousel():
 	update_letters_with_lock_status()
 
 func _input(event):
+	if is_transitioning:
+		return
+		
 	if event is InputEventScreenTouch:
 		handle_touch(event)
 	elif event is InputEventScreenDrag:
@@ -413,7 +433,7 @@ func _input(event):
 			handle_drag(drag_event)
 
 func handle_touch(event: InputEventScreenTouch):
-	if is_animating:
+	if is_animating or is_transitioning:
 		return
 		
 	if event.pressed:
@@ -436,16 +456,23 @@ func handle_touch(event: InputEventScreenTouch):
 			is_swiping = false
 
 func handle_drag(event: InputEventScreenDrag):
-	if is_animating:
+	if is_animating or is_transitioning:
 		return
 
 func _on_back_pressed():
+	is_transitioning = true
+	_disconnect_signals()
 	get_tree().change_scene_to_file("res://scenes/StudentMain.tscn")
-	
-func _exit_tree():
+
+func _on_trophy_pressed():
+	is_transitioning = true
+	_disconnect_signals()
+	get_tree().change_scene_to_file("res://reward scene/rewards_a.tscn")
+
+func _disconnect_signals():
 	if Global.letter_cache_updated.is_connected(_on_letter_cache_updated):
 		Global.letter_cache_updated.disconnect(_on_letter_cache_updated)
-
-
-func _on_trophy_pressed() -> void:
-	get_tree().change_scene_to_file("res://reward scene/rewards_a.tscn")
+		debug_print("Disconnected Firebase signals", "🔌")
+	
+func _exit_tree():
+	_disconnect_signals()
