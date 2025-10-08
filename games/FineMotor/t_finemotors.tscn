@@ -1,0 +1,209 @@
+[gd_scene load_steps=13 format=3 uid="uid://b5bclwjc4npxg"]
+
+[ext_resource type="Script" uid="uid://7ger02orllc5" path="res://games_script/finemotor/t_finemotors.gd" id="1_bsn8c"]
+[ext_resource type="Texture2D" uid="uid://di60uo55y6bxc" path="res://Game Assets/Fine Motor Assets/BG/21.png" id="1_sct1j"]
+[ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="2_bsn8c"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_dh0lf"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="4_yqfry"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="5_4slsg"]
+[ext_resource type="Texture2D" uid="uid://c6qd33ktpu3tj" path="res://Game Assets/Fine Motor Assets/BG/61.png" id="6_g2hca"]
+[ext_resource type="Texture2D" uid="uid://bkem35mntvxxe" path="res://Game Assets/as (1280 x 800 px) (46) 5.png" id="7_tgysq"]
+[ext_resource type="Texture2D" uid="uid://c705lctdrt8dn" path="res://Game Assets/Math/mathsha/23.png" id="8_doski"]
+[ext_resource type="Texture2D" uid="uid://dromatouhcsul" path="res://Game Assets/Fine Motor Assets/33.png" id="9_4aqsa"]
+[ext_resource type="Texture2D" uid="uid://bibo7j4g7ujl0" path="res://Game Assets/Fine Motor Assets/129.png" id="10_et743"]
+[ext_resource type="Texture2D" uid="uid://cki48d8qy0ari" path="res://Game Assets/Fine Motor Assets/111.png" id="11_35ih6"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bsn8c")
+
+[node name="GameBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_sct1j")
+
+[node name="Holder" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.052
+anchor_right = 0.502
+anchor_bottom = 0.052
+offset_left = -357.84
+offset_top = -0.16
+offset_right = 358.16
+offset_bottom = 252.84
+texture = ExtResource("2_bsn8c")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Holder"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 39.0
+offset_right = 630.0
+offset_bottom = 202.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_dh0lf")
+theme_override_font_sizes/font_size = 55
+text = "Give the Gardener his
+things"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Time" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.917
+anchor_top = 0.142
+anchor_right = 0.917
+anchor_bottom = 0.142
+offset_left = -128.64
+offset_top = -129.36
+offset_right = 129.36
+offset_bottom = 128.64
+grow_horizontal = 0
+texture = ExtResource("4_yqfry")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Time"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.494
+anchor_top = 0.554
+anchor_right = 0.494
+anchor_bottom = 0.554
+offset_left = -33.452
+offset_top = -37.932
+offset_right = 33.548
+offset_bottom = 38.068
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_dh0lf")
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Dropzone" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Toybox" type="TextureRect" parent="Dropzone"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.854
+anchor_top = 0.825
+anchor_right = 0.854
+anchor_bottom = 0.825
+offset_left = -277.68
+offset_top = -305.0
+offset_right = 278.32
+offset_bottom = 306.0
+texture = ExtResource("6_g2hca")
+expand_mode = 1
+
+[node name="Draggables" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Toy" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.576
+anchor_right = 0.25
+anchor_bottom = 0.576
+offset_left = -96.0
+offset_top = -95.08
+offset_right = 95.0
+offset_bottom = 95.92
+texture = ExtResource("7_tgysq")
+expand_mode = 1
+
+[node name="Toy2" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.36
+anchor_top = 0.587
+anchor_right = 0.36
+anchor_bottom = 0.587
+offset_left = -95.2
+offset_top = -94.96
+offset_right = 95.8
+offset_bottom = 96.04
+texture = ExtResource("8_doski")
+expand_mode = 1
+
+[node name="Toy3" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.482
+anchor_top = 0.581
+anchor_right = 0.482
+anchor_bottom = 0.581
+offset_left = -96.4401
+offset_top = -95.48
+offset_right = 94.5599
+offset_bottom = 95.52
+texture = ExtResource("9_4aqsa")
+expand_mode = 1
+
+[node name="Toy4" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.598
+anchor_top = 0.586
+anchor_right = 0.598
+anchor_bottom = 0.586
+offset_left = -95.1602
+offset_top = -95.88
+offset_right = 95.8398
+offset_bottom = 95.12
+texture = ExtResource("10_et743")
+expand_mode = 1
+
+[node name="Toy5" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.71
+anchor_top = 0.581
+anchor_right = 0.71
+anchor_bottom = 0.581
+offset_left = -95.2001
+offset_top = -95.48
+offset_right = 123.8
+offset_bottom = 69.52
+texture = ExtResource("11_35ih6")
+expand_mode = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("5_4slsg")
+stretch_mode = 0
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

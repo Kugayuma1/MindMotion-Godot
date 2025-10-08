@@ -1,0 +1,137 @@
+extends Control
+
+var correct_answers = ["Rocket", "Round", "Race"]
+var selected_correct = []
+var original_feedback_text = ""
+var countdown := 15
+var timer_active = true
+var start_time := 0
+
+# Preload popup star scenes (adjust the paths as needed!)
+var complete1_scene = preload("res://reward scene/Complete1.tscn")
+var complete2_scene = preload("res://reward scene/Complete2.tscn")
+var complete3_scene = preload("res://reward scene/Complete3.tscn")
+var retry_scene = preload("res://reward scene/Retry.tscn")
+
+var popup_instance: Control = null
+
+@onready var feedback_label = $TextureRect/Holder/Label
+@onready var timer_label = $TextureRect/Time/Label
+
+func _ready():
+	selected_correct.clear()
+	original_feedback_text = feedback_label.text
+	start_timer()
+	Global.start_time = Time.get_ticks_msec()
+
+func start_timer() -> void:
+	timer_label.text = "15s"
+	countdown = 15
+	timer_active = true
+	update_timer()
+
+func update_timer() -> void:
+	if countdown <= 0:
+		timer_label.text = "Time's up!"
+		timer_active = false
+		ProgressManager.save_progress("reading", false)
+		Global.refresh_everything_after_stage_completion("reading", false)
+		game_over(false)  # ⬅️ Show 1-star popup if time runs out
+		return
+
+	timer_label.text = " " + str(countdown) + "s"
+	countdown -= 1
+	await get_tree().create_timer(1.0).timeout
+
+	if timer_active:
+		update_timer()
+
+func check_answer(answer: String, button: TextureButton) -> void:
+	if !timer_active:
+		feedback_label.text = "Time's Up"
+		return
+
+	if correct_answers.has(answer):
+		if !selected_correct.has(answer):
+			selected_correct.append(answer)
+			feedback_label.text = "Correct!"
+			button.visible = false
+
+			if selected_correct.size() == correct_answers.size():
+				feedback_label.text = "Very Good!"
+				timer_active = false
+				ProgressManager.save_progress("reading", true)
+				Global.refresh_everything_after_stage_completion("reading", true)
+				game_over(true)  # ⬅️ Show star popup when complete
+			else:
+				await get_tree().create_timer(1.5).timeout
+				reset_feedback_label()
+		else:
+			feedback_label.text = "You've already
+			tapped that!"
+			await get_tree().create_timer(1.5).timeout
+			reset_feedback_label()
+	else:
+		feedback_label.text = "Wrong! Try again, 
+		You can do it!"
+		shake_button(button)
+		await get_tree().create_timer(1.5).timeout
+		reset_feedback_label()
+
+func reset_feedback_label() -> void:
+	feedback_label.text = original_feedback_text
+
+func shake_button(button: TextureButton) -> void:
+	var original_pos = button.position
+	var tween = create_tween()
+	tween.tween_property(button, "position", original_pos + Vector2(-10, 0), 0.05)
+	tween.tween_property(button, "position", original_pos + Vector2(10, 0), 0.05).set_delay(0.05)
+	tween.tween_property(button, "position", original_pos, 0.05).set_delay(0.10)
+
+# 🎯 Game over function (popup logic)
+func game_over(success: bool):
+	# Hide objects except background
+	if has_node("TextureRect"): $TextureRect.visible = false
+	if has_node("Quitbtn"): $Quitbtn.visible = false
+
+	if success:
+		if countdown >= 10:
+			popup_instance = complete3_scene.instantiate()
+		elif countdown >= 5:
+			popup_instance = complete2_scene.instantiate()
+		else:
+			popup_instance = complete1_scene.instantiate()
+	else:
+		popup_instance = retry_scene.instantiate()
+
+	add_child(popup_instance)  # Show popup on top
+
+
+
+func _on_quitbtn_pressed() -> void:
+	var letter_lower = Global.current_letter.to_lower()
+	var path = "res://scenes/Categories.tscn"
+	if ResourceLoader.exists(path):
+		get_tree().change_scene_to_file(path)
+	else:	
+		print("Scene not found: ", path)
+
+
+func _on_rabbit_1_pressed() -> void:
+	check_answer("Violin", $TextureRect/Rabbit1)
+
+
+func _on_rabbit_2_pressed() -> void:
+	check_answer("Rocket", $TextureRect/Rabbit2)
+
+
+func _on_rabbit_3_pressed() -> void:
+	check_answer("Round", $TextureRect/Rabbit3)
+
+
+func _on_rabbit_4_pressed() -> void:
+	check_answer("Books", $TextureRect/Rabbit4)
+
+
+func _on_rabbit_5_pressed() -> void:
+	check_answer("Race", $TextureRect/Rabbit5)

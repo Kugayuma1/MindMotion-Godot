@@ -163,12 +163,16 @@ func update_timer_display():
 func win_game():
 	game_active = false
 	game_timer.stop()
+	ProgressManager.save_progress("fine_motor", true)
+	Global.refresh_everything_after_stage_completion("fine_motor", true)
 	var stars = calculate_star_rating()
 	show_completion_screen(true, stars)
 
 func game_over():
 	game_active = false
 	game_timer.stop()
+	ProgressManager.save_progress("fine_motor", false)
+	Global.refresh_everything_after_stage_completion("fine_motor", false)
 	await get_tree().create_timer(1.0).timeout
 	show_completion_screen(false, 0)
 
