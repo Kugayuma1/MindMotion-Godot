@@ -74,17 +74,17 @@ theme_override_font_sizes/font_size = 80
 text = "Activity"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-custom_minimum_size = Vector2(1000, 1000)
+custom_minimum_size = Vector2(900, 800)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -377.0
-offset_top = -377.0
-offset_right = 384.0
-offset_bottom = 457.0
+offset_left = -549.0
+offset_top = -378.0
+offset_right = 551.0
+offset_bottom = 472.0
 grow_horizontal = 2
 grow_vertical = 2
 vertical_scroll_mode = 2

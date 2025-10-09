@@ -26,6 +26,15 @@ const MIN_VELOCITY = 5.0
 const TOUCH_THRESHOLD = 10.0  # Minimum movement to count as scroll
 var has_moved = false
 
+func get_responsive_button_width() -> float:
+	var viewport_width = get_viewport().get_visible_rect().size.x
+	
+	# Single column - use percentage of viewport width
+	var button_width = viewport_width * 0.85  # 85% of screen width
+	
+	# Clamp between reasonable values for landscape
+	return clamp(button_width, 500, 1100)
+
 func _ready():
 	current_student_data = Global.selected_student_data
 	
@@ -63,6 +72,10 @@ func setup_scroll_container():
 		
 		# Enable input processing
 		scroll_container.mouse_filter = Control.MOUSE_FILTER_PASS
+	
+	# Set GridContainer to 1 column
+	if activities_grid:
+		activities_grid.columns = 1
 
 func _process(delta):
 	# Apply scroll momentum/inertia
@@ -152,9 +165,10 @@ func update_button_ratings():
 		button_index += 1
 
 func create_letter_button(letter: String):
-	# Main button container
+	# Main button container with responsive width
 	var button_container = Control.new()
-	button_container.custom_minimum_size = Vector2(675, 80)
+	var button_width = get_responsive_button_width()
+	button_container.custom_minimum_size = Vector2(button_width, 80)
 	
 	# Activity button
 	var activity_button = TextureButton.new()
