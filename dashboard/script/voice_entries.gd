@@ -3,6 +3,7 @@ extends Control
 # Node references
 @onready var student_name_label = $Activities
 @onready var back_button = $BackButton
+@onready var scroll_container = $ScrollContainer
 @onready var activities_grid = $ScrollContainer/VoiceGrid
 
 # Button textures
@@ -19,6 +20,17 @@ var current_student_data: Dictionary = {}
 var voice_data: Dictionary = {}
 var expanded_dates: Dictionary = {}  # Track which dates are expanded
 
+# Touch scrolling for mobile
+var touch_scrolling = false
+var touch_start_y = 0.0
+var touch_last_y = 0.0
+var scroll_velocity = 0.0
+var last_touch_time = 0.0
+const SCROLL_FRICTION = 0.92
+const MIN_VELOCITY = 5.0
+const TOUCH_THRESHOLD = 10.0
+var has_moved = false
+
 func _ready():
 	# Get student data
 	current_student_data = Global.selected_student_data
@@ -27,6 +39,9 @@ func _ready():
 		print("ERROR: No student data found!")
 		go_back()
 		return
+	
+	# Setup ScrollContainer for mobile
+	setup_scroll_container()
 	
 	# Setup UI
 	student_name_label.text = "%s - Voice Activities" % current_student_data.get("name", "Unknown")
@@ -53,6 +68,78 @@ func _ready():
 			create_voice_sections()
 		else:
 			StudentData.load_student_voice_data()
+
+func setup_scroll_container():
+	if scroll_container:
+		# ScrollContainer settings for Godot 4.4
+		scroll_container.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+		scroll_container.follow_focus = false
+		
+		# Enable input processing
+		scroll_container.mouse_filter = Control.MOUSE_FILTER_PASS
+
+func get_responsive_button_width() -> float:
+	var viewport_width = get_viewport().get_visible_rect().size.x
+	
+	# Single column - use percentage of viewport width
+	var button_width = viewport_width * 0.85  # 85% of screen width
+	
+	# Clamp between reasonable values for landscape
+	return clamp(button_width, 500, 1100)
+
+func _process(delta):
+	# Apply scroll momentum/inertia
+	if not touch_scrolling and abs(scroll_velocity) > MIN_VELOCITY:
+		scroll_container.scroll_vertical += int(scroll_velocity)
+		scroll_velocity *= SCROLL_FRICTION
+		
+		# Clamp scrolling within bounds
+		var max_scroll = max(0, activities_grid.size.y - scroll_container.size.y)
+		scroll_container.scroll_vertical = clamp(scroll_container.scroll_vertical, 0, max_scroll)
+
+func _input(event):
+	# Handle touch/mouse input for smooth scrolling
+	if event is InputEventScreenTouch or event is InputEventMouseButton:
+		if event.pressed:
+			# Touch/click started
+			touch_scrolling = true
+			touch_start_y = event.position.y
+			touch_last_y = event.position.y
+			scroll_velocity = 0.0
+			last_touch_time = Time.get_ticks_msec() / 1000.0
+			has_moved = false
+		else:
+			# Touch/click released
+			touch_scrolling = false
+			
+			# Calculate release velocity for momentum scrolling
+			var current_time = Time.get_ticks_msec() / 1000.0
+			var time_delta = current_time - last_touch_time
+			if time_delta > 0 and has_moved:
+				scroll_velocity = (touch_last_y - event.position.y) / time_delta * 2.0
+				# Limit max velocity
+				scroll_velocity = clamp(scroll_velocity, -3000, 3000)
+	
+	elif event is InputEventScreenDrag or (event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT):
+		if touch_scrolling:
+			var delta_y = touch_last_y - event.position.y
+			
+			# Check if movement exceeds threshold
+			if abs(event.position.y - touch_start_y) > TOUCH_THRESHOLD:
+				has_moved = true
+			
+			if has_moved:
+				# Apply scrolling
+				scroll_container.scroll_vertical += int(delta_y)
+				
+				# Update for velocity calculation
+				touch_last_y = event.position.y
+				last_touch_time = Time.get_ticks_msec() / 1000.0
+				
+				# Clamp within bounds
+				var max_scroll = max(0, activities_grid.size.y - scroll_container.size.y)
+				scroll_container.scroll_vertical = clamp(scroll_container.scroll_vertical, 0, max_scroll)
 
 func _on_voice_data_loaded(data: Dictionary):
 	voice_data = data
@@ -120,6 +207,10 @@ func create_voice_sections():
 	# Create sections for each date
 	for date in dates:
 		create_date_section(date, voice_data[date])
+	
+	# Force layout update
+	await get_tree().process_frame
+	activities_grid.queue_sort()
 
 func create_no_data_message():
 	var message_label = Label.new()
@@ -132,15 +223,20 @@ func create_no_data_message():
 func create_date_section(date: String, words: Array):
 	var word_count = words.size()
 	
-	# Date header button (collapsible)
+	# Date header button (collapsible) with responsive width
 	var date_container = Control.new()
-	date_container.custom_minimum_size = Vector2(675, 60)
+	var button_width = get_responsive_button_width()
+	date_container.custom_minimum_size = Vector2(button_width, 60)
 	
 	var date_button = TextureButton.new()
 	date_button.texture_normal = date_button_normal
 	date_button.texture_pressed = date_button_pressed
 	date_button.stretch_mode = TextureButton.STRETCH_SCALE
 	date_button.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	
+	# Important: Stop mouse filter but allow press events
+	date_button.mouse_filter = Control.MOUSE_FILTER_STOP
+	
 	date_container.add_child(date_button)
 	
 	# Date header content
@@ -191,8 +287,8 @@ func create_date_section(date: String, words: Array):
 	margin_right.custom_minimum_size = Vector2(20, 0)
 	header_hbox.add_child(margin_right)
 	
-	# Connect date button
-	date_button.pressed.connect(_on_date_button_pressed.bind(date, icon_label))
+	# Connect date button with custom handler to detect scroll vs tap
+	date_button.gui_input.connect(_on_date_button_input.bind(date, icon_label))
 	
 	activities_grid.add_child(date_container)
 	
@@ -209,9 +305,17 @@ func create_date_section(date: String, words: Array):
 	
 	activities_grid.add_child(words_container)
 
+func _on_date_button_input(event: InputEvent, date: String, icon_label: Label):
+	# Only trigger if it was a tap, not a scroll
+	if event is InputEventScreenTouch or event is InputEventMouseButton:
+		if not event.pressed and not has_moved:
+			# This was a tap, not a scroll
+			_on_date_button_pressed(date, icon_label)
+
 func create_word_card(parent: VBoxContainer, word_data: Dictionary):
 	var word_container = Control.new()
-	word_container.custom_minimum_size = Vector2(675, 50)
+	var button_width = get_responsive_button_width()
+	word_container.custom_minimum_size = Vector2(button_width, 50)
 	
 	# Create a simple background
 	var word_bg = ColorRect.new()

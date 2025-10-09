@@ -80,12 +80,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -377.0
+offset_left = -521.0
 offset_top = -377.0
-offset_right = 384.0
-offset_bottom = 457.0
+offset_right = 579.0
+offset_bottom = 473.0
 grow_horizontal = 2
 grow_vertical = 2
+horizontal_scroll_mode = 0
 
 [node name="ActivitiesGrid" type="GridContainer" parent="ScrollContainer"]
 layout_mode = 2

@@ -3,6 +3,7 @@ extends Control
 # Node references
 @onready var student_name_label = $Activities
 @onready var back_button = $BackButton
+@onready var scroll_container = $ScrollContainer
 @onready var activities_grid = $ScrollContainer/ActivitiesGrid
 
 # Button textures
@@ -16,6 +17,17 @@ var dot_count: int = 0
 var current_student_data: Dictionary = {}
 var motion_data: Dictionary = {}
 
+# Touch scrolling for mobile
+var touch_scrolling = false
+var touch_start_y = 0.0
+var touch_last_y = 0.0
+var scroll_velocity = 0.0
+var last_touch_time = 0.0
+const SCROLL_FRICTION = 0.92
+const MIN_VELOCITY = 5.0
+const TOUCH_THRESHOLD = 10.0
+var has_moved = false
+
 func _ready():
 	# Get student data
 	current_student_data = Global.selected_student_data
@@ -24,6 +36,9 @@ func _ready():
 		print("ERROR: No student data found!")
 		go_back()
 		return
+	
+	# Setup ScrollContainer for mobile
+	setup_scroll_container()
 	
 	# Setup UI
 	student_name_label.text = "%s - Motion Activities" % current_student_data.get("name", "Unknown")
@@ -44,13 +59,85 @@ func _ready():
 		create_motion_buttons()
 	else:
 		print("DEBUG: No preloaded motion data, loading...")
-	# Wait a moment for potential preload to finish
+		# Wait a moment for potential preload to finish
 		await get_tree().create_timer(0.5).timeout
 		if StudentData.get_current_student_motion_data().size() > 0:
 			motion_data = StudentData.get_current_student_motion_data()
 			create_motion_buttons()
 		else:
 			StudentData.load_student_motion_data()
+
+func setup_scroll_container():
+	if scroll_container:
+		# ScrollContainer settings for Godot 4.4
+		scroll_container.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+		scroll_container.follow_focus = false
+		
+		# Enable input processing
+		scroll_container.mouse_filter = Control.MOUSE_FILTER_PASS
+
+func get_responsive_button_width() -> float:
+	var viewport_width = get_viewport().get_visible_rect().size.x
+	
+	# Single column - use percentage of viewport width
+	var button_width = viewport_width * 0.85  # 85% of screen width
+	
+	# Clamp between reasonable values for landscape
+	return clamp(button_width, 500, 1100)
+
+func _process(delta):
+	# Apply scroll momentum/inertia
+	if not touch_scrolling and abs(scroll_velocity) > MIN_VELOCITY:
+		scroll_container.scroll_vertical += int(scroll_velocity)
+		scroll_velocity *= SCROLL_FRICTION
+		
+		# Clamp scrolling within bounds
+		var max_scroll = max(0, activities_grid.size.y - scroll_container.size.y)
+		scroll_container.scroll_vertical = clamp(scroll_container.scroll_vertical, 0, max_scroll)
+
+func _input(event):
+	# Handle touch/mouse input for smooth scrolling
+	if event is InputEventScreenTouch or event is InputEventMouseButton:
+		if event.pressed:
+			# Touch/click started
+			touch_scrolling = true
+			touch_start_y = event.position.y
+			touch_last_y = event.position.y
+			scroll_velocity = 0.0
+			last_touch_time = Time.get_ticks_msec() / 1000.0
+			has_moved = false
+		else:
+			# Touch/click released
+			touch_scrolling = false
+			
+			# Calculate release velocity for momentum scrolling
+			var current_time = Time.get_ticks_msec() / 1000.0
+			var time_delta = current_time - last_touch_time
+			if time_delta > 0 and has_moved:
+				scroll_velocity = (touch_last_y - event.position.y) / time_delta * 2.0
+				# Limit max velocity
+				scroll_velocity = clamp(scroll_velocity, -3000, 3000)
+	
+	elif event is InputEventScreenDrag or (event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT):
+		if touch_scrolling:
+			var delta_y = touch_last_y - event.position.y
+			
+			# Check if movement exceeds threshold
+			if abs(event.position.y - touch_start_y) > TOUCH_THRESHOLD:
+				has_moved = true
+			
+			if has_moved:
+				# Apply scrolling
+				scroll_container.scroll_vertical += int(delta_y)
+				
+				# Update for velocity calculation
+				touch_last_y = event.position.y
+				last_touch_time = Time.get_ticks_msec() / 1000.0
+				
+				# Clamp within bounds
+				var max_scroll = max(0, activities_grid.size.y - scroll_container.size.y)
+				scroll_container.scroll_vertical = clamp(scroll_container.scroll_vertical, 0, max_scroll)
 
 func _on_motion_data_loaded(data: Dictionary):
 	motion_data = data
@@ -84,11 +171,16 @@ func create_motion_buttons():
 	
 	for motion_type in motion_types:
 		create_motion_button(motion_type)
+	
+	# Force layout update
+	await get_tree().process_frame
+	activities_grid.queue_sort()
 
 func create_motion_button(motion_type: String):
-	# Main button container
+	# Main button container with responsive width
 	var button_container = Control.new()
-	button_container.custom_minimum_size = Vector2(675, 100)
+	var button_width = get_responsive_button_width()
+	button_container.custom_minimum_size = Vector2(button_width, 100)
 	
 	# Motion button
 	var motion_button = TextureButton.new()
@@ -96,6 +188,10 @@ func create_motion_button(motion_type: String):
 	motion_button.texture_pressed = motion_button_pressed
 	motion_button.stretch_mode = TextureButton.STRETCH_SCALE
 	motion_button.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	
+	# Important: Stop mouse filter but allow press events
+	motion_button.mouse_filter = Control.MOUSE_FILTER_STOP
+	
 	button_container.add_child(motion_button)
 	
 	# Button content container

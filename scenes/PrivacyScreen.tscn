@@ -50,6 +50,7 @@ offset_right = 487.0
 offset_bottom = 429.5
 grow_horizontal = 2
 grow_vertical = 2
+horizontal_scroll_mode = 0
 
 [node name="PrivacyText" type="RichTextLabel" parent="TextureRect/ScrollContainer"]
 custom_minimum_size = Vector2(1000, 1000)
