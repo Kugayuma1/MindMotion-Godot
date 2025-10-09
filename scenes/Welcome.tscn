@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cfy7n0ueakahr"]
+[gd_scene load_steps=9 format=3 uid="uid://cfy7n0ueakahr"]
 
 [ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="1_7s6y0"]
 [ext_resource type="Texture2D" uid="uid://diy6w4rj2rm83" path="res://assets/left_wave.png" id="2_jdyjy"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cwgfqyonunybf" path="res://assets/right_wave.png" id="4_m8d44"]
 [ext_resource type="Texture2D" uid="uid://b8lf8vmcx55l4" path="res://assets/mindmotion_logo.png" id="5_j8q4y"]
 [ext_resource type="Texture2D" uid="uid://b1k5g3yqlqpl8" path="res://assets/login_button.png" id="6_d6xo6"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="6_m8d44"]
 [ext_resource type="Texture2D" uid="uid://cffyuapppm558" path="res://assets/signup_button.png" id="7_7exl1"]
 
 [node name="Control" type="Control"]
@@ -66,9 +67,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -524.0
-offset_top = -46.0
+offset_top = 11.0
 offset_right = 542.0
-offset_bottom = 600.0
+offset_bottom = 657.0
 grow_horizontal = 2
 texture = ExtResource("5_j8q4y")
 expand_mode = 3
@@ -88,6 +89,7 @@ offset_right = 221.0
 offset_bottom = 79.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_m8d44")
 theme_override_font_sizes/font_size = 50
 text = "Welcome!"
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhyxb4ja8l7gl"
-path="res://.godot/imported/Red.png-c8fbf4f95324920261833ffba90eacc6.ctex"
+uid="uid://dbbngyysfdcmu"
+path="res://.godot/imported/MathLogo.png-c150f1bb18683d143c15173945a4970a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Arts/Red.png"
-dest_files=["res://.godot/imported/Red.png-c8fbf4f95324920261833ffba90eacc6.ctex"]
+source_file="res://assets/MathLogo.png"
+dest_files=["res://.godot/imported/MathLogo.png-c150f1bb18683d143c15173945a4970a.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhyxb4ja8l7gl"
-path="res://.godot/imported/Red.png-c8fbf4f95324920261833ffba90eacc6.ctex"
+uid="uid://c4ywu3w0w6ewo"
+path="res://.godot/imported/Group 158.png-bbab681206c67197c9e96f4baf26422d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Arts/Red.png"
-dest_files=["res://.godot/imported/Red.png-c8fbf4f95324920261833ffba90eacc6.ctex"]
+source_file="res://assets/Group 158.png"
+dest_files=["res://.godot/imported/Group 158.png-bbab681206c67197c9e96f4baf26422d.ctex"]
 
 [params]
 

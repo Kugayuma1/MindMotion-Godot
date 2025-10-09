@@ -195,10 +195,10 @@ expand_mode = 1
 
 [node name="Label" type="Label" parent="Time"]
 layout_mode = 0
-offset_left = 82.0
-offset_top = 140.0
-offset_right = 149.0
-offset_bottom = 216.0
+offset_left = 96.0
+offset_top = 107.0
+offset_right = 163.0
+offset_bottom = 183.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_4xbeo")
 theme_override_font_sizes/font_size = 45

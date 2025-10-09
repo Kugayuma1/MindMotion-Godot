@@ -300,9 +300,9 @@ func game_over():
 func calculate_star_rating() -> int:
 	var time_percentage = float(time_remaining) / float(game_duration)
 	
-	if time_remaining >= 20:  # 20+ seconds remaining = 3 stars
+	if time_remaining >= 10:  # 20+ seconds remaining = 3 stars
 		return 3
-	elif time_remaining >= 10:  # 10+ seconds remaining = 2 stars
+	elif time_remaining >= 5:  # 10+ seconds remaining = 2 stars
 		return 2
 	else:
 		return 1  # Less than 10 seconds = 1 star

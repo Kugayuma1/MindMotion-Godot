@@ -25,7 +25,7 @@ func _ready():
 	Global.start_time = Time.get_ticks_msec()
 
 func start_timer() -> void:
-	timer_label.text = "⏱️ 15s"
+	timer_label.text = "15s"
 	countdown = 15
 	timer_active = true
 	update_timer()
@@ -39,7 +39,7 @@ func update_timer() -> void:
 		game_over(false)  # ⬅️ Show 1-star popup if time runs out
 		return
 
-	timer_label.text = "⏱️ " + str(countdown) + "s"
+	timer_label.text = " " + str(countdown) + "s"
 	countdown -= 1
 	await get_tree().create_timer(1.0).timeout
 
@@ -48,17 +48,17 @@ func update_timer() -> void:
 
 func check_answer(answer: String, button: TextureButton) -> void:
 	if !timer_active:
-		feedback_label.text = "⏱️ Tapos na ang oras!"
+		feedback_label.text = "⏱️ Time's Up!"
 		return
 
 	if correct_answers.has(answer):
 		if !selected_correct.has(answer):
 			selected_correct.append(answer)
-			feedback_label.text = "✅ Tama! " + answer
+			feedback_label.text = "✅ Correct! " + answer
 			button.visible = false
 
 			if selected_correct.size() == correct_answers.size():
-				feedback_label.text = "🎉 Nakuha mo lahat!"
+				feedback_label.text = "🎉 You've got it all right!"
 				timer_active = false
 				ProgressManager.save_progress("reading", true)
 				Global.refresh_everything_after_stage_completion("reading", true)
@@ -67,11 +67,11 @@ func check_answer(answer: String, button: TextureButton) -> void:
 				await get_tree().create_timer(1.5).timeout
 				reset_feedback_label()
 		else:
-			feedback_label.text = "👆 Na-tap mo na yan!"
+			feedback_label.text = "👆 You already tapped that!"
 			await get_tree().create_timer(1.5).timeout
 			reset_feedback_label()
 	else:
-		feedback_label.text = "❌ Mali! Try again."
+		feedback_label.text = "❌ Wrong! Try again."
 		shake_button(button)
 		await get_tree().create_timer(1.5).timeout
 		reset_feedback_label()

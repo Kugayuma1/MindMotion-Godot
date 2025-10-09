@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhyxb4ja8l7gl"
-path="res://.godot/imported/Red.png-c8fbf4f95324920261833ffba90eacc6.ctex"
+uid="uid://ck6eu5ku51dmw"
+path="res://.godot/imported/Artsel.png-8f3c06cf2c071e926c82a8b2ea86f7bd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Arts/Red.png"
-dest_files=["res://.godot/imported/Red.png-c8fbf4f95324920261833ffba90eacc6.ctex"]
+source_file="res://assets/Artsel.png"
+dest_files=["res://.godot/imported/Artsel.png-8f3c06cf2c071e926c82a8b2ea86f7bd.ctex"]
 
 [params]
 

@@ -53,13 +53,15 @@ stretch_mode = 6
 
 [node name="Logo" type="TextureRect" parent="."]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = -1
 anchor_left = 0.5
+anchor_top = 0.061
 anchor_right = 0.5
+anchor_bottom = 0.061
 offset_left = -524.0
-offset_top = -46.0
+offset_top = -111.88
 offset_right = 542.0
-offset_bottom = 600.0
+offset_bottom = 534.12
 grow_horizontal = 2
 texture = ExtResource("3_o61y4")
 expand_mode = 3

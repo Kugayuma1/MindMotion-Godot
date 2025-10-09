@@ -72,6 +72,20 @@ offset_bottom = 415.8
 texture = ExtResource("5_ldohs")
 expand_mode = 1
 
+[node name="Holder2" type="TextureRect" parent="Contents"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.513
+anchor_top = 0.862
+anchor_right = 0.513
+anchor_bottom = 0.862
+offset_left = -510.137
+offset_top = 122.258
+offset_right = 498.863
+offset_bottom = 324.258
+texture = ExtResource("7_5fc1u")
+expand_mode = 1
+
 [node name="Object" type="TextureRect" parent="Contents"]
 layout_mode = 1
 anchors_preset = -1
@@ -194,20 +208,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Holder" type="TextureRect" parent="Draggables"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.513
-anchor_top = 0.862
-anchor_right = 0.513
-anchor_bottom = 0.862
-offset_left = -503.96
-offset_top = -100.96
-offset_right = 505.04
-offset_bottom = 101.04
-texture = ExtResource("7_5fc1u")
-expand_mode = 1
 
 [node name="Holding" type="TextureRect" parent="Draggables"]
 layout_mode = 1

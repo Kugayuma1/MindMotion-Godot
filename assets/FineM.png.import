@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhyxb4ja8l7gl"
-path="res://.godot/imported/Red.png-c8fbf4f95324920261833ffba90eacc6.ctex"
+uid="uid://27x105305vob"
+path="res://.godot/imported/FineM.png-7f3558de86becb6d0f1cf549e9d99f85.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Arts/Red.png"
-dest_files=["res://.godot/imported/Red.png-c8fbf4f95324920261833ffba90eacc6.ctex"]
+source_file="res://assets/FineM.png"
+dest_files=["res://.godot/imported/FineM.png-7f3558de86becb6d0f1cf549e9d99f85.ctex"]
 
 [params]
 

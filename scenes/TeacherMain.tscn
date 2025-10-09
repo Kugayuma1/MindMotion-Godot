@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://cdepj04shy5u2"]
+[gd_scene load_steps=10 format=3 uid="uid://cdepj04shy5u2"]
 
 [ext_resource type="Script" uid="uid://cfwmhx6di5y4a" path="res://scripts/teacher_main.gd" id="1_eafnc"]
 [ext_resource type="Texture2D" uid="uid://diy6w4rj2rm83" path="res://assets/left_wave.png" id="1_jrgrb"]
 [ext_resource type="Texture2D" uid="uid://cwgfqyonunybf" path="res://assets/right_wave.png" id="2_eafnc"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="2_pn6o5"]
+[ext_resource type="Texture2D" uid="uid://c4ywu3w0w6ewo" path="res://assets/Group 158.png" id="3_5fnfh"]
 [ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="3_pn6o5"]
-[ext_resource type="Texture2D" uid="uid://c1l5u5cyfjroa" path="res://assets/students_button.png" id="6_qlwhp"]
-[ext_resource type="Texture2D" uid="uid://cv5k5ox84tc0a" path="res://assets/student_card_bg.png" id="7_jrgrb"]
-[ext_resource type="Texture2D" uid="uid://bf7ykt1047iwe" path="res://assets/logout_button.png" id="7_lekex"]
+[ext_resource type="Texture2D" uid="uid://pukusf7tcj41" path="res://assets/Group 157.png" id="5_f0sme"]
+[ext_resource type="Texture2D" uid="uid://cuecdqwaen3bn" path="res://assets/Group 18.png" id="8_qlwhp"]
+[ext_resource type="Texture2D" uid="uid://b8lf8vmcx55l4" path="res://assets/mindmotion_logo.png" id="9_lekex"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -30,15 +32,17 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -282.0
-offset_top = 65.0
-offset_right = 310.0
-offset_bottom = 170.0
+offset_left = -175.0
+offset_top = 473.0
+offset_right = 185.0
+offset_bottom = 578.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(1, 0.811765, 0.145098, 1)
-theme_override_fonts/font = ExtResource("3_pn6o5")
-theme_override_font_sizes/font_size = 100
+theme_override_colors/font_color = Color(0.32549, 0.0156863, 0.717647, 1)
+theme_override_fonts/font = ExtResource("2_pn6o5")
+theme_override_font_sizes/font_size = 45
 text = "Welcome Teacher!"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Students" type="TextureButton" parent="."]
 layout_mode = 1
@@ -47,14 +51,27 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -445.0
-offset_top = -185.5
-offset_right = -85.0
-offset_bottom = 185.5
+offset_left = -199.0
+offset_top = 38.0
+offset_right = 185.0
+offset_bottom = 162.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("6_qlwhp")
+texture_normal = ExtResource("3_5fnfh")
 stretch_mode = 5
+
+[node name="Label" type="Label" parent="Students"]
+layout_mode = 0
+offset_left = 101.0
+offset_top = 35.0
+offset_right = 282.0
+offset_bottom = 82.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_pn6o5")
+theme_override_font_sizes/font_size = 45
+text = "Student List"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Logout" type="TextureButton" parent="."]
 layout_mode = 1
@@ -63,14 +80,26 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 70.0
-offset_top = -185.5
-offset_right = 430.0
-offset_bottom = 185.5
+offset_left = -201.0
+offset_top = 297.0
+offset_right = 193.0
+offset_bottom = 404.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("7_lekex")
+texture_normal = ExtResource("5_f0sme")
 stretch_mode = 5
+
+[node name="Label" type="Label" parent="Logout"]
+offset_left = 99.0
+offset_top = 26.0
+offset_right = 280.0
+offset_bottom = 73.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_pn6o5")
+theme_override_font_sizes/font_size = 45
+text = "Logout"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Right Wave" type="TextureRect" parent="."]
 layout_mode = 1
@@ -100,37 +129,45 @@ stretch_mode = 6
 
 [node name="VolumeSettings" type="TextureButton" parent="."]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.932
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -291.0
-offset_top = -284.0
-offset_right = 291.0
-offset_bottom = -73.0
+anchor_bottom = 0.932
+offset_left = -201.0
+offset_top = -296.56
+offset_right = 186.0
+offset_bottom = -184.56
 grow_horizontal = 2
 grow_vertical = 0
-texture_normal = ExtResource("7_jrgrb")
+texture_normal = ExtResource("8_qlwhp")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="VolumeSettings"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -107.0
-offset_top = -26.5
-offset_right = 107.0
-offset_bottom = 26.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+offset_left = 101.0
+offset_top = 30.0
+offset_right = 282.0
+offset_bottom = 77.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_pn6o5")
-theme_override_font_sizes/font_size = 50
-text = "Volume Settings"
+theme_override_font_sizes/font_size = 45
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Logo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -609.0
+offset_top = -36.0
+offset_right = 604.0
+offset_bottom = 554.0
+grow_horizontal = 2
+texture = ExtResource("9_lekex")
+expand_mode = 3
+stretch_mode = 5
 
 [connection signal="pressed" from="Students" to="." method="_on_students_pressed"]
 [connection signal="pressed" from="Logout" to="." method="_on_logout_pressed"]

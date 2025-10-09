@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://crxf5fjyp7ncf" path="res://assets/container.png" id="1_6wm04"]
 [ext_resource type="Script" uid="uid://b4g7ojoabs5qk" path="res://scripts/settings.gd" id="1_es4n0"]
 [ext_resource type="Texture2D" uid="uid://b8lf8vmcx55l4" path="res://assets/mindmotion_logo.png" id="2_f4mfi"]
-[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="3_es4n0"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="4_es4n0"]
 [ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="5_gis3k"]
 
 [node name="Control" type="Control"]
@@ -62,9 +62,9 @@ offset_top = 122.0
 offset_right = 179.0
 offset_bottom = 196.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0.247059, 0.270588, 0.32549, 1)
-theme_override_fonts/font = ExtResource("3_es4n0")
-theme_override_font_sizes/font_size = 70
+theme_override_colors/font_color = Color(0.326615, 0.0153933, 0.718362, 1)
+theme_override_fonts/font = ExtResource("4_es4n0")
+theme_override_font_sizes/font_size = 55
 text = "Audio Settings"
 
 [node name="Master" type="Label" parent="Container"]
@@ -78,8 +78,8 @@ offset_right = 321.0
 offset_bottom = -144.0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.247059, 0.270588, 0.32549, 1)
-theme_override_fonts/font = ExtResource("3_es4n0")
-theme_override_font_sizes/font_size = 50
+theme_override_fonts/font = ExtResource("4_es4n0")
+theme_override_font_sizes/font_size = 35
 text = "Master Volume"
 
 [node name="ValueLabel" type="Label" parent="Container"]
@@ -93,8 +93,11 @@ offset_right = 250.0
 offset_bottom = -82.0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.247059, 0.270588, 0.32549, 1)
-theme_override_font_sizes/font_size = 40
+theme_override_fonts/font = ExtResource("4_es4n0")
+theme_override_font_sizes/font_size = 30
 text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HSlider" type="HSlider" parent="Container/ValueLabel"]
 layout_mode = 1
@@ -119,8 +122,8 @@ offset_right = 321.0
 offset_bottom = 40.0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.247059, 0.270588, 0.32549, 1)
-theme_override_fonts/font = ExtResource("3_es4n0")
-theme_override_font_sizes/font_size = 50
+theme_override_fonts/font = ExtResource("4_es4n0")
+theme_override_font_sizes/font_size = 35
 text = "Music Volume"
 
 [node name="ValueLabel2" type="Label" parent="Container"]
@@ -134,8 +137,11 @@ offset_right = 250.0
 offset_bottom = 104.0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.247059, 0.270588, 0.32549, 1)
-theme_override_font_sizes/font_size = 40
+theme_override_fonts/font = ExtResource("4_es4n0")
+theme_override_font_sizes/font_size = 30
 text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HSlider" type="HSlider" parent="Container/ValueLabel2"]
 layout_mode = 1
@@ -160,9 +166,9 @@ offset_right = 321.0
 offset_bottom = 224.0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.247059, 0.270588, 0.32549, 1)
-theme_override_fonts/font = ExtResource("3_es4n0")
-theme_override_font_sizes/font_size = 50
-text = "Sound Volume"
+theme_override_fonts/font = ExtResource("4_es4n0")
+theme_override_font_sizes/font_size = 35
+text = "SFX Volume"
 
 [node name="ValueLabel3" type="Label" parent="Container"]
 layout_mode = 1
@@ -175,8 +181,11 @@ offset_right = 250.0
 offset_bottom = 290.0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.247059, 0.270588, 0.32549, 1)
-theme_override_font_sizes/font_size = 40
+theme_override_fonts/font = ExtResource("4_es4n0")
+theme_override_font_sizes/font_size = 30
 text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HSlider" type="HSlider" parent="Container/ValueLabel3"]
 layout_mode = 1

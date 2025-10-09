@@ -245,22 +245,41 @@ theme_override_font_sizes/font_size = 35
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = 0.719994
+offset_top = -0.0400009
+offset_right = 105.72
+offset_bottom = 109.96
+texture_normal = ExtResource("8_aa6lg")
+stretch_mode = 0
+
 [node name="LetterButtons" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+clip_contents = true
+layout_mode = 1
+anchor_top = 0.682
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 0.439941
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="LetterButton" type="TextureRect" parent="LetterButtons"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 18.437
-anchor_top = 20.137
-anchor_right = 18.437
-anchor_bottom = 20.137
-offset_left = -58.48
-offset_top = -58.48
-offset_right = 58.52
-offset_bottom = 58.52
+anchor_left = 0.378
+anchor_top = 0.197
+anchor_right = 0.378
+anchor_bottom = 0.197
+offset_left = -11.76
+offset_top = -48.571
+offset_right = 85.24
+offset_bottom = 48.429
 texture = ExtResource("7_3flbl")
 expand_mode = 1
 
@@ -285,14 +304,14 @@ vertical_alignment = 1
 [node name="LetterButton2" type="TextureRect" parent="LetterButtons"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 21.962
-anchor_top = 20.162
-anchor_right = 21.962
-anchor_bottom = 20.162
-offset_left = -58.4801
-offset_top = -58.48
-offset_right = 58.5199
-offset_bottom = 58.52
+anchor_left = 0.441
+anchor_top = 0.197
+anchor_right = 0.441
+anchor_bottom = 0.197
+offset_left = -11.72
+offset_top = -48.571
+offset_right = 85.28
+offset_bottom = 48.429
 texture = ExtResource("7_3flbl")
 expand_mode = 1
 
@@ -317,14 +336,14 @@ vertical_alignment = 1
 [node name="LetterButton3" type="TextureRect" parent="LetterButtons"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 25.487
-anchor_top = 20.187
-anchor_right = 25.487
-anchor_bottom = 20.187
-offset_left = -58.48
-offset_top = -58.48
-offset_right = 58.52
-offset_bottom = 58.52
+anchor_left = 0.378
+anchor_top = 0.197
+anchor_right = 0.378
+anchor_bottom = 0.197
+offset_left = 234.24
+offset_top = -48.571
+offset_right = 331.24
+offset_bottom = 48.429
 texture = ExtResource("7_3flbl")
 expand_mode = 1
 
@@ -349,14 +368,14 @@ vertical_alignment = 1
 [node name="LetterButton4" type="TextureRect" parent="LetterButtons"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 29.012
-anchor_top = 20.212
-anchor_right = 29.012
-anchor_bottom = 20.212
-offset_left = -58.48
-offset_top = -58.4801
-offset_right = 58.52
-offset_bottom = 58.5199
+anchor_left = 0.441
+anchor_top = 0.197
+anchor_right = 0.441
+anchor_bottom = 0.197
+offset_left = 234.28
+offset_top = -48.571
+offset_right = 331.28
+offset_bottom = 48.429
 texture = ExtResource("7_3flbl")
 expand_mode = 1
 
@@ -381,14 +400,14 @@ vertical_alignment = 1
 [node name="LetterButton5" type="TextureRect" parent="LetterButtons"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 18.437
-anchor_top = 23.637
-anchor_right = 18.437
-anchor_bottom = 23.637
-offset_left = -58.48
-offset_top = -58.48
-offset_right = 58.52
-offset_bottom = 58.52
+anchor_left = 0.378
+anchor_top = 0.197
+anchor_right = 0.378
+anchor_bottom = 0.197
+offset_left = -11.76
+offset_top = 68.429
+offset_right = 85.24
+offset_bottom = 165.429
 texture = ExtResource("7_3flbl")
 expand_mode = 1
 
@@ -413,14 +432,14 @@ vertical_alignment = 1
 [node name="LetterButton6" type="TextureRect" parent="LetterButtons"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 21.962
-anchor_top = 23.662
-anchor_right = 21.962
-anchor_bottom = 23.663
-offset_left = -58.4801
-offset_top = -58.48
-offset_right = 58.5199
-offset_bottom = 58.48
+anchor_left = 0.441
+anchor_top = 0.197
+anchor_right = 0.441
+anchor_bottom = 0.197
+offset_left = -11.72
+offset_top = 68.429
+offset_right = 85.28
+offset_bottom = 165.429
 texture = ExtResource("7_3flbl")
 expand_mode = 1
 
@@ -445,14 +464,14 @@ vertical_alignment = 1
 [node name="LetterButton7" type="TextureRect" parent="LetterButtons"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 25.537
-anchor_top = 23.662
-anchor_right = 25.537
-anchor_bottom = 23.662
-offset_left = -58.48
-offset_top = -58.48
-offset_right = 58.52
-offset_bottom = 58.52
+anchor_left = 0.378
+anchor_top = 0.197
+anchor_right = 0.378
+anchor_bottom = 0.197
+offset_left = 234.24
+offset_top = 68.429
+offset_right = 331.24
+offset_bottom = 165.429
 texture = ExtResource("7_3flbl")
 expand_mode = 1
 
@@ -477,25 +496,25 @@ vertical_alignment = 1
 [node name="LetterButton8" type="TextureRect" parent="LetterButtons"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 29.062
-anchor_top = 23.687
-anchor_right = 29.062
-anchor_bottom = 23.687
-offset_left = -58.4801
-offset_top = -58.48
-offset_right = 58.5199
-offset_bottom = 58.52
+anchor_left = 0.441
+anchor_top = 0.197
+anchor_right = 0.441
+anchor_bottom = 0.197
+offset_left = 234.28
+offset_top = 68.429
+offset_right = 331.28
+offset_bottom = 165.429
 texture = ExtResource("7_3flbl")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="LetterButtons/LetterButton8"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.506
+anchor_left = 0.504
 anchor_top = 0.5
 anchor_right = 0.506
 anchor_bottom = 0.5
-offset_left = -22.202
+offset_left = -22.008
 offset_top = -37.5
 offset_right = 21.798
 offset_bottom = 37.5
@@ -505,19 +524,5 @@ theme_override_font_sizes/font_size = 65
 text = "N"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Quitbtn" type="TextureButton" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.034
-anchor_top = 0.063
-anchor_right = 0.034
-anchor_bottom = 0.063
-offset_left = 0.719994
-offset_top = -0.0400009
-offset_right = 105.72
-offset_bottom = 109.96
-texture_normal = ExtResource("8_aa6lg")
-stretch_mode = 0
 
 [connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

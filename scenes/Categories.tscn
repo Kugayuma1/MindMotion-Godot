@@ -5,9 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="2_340he"]
 [ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="4_hr060"]
 [ext_resource type="Texture2D" uid="uid://bwbeonicg7d44" path="res://assets/reading_button.png" id="5_x3kuq"]
-[ext_resource type="Texture2D" uid="uid://civs1xugstk04" path="res://assets/finemotor_button.png" id="6_15pit"]
-[ext_resource type="Texture2D" uid="uid://bvc6hqq87fim5" path="res://assets/math_button.png" id="7_1pq8w"]
-[ext_resource type="Texture2D" uid="uid://pwdvhxxkj745" path="res://assets/art_button.png" id="8_8cv24"]
+[ext_resource type="Texture2D" uid="uid://27x105305vob" path="res://assets/FineM.png" id="6_x3kuq"]
+[ext_resource type="Texture2D" uid="uid://dbbngyysfdcmu" path="res://assets/MathLogo.png" id="7_15pit"]
+[ext_resource type="Texture2D" uid="uid://ck6eu5ku51dmw" path="res://assets/Artsel.png" id="8_1pq8w"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -111,7 +111,7 @@ offset_right = -27.0
 offset_bottom = 212.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("6_15pit")
+texture_normal = ExtResource("6_x3kuq")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -150,7 +150,7 @@ offset_right = 398.0
 offset_bottom = 212.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("7_1pq8w")
+texture_normal = ExtResource("7_15pit")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -189,7 +189,7 @@ offset_right = 825.0
 offset_bottom = 212.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("8_8cv24")
+texture_normal = ExtResource("8_1pq8w")
 ignore_texture_size = true
 stretch_mode = 5
 
