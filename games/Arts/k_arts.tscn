@@ -103,7 +103,7 @@ offset_bottom = 406.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("17_kcbvr")
 theme_override_font_sizes/font_size = 35
-text = "1"
+text = "2"
 horizontal_alignment = 1
 justification_flags = 171
 
@@ -125,7 +125,7 @@ offset_bottom = 433.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("17_kcbvr")
 theme_override_font_sizes/font_size = 35
-text = "1"
+text = "3"
 horizontal_alignment = 1
 justification_flags = 171
 
@@ -140,14 +140,14 @@ polygon = PackedVector2Array(1152, 499, 1344, 408, 1331, 504, 1325, 530, 1300, 5
 
 [node name="Kite" type="Label" parent="Node2D2/Node2D/Polygon2D4"]
 z_index = 25
-offset_left = 1180.0
-offset_top = 357.0
-offset_right = 1249.0
-offset_bottom = 406.0
+offset_left = 1269.0
+offset_top = 454.0
+offset_right = 1316.0
+offset_bottom = 500.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("17_kcbvr")
 theme_override_font_sizes/font_size = 35
-text = "1"
+text = "3"
 horizontal_alignment = 1
 justification_flags = 171
 
@@ -160,6 +160,19 @@ script = ExtResource("9_0spfu")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node2D2/Node2D/Polygon2D5/Area2D"]
 polygon = PackedVector2Array(1290, 645, 1326, 524, 1319, 525, 1296, 513, 1255, 499, 1218, 497, 1169, 496, 1149, 500, 1101, 528, 1108, 546, 1119, 543, 1166, 551, 1221, 576, 1262, 607)
 
+[node name="Kite" type="Label" parent="Node2D2/Node2D/Polygon2D5"]
+z_index = 25
+offset_left = 1228.0
+offset_top = 514.0
+offset_right = 1323.0
+offset_bottom = 564.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("17_kcbvr")
+theme_override_font_sizes/font_size = 35
+text = "2"
+horizontal_alignment = 1
+justification_flags = 171
+
 [node name="Polygon2D6" type="Polygon2D" parent="Node2D2/Node2D"]
 polygon = PackedVector2Array(1107, 545, 1142, 547, 1191, 561, 1235, 585, 1273, 620, 1289, 643, 1249, 758, 1209, 837, 1173, 890, 1171, 817, 1166, 750, 1151, 665, 1125, 586)
 script = ExtResource("10_io06w")
@@ -169,6 +182,19 @@ script = ExtResource("10_io06w")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node2D2/Node2D/Polygon2D6/Area2D"]
 polygon = PackedVector2Array(1107, 545, 1142, 547, 1191, 561, 1235, 585, 1273, 620, 1289, 643, 1249, 758, 1209, 837, 1173, 890, 1171, 817, 1166, 750, 1151, 665, 1125, 586)
 
+[node name="Kite" type="Label" parent="Node2D2/Node2D/Polygon2D6"]
+z_index = 25
+offset_left = 1169.0
+offset_top = 647.0
+offset_right = 1259.0
+offset_bottom = 741.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("17_kcbvr")
+theme_override_font_sizes/font_size = 35
+text = "1"
+horizontal_alignment = 1
+justification_flags = 171
+
 [node name="Polygon2D7" type="Polygon2D" parent="Node2D2/Node2D"]
 polygon = PackedVector2Array(882, 518, 979, 588, 966, 604, 949, 613, 919, 616, 889, 613, 857, 606, 852, 603, 865, 579, 822, 567, 845, 603, 824, 599, 804, 602, 771, 612, 752, 632, 739, 666, 738, 687, 737, 708, 710, 686, 710, 734, 739, 718, 743, 715, 766, 736, 771, 700, 752, 710, 741, 711, 744, 663, 754, 636, 774, 614, 805, 605, 846, 606, 822, 644, 869, 648, 853, 607, 881, 614, 906, 620, 931, 620, 959, 613, 983, 592, 986, 598, 964, 706, 974, 700, 1112, 552, 1085, 499, 1074, 507, 1001, 513)
 script = ExtResource("11_uw1gt")
@@ -177,6 +203,19 @@ script = ExtResource("11_uw1gt")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node2D2/Node2D/Polygon2D7/Area2D"]
 polygon = PackedVector2Array(882, 518, 979, 588, 966, 604, 949, 613, 919, 616, 889, 613, 857, 606, 852, 603, 865, 579, 822, 567, 845, 603, 824, 599, 804, 602, 771, 612, 752, 632, 739, 666, 738, 687, 737, 708, 710, 686, 710, 734, 739, 718, 743, 715, 766, 736, 771, 700, 752, 710, 741, 711, 744, 663, 754, 636, 774, 614, 805, 605, 846, 606, 822, 644, 869, 648, 853, 607, 881, 614, 906, 620, 931, 620, 959, 613, 983, 592, 986, 598, 964, 706, 974, 700, 1112, 552, 1085, 499, 1074, 507, 1001, 513)
+
+[node name="Kite" type="Label" parent="Node2D2/Node2D/Polygon2D7"]
+z_index = 25
+offset_left = 1009.0
+offset_top = 537.0
+offset_right = 1074.0
+offset_bottom = 578.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("17_kcbvr")
+theme_override_font_sizes/font_size = 35
+text = "4"
+horizontal_alignment = 1
+justification_flags = 171
 
 [node name="Node2D1" type="Node2D" parent="Node2D2/Node2D"]
 
@@ -259,7 +298,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("17_kcbvr")
 theme_override_font_sizes/font_size = 35
 text = "Color By Number:
-Bee"
+Kite"
 horizontal_alignment = 1
 justification_flags = 171
 
@@ -293,6 +332,15 @@ offset_bottom = 939.0
 texture = ExtResource("19_sducs")
 expand_mode = 1
 
+[node name="TextureRect5" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1692.0
+offset_top = 4.0
+offset_right = 1918.0
+offset_bottom = 219.0
+texture = ExtResource("21_rqckf")
+expand_mode = 1
+
 [node name="Quitbtn" type="TextureButton" parent="."]
 layout_mode = 0
 offset_left = 47.0
@@ -303,11 +351,4 @@ texture_normal = ExtResource("20_v8ani")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="TextureRect5" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 1692.0
-offset_top = 4.0
-offset_right = 1918.0
-offset_bottom = 219.0
-texture = ExtResource("21_rqckf")
-expand_mode = 1
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

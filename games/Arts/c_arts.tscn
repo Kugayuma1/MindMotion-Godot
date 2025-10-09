@@ -1,8 +1,8 @@
 [gd_scene load_steps=23 format=3 uid="uid://du8wavjv3hn85"]
 
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_1cgyr"]
 [ext_resource type="Script" uid="uid://b1n40wq8c2wsy" path="res://games_script/Arts/LetterC/c_arts.gd" id="1_d3nbv"]
-[ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="2_d3nbv"]
+[ext_resource type="Texture2D" uid="uid://cb2bm3pcwne5x" path="res://Game Assets/Arts/MathEbg (23).png" id="2_igkmn"]
+[ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="3_0gwjr"]
 [ext_resource type="Script" uid="uid://dhgkxa7xqgjdd" path="res://games_script/Arts/LetterC/node_2d_2.gd" id="3_igkmn"]
 [ext_resource type="Script" uid="uid://f6va6qbx4cb1" path="res://games_script/Arts/LetterC/polygon_2d.gd" id="4_0gwjr"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="5_n8fuf"]
@@ -39,16 +39,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_1cgyr")
+texture = ExtResource("2_igkmn")
 expand_mode = 1
 
-[node name="paper" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 386.0
-offset_top = 122.0
-offset_right = 1654.0
-offset_bottom = 999.0
-texture = ExtResource("2_d3nbv")
+[node name="Paper" type="TextureRect" parent="."]
+offset_left = 273.0
+offset_top = 242.0
+offset_right = 1681.0
+offset_bottom = 1034.0
+texture = ExtResource("3_0gwjr")
+expand_mode = 1
 
 [node name="Node2D2" type="Node2D" parent="."]
 script = ExtResource("3_igkmn")
@@ -56,6 +56,7 @@ script = ExtResource("3_igkmn")
 [node name="Node2D" type="Node2D" parent="Node2D2"]
 
 [node name="Polygon2D" type="Polygon2D" parent="Node2D2/Node2D"]
+position = Vector2(0, 51)
 polygon = PackedVector2Array(825, 811, 781, 622, 783, 620, 785, 619, 788, 623, 796, 630, 804, 636, 808, 638, 814, 638, 819, 637, 828, 632, 833, 630, 835, 630, 841, 636, 849, 642, 856, 644, 862, 645, 869, 642, 875, 638, 881, 632, 883, 633, 890, 637, 893, 640, 898, 644, 903, 646, 906, 646, 913, 645, 920, 641, 928, 634, 930, 635, 932, 637, 939, 642, 948, 647, 954, 649, 959, 648, 967, 644, 972, 639, 977, 635, 980, 636, 987, 641, 991, 645, 996, 648, 1003, 649, 1009, 649, 1016, 645, 1021, 640, 1026, 634, 1030, 629, 1035, 633, 1040, 637, 1043, 640, 1049, 641, 1050, 642, 1057, 643, 1063, 641, 1071, 636, 1076, 630, 1079, 627, 1083, 631, 1088, 634, 1093, 638, 1097, 639, 1102, 639, 1106, 638, 1112, 637, 1115, 632, 1120, 629, 1121, 627, 1127, 629, 1130, 632, 1138, 635, 1143, 637, 1151, 638, 1161, 637, 1171, 631, 1178, 623, 1180, 621, 1181, 623, 1181, 629, 1141, 804, 1137, 809, 1103, 822, 1058, 837, 1027, 844, 995, 847, 967, 848, 943, 846, 900, 837, 873, 829, 842, 818)
 script = ExtResource("4_0gwjr")
 
@@ -78,6 +79,7 @@ horizontal_alignment = 1
 justification_flags = 171
 
 [node name="Polygon2D2" type="Polygon2D" parent="Node2D2/Node2D"]
+position = Vector2(0, 51)
 polygon = PackedVector2Array(763, 568, 760, 572, 753, 581, 750, 588, 749, 591, 747, 604, 750, 612, 755, 618, 763, 621, 771, 622, 779, 619, 784, 618, 792, 626, 800, 632, 806, 637, 811, 638, 815, 638, 824, 635, 832, 630, 835, 629, 843, 638, 850, 643, 858, 646, 870, 642, 876, 637, 881, 632, 883, 632, 891, 639, 897, 643, 902, 646, 907, 646, 912, 645, 919, 641, 926, 637, 929, 633, 938, 642, 945, 646, 953, 648, 957, 649, 963, 647, 969, 642, 976, 635, 978, 634, 983, 639, 989, 643, 994, 647, 1000, 649, 1005, 649, 1013, 647, 1021, 641, 1026, 635, 1029, 630, 1031, 630, 1038, 635, 1043, 639, 1051, 643, 1058, 643, 1064, 641, 1071, 636, 1076, 631, 1079, 628, 1084, 630, 1090, 636, 1097, 639, 1103, 639, 1111, 637, 1117, 632, 1122, 626, 1131, 632, 1140, 635, 1145, 636, 1150, 637, 1157, 637, 1166, 635, 1172, 629, 1177, 625, 1180, 621, 1183, 620, 1191, 620, 1195, 622, 1204, 619, 1211, 613, 1216, 601, 1217, 592, 1217, 581, 1214, 573, 1205, 565, 1197, 561, 1185, 566, 1175, 570, 1157, 571, 1143, 572, 1131, 571, 1113, 569, 1104, 568, 1091, 566, 1080, 571, 1070, 575, 1064, 578, 1054, 579, 1039, 579, 1022, 578, 1004, 580, 990, 587, 977, 594, 962, 601, 944, 604, 929, 603, 915, 599, 903, 593, 886, 587, 872, 583, 859, 581, 849, 584, 837, 587, 822, 588, 810, 587, 798, 584, 784, 579, 773, 572, 766, 566)
 script = ExtResource("6_mm0u4")
 
@@ -100,6 +102,7 @@ horizontal_alignment = 1
 justification_flags = 171
 
 [node name="Polygon2D3" type="Polygon2D" parent="Node2D2/Node2D"]
+position = Vector2(0, 51)
 polygon = PackedVector2Array(787, 485, 777, 496, 769, 504, 759, 522, 755, 539, 756, 551, 762, 562, 773, 573, 783, 580, 797, 585, 808, 587, 820, 588, 831, 588, 841, 586, 850, 583, 862, 581, 868, 581, 875, 583, 886, 586, 898, 591, 907, 596, 916, 599, 926, 602, 935, 604, 945, 604, 958, 603, 966, 600, 976, 594, 989, 588, 998, 583, 1008, 579, 1021, 578, 1030, 579, 1037, 578, 1043, 578, 1053, 579, 1062, 578, 1069, 577, 1076, 573, 1085, 569, 1091, 567, 1099, 567, 1109, 568, 1131, 572, 1146, 571, 1166, 572, 1181, 568, 1194, 563, 1207, 554, 1217, 540, 1222, 528, 1222, 514, 1220, 508, 1213, 497, 1203, 489, 1192, 482, 1188, 482, 1182, 489, 1162, 496, 1147, 498, 1129, 498, 1111, 495, 1098, 492, 1091, 492, 1078, 493, 1068, 497, 1056, 500, 1047, 505, 1028, 513, 1006, 519, 988, 520, 964, 517, 928, 502, 908, 496, 878, 504, 860, 509, 836, 510, 820, 507, 802, 496, 793, 487, 790, 483)
 script = ExtResource("7_krkt3")
 
@@ -122,6 +125,7 @@ horizontal_alignment = 1
 justification_flags = 171
 
 [node name="Polygon2D4" type="Polygon2D" parent="Node2D2/Node2D"]
+position = Vector2(0, 51)
 polygon = PackedVector2Array(786, 458, 787, 474, 791, 485, 797, 493, 803, 497, 822, 508, 837, 511, 854, 510, 874, 506, 887, 501, 904, 496, 913, 497, 926, 501, 936, 505, 945, 509, 955, 514, 965, 517, 978, 519, 989, 520, 1002, 520, 1018, 516, 1035, 510, 1048, 504, 1060, 499, 1076, 494, 1091, 491, 1101, 493, 1108, 495, 1124, 497, 1139, 499, 1150, 498, 1158, 497, 1175, 491, 1185, 486, 1194, 476, 1199, 464, 1198, 452, 1193, 436, 1183, 420, 1167, 400, 1154, 388, 1130, 373, 1102, 361, 1081, 354, 1063, 352, 1048, 350, 1046, 350, 1041, 360, 1032, 371, 1024, 379, 1017, 383, 1011, 387, 1004, 385, 991, 383, 975, 382, 959, 382, 956, 381, 948, 372, 941, 363, 936, 353, 924, 354, 901, 359, 883, 365, 858, 376, 839, 388, 825, 399, 808, 417, 798, 431, 791, 443)
 script = ExtResource("8_b77c1")
 
@@ -144,6 +148,7 @@ horizontal_alignment = 1
 justification_flags = 171
 
 [node name="Polygon2D5" type="Polygon2D" parent="Node2D2/Node2D"]
+position = Vector2(0, 51)
 polygon = PackedVector2Array(991, 281, 977, 282, 960, 289, 946, 300, 937, 315, 933, 327, 933, 342, 935, 354, 940, 362, 949, 374, 956, 379, 967, 382, 978, 381, 1011, 386, 1023, 380, 1038, 366, 1048, 342, 1047, 325, 1038, 303, 1021, 289, 1006, 283)
 script = ExtResource("9_265bb")
 
@@ -239,14 +244,14 @@ script = ExtResource("17_kyjqe")
 [node name="label_main" type="Label" parent="Node2D2/Node2D1"]
 z_index = 25
 offset_left = 727.0
-offset_top = 109.0
+offset_top = 160.0
 offset_right = 1258.0
-offset_bottom = 212.0
+offset_bottom = 263.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("5_n8fuf")
 theme_override_font_sizes/font_size = 35
 text = "Color By Number:
-Bee"
+Cupcake"
 horizontal_alignment = 1
 justification_flags = 171
 
@@ -266,9 +271,9 @@ justification_flags = 171
 [node name="TextureRect4" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 587.0
-offset_top = 166.0
+offset_top = 217.0
 offset_right = 1369.0
-offset_bottom = 917.0
+offset_bottom = 968.0
 mouse_filter = 2
 texture = ExtResource("18_4coq3")
 expand_mode = 1
@@ -277,9 +282,9 @@ expand_mode = 1
 z_index = 14
 layout_mode = 0
 offset_left = 660.0
-offset_top = 62.0
+offset_top = 113.0
 offset_right = 1312.0
-offset_bottom = 252.0
+offset_bottom = 303.0
 texture = ExtResource("19_2yl3m")
 
 [node name="TextureRect5" type="TextureRect" parent="."]

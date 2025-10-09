@@ -176,3 +176,7 @@ func refresh_everything_after_stage_completion(stage_name: String, completed: bo
 			current_scene.unlock_stickers_for_letter(current_letter)
 	
 	print("Cache and UI refresh complete")
+
+
+func _on_quitbtn_pressed() -> void:
+	pass # Replace with function body.

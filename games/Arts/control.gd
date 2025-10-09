@@ -10,7 +10,7 @@ var drag_preview: Control
 
 # ---------------- TIMER ----------------
 var countdown := 15
-var timer_active := false
+var timer_active = false
 @onready var timer_label = $TimerLabel   # Label under this Control
 @onready var main_label = $label_main    # Game status label
 @onready var target_node = $Node2D2      # Direct reference to Node2D2
@@ -209,7 +209,6 @@ func create_drag_preview(button: TextureButton):
 	canvas_layer.layer = 100
 	get_tree().current_scene.add_child(canvas_layer)
 	canvas_layer.add_child(drag_preview)
-	
 	drag_preview.set_meta("canvas_layer", canvas_layer)
 
 func is_point_in_polygon(point: Vector2, polygon: Polygon2D) -> bool:
@@ -263,7 +262,6 @@ func win_game():
 # ---------------- POPUP SYSTEM ----------------
 func game_over(success: bool):
 	print("H_Arts game over called with success: ", success)
-	
 	hide_game_elements()
 	
 	if success:
@@ -293,6 +291,7 @@ func show_game_elements():
 			element.visible = true
 	print("Shown ", game_elements.size(), " game elements")
 
+# ---------------- HELPERS ----------------
 func get_all_polygons_in_node(node: Node) -> Array:
 	var polygons = []
 	for child in node.get_children():
@@ -347,7 +346,7 @@ func show_celebration_effects():
 		tween.tween_property(main_label, "scale", Vector2(1.2, 1.2), 0.3)
 		tween.tween_property(main_label, "scale", Vector2(1.0, 1.0), 0.3)
 
-# ---------------- DEBUG FUNCTIONS ----------------
+# ---------------- DEBUG ----------------
 func debug_status():
 	print("\n=== H_ARTS DEBUG STATUS ===")
 	print("Game completed: ", game_completed)

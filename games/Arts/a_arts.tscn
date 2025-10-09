@@ -1,9 +1,9 @@
 [gd_scene load_steps=27 format=3 uid="uid://bykhkmswih4qa"]
 
 [ext_resource type="Script" uid="uid://ca6c3aeiqva76" path="res://games_script/Arts/LetterA/a_arts.gd" id="1_ii7ix"]
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_imnym"]
-[ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="2_bt123"]
+[ext_resource type="Texture2D" uid="uid://cxs218c74phx8" path="res://Game Assets/Arts/MathEbg (18).png" id="2_mh6vr"]
 [ext_resource type="Texture2D" uid="uid://ckwfxbesn5jj" path="res://Game Assets/Arts/sysarchi (7).png" id="3_adl1h"]
+[ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="3_mh6vr"]
 [ext_resource type="Script" uid="uid://c6nyokigv55kv" path="res://games_script/Arts/LetterA/node_2d.gd" id="4_adl1h"]
 [ext_resource type="Texture2D" uid="uid://bhyxb4ja8l7gl" path="res://Game Assets/Arts/red.png" id="4_gxa2b"]
 [ext_resource type="Script" uid="uid://b1l0yr8aqltu4" path="res://games_script/Arts/LetterA/polygon_2d.gd" id="5_adl1h"]
@@ -43,15 +43,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_imnym")
+texture = ExtResource("2_mh6vr")
 
 [node name="Paper" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 386.0
-offset_top = 122.0
-offset_right = 1654.0
-offset_bottom = 999.0
-texture = ExtResource("2_bt123")
+offset_left = 273.0
+offset_top = 206.0
+offset_right = 1681.0
+offset_bottom = 998.0
+texture = ExtResource("3_mh6vr")
+expand_mode = 1
 
 [node name="Node2D2" type="Node2D" parent="."]
 script = ExtResource("4_adl1h")
@@ -59,7 +60,7 @@ script = ExtResource("4_adl1h")
 [node name="Node2D1" type="Node2D" parent="Node2D2"]
 
 [node name="Polygon2D2" type="Polygon2D" parent="Node2D2/Node2D1"]
-position = Vector2(0, 95)
+position = Vector2(0, 157)
 polygon = PackedVector2Array(581, 565, 581, 611, 1397, 610, 1396, 565)
 script = ExtResource("6_g2rvk")
 
@@ -83,7 +84,7 @@ justification_flags = 171
 
 [node name="Polygon2D" type="Polygon2D" parent="Node2D2/Node2D1"]
 z_index = 3
-position = Vector2(0, 95)
+position = Vector2(0, 157)
 polygon = PackedVector2Array(580, 613, 1396, 611, 1395, 634, 1384, 660, 1347, 679, 1335, 676, 1135, 677, 1111, 677, 1098, 685, 604, 685, 588, 678, 580, 656)
 script = ExtResource("5_adl1h")
 
@@ -107,7 +108,7 @@ justification_flags = 171
 
 [node name="Polygon2D8" type="Polygon2D" parent="Node2D2/Node2D1"]
 z_index = 5
-position = Vector2(0, 95)
+position = Vector2(0, 157)
 polygon = PackedVector2Array(1111, 485, 1111, 558, 1393, 559, 1393, 538, 1343, 539, 1330, 526, 1329, 485)
 script = ExtResource("12_4a8l5")
 
@@ -130,7 +131,7 @@ horizontal_alignment = 1
 justification_flags = 171
 
 [node name="Polygon2D10" type="Polygon2D" parent="Node2D2/Node2D1"]
-position = Vector2(0, 95)
+position = Vector2(0, 157)
 polygon = PackedVector2Array(1116, 314, 1116, 481, 1337, 480, 1224, 313)
 script = ExtResource("14_dxr4o")
 
@@ -154,7 +155,7 @@ justification_flags = 171
 
 [node name="Polygon2D11" type="Polygon2D" parent="Node2D2/Node2D1"]
 z_index = 9
-position = Vector2(0, 95)
+position = Vector2(0, 157)
 polygon = PackedVector2Array(816, 320, 815, 377, 749, 378, 749, 431, 814, 435, 816, 494, 876, 494, 880, 436, 945, 434, 945, 382, 881, 378, 877, 319)
 script = ExtResource("10_ngnm3")
 
@@ -178,7 +179,7 @@ justification_flags = 171
 
 [node name="Polygon2D12" type="Polygon2D" parent="Node2D2/Node2D1"]
 z_index = 8
-position = Vector2(0, 95)
+position = Vector2(0, 157)
 polygon = PackedVector2Array(585, 270, 585, 559, 1106, 559, 1107, 273)
 script = ExtResource("23_g2rvk")
 
@@ -201,7 +202,7 @@ horizontal_alignment = 1
 justification_flags = 171
 
 [node name="Polygon2D5" type="Polygon2D" parent="Node2D2/Node2D1"]
-position = Vector2(0, 95)
+position = Vector2(0, 157)
 polygon = PackedVector2Array(939, 263, 1010, 264, 1010, 214, 989, 190, 969, 190, 949, 196, 940, 219)
 script = ExtResource("9_uvcr8")
 
@@ -225,7 +226,7 @@ justification_flags = 171
 
 [node name="Polygon2D14" type="Polygon2D" parent="Node2D2/Node2D1"]
 z_index = 10
-position = Vector2(0, 95)
+position = Vector2(0, 157)
 polygon = PackedVector2Array(696, 597, 680, 617, 668, 652, 674, 681, 688, 709, 719, 722, 764, 725, 803, 703, 824, 675, 822, 633, 788, 590, 746, 582, 715, 589)
 script = ExtResource("25_gqfqg")
 
@@ -249,7 +250,7 @@ justification_flags = 171
 
 [node name="Polygon2D15" type="Polygon2D" parent="Node2D2/Node2D1"]
 z_index = 10
-position = Vector2(499, 96)
+position = Vector2(499, 158)
 polygon = PackedVector2Array(696, 597, 680, 617, 668, 652, 674, 681, 688, 709, 719, 722, 764, 725, 803, 703, 824, 675, 822, 633, 788, 590, 746, 582, 715, 589)
 script = ExtResource("26_uvcr8")
 
@@ -344,9 +345,9 @@ script = ExtResource("22_e0cix")
 [node name="TextureRect5" type="TextureRect" parent="Node2D2/Node2D3"]
 z_index = 14
 offset_left = 650.0
-offset_top = 12.0
+offset_top = 76.0
 offset_right = 1302.0
-offset_bottom = 202.0
+offset_bottom = 266.0
 texture = ExtResource("27_uvcr8")
 
 [node name="TextureRect4" type="TextureRect" parent="Node2D2"]
@@ -360,9 +361,9 @@ expand_mode = 1
 [node name="label_main" type="Label" parent="Node2D2"]
 z_index = 25
 offset_left = 724.0
-offset_top = 68.0
+offset_top = 130.0
 offset_right = 1255.0
-offset_bottom = 171.0
+offset_bottom = 233.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("28_ngnm3")
 theme_override_font_sizes/font_size = 35
@@ -401,21 +402,21 @@ justification_flags = 171
 z_index = 11
 layout_mode = 0
 offset_left = 473.0
-offset_top = 34.0
+offset_top = 96.0
 offset_right = 1476.0
-offset_bottom = 1121.0
+offset_bottom = 1183.0
 mouse_filter = 2
 texture = ExtResource("3_adl1h")
 expand_mode = 1
 
 [node name="Polygon2D16" type="Polygon2D" parent="."]
 z_index = 10
-position = Vector2(498, 93)
+position = Vector2(498, 155)
 polygon = PackedVector2Array(726, 639, 720, 644, 720, 662, 730, 673, 750, 679, 769, 671, 773, 661, 770, 645, 762, 635, 746, 634)
 
 [node name="Polygon2D13" type="Polygon2D" parent="."]
 z_index = 10
-position = Vector2(0, 95)
+position = Vector2(0, 157)
 polygon = PackedVector2Array(726, 639, 720, 644, 720, 662, 730, 673, 750, 679, 769, 671, 773, 661, 770, 645, 762, 635, 746, 634)
 
 [connection signal="pressed" from="Node2D2/Quitbtn" to="." method="_on_quitbtn_pressed"]

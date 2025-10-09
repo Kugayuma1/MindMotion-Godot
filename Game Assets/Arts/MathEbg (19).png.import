@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qckic7o6mwpc"
-path="res://.godot/imported/blue.png-3dded87510c145240332f20fd2874d1a.ctex"
+uid="uid://sc5uo7rfgped"
+path="res://.godot/imported/MathEbg (19).png-df5f17f56b9bd11044a12e30f3d004c1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Arts/blue.png"
-dest_files=["res://.godot/imported/blue.png-3dded87510c145240332f20fd2874d1a.ctex"]
+source_file="res://Game Assets/Arts/MathEbg (19).png"
+dest_files=["res://.godot/imported/MathEbg (19).png-df5f17f56b9bd11044a12e30f3d004c1.ctex"]
 
 [params]
 

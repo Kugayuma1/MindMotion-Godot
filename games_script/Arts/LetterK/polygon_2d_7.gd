@@ -1,8 +1,8 @@
 extends Polygon2D
 
 var original_color: Color
-@export var assigned_number: int = 1      
-@export var correct_color: Color = Color.RED 
+@export var assigned_number: int = 4    
+@export var correct_color: Color = Color.HOT_PINK
 var is_colored: bool = false
 var current_applied_color: Color  
 var my_label: Label  # Reference to child label

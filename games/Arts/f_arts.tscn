@@ -320,7 +320,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("19_sttb6")
 theme_override_font_sizes/font_size = 35
 text = "Color By Number:
-Bee"
+Fish"
 horizontal_alignment = 1
 justification_flags = 171
 

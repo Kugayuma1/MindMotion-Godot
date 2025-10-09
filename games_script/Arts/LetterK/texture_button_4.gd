@@ -1,8 +1,8 @@
 # TextureButton script for color by numbers - WITH DISAPPEARING EFFECT
 extends TextureButton
 
-@export var color: Color = Color.RED
-@export var color_number: int = 1  # The number associated with this color
+@export var color: Color = Color.HOT_PINK
+@export var color_number: int = 4  # The number associated with this color
 var is_dragging = false
 var original_modulate: Color
 
