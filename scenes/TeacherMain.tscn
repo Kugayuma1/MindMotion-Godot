@@ -46,15 +46,15 @@ vertical_alignment = 1
 
 [node name="Students" type="TextureButton" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -199.0
-offset_top = 38.0
-offset_right = 185.0
-offset_bottom = 162.0
+anchors_preset = -1
+anchor_left = 0.496
+anchor_top = 0.593
+anchor_right = 0.496
+anchor_bottom = 0.593
+offset_left = -191.32
+offset_top = -62.4401
+offset_right = 192.68
+offset_bottom = 61.5599
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("3_5fnfh")
@@ -75,21 +75,22 @@ vertical_alignment = 1
 
 [node name="Logout" type="TextureButton" parent="."]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.825
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.825
 offset_left = -201.0
-offset_top = 297.0
+offset_top = -54.0001
 offset_right = 193.0
-offset_bottom = 404.0
+offset_bottom = 52.9999
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("5_f0sme")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="Logout"]
+layout_mode = 0
 offset_left = 99.0
 offset_top = 26.0
 offset_right = 280.0
@@ -130,20 +131,21 @@ stretch_mode = 6
 [node name="VolumeSettings" type="TextureButton" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.932
-anchor_right = 0.5
-anchor_bottom = 0.932
-offset_left = -201.0
-offset_top = -296.56
-offset_right = 186.0
-offset_bottom = -184.56
+anchor_left = 0.496
+anchor_top = 0.709
+anchor_right = 0.496
+anchor_bottom = 0.709
+offset_left = -193.32
+offset_top = -55.72
+offset_right = 193.68
+offset_bottom = 56.28
 grow_horizontal = 2
 grow_vertical = 0
 texture_normal = ExtResource("8_qlwhp")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="VolumeSettings"]
+layout_mode = 0
 offset_left = 101.0
 offset_top = 30.0
 offset_right = 282.0

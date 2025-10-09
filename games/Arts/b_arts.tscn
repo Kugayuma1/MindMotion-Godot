@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://dd2hl5jffy827" path="res://games_script/Arts/LetterA/texture_button.gd" id="13_r5r0e"]
 [ext_resource type="Script" uid="uid://r5eur67urdng" path="res://games_script/Arts/LetterA/texture_button_3.gd" id="15_1n4fr"]
 [ext_resource type="Script" uid="uid://ckenedttsudc5" path="res://games_script/Arts/LetterA/texture_button_2.gd" id="17_cu0wi"]
-[ext_resource type="Texture2D" uid="uid://dar0xbmdwsoyw" path="res://Game Assets/Arts/black.png" id="18_bn038"]
+[ext_resource type="Texture2D" uid="uid://dar0xbmdwsoyw" path="res://Game Assets/Arts/Black.png" id="18_bn038"]
 [ext_resource type="Script" uid="uid://vqbo1cv8ma7d" path="res://games_script/Arts/LetterA/texture_button_4.gd" id="19_5gd3a"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="20_v3yyl"]
 [ext_resource type="Texture2D" uid="uid://b4fcft4nhtcia" path="res://Game Assets/Arts/subt 1.png" id="21_y60mp"]
@@ -33,13 +33,10 @@
 [ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="31_fankn"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_miyh4"]
-load_path = "res://.godot/imported/red.png-dfa5a4939a447e636d902ca7ea351061.ctex"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xlvnm"]
-load_path = "res://.godot/imported/blue.png-3dded87510c145240332f20fd2874d1a.ctex"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b4myp"]
-load_path = "res://.godot/imported/yellow.png-422e0e7dcaefe23c87793bdbd026301c.ctex"
 
 [node name="Control2" type="Control"]
 layout_mode = 3
@@ -65,6 +62,7 @@ texture = ExtResource("2_fankn")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 276.0
 offset_top = 209.0
 offset_right = 1684.0

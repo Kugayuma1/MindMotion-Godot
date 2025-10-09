@@ -23,13 +23,10 @@
 [ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="21_wgrpx"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1up7h"]
-load_path = "res://.godot/imported/red.png-dfa5a4939a447e636d902ca7ea351061.ctex"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_djswn"]
-load_path = "res://.godot/imported/yellow.png-422e0e7dcaefe23c87793bdbd026301c.ctex"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_uf610"]
-load_path = "res://.godot/imported/blue.png-3dded87510c145240332f20fd2874d1a.ctex"
 
 [node name="Control" type="Control"]
 layout_mode = 3
