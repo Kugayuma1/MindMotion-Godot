@@ -1,13 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://cfy7n0ueakahr"]
+[gd_scene load_steps=12 format=3 uid="uid://cfy7n0ueakahr"]
 
 [ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="1_7s6y0"]
 [ext_resource type="Texture2D" uid="uid://diy6w4rj2rm83" path="res://assets/left_wave.png" id="2_jdyjy"]
 [ext_resource type="Script" uid="uid://exrikfmgayri" path="res://scripts/welcome.gd" id="2_xkc68"]
 [ext_resource type="Texture2D" uid="uid://cwgfqyonunybf" path="res://assets/right_wave.png" id="4_m8d44"]
 [ext_resource type="Texture2D" uid="uid://b8lf8vmcx55l4" path="res://assets/mindmotion_logo.png" id="5_j8q4y"]
-[ext_resource type="Texture2D" uid="uid://b1k5g3yqlqpl8" path="res://assets/login_button.png" id="6_d6xo6"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="6_m8d44"]
-[ext_resource type="Texture2D" uid="uid://cffyuapppm558" path="res://assets/signup_button.png" id="7_7exl1"]
+[ext_resource type="Texture2D" uid="uid://lwkteoaxapyj" path="res://assets/Buttons/Login.png" id="7_j8q4y"]
+[ext_resource type="Texture2D" uid="uid://doygaldstucxg" path="res://assets/Buttons/LoginHover.png" id="8_7exl1"]
+[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="8_d6xo6"]
+[ext_resource type="Texture2D" uid="uid://bea2uat77tlu0" path="res://assets/Buttons/Signup.png" id="9_7exl1"]
+[ext_resource type="Texture2D" uid="uid://bprd85vdxi06h" path="res://assets/Buttons/SignupHover.png" id="11_x3ygu"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -106,8 +109,20 @@ offset_right = 266.0
 offset_bottom = 196.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("6_d6xo6")
+texture_normal = ExtResource("7_j8q4y")
+texture_pressed = ExtResource("8_7exl1")
 stretch_mode = 5
+
+[node name="Label" type="Label" parent="Login"]
+offset_left = 162.0
+offset_top = 28.0
+offset_right = 296.0
+offset_bottom = 96.0
+theme_override_fonts/font = ExtResource("8_d6xo6")
+theme_override_font_sizes/font_size = 65
+text = "Login"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Signup" type="TextureButton" parent="."]
 layout_mode = 1
@@ -122,8 +137,20 @@ offset_right = 268.0
 offset_bottom = 361.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("7_7exl1")
+texture_normal = ExtResource("9_7exl1")
+texture_pressed = ExtResource("11_x3ygu")
 stretch_mode = 5
+
+[node name="Label" type="Label" parent="Signup"]
+offset_left = 162.0
+offset_top = 28.0
+offset_right = 296.0
+offset_bottom = 96.0
+theme_override_fonts/font = ExtResource("8_d6xo6")
+theme_override_font_sizes/font_size = 65
+text = "Signup"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Login" to="." method="_on_login_pressed"]

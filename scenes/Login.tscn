@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bcj1se16a650t"]
+[gd_scene load_steps=16 format=3 uid="uid://bcj1se16a650t"]
 
 [ext_resource type="Script" uid="uid://cc7us5wbsk55" path="res://scripts/login.gd" id="1_p5ycx"]
 [ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="2_yxk4x"]
@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://c6lyvgte3htt2" path="res://assets/eye.png" id="4_jbclg"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="4_na214"]
 [ext_resource type="Texture2D" uid="uid://b8lf8vmcx55l4" path="res://assets/mindmotion_logo.png" id="4_xpxjw"]
-[ext_resource type="Texture2D" uid="uid://b1k5g3yqlqpl8" path="res://assets/login_button.png" id="4_yxk4x"]
+[ext_resource type="Texture2D" uid="uid://lwkteoaxapyj" path="res://assets/Buttons/Login.png" id="6_7hd5n"]
+[ext_resource type="Texture2D" uid="uid://doygaldstucxg" path="res://assets/Buttons/LoginHover.png" id="7_ft2vs"]
+[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="8_egi27"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p5ycx"]
 
@@ -189,8 +191,21 @@ offset_right = 153.001
 offset_bottom = -112.0
 grow_horizontal = 2
 grow_vertical = 0
-texture_normal = ExtResource("4_yxk4x")
+texture_normal = ExtResource("6_7hd5n")
+texture_pressed = ExtResource("7_ft2vs")
 stretch_mode = 5
+
+[node name="Label" type="Label" parent="Container/Login"]
+layout_mode = 0
+offset_left = 66.9996
+offset_top = 10.0
+offset_right = 201.0
+offset_bottom = 56.0
+theme_override_fonts/font = ExtResource("8_egi27")
+theme_override_font_sizes/font_size = 38
+text = "Login"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Label" type="Label" parent="Container"]
 layout_mode = 1

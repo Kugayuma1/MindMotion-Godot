@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://d1midy3vxl0we"]
+[gd_scene load_steps=6 format=3 uid="uid://d1midy3vxl0we"]
 
 [ext_resource type="Texture2D" uid="uid://crxf5fjyp7ncf" path="res://assets/container.png" id="1_s007g"]
 [ext_resource type="Script" uid="uid://bq7qhnkkdpgo0" path="res://scripts/terms_screen.gd" id="1_sq8al"]
 [ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="2_sq8al"]
 [ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="3_gb8ql"]
+[ext_resource type="Texture2D" uid="uid://6rgkai5x43s" path="res://assets/Buttons/CloseHover.png" id="5_7hfbd"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -95,6 +96,7 @@ offset_right = -33.0
 offset_bottom = 123.5
 grow_horizontal = 0
 texture_normal = ExtResource("2_sq8al")
+texture_pressed = ExtResource("5_7hfbd")
 stretch_mode = 0
 
 [connection signal="pressed" from="TextureRect/BackButton" to="." method="_on_back_button_pressed"]

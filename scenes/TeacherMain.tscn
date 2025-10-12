@@ -1,14 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://cdepj04shy5u2"]
+[gd_scene load_steps=13 format=3 uid="uid://cdepj04shy5u2"]
 
 [ext_resource type="Script" uid="uid://cfwmhx6di5y4a" path="res://scripts/teacher_main.gd" id="1_eafnc"]
 [ext_resource type="Texture2D" uid="uid://diy6w4rj2rm83" path="res://assets/left_wave.png" id="1_jrgrb"]
 [ext_resource type="Texture2D" uid="uid://cwgfqyonunybf" path="res://assets/right_wave.png" id="2_eafnc"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="2_pn6o5"]
-[ext_resource type="Texture2D" uid="uid://c4ywu3w0w6ewo" path="res://assets/Group 158.png" id="3_5fnfh"]
 [ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="3_pn6o5"]
-[ext_resource type="Texture2D" uid="uid://pukusf7tcj41" path="res://assets/Group 157.png" id="5_f0sme"]
-[ext_resource type="Texture2D" uid="uid://cuecdqwaen3bn" path="res://assets/Group 18.png" id="8_qlwhp"]
+[ext_resource type="Texture2D" uid="uid://dvo8krb6uko03" path="res://assets/Buttons/Play (1).png" id="3_qlwhp"]
+[ext_resource type="Texture2D" uid="uid://j4y18hph6tor" path="res://assets/Buttons/PlayHover.png" id="4_lekex"]
+[ext_resource type="Texture2D" uid="uid://3cmllr660aft" path="res://assets/Buttons/Quit.png" id="6_i2yxm"]
+[ext_resource type="Texture2D" uid="uid://dd5qg6sbiw244" path="res://assets/Buttons/QuitHover.png" id="7_sdyvc"]
 [ext_resource type="Texture2D" uid="uid://b8lf8vmcx55l4" path="res://assets/mindmotion_logo.png" id="9_lekex"]
+[ext_resource type="Texture2D" uid="uid://crujp75dko30l" path="res://assets/Buttons/Settings.png" id="10_ec03b"]
+[ext_resource type="Texture2D" uid="uid://b36jb8lsr1m1t" path="res://assets/Buttons/SettingsHover.png" id="11_g0s06"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -59,7 +62,8 @@ offset_right = 192.68
 offset_bottom = 61.5599
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("3_5fnfh")
+texture_normal = ExtResource("3_qlwhp")
+texture_pressed = ExtResource("4_lekex")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="Students"]
@@ -88,7 +92,8 @@ offset_right = 193.0
 offset_bottom = 52.9999
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("5_f0sme")
+texture_normal = ExtResource("6_i2yxm")
+texture_pressed = ExtResource("7_sdyvc")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="Logout"]
@@ -143,7 +148,8 @@ offset_right = 193.68
 offset_bottom = 56.28
 grow_horizontal = 2
 grow_vertical = 0
-texture_normal = ExtResource("8_qlwhp")
+texture_normal = ExtResource("10_ec03b")
+texture_pressed = ExtResource("11_g0s06")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="VolumeSettings"]

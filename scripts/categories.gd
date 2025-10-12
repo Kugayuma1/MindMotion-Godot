@@ -97,22 +97,22 @@ func _on_back_pressed():
 
 func _on_reading_pressed():
 	AudioManager.play_sound("button_click")
-	load_stage_scene("reading", "Reading", "reading")
+	load_stage_with_countdown("reading", "Reading", "reading")
 
 func _on_fine_motor_pressed():
 	AudioManager.play_sound("button_click")
 	if try_load_locked_stage("fine_motor", "Fine Motor Skills", "Complete Reading first"):
-		load_stage_scene("fine_motor", "FineMotor", "finemotors")
+		load_stage_with_countdown("fine_motor", "FineMotor", "finemotors")
 
 func _on_math_pressed():
 	AudioManager.play_sound("button_click")
 	if try_load_locked_stage("math", "Math", "Complete Fine Motor first"):
-		load_stage_scene("math", "Math", "math")
+		load_stage_with_countdown("math", "Math", "math")
 
 func _on_arts_pressed():
 	AudioManager.play_sound("button_click")
 	if try_load_locked_stage("art", "Arts & Crafts", "Complete Math first"):
-		load_stage_scene("art", "Arts", "arts")
+		load_stage_with_countdown("art", "Arts", "arts")
 
 func try_load_locked_stage(stage: String, display_name: String, requirement: String) -> bool:
 	if not is_stage_unlocked(stage):
@@ -120,16 +120,41 @@ func try_load_locked_stage(stage: String, display_name: String, requirement: Str
 		return false
 	return true
 
-func load_stage_scene(stage: String, folder: String, filename: String):
+# This function loads countdown scene first, then the game
+func load_stage_with_countdown(stage: String, folder: String, filename: String):
 	is_transitioning = true
 	_disconnect_signals()
 	
-	var path = "res://games/%s/%s_%s.tscn" % [folder, Global.current_letter.to_lower(), filename]
-	if ResourceLoader.exists(path):
-		get_tree().change_scene_to_file(path)
-	else:
+	var game_path = "res://games/%s/%s_%s.tscn" % [folder, Global.current_letter.to_lower(), filename]
+	
+	if not ResourceLoader.exists(game_path):
 		is_transitioning = false
 		show_dialog("❌ Scene for letter %s not found." % Global.current_letter, "Scene not found")
+		return
+	
+	# Check if countdown scene exists
+	var countdown_path = "res://Countdown.tscn"
+	if not ResourceLoader.exists(countdown_path):
+		debug_print("⚠️ Countdown scene not found, loading game directly", "⚠️")
+		get_tree().change_scene_to_file(game_path)
+		return
+	
+	# Load and instance countdown scene
+	var countdown_scene = load(countdown_path)
+	if countdown_scene == null:
+		debug_print("⚠️ Failed to load countdown scene, loading game directly", "⚠️")
+		get_tree().change_scene_to_file(game_path)
+		return
+		
+	var countdown_instance = countdown_scene.instantiate()
+	
+	# Pass game path to countdown scene
+	countdown_instance.set_meta("game_scene_path", game_path)
+	
+	# Switch to countdown scene
+	get_tree().root.add_child(countdown_instance)
+	get_tree().current_scene.queue_free()
+	get_tree().current_scene = countdown_instance
 
 func show_dialog(text: String, title: String):
 	var dialog = AcceptDialog.new()

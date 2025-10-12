@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bvlf5n7k77t86"]
+[gd_scene load_steps=22 format=3 uid="uid://bvlf5n7k77t86"]
 
 [ext_resource type="Script" uid="uid://b48efpixvk3qm" path="res://scripts/teachersignup.gd" id="1_ylm1m"]
 [ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="2_wnxgu"]
@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://c6lyvgte3htt2" path="res://assets/eye.png" id="4_3sokr"]
 [ext_resource type="Texture2D" uid="uid://b8lf8vmcx55l4" path="res://assets/mindmotion_logo.png" id="4_bs3re"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="4_h0ldm"]
-[ext_resource type="Texture2D" uid="uid://b6jc11b3to0sx" path="res://assets/Sign.png" id="4_rrx5e"]
+[ext_resource type="Texture2D" uid="uid://bfkjutsinshvf" path="res://assets/Buttons/Signin-up.png" id="6_bewqx"]
+[ext_resource type="Texture2D" uid="uid://dvxxrww21wm2w" path="res://assets/Buttons/Signin-upHover.png" id="7_ctstp"]
+[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="8_mh7sc"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3sokr"]
 
@@ -355,8 +357,20 @@ offset_right = 139.5
 offset_bottom = -63.0001
 grow_horizontal = 2
 grow_vertical = 0
-texture_normal = ExtResource("4_rrx5e")
+texture_normal = ExtResource("6_bewqx")
+texture_pressed = ExtResource("7_ctstp")
 stretch_mode = 5
+
+[node name="Label" type="Label" parent="Container/Signup"]
+offset_left = 66.9996
+offset_top = 10.0
+offset_right = 201.0
+offset_bottom = 56.0
+theme_override_fonts/font = ExtResource("8_mh7sc")
+theme_override_font_sizes/font_size = 38
+text = "Signup"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Logo" type="TextureRect" parent="Container"]
 layout_mode = 1
