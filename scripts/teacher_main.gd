@@ -19,6 +19,7 @@ func _ready():
 	Global.students_cache_updated.connect(_on_students_updated)
 	
 	# Show initial student count if you have a status label
+	LoadingScreen.hide_loading()
 	update_student_status()
 	StudentData.load_student_cognitive_data()
 	StudentData.load_student_motion_data()

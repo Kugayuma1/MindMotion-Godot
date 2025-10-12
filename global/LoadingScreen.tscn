@@ -1,0 +1,115 @@
+[gd_scene load_steps=14 format=3 uid="uid://dlhs2pubimg8p"]
+
+[ext_resource type="Script" uid="uid://beeo01pr7uobn" path="res://global/loading_screen.gd" id="1_ykd5q"]
+[ext_resource type="Texture2D" uid="uid://de3bk13vkni5i" path="res://Gross-Motor Assets/Walking/1.png" id="2_sjvxp"]
+[ext_resource type="Texture2D" uid="uid://bha7pwdk2lcm0" path="res://assets/student_bg.png" id="2_xqmwg"]
+[ext_resource type="Texture2D" uid="uid://b1gouaq48akmi" path="res://Gross-Motor Assets/Walking/2.png" id="3_xqmwg"]
+[ext_resource type="Texture2D" uid="uid://dy7iooly2eeqw" path="res://Gross-Motor Assets/Walking/3.png" id="4_iybrr"]
+[ext_resource type="Texture2D" uid="uid://cn026o7nf3cxq" path="res://Gross-Motor Assets/Walking/4.png" id="5_el6ln"]
+[ext_resource type="Texture2D" uid="uid://uaw60ov5v5mo" path="res://Gross-Motor Assets/Walking/5.png" id="6_gnueo"]
+[ext_resource type="Texture2D" uid="uid://cum766to3bvip" path="res://Gross-Motor Assets/Walking/6.png" id="7_ctgv3"]
+[ext_resource type="Texture2D" uid="uid://bo7pplbhhvpk7" path="res://Gross-Motor Assets/Walking/7.png" id="8_irxsv"]
+[ext_resource type="Texture2D" uid="uid://cx12hqugxfeo8" path="res://Gross-Motor Assets/Walking/8.png" id="9_alc63"]
+[ext_resource type="Texture2D" uid="uid://csvu7kj40nbkt" path="res://Gross-Motor Assets/Walking/9.png" id="10_hdi2t"]
+[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="11_ffel0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d6wpl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_sjvxp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_xqmwg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_iybrr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_el6ln")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_gnueo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ctgv3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_irxsv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_alc63")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_hdi2t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="LoadingScreen" type="CanvasLayer"]
+script = ExtResource("1_ykd5q")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_xqmwg")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CenterContainer/HBoxContainer"]
+position = Vector2(-66.125, 6.37501)
+scale = Vector2(0.3395, 0.3055)
+sprite_frames = SubResource("SpriteFrames_d6wpl")
+
+[node name="Label" type="Label" parent="CenterContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_ffel0")
+theme_override_font_sizes/font_size = 100
+text = "Loading"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Dot1" type="Label" parent="CenterContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_ffel0")
+theme_override_font_sizes/font_size = 100
+text = "."
+
+[node name="Dot2" type="Label" parent="CenterContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_ffel0")
+theme_override_font_sizes/font_size = 100
+text = "."
+
+[node name="Dot3" type="Label" parent="CenterContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_ffel0")
+theme_override_font_sizes/font_size = 100
+text = "."

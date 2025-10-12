@@ -171,12 +171,18 @@ func _on_firestore_verification_completed(result: int, response_code: int, heade
 		firestore_request[0].queue_free()
 
 func proceed_with_verified_login():
+	hide_loading()
+	
+	# Show the global loading screen
+	LoadingScreen.show_loading()
+	
 	# Original logic for proceeding after successful verification
 	if Global.user_type == "student":
 		await load_student_data()
 		get_tree().change_scene_to_file("res://scenes/StudentMain.tscn")
 	else:
-		hide_loading()
+		await get_tree().create_timer(3.0).timeout
+		LoadingScreen.hide_loading()
 		get_tree().change_scene_to_file("res://scenes/TeacherMain.tscn")
 
 
@@ -190,18 +196,14 @@ func load_student_data():
 		await get_tree().process_frame
 		wait_time += 0.1
 		await get_tree().create_timer(0.1).timeout
-		if int(wait_time) % 3 == 0:
-			update_loading("Loading progress... %d seconds" % int(wait_time))
 	
 	if not Global.is_letter_cache_loaded:
 		print("⚠️ Letter cache timeout - using safe defaults")
 		Global.set_default_letter_cache()
 	
 	# Don't pre-load stage data - let it load on-demand
-	# This reduces login time and prevents sync issues
-	update_loading("Almost ready...")
 	await get_tree().create_timer(1.0).timeout
-	hide_loading()
+	LoadingScreen.hide_loading()
 
 func show_loading(message: String):
 	set_inputs_enabled(false)
@@ -243,8 +245,8 @@ func show_error_dialog(message: String):
 	error_dialog.theme = dialog_theme
 	error_dialog.dialog_text = message
 	error_dialog.title = "Error"
-	loading_dialog.min_size = Vector2(350, 150)  # Width x Height
-	loading_dialog.size = Vector2(350, 150)
+	error_dialog.min_size = Vector2(350, 150)  # Width x Height
+	error_dialog.size = Vector2(350, 150)
 	error_dialog.popup_centered()
 	
 	# Auto-cleanup when closed
@@ -257,8 +259,8 @@ func show_info_dialog(message: String):
 	info_dialog.theme = dialog_theme
 	info_dialog.dialog_text = message
 	info_dialog.title = "Information"
-	loading_dialog.min_size = Vector2(350, 150)  # Width x Height
-	loading_dialog.size = Vector2(350, 150)	
+	info_dialog.min_size = Vector2(350, 150)  # Width x Height
+	info_dialog.size = Vector2(350, 150)	
 	info_dialog.popup_centered()
 	
 	# Auto-cleanup when closed

@@ -19,9 +19,10 @@ config/icon="res://icon.svg"
 
 Global="*res://global/global.gd"
 ProgressManager="*res://global/ProgressManager.gd"
-InternetManager="*res://global/InternetManager.tscn"
 StudentData="*res://global/StudentData.gd"
+InternetManager="*res://global/InternetManager.tscn"
 AudioManager="*res://global/AudioManager.gd"
+LoadingScreen="*res://global/LoadingScreen.tscn"
 SceneTransition="*res://global/SceneTransition.gd"
 
 [display]

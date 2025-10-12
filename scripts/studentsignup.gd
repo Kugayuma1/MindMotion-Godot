@@ -314,7 +314,11 @@ func create_next_stage_document():
 func finish_signup_process():
 	debug_print("All signup documents created successfully!", "🎉")
 	
-	update_signup_loading("Finalizing your account...")
+	# Hide the AcceptDialog
+	hide_signup_loading()
+	
+	# Show the global loading screen
+	LoadingScreen.show_loading()
 	
 	# Brief wait for Firebase to propagate the data
 	await get_tree().create_timer(2.0).timeout
@@ -327,9 +331,7 @@ func finish_signup_process():
 
 func load_new_student_data_with_verification():
 	debug_print("Loading and verifying new student data...", "📡")
-	
-	update_signup_loading("Verifying your account...")
-	
+		
 	# Load from Firebase
 	Global.load_all_letter_completion_data()
 	
@@ -341,8 +343,6 @@ func load_new_student_data_with_verification():
 		wait_time += 0.1
 		await get_tree().create_timer(0.1).timeout
 		
-		if int(wait_time) % 2 == 0:
-			update_signup_loading("Setting up activities... %d seconds" % int(wait_time))
 	
 	# Verify the data is correct
 	if Global.is_letter_cache_loaded:
