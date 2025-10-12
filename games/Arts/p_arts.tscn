@@ -42,6 +42,7 @@ texture = ExtResource("1_tmy8g")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 276.0
 offset_top = 209.0
 offset_right = 1684.0
