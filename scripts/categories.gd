@@ -90,22 +90,27 @@ func is_stage_unlocked(stage_name: String) -> bool:
 
 # Consolidated button handlers
 func _on_back_pressed():
+	AudioManager.play_sound("button_click")
 	is_transitioning = true
 	_disconnect_signals()
 	get_tree().change_scene_to_file("res://scenes/LevelSelection.tscn")
 
 func _on_reading_pressed():
+	AudioManager.play_sound("button_click")
 	load_stage_scene("reading", "Reading", "reading")
 
 func _on_fine_motor_pressed():
+	AudioManager.play_sound("button_click")
 	if try_load_locked_stage("fine_motor", "Fine Motor Skills", "Complete Reading first"):
 		load_stage_scene("fine_motor", "FineMotor", "finemotors")
 
 func _on_math_pressed():
+	AudioManager.play_sound("button_click")
 	if try_load_locked_stage("math", "Math", "Complete Fine Motor first"):
 		load_stage_scene("math", "Math", "math")
 
 func _on_arts_pressed():
+	AudioManager.play_sound("button_click")
 	if try_load_locked_stage("art", "Arts & Crafts", "Complete Math first"):
 		load_stage_scene("art", "Arts", "arts")
 

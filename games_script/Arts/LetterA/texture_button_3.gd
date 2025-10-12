@@ -22,6 +22,7 @@ func _on_button_down():
 	print("Color button ", color_number, " picked up - button faded")
 
 func _on_button_up():
+	AudioManager.play_sound("button_click")
 	is_dragging = false
 	# Restore the button's original appearance
 	modulate = original_modulate

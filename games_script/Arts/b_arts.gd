@@ -412,6 +412,7 @@ func force_win_check():
 	check_win_condition()
 
 func _on_quitbtn_pressed() -> void:
+	AudioManager.play_sound("button_click")
 	var letter_lower = Global.current_letter.to_lower()
 	var path = "res://scenes/Categories.tscn"
 	if ResourceLoader.exists(path):

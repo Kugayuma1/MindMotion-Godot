@@ -15,15 +15,18 @@
 [ext_resource type="Script" uid="uid://dd2hl5jffy827" path="res://games_script/Arts/LetterA/texture_button.gd" id="13_r5r0e"]
 [ext_resource type="Script" uid="uid://r5eur67urdng" path="res://games_script/Arts/LetterA/texture_button_3.gd" id="15_1n4fr"]
 [ext_resource type="Script" uid="uid://ckenedttsudc5" path="res://games_script/Arts/LetterA/texture_button_2.gd" id="17_cu0wi"]
-[ext_resource type="Texture2D" uid="uid://dar0xbmdwsoyw" path="res://Game Assets/Arts/Black.png" id="18_bn038"]
+[ext_resource type="Texture2D" uid="uid://dar0xbmdwsoyw" path="res://Game Assets/Arts/black.png" id="18_bn038"]
 [ext_resource type="Script" uid="uid://vqbo1cv8ma7d" path="res://games_script/Arts/LetterA/texture_button_4.gd" id="19_5gd3a"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="20_v3yyl"]
 [ext_resource type="Texture2D" uid="uid://b4fcft4nhtcia" path="res://Game Assets/Arts/subt 1.png" id="21_y60mp"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="22_rvfpq"]
+[ext_resource type="Texture2D" uid="uid://bhyxb4ja8l7gl" path="res://Game Assets/Arts/red.png" id="23_dqxce"]
 [ext_resource type="Texture2D" uid="uid://c1viy7tn1qeqt" path="res://Game Assets/Arts/sysarchi (9).png" id="23_l1yr3"]
 [ext_resource type="Script" uid="uid://duwi82m7xjboa" path="res://games/Arts/bl_4_1.gd" id="24_xnq6q"]
 [ext_resource type="Script" uid="uid://cgu72fq46mfhv" path="res://games/Arts/y_2_5.gd" id="25_qtsj3"]
+[ext_resource type="Texture2D" uid="uid://c8jfigrl7wxu8" path="res://Game Assets/Arts/yellow.png" id="25_r5r0e"]
 [ext_resource type="Script" uid="uid://j42qaskcryox" path="res://games/Arts/y_2_4.gd" id="26_dqxce"]
+[ext_resource type="Texture2D" uid="uid://qckic7o6mwpc" path="res://Game Assets/Arts/blue.png" id="27_231rb"]
 [ext_resource type="Script" uid="uid://cpaj2cp8lkam2" path="res://games/Arts/y_2_3.gd" id="27_r5r0e"]
 [ext_resource type="Script" uid="uid://cghtc5oersgrv" path="res://games/Arts/y_2_2.gd" id="28_231rb"]
 [ext_resource type="Script" uid="uid://lvxfgqhoo4ua" path="res://games/Arts/y_2_1.gd" id="29_1n4fr"]
@@ -31,12 +34,6 @@
 [ext_resource type="Script" uid="uid://xfoxuo8gipre" path="res://games/Arts/b_3_2.gd" id="30_tgtfs"]
 [ext_resource type="Script" uid="uid://dj40fobvghore" path="res://games/Arts/b_3_1.gd" id="31_cu0wi"]
 [ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="31_fankn"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_miyh4"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xlvnm"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b4myp"]
 
 [node name="Control2" type="Control"]
 layout_mode = 3
@@ -289,29 +286,10 @@ offset_left = 1104.0
 offset_top = 422.0
 offset_right = 1454.0
 offset_bottom = 572.0
-texture_normal = SubResource("CompressedTexture2D_miyh4")
+texture_normal = ExtResource("23_dqxce")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("13_r5r0e")
-
-[node name="TextureButton3" type="TextureButton" parent="Node2D2/Node2D1"]
-z_index = 15
-custom_minimum_size = Vector2(350, 150)
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 1107.0
-offset_top = 688.0
-offset_right = 1457.0
-offset_bottom = 838.0
-grow_horizontal = 0
-grow_vertical = 2
-texture_normal = SubResource("CompressedTexture2D_xlvnm")
-ignore_texture_size = true
-stretch_mode = 0
-script = ExtResource("15_1n4fr")
 
 [node name="TextureButton2" type="TextureButton" parent="Node2D2/Node2D1"]
 z_index = 15
@@ -327,10 +305,29 @@ offset_right = 1452.0
 offset_bottom = 712.0
 grow_horizontal = 0
 grow_vertical = 2
-texture_normal = SubResource("CompressedTexture2D_b4myp")
+texture_normal = ExtResource("25_r5r0e")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("17_cu0wi")
+
+[node name="TextureButton3" type="TextureButton" parent="Node2D2/Node2D1"]
+z_index = 15
+custom_minimum_size = Vector2(350, 150)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1107.0
+offset_top = 688.0
+offset_right = 1457.0
+offset_bottom = 838.0
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = ExtResource("27_231rb")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("15_1n4fr")
 
 [node name="TextureButton4" type="TextureButton" parent="Node2D2/Node2D1"]
 z_index = 15

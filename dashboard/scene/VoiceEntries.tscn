@@ -27,13 +27,11 @@ grow_vertical = 2
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_top = -5.1546
-offset_right = 661.0
-offset_bottom = 5.15454
+offset_right = 646.0
 grow_vertical = 2
 texture = ExtResource("1_f73p8")
-expand_mode = 5
-stretch_mode = 5
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Right Wave" type="TextureRect" parent="."]
 layout_mode = 1
@@ -41,12 +39,15 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -608.0
+offset_left = -572.0
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("2_obgkd")
-expand_mode = 5
-stretch_mode = 5
+expand_mode = 1
+stretch_mode = 6
 
 [node name="BackButton" type="TextureButton" parent="."]
 layout_mode = 0
@@ -85,6 +86,10 @@ offset_right = 590.0
 offset_bottom = 473.0
 grow_horizontal = 2
 grow_vertical = 2
+scroll_horizontal_custom_step = 935.457
+scroll_vertical_custom_step = 896.438
+horizontal_scroll_mode = 0
+scroll_deadzone = 7
 
 [node name="VoiceGrid" type="GridContainer" parent="ScrollContainer"]
 layout_mode = 2

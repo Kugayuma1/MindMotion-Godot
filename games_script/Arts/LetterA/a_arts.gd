@@ -32,6 +32,7 @@ var popup_instance: Control = null
 @export var auto_detect_backgrounds: bool = true
 
 func _ready():
+	AudioManager.play_temp_music("game")
 	if main_label:
 		original_main_text = main_label.text
 	collect_game_elements()
@@ -312,6 +313,9 @@ func force_win_check():
 	check_win_condition()
 
 func _on_quitbtn_pressed() -> void:
+	AudioManager.play_sound("button_click")
+	AudioManager.stop_music(false)
+	AudioManager.resume_previous_music()
 	var letter_lower = Global.current_letter.to_lower()
 	var path = "res://scenes/Categories.tscn"
 	if ResourceLoader.exists(path):

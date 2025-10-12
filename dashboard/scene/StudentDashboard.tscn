@@ -27,31 +27,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Left Wave" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 656.0
-grow_vertical = 2
-texture = ExtResource("2_b6vkk")
-expand_mode = 5
-stretch_mode = 5
-
 [node name="Right Wave" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -609.0
-offset_top = -8.0
+offset_left = -572.0
+offset_top = 1.0
 offset_right = 1.0
-offset_bottom = 8.0
+offset_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("3_qui8s")
-expand_mode = 5
-stretch_mode = 5
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Left Wave" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 646.0
+grow_vertical = 2
+texture = ExtResource("2_b6vkk")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="StudentAvatar" type="TextureRect" parent="."]
 layout_mode = 1

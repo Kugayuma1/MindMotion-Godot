@@ -179,4 +179,4 @@ func refresh_everything_after_stage_completion(stage_name: String, completed: bo
 
 
 func _on_quitbtn_pressed() -> void:
-	pass # Replace with function body.
+		get_tree().change_scene_to_file("res://scenes/LevelSelection.tscn")

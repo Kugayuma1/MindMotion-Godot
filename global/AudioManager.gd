@@ -17,13 +17,13 @@ var previous_music: String = ""
 
 # Audio resources - Add your audio files here
 var music_tracks = {
-	"menu": preload("res://audio/music/by-jeans-laufey-falling-behind-cover-by-minji-newjeans-128-ytshorts.savetube.me.mp3"),
-	"game": preload("res://audio/music/spotifydown.com - OMG.mp3"),
-	"motion": preload("res://audio/music/spotifydown.com - Ditto.mp3")
+	"menu": preload("res://audio/music/Falling Behind (Instrumental).mp3"),
+	"game": preload("res://audio/music/gamebg1.mp3"),
+	"motion": preload("res://audio/music/gamebg1.mp3")
 }
 
 var sound_effects = {
-	"button_click": preload("res://audio/sounds/spotifydown.com - Bubble Gum.mp3")
+	"button_click": preload("res://audio/sounds/pop1.mp3")
 }
 
 func _ready():

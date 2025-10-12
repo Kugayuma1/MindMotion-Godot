@@ -28,8 +28,9 @@ var scroll_velocity = 0.0
 var last_touch_time = 0.0
 const SCROLL_FRICTION = 0.92
 const MIN_VELOCITY = 5.0
-const TOUCH_THRESHOLD = 10.0
+const TOUCH_THRESHOLD = 25.0
 var has_moved = false
+var touch_target = null
 
 func _ready():
 	# Get student data
@@ -109,6 +110,8 @@ func _input(event):
 			scroll_velocity = 0.0
 			last_touch_time = Time.get_ticks_msec() / 1000.0
 			has_moved = false
+			# Store the initial touch position more precisely
+			touch_target = event.position
 		else:
 			# Touch/click released
 			touch_scrolling = false
@@ -120,13 +123,16 @@ func _input(event):
 				scroll_velocity = (touch_last_y - event.position.y) / time_delta * 2.0
 				# Limit max velocity
 				scroll_velocity = clamp(scroll_velocity, -3000, 3000)
+			
+			# Reset touch target
+			touch_target = null
 	
 	elif event is InputEventScreenDrag or (event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT):
 		if touch_scrolling:
 			var delta_y = touch_last_y - event.position.y
 			
-			# Check if movement exceeds threshold
-			if abs(event.position.y - touch_start_y) > TOUCH_THRESHOLD:
+			# Check if movement exceeds threshold - use distance from original touch point
+			if touch_target and touch_target.distance_to(event.position) > TOUCH_THRESHOLD:
 				has_moved = true
 			
 			if has_moved:
@@ -140,7 +146,6 @@ func _input(event):
 				# Clamp within bounds
 				var max_scroll = max(0, activities_grid.size.y - scroll_container.size.y)
 				scroll_container.scroll_vertical = clamp(scroll_container.scroll_vertical, 0, max_scroll)
-
 func _on_voice_data_loaded(data: Dictionary):
 	voice_data = data
 	create_voice_sections()
@@ -288,7 +293,7 @@ func create_date_section(date: String, words: Array):
 	header_hbox.add_child(margin_right)
 	
 	# Connect date button with custom handler to detect scroll vs tap
-	date_button.gui_input.connect(_on_date_button_input.bind(date, icon_label))
+	date_button.pressed.connect(_on_date_button_pressed.bind(date, icon_label))
 	
 	activities_grid.add_child(date_container)
 	
@@ -305,12 +310,6 @@ func create_date_section(date: String, words: Array):
 	
 	activities_grid.add_child(words_container)
 
-func _on_date_button_input(event: InputEvent, date: String, icon_label: Label):
-	# Only trigger if it was a tap, not a scroll
-	if event is InputEventScreenTouch or event is InputEventMouseButton:
-		if not event.pressed and not has_moved:
-			# This was a tap, not a scroll
-			_on_date_button_pressed(date, icon_label)
 
 func create_word_card(parent: VBoxContainer, word_data: Dictionary):
 	var word_container = Control.new()

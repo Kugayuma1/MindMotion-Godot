@@ -242,6 +242,7 @@ func update_letters():
 	update_letters_with_lock_status()
 
 func _on_any_button_pressed(clicked_button: TextureButton):
+	AudioManager.play_sound("button_click")
 	if is_animating or is_transitioning:
 		return
 	
@@ -460,11 +461,13 @@ func handle_drag(event: InputEventScreenDrag):
 		return
 
 func _on_back_pressed():
+	AudioManager.play_sound("button_click")
 	is_transitioning = true
 	_disconnect_signals()
 	get_tree().change_scene_to_file("res://scenes/StudentMain.tscn")
 
 func _on_trophy_pressed():
+	AudioManager.play_sound("button_click")
 	is_transitioning = true
 	_disconnect_signals()
 	get_tree().change_scene_to_file("res://reward scene/rewards_a.tscn")

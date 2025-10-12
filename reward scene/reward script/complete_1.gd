@@ -3,6 +3,7 @@ extends Control
 const RandomMotionSelector = preload("res://scripts/RandomMotionSelector.gd")
 
 func _on_quit_pressed() -> void:
+	AudioManager.play_sound("button_click")
 	AudioManager.stop_music(false)
 	AudioManager.resume_previous_music()
 	var letter_lower = Global.current_letter.to_lower()
@@ -13,6 +14,7 @@ func _on_quit_pressed() -> void:
 		print("Scene not found: ", path)
 
 func _on_next_item_pressed() -> void:
+	AudioManager.play_sound("button_click")
 	AudioManager.stop_music(false)
 	var scene_path = RandomMotionSelector.get_random_motion_scene_path()
 	
@@ -28,4 +30,5 @@ func _on_next_item_pressed() -> void:
 			get_tree().change_scene_to_file(clap_path)
 
 func _on_retry_pressed() -> void:
+	AudioManager.play_sound("button_click")
 	SceneTransition.reload_with_fade()

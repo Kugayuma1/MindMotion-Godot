@@ -31,16 +31,17 @@ anchor_bottom = 1.0
 offset_left = 2.0
 offset_top = -6.0
 offset_right = -3.0
-offset_bottom = -229.0
+offset_bottom = -153.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("7_oipxb")
 
 [node name="StickerContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
-offset_top = 852.0
+offset_left = 4.0
+offset_top = 874.0
 offset_right = 1907.0
-offset_bottom = 1043.0
+offset_bottom = 1030.0
 horizontal_scroll_mode = 2
 vertical_scroll_mode = 0
 
@@ -50,8 +51,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 16
 
-[node name="Quitbtn" type="TextureButton" parent="StickerContainer/StickerGrid"]
-layout_mode = 2
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.063
+anchor_right = 0.034
+anchor_bottom = 0.063
+offset_left = -12.28
+offset_top = -12.04
+offset_right = 92.72
+offset_bottom = 97.96
 texture_normal = ExtResource("4_neldy")
-ignore_texture_size = true
 stretch_mode = 0
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]
