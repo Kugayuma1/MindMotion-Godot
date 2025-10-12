@@ -6,9 +6,7 @@ extends Control
 @onready var back_button = $BackButton
 @onready var refresh_button = $RefreshButton
 
-# Loading overlay references
-var loading_overlay: Control = null
-var loading_label: Label = null
+
 
 # Preload avatar textures
 var boy_avatar = preload("res://assets/boy_avatar.png")
@@ -38,6 +36,7 @@ func _ready():
 	# Connect to Global's students cache signal
 	Global.students_cache_updated.connect(_on_students_cache_updated)
 	
+	LoadingScreen.show_loading()
 	# Load students immediately from cache
 	load_students_from_cache()
 	
@@ -154,6 +153,7 @@ func load_students_from_cache():
 	if students_data.size() == 0:
 		print("DEBUG: No students found, showing no students message")
 		create_no_students_message()
+		LoadingScreen.hide_loading()
 		return
 	
 	print("👥 Found %d students in cache" % students_data.size())
@@ -165,6 +165,7 @@ func load_students_from_cache():
 		create_student_card(student_data)
 	
 	print("DEBUG: Finished creating all student cards")
+	LoadingScreen.hide_loading()
 
 func create_student_card(student_data: Dictionary):
 	# Main card button with responsive width
@@ -276,42 +277,9 @@ func create_loading_message():
 	message_label.custom_minimum_size = Vector2(400, 200)
 	student_grid.add_child(message_label)
 
-func show_refresh_loading():
-	if loading_overlay != null:
-		return  # Already showing
-	
-	# Create semi-transparent overlay
-	loading_overlay = ColorRect.new()
-	loading_overlay.color = Color(0, 0, 0, 0.7)
-	loading_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	loading_overlay.z_index = 100
-	add_child(loading_overlay)
-	
-	# Create loading label
-	loading_label = Label.new()
-	loading_label.text = "Refreshing students data..."
-	loading_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	loading_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	loading_label.add_theme_color_override("font_color", Color.WHITE)
-	loading_label.add_theme_font_size_override("font_size", 18)
-	loading_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	loading_overlay.add_child(loading_label)
-	
-	# Disable refresh button during loading
-	refresh_button.disabled = true
-
-func hide_refresh_loading():
-	if loading_overlay != null:
-		loading_overlay.queue_free()
-		loading_overlay = null
-		loading_label = null
-	
-	# Re-enable refresh button
-	refresh_button.disabled = false
-
 func _on_students_cache_updated():
 	print("🔄 Students cache updated - refreshing list")
-	hide_refresh_loading()
+	LoadingScreen.hide_loading()
 	load_students_from_cache()
 
 func _on_student_card_pressed(student_data: Dictionary):
@@ -329,7 +297,8 @@ func _on_back_button_pressed():
 
 func _on_refresh_button_pressed():
 	print("🔄 Refresh button pressed - fetching latest student data")
-	show_refresh_loading()
+	LoadingScreen.show_loading()  # ← CHANGE THIS
+	
 	
 	# Force refresh the students cache from server
 	Global.refresh_students_cache()

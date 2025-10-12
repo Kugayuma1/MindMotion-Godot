@@ -199,8 +199,11 @@ func handle_signup_response(response_code: int, response: Dictionary):
 func handle_store_data_response(response_code: int, response: Dictionary):
 	if response_code == 200:
 		print("Teacher data stored successfully.")
-		update_loading("Loading students data...")
-
+		# Hide the AcceptDialog
+		hide_loading()
+		
+		# Show the global loading screen
+		LoadingScreen.show_loading()
 		# Force fresh fetch
 		Global.refresh_students_cache()
 		
@@ -208,7 +211,6 @@ func handle_store_data_response(response_code: int, response: Dictionary):
 		await Global.wait_for_students_cache()
 		
 		print("DEBUG: Students loaded:", Global.get_students_cache().size())
-		hide_loading()
 		get_tree().change_scene_to_file("res://scenes/TeacherMain.tscn")
 	else:
 		hide_loading()
@@ -242,7 +244,6 @@ func _on_students_loaded():
 	for i in range(min(3, students.size())):
 		print("DEBUG: Student %d: %s" % [i, students[i].name])
 	
-	hide_loading()
 	
 	# Disconnect the signal to avoid duplicate calls
 	if Global.students_cache_updated.is_connected(_on_students_loaded):

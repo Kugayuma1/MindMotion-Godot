@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=3 uid="uid://idrx6p58q0o"]
+
+[ext_resource type="Texture2D" uid="uid://ckbw7fan2ff4c" path="res://Game Bg/Gross-motorbg.png" id="1_b5vdu"]
+[ext_resource type="Texture2D" uid="uid://de3bk13vkni5i" path="res://Gross-Motor Assets/Walking/1.png" id="2_u8pis"]
+[ext_resource type="Texture2D" uid="uid://b1gouaq48akmi" path="res://Gross-Motor Assets/Walking/2.png" id="3_f4f48"]
+[ext_resource type="Texture2D" uid="uid://dy7iooly2eeqw" path="res://Gross-Motor Assets/Walking/3.png" id="4_4fnl0"]
+[ext_resource type="Texture2D" uid="uid://cn026o7nf3cxq" path="res://Gross-Motor Assets/Walking/4.png" id="5_d7rf8"]
+[ext_resource type="Texture2D" uid="uid://uaw60ov5v5mo" path="res://Gross-Motor Assets/Walking/5.png" id="6_flbaq"]
+[ext_resource type="Texture2D" uid="uid://cum766to3bvip" path="res://Gross-Motor Assets/Walking/6.png" id="7_4j6rh"]
+[ext_resource type="Texture2D" uid="uid://bo7pplbhhvpk7" path="res://Gross-Motor Assets/Walking/7.png" id="8_5wj2t"]
+[ext_resource type="Texture2D" uid="uid://cx12hqugxfeo8" path="res://Gross-Motor Assets/Walking/8.png" id="9_c8kyp"]
+[ext_resource type="Texture2D" uid="uid://csvu7kj40nbkt" path="res://Gross-Motor Assets/Walking/9.png" id="10_gfouo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ahe8b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_u8pis")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_f4f48")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4fnl0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_d7rf8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_flbaq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_4j6rh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_5wj2t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_c8kyp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_gfouo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_b5vdu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(905, 673)
+scale = Vector2(1.1375, 1.1375)
+sprite_frames = SubResource("SpriteFrames_ahe8b")
+frame_progress = 0.0373906

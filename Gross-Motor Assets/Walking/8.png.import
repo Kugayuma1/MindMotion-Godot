@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cfxx24s1cvdn5"
-path="res://.godot/imported/6-removebg-preview.png-992f5d896bf43095bfbc435f3341aabe.ctex"
+uid="uid://cx12hqugxfeo8"
+path="res://.godot/imported/8.png-dfa378e9aa2317e3fcf2f3f83ccaed9f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Gross-Motor Assets/Walking/6-removebg-preview.png"
-dest_files=["res://.godot/imported/6-removebg-preview.png-992f5d896bf43095bfbc435f3341aabe.ctex"]
+source_file="res://Gross-Motor Assets/Walking/8.png"
+dest_files=["res://.godot/imported/8.png-dfa378e9aa2317e3fcf2f3f83ccaed9f.ctex"]
 
 [params]
 

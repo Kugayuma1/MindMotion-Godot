@@ -2,6 +2,9 @@ extends Control
 
 var is_transitioning = false
 
+func _ready():
+	LoadingScreen.hide_loading()
+
 func _on_play_pressed():
 	if is_transitioning:
 		return
