@@ -55,12 +55,14 @@ vertical_alignment = 1
 
 [node name="ant2" type="TextureButton" parent="TextureRect"]
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = -1
+anchor_left = 0.32
 anchor_top = 1.0
+anchor_right = 0.32
 anchor_bottom = 1.0
-offset_left = 380.0
+offset_left = -233.76
 offset_top = -446.0
-offset_right = 849.0
+offset_right = 235.24
 offset_bottom = -2.0
 grow_vertical = 0
 texture_normal = ExtResource("3_cb002")
@@ -81,14 +83,14 @@ vertical_alignment = 1
 
 [node name="ant3" type="TextureButton" parent="TextureRect"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = -1
+anchor_left = 0.514
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 0.514
 anchor_bottom = 1.0
-offset_left = -208.0
+offset_left = -234.852
 offset_top = -451.0
-offset_right = 261.0
+offset_right = 234.148
 offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -110,14 +112,14 @@ vertical_alignment = 1
 
 [node name="ant4" type="TextureButton" parent="TextureRect"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = -1
+anchor_left = 0.707
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.707
 anchor_bottom = 1.0
-offset_left = -797.0
+offset_left = -235.026
 offset_top = -444.0
-offset_right = -328.0
+offset_right = 233.974
 grow_horizontal = 0
 grow_vertical = 0
 texture_normal = ExtResource("3_cb002")

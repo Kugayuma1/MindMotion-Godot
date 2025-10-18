@@ -1,13 +1,21 @@
 extends Control
 
-# Game configuration
-var correct_answer = "BURGER"  # The word to guess
-var answer_length = 6  # Number of letter slots
-var available_letters = ["C", "B", "R", "U", "A", "R", "G", "E"]  # Letters shown to player
+# Game configuration - List of words with their data
+var word_data = [
+	{"word": "BALL", "image_path": "res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/Ball.png", "available_letters": ["K", "A", "B", "Y", "A", "L", "I", "L"]},
+	{"word": "BOOK", "image_path": "res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/Book.png", "available_letters": ["G", "O", "K", "O", "T", "M", "K", "B"]},
+	{"word": "BOAT", "image_path": "res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/Boat.png", "available_letters": ["G", "A", "K", "O", "T", "M", "K", "B"]},]
+	
+
+# Current game state
+var current_word_index = 0  # Tracks which word we're on
+var correct_answer = ""
+var answer_length = 0
+var available_letters = []
 
 # Game state
-var current_answer = []  # Array to track filled letters
-var current_slot_index = 0  # Which slot to fill next
+var current_answer = []
+var current_slot_index = 0
 var countdown := 15
 var timer_active = true
 
@@ -20,23 +28,19 @@ var retry_scene = preload("res://reward scene/Retry.tscn")
 var popup_instance: Control = null
 
 # Node references
-@onready var timer_label = $Time/Label  # Adjust path based on your timer UI
+@onready var timer_label = $Time/Label
 @onready var letter_holders = [
 	$LetterHolders/FirstLetter/Label,
 	$LetterHolders/SecondLetter/Label,
 	$LetterHolders/ThirdLetter/Label,
-	$LetterHolders/FourthLetter/Label,
-	$LetterHolders/FifthLetter/Label,
-	$LetterHolders/SixthLetter/Label
+	$LetterHolders/FourthLetter/Label
 ]
 
 @onready var letter_holder_controls = [
 	$LetterHolders/FirstLetter,
 	$LetterHolders/SecondLetter,
 	$LetterHolders/ThirdLetter,
-	$LetterHolders/FourthLetter,
-	$LetterHolders/FifthLetter,
-	$LetterHolders/SixthLetter
+	$LetterHolders/FourthLetter
 ]
 
 @onready var letter_buttons = [
@@ -50,14 +54,35 @@ var popup_instance: Control = null
 	$LetterButtons/LetterButton8
 ]
 
-var button_letters = {}  # Maps TextureRect to its letter
-var slot_to_button = {}  # Maps slot index to the button that filled it
+@onready var image_display = $ItemHolder/TextureRect  # Reference to your image/TextureRect node
+
+var button_letters = {}
+var slot_to_button = {}
 
 func _ready():
+	load_current_word()
 	setup_game()
 	setup_letter_holder_inputs()
 	start_timer()
 	Global.start_time = Time.get_ticks_msec()
+
+func load_current_word() -> void:
+	# Get the current word data based on current_word_index
+	if current_word_index >= word_data.size():
+		current_word_index = 0  # Loop back to the beginning if we've gone through all words
+	
+	var data = word_data[current_word_index]
+	correct_answer = data["word"]
+	answer_length = correct_answer.length()
+	available_letters = data["available_letters"].duplicate()
+	
+	# Load and set the image
+	if ResourceLoader.exists(data["image_path"]):
+		image_display.texture = load(data["image_path"])
+	else:
+		print("Image not found: ", data["image_path"])
+	
+	print("Loaded word: ", correct_answer, " at index: ", current_word_index)
 
 func setup_game() -> void:
 	current_answer.clear()
@@ -77,14 +102,10 @@ func setup_game() -> void:
 			label.text = available_letters[i]
 			button.visible = true
 			
-			# Store the letter for this TextureRect
 			button_letters[button] = available_letters[i]
-			
-			# Make TextureRect clickable
 			button.gui_input.connect(_on_letter_button_input.bind(button))
 
 func setup_letter_holder_inputs() -> void:
-	# Make letter holders clickable for deletion
 	for i in range(letter_holder_controls.size()):
 		var holder = letter_holder_controls[i]
 		holder.gui_input.connect(_on_letter_holder_input.bind(i))
@@ -117,35 +138,22 @@ func _on_letter_button_input(event: InputEvent, button: TextureRect) -> void:
 			if !timer_active:
 				return
 			
-			# Check if we still have empty slots
 			if current_slot_index >= answer_length:
 				return
 			
-			# Check if this button is still visible (not already used)
 			if !button.visible:
 				return
 			
-			# Get the letter for this button
 			var letter = button_letters.get(button, "")
 			if letter == "":
 				return
 			
-			# Add letter to current answer
 			current_answer.append(letter)
-			
-			# Update the label in the current slot
 			letter_holders[current_slot_index].text = letter
-			
-			# Map this slot to the button for deletion later
 			slot_to_button[current_slot_index] = button
-			
-			# Hide the button that was pressed
 			button.visible = false
-			
-			# Move to next slot
 			current_slot_index += 1
 			
-			# Check if word is complete
 			if current_slot_index >= answer_length:
 				check_complete_answer()
 
@@ -155,77 +163,58 @@ func _on_letter_holder_input(event: InputEvent, slot_index: int) -> void:
 			if !timer_active:
 				return
 			
-			# Check if this slot has a letter
 			if letter_holders[slot_index].text == "":
 				return
 			
-			# Get the button that filled this slot
 			var button = slot_to_button.get(slot_index)
 			if button == null:
 				return
 			
-			# Clear the slot
 			letter_holders[slot_index].text = ""
-			
-			# Show the button again
 			button.visible = true
-			
-			# Remove from current answer
 			current_answer.remove_at(slot_index)
-			
-			# Remove from slot mapping
 			slot_to_button.erase(slot_index)
 			
-			# Shift all letters after this slot to the left
 			for i in range(slot_index, answer_length - 1):
 				if i + 1 < answer_length and letter_holders[i + 1].text != "":
-					# Move letter from next slot to current slot
 					letter_holders[i].text = letter_holders[i + 1].text
 					
-					# Update slot mapping
 					if slot_to_button.has(i + 1):
 						slot_to_button[i] = slot_to_button[i + 1]
 						slot_to_button.erase(i + 1)
 					
-					# Clear the next slot
 					letter_holders[i + 1].text = ""
 			
-			# Update current slot index
 			current_slot_index = current_answer.size()
 
 func check_complete_answer() -> void:
 	var player_word = "".join(current_answer)
 	
 	if player_word == correct_answer:
-		# Correct answer!
 		timer_active = false
 		ProgressManager.save_progress("reading", true)
 		Global.refresh_everything_after_stage_completion("reading", true)
 		await get_tree().create_timer(0.5).timeout
 		game_over(true)
 	else:
-		# Wrong answer - shake and reset
 		shake_letter_holders()
 		await get_tree().create_timer(1.0).timeout
 		reset_answer()
 
 func reset_answer() -> void:
-	# Clear current answer
 	current_answer.clear()
 	current_slot_index = 0
 	slot_to_button.clear()
 	
-	# Clear letter holder labels
 	for label in letter_holders:
 		label.text = ""
 	
-	# Show all buttons again
 	for button in letter_buttons:
 		button.visible = true
 
 func shake_letter_holders() -> void:
 	for i in range(letter_holders.size()):
-		var holder = letter_holders[i].get_parent()  # Get the Control node
+		var holder = letter_holders[i].get_parent()
 		var original_pos = holder.position
 		var tween = create_tween()
 		tween.tween_property(holder, "position", original_pos + Vector2(-10, 0), 0.05)
@@ -233,7 +222,6 @@ func shake_letter_holders() -> void:
 		tween.tween_property(holder, "position", original_pos, 0.05).set_delay(0.10)
 
 func game_over(success: bool):
-	# Hide UI elements
 	if has_node("LetterHolders"): $LetterHolders.visible = false
 	if has_node("LetterButtons"): $LetterButtons.visible = false
 	if has_node("ItemHolder"): $ItemHolder.visible = false
@@ -241,7 +229,6 @@ func game_over(success: bool):
 	if has_node("Quitbtn"): $Quitbtn.visible = false
 	
 	if success:
-		# Award stars based on remaining time
 		if countdown >= 10:
 			popup_instance = complete3_scene.instantiate()
 		elif countdown >= 5:
@@ -260,3 +247,17 @@ func _on_quitbtn_pressed() -> void:
 		get_tree().change_scene_to_file(path)
 	else:	
 		print("Scene not found: ", path)
+
+# Call this function when moving to the next word (e.g., from a completion popup)
+func next_word() -> void:
+	current_word_index += 1
+	load_current_word()
+	setup_game()
+	
+	if has_node("LetterHolders"): $LetterHolders.visible = true
+	if has_node("LetterButtons"): $LetterButtons.visible = true
+	if has_node("ItemHolder"): $ItemHolder.visible = true
+	if has_node("Time"): $Time.visible = true
+	if has_node("Quitbtn"): $Quitbtn.visible = true
+	
+	start_timer()

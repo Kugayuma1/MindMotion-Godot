@@ -72,20 +72,6 @@ offset_bottom = 415.8
 texture = ExtResource("6_pgjaf")
 expand_mode = 1
 
-[node name="Holder2" type="TextureRect" parent="Contents"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.513
-anchor_top = 0.862
-anchor_right = 0.513
-anchor_bottom = 0.862
-offset_left = -510.137
-offset_top = 122.258
-offset_right = 498.863
-offset_bottom = 324.258
-texture = ExtResource("8_oc8ua")
-expand_mode = 1
-
 [node name="Object" type="TextureRect" parent="Contents"]
 layout_mode = 1
 anchors_preset = -1
@@ -98,20 +84,6 @@ offset_top = -174.839
 offset_right = 174.863
 offset_bottom = 175.161
 texture = ExtResource("5_oc8ua")
-expand_mode = 1
-
-[node name="Holder" type="TextureRect" parent="Contents"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.845
-anchor_right = 0.5
-anchor_bottom = 0.845
-offset_left = -501.5
-offset_top = -101.145
-offset_right = 507.5
-offset_bottom = 100.855
-texture = ExtResource("8_oc8ua")
 expand_mode = 1
 
 [node name="Phrase" type="Label" parent="Contents"]
@@ -159,46 +131,60 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RabbitDrop" type="TextureRect" parent="DropZone"]
+[node name="Holder" type="TextureRect" parent="DropZone"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.376
-anchor_top = 0.603
-anchor_right = 0.376
-anchor_bottom = 0.603
-offset_left = -81.92
-offset_top = -89.24
-offset_right = 83.08
-offset_bottom = 75.76
-texture = ExtResource("10_ougiq")
+anchor_left = 0.511
+anchor_top = 0.644
+anchor_right = 0.511
+anchor_bottom = 0.644
+offset_left = -505.12
+offset_top = -101.52
+offset_right = 503.88
+offset_bottom = 100.48
+texture = ExtResource("8_oc8ua")
 expand_mode = 1
 
-[node name="EatingDrop" type="TextureRect" parent="DropZone"]
+[node name="CarrotDrop" type="TextureRect" parent="DropZone/Holder"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.513
-anchor_top = 0.612
-anchor_right = 0.513
-anchor_bottom = 0.612
-offset_left = -82.9601
-offset_top = -95.9601
-offset_right = 82.0399
-offset_bottom = 69.0399
+anchor_left = 0.774
+anchor_top = 0.5
+anchor_right = 0.774
+anchor_bottom = 0.5
+offset_left = -82.9661
+offset_top = -84.0
+offset_right = 82.0339
+offset_bottom = 81.0
+texture = ExtResource("12_pf7rg")
+expand_mode = 1
+
+[node name="EatingDrop" type="TextureRect" parent="DropZone/Holder"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.5
+offset_top = -83.0
+offset_right = 79.5
+offset_bottom = 82.0
 texture = ExtResource("11_hjp0s")
 expand_mode = 1
 
-[node name="CarrotDrop" type="TextureRect" parent="DropZone"]
+[node name="RabbitDrop" type="TextureRect" parent="DropZone/Holder"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.645
-anchor_top = 0.609
-anchor_right = 0.645
-anchor_bottom = 0.609
-offset_left = -83.4
-offset_top = -91.72
-offset_right = 81.6
-offset_bottom = 73.28
-texture = ExtResource("12_pf7rg")
+anchor_left = 0.22
+anchor_top = 0.5
+anchor_right = 0.22
+anchor_bottom = 0.5
+offset_left = -82.98
+offset_top = -85.0
+offset_right = 82.02
+offset_bottom = 80.0
+texture = ExtResource("10_ougiq")
 expand_mode = 1
 
 [node name="Draggables" type="Control" parent="."]
@@ -209,46 +195,60 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Eating" type="TextureRect" parent="Draggables"]
+[node name="Holder2" type="TextureRect" parent="Draggables"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.385
-anchor_top = 0.862
-anchor_right = 0.385
-anchor_bottom = 0.862
-offset_left = -82.2
-offset_top = -82.96
-offset_right = 82.8
-offset_bottom = 82.04
-texture = ExtResource("11_hjp0s")
+anchor_left = 0.513
+anchor_top = 1.0
+anchor_right = 0.513
+anchor_bottom = 1.0
+offset_left = -503.96
+offset_top = -250.0
+offset_right = 505.04
+offset_bottom = -48.0
+texture = ExtResource("8_oc8ua")
 expand_mode = 1
 
-[node name="Carrot" type="TextureRect" parent="Draggables"]
+[node name="Rabbit" type="TextureRect" parent="Draggables/Holder2"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.522
-anchor_top = 0.864
-anchor_right = 0.522
-anchor_bottom = 0.864
-offset_left = -83.2401
-offset_top = -82.12
-offset_right = 81.7599
-offset_bottom = 82.88
+anchor_left = 0.753
+anchor_top = 0.517
+anchor_right = 0.753
+anchor_bottom = 0.517
+offset_left = -82.777
+offset_top = -82.4341
+offset_right = 82.223
+offset_bottom = 82.5659
+texture = ExtResource("10_ougiq")
+expand_mode = 1
+
+[node name="Carrot" type="TextureRect" parent="Draggables/Holder2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.516
+anchor_top = 0.512
+anchor_right = 0.516
+anchor_bottom = 0.512
+offset_left = -82.6441
+offset_top = -82.424
+offset_right = 82.3558
+offset_bottom = 82.576
 texture = ExtResource("12_pf7rg")
 expand_mode = 1
 
-[node name="Rabbit" type="TextureRect" parent="Draggables"]
+[node name="Eating" type="TextureRect" parent="Draggables/Holder2"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.646
-anchor_top = 0.865
-anchor_right = 0.646
-anchor_bottom = 0.865
-offset_left = -82.3201
-offset_top = -82.2001
-offset_right = 82.6799
-offset_bottom = 82.7999
-texture = ExtResource("10_ougiq")
+anchor_left = 0.256
+anchor_top = 0.5
+anchor_right = 0.256
+anchor_bottom = 0.5
+offset_left = -82.3041
+offset_top = -83.0001
+offset_right = 82.6959
+offset_bottom = 81.9999
+texture = ExtResource("11_hjp0s")
 expand_mode = 1
 
 [node name="Quitbtn" type="TextureButton" parent="."]

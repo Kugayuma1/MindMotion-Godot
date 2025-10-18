@@ -11,8 +11,8 @@ var total_required_matches := 3  # Rabbit, Eating, Carrot dropzones
 
 # Node references
 @onready var timer_display = $Time/Label
-@onready var dropzone_container = $DropZone
-@onready var draggable_container = $Draggables
+@onready var dropzone_container = $DropZone/Holder
+@onready var draggable_container = $Draggables/Holder2
 @onready var game_timer: Timer
 
 # Popup scenes

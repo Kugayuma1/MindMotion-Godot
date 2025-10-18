@@ -1,13 +1,27 @@
 extends Control
 
-var correct_answers = ["Alive", "Apple", "Art"]
+# Game configuration - List of question sets with their choices
+var question_data = [
+	{
+		"correct_answers": ["Alive", "Apple", "Art"],
+		"all_choices": ["Mouse", "Alive", "Apple", "Dove", "Art"]  # All 5 button labels
+	},
+	{
+		"correct_answers": ["Ate", "Ant", "Ape"],
+		"all_choices": ["Dog", "Ate", "Car", "Ape", "Ant"]
+	},
+]
+
+var current_question_index = 0
+var correct_answers = []
+var all_choices = []
 var selected_correct = []
 var original_feedback_text = ""
 var countdown := 15
 var timer_active = true
 var start_time := 0
 
-# Preload popup star scenes (adjust the paths as needed!)
+# Preload popup star scenes
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn")
 var complete3_scene = preload("res://reward scene/Complete3.tscn")
@@ -18,13 +32,42 @@ var popup_instance: Control = null
 @onready var feedback_label = $TextureRect/Holder/Label
 @onready var timer_label = $TextureRect/Time/Label
 
+# Button references
+@onready var choice_buttons = [
+	$TextureRect/ant1,
+	$TextureRect/ant2,
+	$TextureRect/ant3,
+	$TextureRect/ant4,
+	$TextureRect/ant5
+]
+
 func _ready():
 	AudioManager.play_temp_music("game")
+	load_current_question()
 	selected_correct.clear()
 	original_feedback_text = feedback_label.text
 	start_timer()
 	Global.start_time = Time.get_ticks_msec()
+
+func load_current_question() -> void:
+	# Get the current question data based on current_question_index
+	if current_question_index >= question_data.size():
+		current_question_index = 0  # Loop back to the beginning
 	
+	var data = question_data[current_question_index]
+	correct_answers = data["correct_answers"].duplicate()
+	all_choices = data["all_choices"].duplicate()
+	
+	# Set button labels with the choices for this question
+	for i in range(choice_buttons.size()):
+		if i < all_choices.size():
+			var button = choice_buttons[i]
+			# Get the label child node and set its text
+			var label = button.get_node("Label")  # Adjust path if your label is named differently
+			label.text = all_choices[i]
+			button.visible = true
+	
+	print("Loaded question: ", current_question_index, " with correct answers: ", correct_answers)
 
 func start_timer() -> void:
 	timer_label.text = "15s"
@@ -38,7 +81,7 @@ func update_timer() -> void:
 		timer_active = false
 		ProgressManager.save_progress("reading", false)
 		Global.refresh_everything_after_stage_completion("reading", false)
-		game_over(false)  # ⬅️ Show 1-star popup if time runs out
+		game_over(false)
 		return
 
 	timer_label.text = " " + str(countdown) + "s"
@@ -64,7 +107,7 @@ func check_answer(answer: String, button: TextureButton) -> void:
 				timer_active = false
 				ProgressManager.save_progress("reading", true)
 				Global.refresh_everything_after_stage_completion("reading", true)
-				game_over(true)  # ⬅️ Show star popup when complete
+				game_over(true)
 			else:
 				await get_tree().create_timer(1.5).timeout
 				reset_feedback_label()
@@ -88,10 +131,7 @@ func shake_button(button: TextureButton) -> void:
 	tween.tween_property(button, "position", original_pos + Vector2(10, 0), 0.05).set_delay(0.05)
 	tween.tween_property(button, "position", original_pos, 0.05).set_delay(0.10)
 
-# 🎯 Game over function (popup logic)
 func game_over(success: bool):
-	
-	# Hide objects except background
 	if has_node("TextureRect/ant1"): $TextureRect/ant1.visible = false
 	if has_node("TextureRect/ant2"): $TextureRect/ant2.visible = false
 	if has_node("TextureRect/ant3"): $TextureRect/ant3.visible = false
@@ -100,7 +140,6 @@ func game_over(success: bool):
 	if has_node("TextureRect/Holder"): $TextureRect/Holder.visible = false
 	if has_node("TextureRect/Time"): $TextureRect/Time.visible = false
 	if has_node("Quitbtn"): $Quitbtn.visible = false
-	
 	
 	if success:
 		if countdown >= 10:
@@ -112,29 +151,22 @@ func game_over(success: bool):
 	else:
 		popup_instance = retry_scene.instantiate()
 
-	add_child(popup_instance)  # Show popup on top
-
-
+	add_child(popup_instance)
 
 func _on_ant_1_pressed() -> void:
-	check_answer("Mouse", $TextureRect/ant1)
-
+	check_answer(all_choices[0], $TextureRect/ant1)
 
 func _on_ant_2_pressed() -> void:
-	check_answer("Alive", $TextureRect/ant2)
-
+	check_answer(all_choices[1], $TextureRect/ant2)
 
 func _on_ant_3_pressed() -> void:
-	check_answer("Apple", $TextureRect/ant3)
-
+	check_answer(all_choices[2], $TextureRect/ant3)
 
 func _on_ant_4_pressed() -> void:
-	check_answer("Dove", $TextureRect/ant4)
-
+	check_answer(all_choices[3], $TextureRect/ant4)
 
 func _on_ant_5_pressed() -> void:
-	check_answer("Art", $TextureRect/ant5)
-
+	check_answer(all_choices[4], $TextureRect/ant5)
 
 func _on_quitbtn_pressed() -> void:
 	AudioManager.resume_previous_music() 
@@ -144,3 +176,21 @@ func _on_quitbtn_pressed() -> void:
 		get_tree().change_scene_to_file(path)
 	else:	
 		print("Scene not found: ", path)
+
+# Call this function when moving to the next question (e.g., from a completion popup)
+func next_word() -> void:
+	current_question_index += 1
+	load_current_question()
+	selected_correct.clear()
+	
+	# Show UI elements again
+	if has_node("TextureRect/ant1"): $TextureRect/ant1.visible = true
+	if has_node("TextureRect/ant2"): $TextureRect/ant2.visible = true
+	if has_node("TextureRect/ant3"): $TextureRect/ant3.visible = true
+	if has_node("TextureRect/ant4"): $TextureRect/ant4.visible = true
+	if has_node("TextureRect/ant5"): $TextureRect/ant5.visible = true
+	if has_node("TextureRect/Holder"): $TextureRect/Holder.visible = true
+	if has_node("TextureRect/Time"): $TextureRect/Time.visible = true
+	if has_node("Quitbtn"): $Quitbtn.visible = true
+	
+	start_timer()
