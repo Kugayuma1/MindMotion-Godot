@@ -86,20 +86,6 @@ offset_bottom = 175.161
 texture = ExtResource("6_b0bwy")
 expand_mode = 1
 
-[node name="Holder" type="TextureRect" parent="Contents"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.845
-anchor_right = 0.5
-anchor_bottom = 0.845
-offset_left = -501.5
-offset_top = -101.145
-offset_right = 507.5
-offset_bottom = 100.855
-texture = ExtResource("7_8up07")
-expand_mode = 1
-
 [node name="Phrase" type="Label" parent="Contents"]
 layout_mode = 1
 anchors_preset = -1
@@ -145,46 +131,60 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BoyDrop" type="TextureRect" parent="DropZone"]
+[node name="Holder" type="TextureRect" parent="DropZone"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.376
-anchor_top = 0.64
-anchor_right = 0.376
-anchor_bottom = 0.64
-offset_left = -81.92
-offset_top = -128.2
-offset_right = 83.08
-offset_bottom = 36.8
-texture = ExtResource("9_7vnmr")
+anchor_left = 0.5
+anchor_top = 0.644
+anchor_right = 0.5
+anchor_bottom = 0.644
+offset_left = -484.0
+offset_top = -101.52
+offset_right = 525.0
+offset_bottom = 100.48
+texture = ExtResource("7_8up07")
 expand_mode = 1
 
-[node name="PlayingDrop" type="TextureRect" parent="DropZone"]
+[node name="GuitarDrop" type="TextureRect" parent="DropZone/Holder"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.513
-anchor_top = 0.643
-anchor_right = 0.513
-anchor_bottom = 0.643
-offset_left = -82.96
-offset_top = -128.44
-offset_right = 82.04
-offset_bottom = 36.5599
+anchor_left = 0.767
+anchor_top = 0.5
+anchor_right = 0.767
+anchor_bottom = 0.5
+offset_left = -82.903
+offset_top = -85.0
+offset_right = 82.097
+offset_bottom = 80.0
+texture = ExtResource("11_v76gv")
+expand_mode = 1
+
+[node name="PlayingDrop" type="TextureRect" parent="DropZone/Holder"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.504
+anchor_top = 0.5
+anchor_right = 0.504
+anchor_bottom = 0.5
+offset_left = -82.536
+offset_top = -84.0
+offset_right = 82.464
+offset_bottom = 80.9999
 texture = ExtResource("10_0cgus")
 expand_mode = 1
 
-[node name="GuitarDrop" type="TextureRect" parent="DropZone"]
+[node name="BoyDrop" type="TextureRect" parent="DropZone/Holder"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.645
-anchor_top = 0.644
-anchor_right = 0.645
-anchor_bottom = 0.644
-offset_left = -83.4
-offset_top = -128.52
-offset_right = 81.6
-offset_bottom = 36.48
-texture = ExtResource("11_v76gv")
+anchor_left = 0.243
+anchor_top = 0.5
+anchor_right = 0.243
+anchor_bottom = 0.5
+offset_left = -82.187
+offset_top = -84.0
+offset_right = 82.813
+offset_bottom = 81.0
+texture = ExtResource("9_7vnmr")
 expand_mode = 1
 
 [node name="Draggables" type="Control" parent="."]
@@ -199,56 +199,56 @@ grow_vertical = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.513
-anchor_top = 0.862
+anchor_top = 1.0
 anchor_right = 0.513
-anchor_bottom = 0.862
+anchor_bottom = 1.0
 offset_left = -503.96
-offset_top = -100.96
+offset_top = -250.0
 offset_right = 505.04
-offset_bottom = 101.04
+offset_bottom = -48.0
 texture = ExtResource("7_8up07")
 expand_mode = 1
 
-[node name="Guitar" type="TextureRect" parent="Draggables"]
+[node name="Boy" type="TextureRect" parent="Draggables/Holder"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.385
-anchor_top = 0.862
-anchor_right = 0.385
-anchor_bottom = 0.862
-offset_left = -82.2
-offset_top = -82.96
-offset_right = 82.8
-offset_bottom = 82.04
-texture = ExtResource("11_v76gv")
+anchor_left = 0.753
+anchor_top = 0.517
+anchor_right = 0.753
+anchor_bottom = 0.517
+offset_left = -82.777
+offset_top = -82.4341
+offset_right = 82.223
+offset_bottom = 82.5659
+texture = ExtResource("9_7vnmr")
 expand_mode = 1
 
-[node name="Playing" type="TextureRect" parent="Draggables"]
+[node name="Playing" type="TextureRect" parent="Draggables/Holder"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.522
-anchor_top = 0.864
-anchor_right = 0.522
-anchor_bottom = 0.864
-offset_left = -83.2401
-offset_top = -82.12
-offset_right = 81.7599
-offset_bottom = 82.88
+anchor_left = 0.516
+anchor_top = 0.512
+anchor_right = 0.516
+anchor_bottom = 0.512
+offset_left = -82.6441
+offset_top = -82.4239
+offset_right = 82.3558
+offset_bottom = 82.5761
 texture = ExtResource("10_0cgus")
 expand_mode = 1
 
-[node name="Boy" type="TextureRect" parent="Draggables"]
+[node name="Guitar" type="TextureRect" parent="Draggables/Holder"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.646
-anchor_top = 0.865
-anchor_right = 0.646
-anchor_bottom = 0.865
-offset_left = -82.3201
-offset_top = -82.2001
-offset_right = 82.6799
-offset_bottom = 82.7999
-texture = ExtResource("9_7vnmr")
+anchor_left = 0.256
+anchor_top = 0.5
+anchor_right = 0.256
+anchor_bottom = 0.5
+offset_left = -82.3041
+offset_top = -83.0
+offset_right = 82.6959
+offset_bottom = 82.0
+texture = ExtResource("11_v76gv")
 expand_mode = 1
 
 [node name="Quitbtn" type="TextureButton" parent="."]

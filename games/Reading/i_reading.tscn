@@ -86,20 +86,6 @@ offset_bottom = 175.161
 texture = ExtResource("6_n8e7m")
 expand_mode = 1
 
-[node name="Holder" type="TextureRect" parent="Contents"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.845
-anchor_right = 0.5
-anchor_bottom = 0.845
-offset_left = -501.5
-offset_top = -101.145
-offset_right = 507.5
-offset_bottom = 100.855
-texture = ExtResource("7_g7v22")
-expand_mode = 1
-
 [node name="Phrase" type="Label" parent="Contents"]
 layout_mode = 1
 anchors_preset = -1
@@ -137,20 +123,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Holder2" type="TextureRect" parent="Contents"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.513
-anchor_top = 0.862
-anchor_right = 0.513
-anchor_bottom = 0.862
-offset_left = -510.137
-offset_top = 122.258
-offset_right = 498.863
-offset_bottom = 324.258
-texture = ExtResource("7_g7v22")
-expand_mode = 1
-
 [node name="DropZone" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -159,46 +131,60 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GirlDrop" type="TextureRect" parent="DropZone"]
+[node name="Holder" type="TextureRect" parent="DropZone"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.376
-anchor_top = 0.64
-anchor_right = 0.376
-anchor_bottom = 0.64
-offset_left = -81.92
-offset_top = -132.2
-offset_right = 83.08
-offset_bottom = 32.8
-texture = ExtResource("9_hblc8")
+anchor_left = 0.5
+anchor_top = 0.644
+anchor_right = 0.5
+anchor_bottom = 0.644
+offset_left = -484.0
+offset_top = -101.52
+offset_right = 525.0
+offset_bottom = 100.48
+texture = ExtResource("7_g7v22")
 expand_mode = 1
 
-[node name="EatingDrop" type="TextureRect" parent="DropZone"]
+[node name="IcecreamDrop" type="TextureRect" parent="DropZone/Holder"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.513
-anchor_top = 0.643
-anchor_right = 0.513
-anchor_bottom = 0.643
-offset_left = -82.96
-offset_top = -132.44
-offset_right = 82.04
-offset_bottom = 32.5599
+anchor_left = 0.762
+anchor_top = 0.502
+anchor_right = 0.762
+anchor_bottom = 0.502
+offset_left = -82.858
+offset_top = -82.404
+offset_right = 82.142
+offset_bottom = 82.596
+texture = ExtResource("11_cevsa")
+expand_mode = 1
+
+[node name="EatingDrop" type="TextureRect" parent="DropZone/Holder"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.5
+anchor_right = 0.502
+anchor_bottom = 0.5
+offset_left = -82.518
+offset_top = -82.0
+offset_right = 82.482
+offset_bottom = 82.9999
 texture = ExtResource("10_r7mav")
 expand_mode = 1
 
-[node name="IcecreamDrop" type="TextureRect" parent="DropZone"]
+[node name="GirlDrop" type="TextureRect" parent="DropZone/Holder"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.645
-anchor_top = 0.644
-anchor_right = 0.645
-anchor_bottom = 0.644
-offset_left = -83.4
-offset_top = -132.52
-offset_right = 81.6
-offset_bottom = 32.48
-texture = ExtResource("11_cevsa")
+anchor_left = 0.242
+anchor_top = 0.5
+anchor_right = 0.242
+anchor_bottom = 0.5
+offset_left = -82.178
+offset_top = -84.0
+offset_right = 82.822
+offset_bottom = 81.0
+texture = ExtResource("9_hblc8")
 expand_mode = 1
 
 [node name="Draggables" type="Control" parent="."]
@@ -209,46 +195,60 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Girl" type="TextureRect" parent="Draggables"]
+[node name="Holder2" type="TextureRect" parent="Draggables"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.385
+anchor_left = 0.513
 anchor_top = 0.862
-anchor_right = 0.385
+anchor_right = 0.513
 anchor_bottom = 0.862
-offset_left = -82.2
-offset_top = -82.96
-offset_right = 82.8
-offset_bottom = 82.04
+offset_left = -503.96
+offset_top = -100.96
+offset_right = 505.04
+offset_bottom = 101.04
+texture = ExtResource("7_g7v22")
+expand_mode = 1
+
+[node name="Eating" type="TextureRect" parent="Draggables/Holder2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.753
+anchor_top = 0.517
+anchor_right = 0.753
+anchor_bottom = 0.517
+offset_left = -82.777
+offset_top = -82.4341
+offset_right = 82.223
+offset_bottom = 82.5659
+texture = ExtResource("10_r7mav")
+expand_mode = 1
+
+[node name="Girl" type="TextureRect" parent="Draggables/Holder2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.256
+anchor_top = 0.5
+anchor_right = 0.256
+anchor_bottom = 0.5
+offset_left = -82.3041
+offset_top = -83.0001
+offset_right = 82.6959
+offset_bottom = 81.9999
 texture = ExtResource("9_hblc8")
 expand_mode = 1
 
-[node name="Icecream" type="TextureRect" parent="Draggables"]
+[node name="Icecream" type="TextureRect" parent="Draggables/Holder2"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.522
-anchor_top = 0.864
-anchor_right = 0.522
-anchor_bottom = 0.864
-offset_left = -83.2401
-offset_top = -82.12
-offset_right = 81.7599
-offset_bottom = 82.88
+anchor_left = 0.516
+anchor_top = 0.512
+anchor_right = 0.516
+anchor_bottom = 0.512
+offset_left = -82.6441
+offset_top = -82.424
+offset_right = 82.3558
+offset_bottom = 82.576
 texture = ExtResource("11_cevsa")
-expand_mode = 1
-
-[node name="Eating" type="TextureRect" parent="Draggables"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.646
-anchor_top = 0.865
-anchor_right = 0.646
-anchor_bottom = 0.865
-offset_left = -82.3201
-offset_top = -82.2001
-offset_right = 82.6799
-offset_bottom = 82.7999
-texture = ExtResource("10_r7mav")
 expand_mode = 1
 
 [node name="Quitbtn" type="TextureButton" parent="."]

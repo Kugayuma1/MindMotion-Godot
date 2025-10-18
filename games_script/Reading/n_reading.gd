@@ -11,8 +11,8 @@ var total_required_matches := 3  # Rabbit, Eating, Carrot dropzones
 
 # Node references
 @onready var timer_display = $Time/Label
-@onready var dropzone_container = $DropZone
-@onready var draggable_container = $Draggables
+@onready var dropzone_container = $DropZone/Holder
+@onready var draggable_container = $Draggables/Holder2
 @onready var game_timer: Timer
 
 # Popup scenes
@@ -93,6 +93,26 @@ func restore_dropzone_opacity(zone: Control):
 	for child in zone.get_children():
 		if child is Control or child is Node2D:
 			tween.parallel().tween_property(child, "modulate:a", 1.0, 0.3)
+			
+func shuffle_draggables():
+	"""Randomize the positions of draggable items"""
+	var draggables = draggable_container.get_children()
+	var positions = []
+	
+	# Collect all current positions
+	for item in draggables:
+		if item is Control:
+			positions.append(item.global_position)
+	
+	# Shuffle the positions array
+	positions.shuffle()
+	
+	# Assign shuffled positions back to items
+	for i in range(draggables.size()):
+		if draggables[i] is Control:
+			draggables[i].global_position = positions[i]
+			# Update original positions so they can return here
+			original_positions[draggables[i].name] = positions[i]
 
 func _on_draggable_input(event: InputEvent, item: Control):
 	if not game_active:
@@ -287,6 +307,8 @@ func start_game():
 	time_remaining = game_duration
 	matches_completed = 0
 	
+	shuffle_draggables() 
+	
 	update_timer_display()
 	game_timer.start()
 
@@ -402,6 +424,7 @@ func restart_game():
 		timer_display.scale = Vector2.ONE
 	
 	# Start new game
+	shuffle_draggables() 
 	start_game()
 
 func _on_quitbtn_pressed() -> void:
