@@ -122,10 +122,10 @@ anchor_left = 0.59
 anchor_top = 0.555
 anchor_right = 0.59
 anchor_bottom = 0.555
-offset_left = -0.620117
-offset_top = 0.154968
-offset_right = 481.38
-offset_bottom = 534.155
+offset_left = -28.62
+offset_top = 11.155
+offset_right = 453.38
+offset_bottom = 545.155
 texture_normal = ExtResource("3_36p2j")
 
 [node name="Label" type="Label" parent="TextureRect/Volc4"]

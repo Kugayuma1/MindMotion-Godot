@@ -89,6 +89,7 @@ texture_pressed = ExtResource("6_phsik")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="Play"]
+layout_mode = 0
 offset_left = 125.0
 offset_top = 17.0
 offset_right = 259.0
@@ -117,6 +118,7 @@ texture_pressed = ExtResource("9_e4stn")
 stretch_mode = 6
 
 [node name="Label" type="Label" parent="Setting"]
+layout_mode = 0
 offset_left = 113.0
 offset_top = 17.0
 offset_right = 278.0
@@ -145,6 +147,7 @@ texture_pressed = ExtResource("11_eyra5")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="Quit"]
+layout_mode = 0
 offset_left = 109.0
 offset_top = 18.0
 offset_right = 274.0

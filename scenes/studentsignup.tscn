@@ -383,6 +383,7 @@ texture_pressed = ExtResource("7_8vx3m")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="Container/Signup"]
+layout_mode = 0
 offset_left = 66.9996
 offset_top = 10.0
 offset_right = 201.0
