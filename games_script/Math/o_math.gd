@@ -5,7 +5,7 @@ var correct_onion_order = [6, 7, 8, 9, 10]
 var current_onion_index = 0
 var completed_onions = []
 
-# Mapping of onion nodes to their actual numbers (scene order: 8,6,9,10,7)
+# Mapping of onion nodes to their actual numbers
 var onion_number_mapping = {
 	"onion1": 8,
 	"onion2": 6,
@@ -40,6 +40,9 @@ func _ready():
 	completed_onions.clear()
 	current_onion_index = 0
 	
+	# Randomize onion number assignments
+	randomize_onion_numbers()
+	
 	if feedback_label:
 		original_feedback_text = feedback_label.text
 		feedback_label.text = "Tap the onions in order: 6, 7, 8, 9, 10"
@@ -47,6 +50,39 @@ func _ready():
 	start_timer()
 	Global.start_time = Time.get_ticks_msec()
 	setup_onion_handlers()
+
+func randomize_onion_numbers() -> void:
+	# Create a shuffled list of numbers 6-10
+	var numbers = [6, 7, 8, 9, 10]
+	numbers.shuffle()
+	
+	# Assign shuffled numbers to each onion
+	onion_number_mapping["onion1"] = numbers[0]
+	onion_number_mapping["onion2"] = numbers[1]
+	onion_number_mapping["onion3"] = numbers[2]
+	onion_number_mapping["onion4"] = numbers[3]
+	onion_number_mapping["onion5"] = numbers[4]
+	
+	# Update the onion label displays
+	update_onion_labels()
+	
+	# Debug: Print the randomized mapping
+	print("🧅 Randomized Onion Mapping:")
+	for onion_name in onion_number_mapping:
+		print("%s → %d" % [onion_name, onion_number_mapping[onion_name]])
+
+func update_onion_labels() -> void:
+	# Update label for each onion - adjust the path if your labels are named differently
+	if onion1 and onion1.has_node("Label"):
+		onion1.get_node("Label").text = str(onion_number_mapping["onion1"])
+	if onion2 and onion2.has_node("Label"):
+		onion2.get_node("Label").text = str(onion_number_mapping["onion2"])
+	if onion3 and onion3.has_node("Label"):
+		onion3.get_node("Label").text = str(onion_number_mapping["onion3"])
+	if onion4 and onion4.has_node("Label"):
+		onion4.get_node("Label").text = str(onion_number_mapping["onion4"])
+	if onion5 and onion5.has_node("Label"):
+		onion5.get_node("Label").text = str(onion_number_mapping["onion5"])
 
 func setup_onion_handlers():
 	if onion1:

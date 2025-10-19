@@ -1,356 +1,432 @@
-# VISUAL MATH GAME - FIXED WITH CORRECT NODE PATHS
+# VISUAL MATH GAME - RANDOMIZED ADDITION FOR AVOCADO SCENE
 # Attach this to your main Control node
 extends Control
 
-# Game settings
-var countdown := 15
-var timer_active := true
-var correct_answer := 0
-var current_equation := ""
+# === GAME SETTINGS ===
+const GAME_TIME: int = 15
+const FAST_COMPLETION_THRESHOLD: int = 10
+const MEDIUM_COMPLETION_THRESHOLD: int = 5
 
+# === RANDOM MATH CONSTRAINTS ===
+# Addition: left + right, minimum sum is 4
+var min_addend := 1
+var max_addend_left := 4
+var max_addend_right := 3
+var min_total_sum := 4
+
+# === GAME STATE ===
+var countdown: int = GAME_TIME
+var timer_active: bool = true
+var correct_answer: int = 0
+var current_equation: String = ""
+var start_time: int = 0
+var random_left_count := 0
+var random_right_count := 0
+
+# === SCENE RESOURCES ===
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn")
 var complete3_scene = preload("res://reward scene/Complete3.tscn")
 var retry_scene = preload("res://reward scene/Retry.tscn")
-
 var popup_instance: Control = null
 
-# Track time
-var start_time: int = 0
+# === UI NODE REFERENCES ===
+@onready var equation_label: Label = $Holder/Label
+@onready var timer_label: Label = $Time/Label
 
-# UI References
-@onready var equation_label = $TextureRect/Holder/Label
-@onready var timer_label = $TextureRect/Time/Label
-@onready var button1 = $Button1/Label3
-@onready var button2 = $Button2/Label3  
-@onready var button3 = $Button3/Label3
-@onready var button4 = $Button4/Label3
+# TextureButton references
+@onready var button_nodes: Array[TextureButton] = []
+@onready var button_labels: Array[Label] = []
 
-# Button nodes
-@onready var btn1 = $Button1
-@onready var btn2 = $Button2
-@onready var btn3 = $Button3
-@onready var btn4 = $Button4
+# Avocado group paths - 7 TOTAL AVOCADOS (4 left, 3 right)
+var left_avocado_paths: Array[String] = [
+	"LeftGroup/Avocado1",
+	"LeftGroup/Avocado2", 
+	"LeftGroup/Avocado3",
+	"LeftGroup/Avocado4"
+]
 
-# CORRECT NODE PATHS based on your scene structure
-var group1_names = ["LeftGroup/TextureRect2", "LeftGroup/TextureRect3", "LeftGroup/TextureRect4", "LeftGroup/TextureRect5"]  # LEFT SIDE - 4 avocados
-var group2_names = ["RightGroup/TextureRect6", "RightGroup/TextureRect7", "RightGroup/TextureRect8"]  # RIGHT SIDE - 3 avocados
+var right_avocado_paths: Array[String] = [
+	"RightGroup/Avocado5",
+	"RightGroup/Avocado6",
+	"RightGroup/Avocado7"
+]
 
-var group1_avocados = []
-var group2_avocados = []
+# Avocado collections
+var left_avocados: Array[Node] = []
+var right_avocados: Array[Node] = []
 
-func _ready():
-	AudioManager.play_temp_music("game")
-	print("=== GAME STARTING WITH CORRECT PATHS ===")
-	Global.start_time = Time.get_ticks_msec()  # record when the game starts
+# === INITIALIZATION ===
+func _ready() -> void:
+	print("Avocado Math Game - Starting with Randomization")
+	start_time = Time.get_ticks_msec()
 	
-	assign_avocados_to_groups()
-	setup_visual_math_game()
-	debug_everything()
-	start_timer()
-	setup_buttons()
-	
+	debug_scene_structure()
+	initialize_game()
 
-func assign_avocados_to_groups():
-	print("--- ASSIGNING AVOCADOS TO GROUPS (CORRECT PATHS) ---")
+func debug_scene_structure() -> void:
+	"""Debug function to see what nodes actually exist"""
+	print("\n=== DEBUGGING SCENE STRUCTURE ===")
 	
-	group1_avocados = []
-	group2_avocados = []
-	
-	# Assign Group 1 avocados (LEFT SIDE)
-	for avocado_path in group1_names:
-		var avocado_node = get_node_or_null(avocado_path)
-		if avocado_node:
-			group1_avocados.append(avocado_node)
-			print("✅ Added %s to GROUP 1 (LEFT)" % avocado_path)
-		else:
-			print("❌ Could not find: %s" % avocado_path)
-	
-	# Assign Group 2 avocados (RIGHT SIDE)  
-	for avocado_path in group2_names:
-		var avocado_node = get_node_or_null(avocado_path)
-		if avocado_node:
-			group2_avocados.append(avocado_node)
-			print("✅ Added %s to GROUP 2 (RIGHT)" % avocado_path)
-		else:
-			print("❌ Could not find: %s" % avocado_path)
-	
-	print("Group 1 (LEFT) has %d avocados" % group1_avocados.size())
-	print("Group 2 (RIGHT) has %d avocados" % group2_avocados.size())
-	print("Expected equation: %d + %d = %d" % [group1_avocados.size(), group2_avocados.size(), group1_avocados.size() + group2_avocados.size()])
-
-func setup_visual_math_game():
-	print("--- SETTING UP MATH GAME ---")
-	
-	# Count avocados in each group
-	var group1_count = group1_avocados.size()
-	var group2_count = group2_avocados.size()
-	
-	# Calculate correct answer
-	correct_answer = group1_count + group2_count
-	
-	# Create equation
-	current_equation = "%d + %d = %d" % [group1_count, group2_count, correct_answer]
-	
-	print("Visual equation: %s" % current_equation)
-	print("Correct answer: %d" % correct_answer)
-	
-	# Generate choices for buttons
-	generate_answer_choices()
-
-func generate_answer_choices():
-	print("--- GENERATING ANSWER CHOICES ---")
-	
-	# ALWAYS start with the correct answer
-	var choices = [correct_answer]
-	
-	# Generate exactly 3 wrong answers
-	var wrong_answers = []
-	
-	# Create potential wrong answers
-	var potential_wrongs = [
-		correct_answer - 3,
-		correct_answer - 2,
-		correct_answer - 1,
-		correct_answer + 1,
-		correct_answer + 2,
-		correct_answer + 3,
-		correct_answer + 4,
-		correct_answer + 5,
-		correct_answer + 6
+	var ui_paths = [
+		"Holder/Label",
+		"Time/Label", 
+		"Button1",
+		"Button2",
+		"Button3", 
+		"Button4",
+		"Button1/Label3",
+		"Button2/Label3",
+		"Button3/Label3",
+		"Button4/Label3"
 	]
 	
-	# Filter and collect valid wrong answers
-	for wrong in potential_wrongs:
-		if wrong > 0 and wrong != correct_answer and not wrong_answers.has(wrong):
-			wrong_answers.append(wrong)
-		if wrong_answers.size() >= 3:
-			break
+	for path in ui_paths:
+		var node = get_node_or_null(path)
+		if node:
+			print("Found UI: %s (%s)" % [path, node.get_class()])
+		else:
+			print("Missing UI: %s" % path)
 	
-	# If we don't have enough wrong answers, generate some manually
-	while wrong_answers.size() < 3:
-		var new_wrong = correct_answer + wrong_answers.size() + 7
-		if new_wrong != correct_answer and not wrong_answers.has(new_wrong):
-			wrong_answers.append(new_wrong)
+	print("\nChecking avocado nodes...")
+	var all_avocado_paths = left_avocado_paths + right_avocado_paths
+	for path in all_avocado_paths:
+		var node = get_node_or_null(path)
+		if node:
+			print("Found avocado: %s (%s)" % [path, node.get_class()])
+		else:
+			print("Missing avocado: %s" % path)
 	
-	# Add exactly 3 wrong answers to choices
-	for i in range(3):
-		if i < wrong_answers.size():
-			choices.append(wrong_answers[i])
-	
-	print("Before shuffle - Choices: %s" % str(choices))
-	print("Correct answer: %d (MUST be in choices)" % correct_answer)
-	
-	# VERIFY correct answer is in choices
-	if not choices.has(correct_answer):
-		print("🚨 ERROR: Correct answer missing! Forcing it back...")
-		choices[0] = correct_answer
-	
-	# Shuffle the choices
-	choices.shuffle()
-	
-	print("After shuffle - Final choices: %s" % str(choices))
-	print("Correct answer %d is at position: %d" % [correct_answer, choices.find(correct_answer) + 1])
-	
-	# Assign to buttons
-	assign_to_buttons(choices)
+	print("=== END SCENE DEBUG ===\n")
 
-func assign_to_buttons(choices: Array):
-	print("--- ASSIGNING TO BUTTONS ---")
+func initialize_game() -> void:
+	"""Initialize all game components in order"""
+	generate_random_numbers()
+	setup_node_references()
+	collect_avocado_nodes()
+	display_avocados_based_on_random()
+	setup_math_problem()
+	setup_ui()
+	setup_button_connections()
+	start_countdown_timer()
+
+# === RANDOM NUMBER GENERATION ===
+func generate_random_numbers() -> void:
+	"""Generate random avocado counts ensuring minimum sum of 4"""
+	var valid_combination = false
 	
-	# VERIFY we have exactly 4 choices
-	if choices.size() != 4:
-		print("🚨 ERROR: Expected 4 choices, got %d" % choices.size())
-		return
+	while not valid_combination:
+		random_left_count = randi_range(min_addend, max_addend_left)
+		random_right_count = randi_range(min_addend, max_addend_right)
 		
-	if not choices.has(correct_answer):
-		print("🚨 CRITICAL ERROR: Correct answer %d not in choices!" % correct_answer)
-		return
+		# Check if sum is at least 4
+		if random_left_count + random_right_count >= min_total_sum:
+			valid_combination = true
 	
-	var buttons = [btn1, btn2, btn3, btn4]
-	var labels = [button1, button2, button3, button4]
+	print("Random left avocados: %d" % random_left_count)
+	print("Random right avocados: %d" % random_right_count)
+	print("Total: %d + %d = %d" % [random_left_count, random_right_count, random_left_count + random_right_count])
+
+func setup_node_references() -> void:
+	"""Setup node references with fallback checking"""
+	button_nodes.clear()
+	button_labels.clear()
 	
-	for i in range(4):
-		var value = choices[i]
+	var button_paths = ["Button1", "Button2", "Button3", "Button4"]
+	var label_paths = ["Button1/Label3", "Button2/Label3", "Button3/Label3", "Button4/Label3"]
+	
+	for i in range(button_paths.size()):
+		var button = get_node_or_null(button_paths[i])
+		var label = get_node_or_null(label_paths[i])
 		
-		# Set button label
-		if labels[i]:
-			labels[i].text = str(value)
-			print("✅ Button %d label set to: %s" % [i+1, str(value)])
+		if button:
+			button_nodes.append(button)
+			print("Button %d reference set" % (i + 1))
 		else:
-			print("❌ Button %d label not found!" % [i+1])
+			button_nodes.append(null)
+			print("Button %d not found at path: %s" % [i + 1, button_paths[i]])
 		
-		# Set button meta data
-		if buttons[i]:
-			buttons[i].set_meta("answer_value", value)
-			print("✅ Button %d meta set to: %d" % [i+1, value])
-			
-			# Verify the meta was set correctly
-			var verify_meta = buttons[i].get_meta("answer_value", -999)
-			if verify_meta != value:
-				print("🚨 Meta verification failed for button %d!" % [i+1])
+		if label:
+			button_labels.append(label)
+			print("Button %d label reference set" % (i + 1))
 		else:
-			print("❌ Button %d node not found!" % [i+1])
+			button_labels.append(null)
+			print("Button %d label not found at path: %s" % [i + 1, label_paths[i]])
+
+# === AVOCADO NODE COLLECTION ===
+func collect_avocado_nodes() -> void:
+	"""Collect all avocado nodes from both groups"""
+	left_avocados.clear()
+	right_avocados.clear()
 	
-	# Final verification
-	print("=== FINAL VERIFICATION ===")
-	var correct_button_found = false
-	for i in range(4):
-		if buttons[i]:
-			var button_value = buttons[i].get_meta("answer_value", -999)
-			if button_value == correct_answer:
-				correct_button_found = true
-				print("✅ Correct answer %d found on Button %d" % [correct_answer, i+1])
+	for avocado_path in left_avocado_paths:
+		var avocado_node = get_node_or_null(avocado_path)
+		if avocado_node:
+			left_avocados.append(avocado_node)
+			print("Found left avocado: %s" % avocado_path)
+		else:
+			print("Missing left avocado: %s" % avocado_path)
 	
-	if not correct_button_found:
-		print("🚨 CRITICAL: NO BUTTON HAS THE CORRECT ANSWER!")
+	for avocado_path in right_avocado_paths:
+		var avocado_node = get_node_or_null(avocado_path)
+		if avocado_node:
+			right_avocados.append(avocado_node)
+			print("Found right avocado: %s" % avocado_path)
+		else:
+			print("Missing right avocado: %s" % avocado_path)
+	
+	print("Left avocados: %d, Right avocados: %d" % [left_avocados.size(), right_avocados.size()])
+
+func display_avocados_based_on_random() -> void:
+	"""Show only the random amount of avocados in shuffled positions"""
+	# Collect all left avocado indices
+	var left_indices = []
+	for i in range(left_avocados.size()):
+		left_indices.append(i)
+	left_indices.shuffle()
+	
+	# Collect all right avocado indices
+	var right_indices = []
+	for i in range(right_avocados.size()):
+		right_indices.append(i)
+	right_indices.shuffle()
+	
+	# Hide all avocados first
+	for avocado in left_avocados:
+		avocado.visible = false
+	for avocado in right_avocados:
+		avocado.visible = false
+	
+	# Show only the random count from shuffled positions
+	for i in range(random_left_count):
+		if i < left_indices.size():
+			left_avocados[left_indices[i]].visible = true
+	
+	for i in range(random_right_count):
+		if i < right_indices.size():
+			right_avocados[right_indices[i]].visible = true
+	
+	print("Displayed %d left avocados (shuffled) and %d right avocados (shuffled)" % [random_left_count, random_right_count])
+
+# === MATH PROBLEM SETUP ===
+func setup_math_problem() -> void:
+	"""Create the math problem based on visible avocado counts"""
+	var left_count = random_left_count
+	var right_count = random_right_count
+	
+	# Addition logic
+	correct_answer = left_count + right_count
+	current_equation = "%d + %d = ?" % [left_count, right_count]
+	
+	print("Equation: %s (Answer: %d)" % [current_equation, correct_answer])
+	
+	generate_answer_options()
+
+func generate_answer_options() -> void:
+	"""Generate 4 answer options including the correct one"""
+	var options: Array[int] = [correct_answer]
+	
+	var wrong_options: Array[int] = []
+	var attempts = 0
+	
+	while wrong_options.size() < 3 and attempts < 20:
+		var offset = randi_range(-3, 5)
+		var wrong_answer = correct_answer + offset
+		
+		if wrong_answer > 0 and wrong_answer != correct_answer and not wrong_options.has(wrong_answer):
+			wrong_options.append(wrong_answer)
+		
+		attempts += 1
+	
+	while wrong_options.size() < 3:
+		wrong_options.append(correct_answer + wrong_options.size() + 1)
+	
+	for wrong in wrong_options.slice(0, 3):
+		options.append(wrong)
+	
+	options.shuffle()
+	
+	print("Answer options: %s (Correct: %d)" % [str(options), correct_answer])
+	assign_options_to_buttons(options)
+
+func assign_options_to_buttons(options: Array[int]) -> void:
+	"""Assign answer options to buttons"""
+	for i in range(min(4, options.size())):
+		if i < button_labels.size() and button_labels[i]:
+			button_labels[i].text = str(options[i])
+			print("Set button %d label to: %d" % [i + 1, options[i]])
+		else:
+			print("Could not set label for button %d" % [i + 1])
+		
+		if i < button_nodes.size() and button_nodes[i]:
+			button_nodes[i].set_meta("answer_value", options[i])
+			print("Set button %d meta to: %d" % [i + 1, options[i]])
+		else:
+			print("Could not set meta for button %d" % [i + 1])
+
+# === UI SETUP ===
+func setup_ui() -> void:
+	"""Setup initial UI state"""
+	if equation_label:
+		equation_label.text = "Solve the avocado: " + current_equation
+		print("Equation label set")
 	else:
-		print("✅ SUCCESS: Correct answer is assigned to a button")
+		print("Equation label not found")
+	
+	update_timer_display()
 
-func setup_buttons():
-	if btn1: btn1.pressed.connect(_on_button_pressed.bind(1))
-	if btn2: btn2.pressed.connect(_on_button_pressed.bind(2))
-	if btn3: btn3.pressed.connect(_on_button_pressed.bind(3))
-	if btn4: btn4.pressed.connect(_on_button_pressed.bind(4))
+func setup_button_connections() -> void:
+	"""Connect button press signals"""
+	for i in range(button_nodes.size()):
+		if button_nodes[i]:
+			if not button_nodes[i].pressed.is_connected(_on_button_pressed):
+				button_nodes[i].pressed.connect(_on_button_pressed.bind(i))
+				print("Connected button %d signal" % (i + 1))
+		else:
+			print("Cannot connect button %d - node is null" % (i + 1))
 
-func _on_button_pressed(button_num: int):
-	if !timer_active:
+# === TIMER SYSTEM ===
+func start_countdown_timer() -> void:
+	"""Start the countdown timer"""
+	countdown = GAME_TIME
+	timer_active = true
+	update_timer_display()
+	countdown_loop()
+
+func countdown_loop() -> void:
+	"""Main countdown loop"""
+	while timer_active and countdown > 0:
+		await get_tree().create_timer(1.0).timeout
+		
+		if not timer_active:
+			break
+			
+		countdown -= 1
+		update_timer_display()
+	
+	if timer_active and countdown <= 0:
+		handle_timeout()
+
+func update_timer_display() -> void:
+	"""Update timer label"""
+	if timer_label:
+		timer_label.text = " %ds" % countdown
+	else:
+		print("Timer label not found - cannot update display")
+
+func handle_timeout() -> void:
+	"""Handle timer timeout"""
+	timer_active = false
+	
+	if equation_label:
+		equation_label.text = "Time's up! Answer: %d" % correct_answer
+	
+	if timer_label:
+		timer_label.text = "Time's up!"
+	
+	print("Game timed out")
+	ProgressManager.save_progress("math", false)
+	Global.refresh_everything_after_stage_completion("math", false)
+	end_game(false)
+
+# === BUTTON HANDLING ===
+func _on_button_pressed(button_index: int) -> void:
+	"""Handle button press"""
+	print("Button %d pressed" % (button_index + 1))
+	
+	if not timer_active:
+		print("Timer not active, ignoring button press")
 		return
 	
-	var buttons = [btn1, btn2, btn3, btn4]
-	var clicked_button = buttons[button_num - 1]
-	if !clicked_button:
+	if button_index < 0 or button_index >= button_nodes.size():
+		print("Invalid button index: %d" % button_index)
 		return
 	
-	var selected_answer = clicked_button.get_meta("answer_value", -999)
+	var clicked_button = button_nodes[button_index]
+	if not clicked_button:
+		print("Button node is null for index: %d" % button_index)
+		return
+	
+	var selected_answer = clicked_button.get_meta("answer_value", -1)
+	print("Selected answer: %d (Correct: %d)" % [selected_answer, correct_answer])
 	
 	if selected_answer == correct_answer:
-		# Correct!
-		if equation_label:
-			equation_label.text = "✅ Tama! " + str(correct_answer)
-		timer_active = false
-		
-		# Calculate elapsed time
-		var elapsed = (Time.get_ticks_msec() - start_time) / 1000.0
-		print("🎉 CORRECT in %.2f seconds" % elapsed)
-		
-		game_over(true, elapsed)   # ✅ now passes elapsed
-		ProgressManager.save_progress("math", true)
-		Global.refresh_everything_after_stage_completion("math", true)
+		handle_correct_answer()
 	else:
-		if equation_label:
-			equation_label.text = "Wrong, Try Again!"
-		shake_button(clicked_button)
-		await get_tree().create_timer(1.5).timeout
-		if timer_active and equation_label:
-			equation_label.text = ""
+		handle_wrong_answer(clicked_button)
 
+func handle_correct_answer() -> void:
+	"""Handle correct answer selection"""
+	timer_active = false
+	
+	if equation_label:
+		equation_label.text = "Correct! %d" % correct_answer
+	
+	var elapsed_time = (Time.get_ticks_msec() - start_time) / 1000.0
+	print("Correct answer in %.2f seconds" % elapsed_time)
+	
+	ProgressManager.save_progress("math", true)
+	Global.refresh_everything_after_stage_completion("math", true)
+	end_game(true)
 
-func shake_button(button: Control) -> void:
-	if !button:
+func handle_wrong_answer(button: TextureButton) -> void:
+	"""Handle wrong answer selection"""
+	if equation_label:
+		equation_label.text = "Wrong! Try again"
+	
+	animate_button_shake(button)
+	
+	await get_tree().create_timer(1.5).timeout
+	if timer_active and equation_label:
+		equation_label.text = "Solve the avocado: " + current_equation
+
+func animate_button_shake(button: TextureButton) -> void:
+	"""Animate button shake effect"""
+	if not button:
 		return
-	var original_pos = button.position
+	
+	var original_position = button.position
 	var tween = create_tween()
-	tween.tween_property(button, "position", original_pos + Vector2(-10, 0), 0.05)
-	tween.tween_property(button, "position", original_pos + Vector2(10, 0), 0.05).set_delay(0.05)
-	tween.tween_property(button, "position", original_pos, 0.05).set_delay(0.10)
-
-func start_timer() -> void:
-	countdown = 15
-	timer_active = true
-	if timer_label:
-		timer_label.text = "" + str(countdown) + "s"
-	update_timer()   # ✅ start the countdown loop
-
-func update_timer() -> void:
-	if countdown <= 0:
-		timer_active = false
-		if timer_label:
-			timer_label.text = "Time's Up"
-		if equation_label:
-			equation_label.text = "Time's up! Answer: " + str(correct_answer)
-		ProgressManager.save_progress("math", false)
-		Global.refresh_everything_after_stage_completion("math", false)
-		game_over(false)
-		return
-
-	# Show time
-	if timer_label:
-		timer_label.text = " " + str(countdown) + "s"
 	
-	countdown -= 1
-	await get_tree().create_timer(1.0).timeout
+	tween.tween_property(button, "position", original_position + Vector2(-10, 0), 0.05)
+	tween.tween_property(button, "position", original_position + Vector2(10, 0), 0.05)
+	tween.tween_property(button, "position", original_position, 0.05)
 
-	if timer_active:
-		update_timer()   # ✅ loop continues
+# === GAME END ===
+func end_game(success: bool) -> void:
+	"""End the game and show results"""
+	hide_game_ui()
+	show_result_popup(success)
 
-		
-func game_over(success: bool, elapsed: float = 999.0):
-	# Hide UI elements
-	if has_node("TextureRect/GameBG"): $TextureRect/GameBG.visible = false
-	if has_node("TextureRect/Time"): $TextureRect/Time.visible = false
-	if has_node("TextureRect/Holder"): $TextureRect/Holder.visible = false
-	if has_node("TextureRect/Label"): $TextureRect/Label.visible = false
-	if has_node("TextureRect/Label2"): $TextureRect/Label2.visible = false
-	if has_node("TextureRect/Label3"): $TextureRect/Label3.visible = false
-	if has_node("RightGroup"): $RightGroup.visible = false
-	if has_node("LeftGroup"): $LeftGroup.visible = false
-	if has_node("Button1"): $Button1.visible = false
-	if has_node("Button2"): $Button2.visible = false
-	if has_node("Button3"): $Button3.visible = false
-	if has_node("Button4"): $Button4.visible = false
-	if has_node("Quitbtn"): $Quitbtn.visible = false
+func hide_game_ui() -> void:
+	"""Hide all game UI elements"""
+	var ui_paths = [
+		"GameBG/Canvas", "Time", "Holder", "RightGroup", "LeftGroup", 
+		"Button1", "Button2", "Button3", "Button4", "Quitbtn", "Operations"
+	]
 	
-	# ✅ POPUP LOGIC BASED ON COUNTDOWN (like the spelling game)
+	for element_path in ui_paths:
+		var element = get_node_or_null(element_path)
+		if element:
+			element.visible = false
+			print("Hidden: %s" % element_path)
+
+func show_result_popup(success: bool) -> void:
+	"""Show appropriate result popup"""
 	if success:
-		if countdown >= 10:   # finished fast → 3 stars
+		if countdown >= FAST_COMPLETION_THRESHOLD:
 			popup_instance = complete3_scene.instantiate()
-		elif countdown >= 5:  # medium speed → 2 stars
+		elif countdown >= MEDIUM_COMPLETION_THRESHOLD:
 			popup_instance = complete2_scene.instantiate()
-		else:                 # slow but correct → 1 star
+		else:
 			popup_instance = complete1_scene.instantiate()
 	else:
-		popup_instance = retry_scene.instantiate()  # always show 1-star if failed
-
-	# Add popup to scene
+		popup_instance = retry_scene.instantiate()
+	
 	if popup_instance:
 		add_child(popup_instance)
 
-# DEBUG FUNCTION
-func debug_everything():
-	print("\n=== COMPLETE DEBUG INFO ===")
-	print("Group 1 (LEFT) count: %d avocados" % group1_avocados.size())
-	print("Group 2 (RIGHT) count: %d avocados" % group2_avocados.size()) 
-	print("Equation: %s" % current_equation)
-	print("Correct answer: %d" % correct_answer)
-	
-	# Check button assignments
-	var buttons = [btn1, btn2, btn3, btn4]
-	var labels = [button1, button2, button3, button4]
-	var correct_found = false
-	
-	print("--- BUTTON ANALYSIS ---")
-	for i in range(4):
-		if buttons[i] and labels[i]:
-			var meta_val = buttons[i].get_meta("answer_value", "MISSING")
-			var label_text = labels[i].text
-			var is_correct = (meta_val == correct_answer)
-			if is_correct:
-				correct_found = true
-			print("Button %d: Label='%s', Meta=%s, IsCorrect=%s" % [i+1, label_text, str(meta_val), str(is_correct)])
-		else:
-			print("Button %d: NODE REFERENCE ERROR" % [i+1])
-	
-	if correct_found:
-		print("✅ SUCCESS: Correct answer IS available on a button")
-	else:
-		print("🚨 PROBLEM: Correct answer NOT found on any button!")
-	
-	print("========================\n")
-
-
 func _on_quitbtn_pressed() -> void:
-	var letter_lower = Global.current_letter.to_lower()
 	var path = "res://scenes/Categories.tscn"
 	if ResourceLoader.exists(path):
 		get_tree().change_scene_to_file(path)

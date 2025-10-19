@@ -152,6 +152,8 @@ func game_over(success: bool) -> void:
 # --- NEXT QUESTION ---
 func next_word() -> void:
 	current_question_index += 1
+	load_current_question()
+	selected_correct.clear()
 	if current_question_index < question_data.size():
 		for button in choice_buttons:
 			button.visible = true
@@ -159,8 +161,6 @@ func next_word() -> void:
 		if has_node("TextureRect/Time"): $TextureRect/Time.visible = true
 		if has_node("Quitbtn"): $Quitbtn.visible = true
 
-		load_current_question()
-		start_timer()
 	else:
 		print("✅ All questions completed!")
 

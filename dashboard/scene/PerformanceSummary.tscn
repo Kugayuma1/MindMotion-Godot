@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dfuwx3qwkm7fa"]
 
-[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="1_r5ukn"]
 [ext_resource type="Script" uid="uid://bo2c2m6r4wqlf" path="res://dashboard/script/performance_summary.gd" id="1_wakw2"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="2_j6pys"]
 [ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="2_wakw2"]
 
 [node name="Control" type="Control"]
@@ -32,7 +32,7 @@ offset_right = 89.0
 offset_bottom = 169.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_r5ukn")
+theme_override_fonts/font = ExtResource("2_j6pys")
 theme_override_font_sizes/font_size = 100
 text = "name"
 

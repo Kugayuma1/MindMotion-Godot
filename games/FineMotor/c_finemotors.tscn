@@ -1,23 +1,15 @@
-[gd_scene load_steps=23 format=3 uid="uid://blkan68id3vtr"]
+[gd_scene load_steps=15 format=3 uid="uid://blkan68id3vtr"]
 
 [ext_resource type="Script" uid="uid://daml2muxgrgw6" path="res://games_script/finemotor/LetterC/c_finemotor.gd" id="1_018bn"]
 [ext_resource type="Texture2D" uid="uid://lxuhwshlr4l" path="res://Game Bg/bgforcat.png" id="2_77fbi"]
 [ext_resource type="Texture2D" uid="uid://behk6w7cblbba" path="res://Game Assets/Fine Motor Assets/catpawPurp.png" id="3_88l1x"]
-[ext_resource type="Script" uid="uid://bidekrm2bbijt" path="res://games_script/finemotor/LetterC/purple.gd" id="4_uqvxr"]
 [ext_resource type="Texture2D" uid="uid://f8dvm3ah21jd" path="res://Game Assets/Fine Motor Assets/catpawRed.png" id="5_hqiad"]
-[ext_resource type="Script" uid="uid://doutows362wqf" path="res://games_script/finemotor/LetterC/red.gd" id="6_d2bre"]
 [ext_resource type="Texture2D" uid="uid://cdfmjarptx3b4" path="res://Game Assets/Fine Motor Assets/catpawGray 1.png" id="7_chdyg"]
-[ext_resource type="Script" uid="uid://coc8bih4wujma" path="res://games_script/finemotor/LetterC/gray.gd" id="8_8f826"]
 [ext_resource type="Texture2D" uid="uid://b78sjspixo5bi" path="res://Game Assets/Fine Motor Assets/catpawOra.png" id="9_urayb"]
-[ext_resource type="Script" uid="uid://b68ivcgu83cat" path="res://games_script/finemotor/LetterC/orange.gd" id="10_6bhmh"]
 [ext_resource type="Texture2D" uid="uid://cpidqkskiv8ki" path="res://Game Assets/Fine Motor Assets/catfoodGray.png" id="11_xjdvd"]
-[ext_resource type="Script" uid="uid://c5eufr8ib0y87" path="res://games_script/finemotor/LetterC/gray_food.gd" id="12_3vt42"]
 [ext_resource type="Texture2D" uid="uid://3i1upqcq6tk0" path="res://Game Assets/Fine Motor Assets/catfoodPurp.png" id="13_vir34"]
-[ext_resource type="Script" uid="uid://fwgssn74kup0" path="res://games_script/finemotor/LetterC/purple_food.gd" id="14_x4eyt"]
 [ext_resource type="Texture2D" uid="uid://bouv8ciq3shbm" path="res://Game Assets/Fine Motor Assets/catfoodRed.png" id="15_qyvlh"]
-[ext_resource type="Script" uid="uid://cacsea25vmgix" path="res://games_script/finemotor/LetterC/red_food.gd" id="16_jxoan"]
 [ext_resource type="Texture2D" uid="uid://brfi30v8032w8" path="res://Game Assets/Fine Motor Assets/catfoodOra.png" id="17_4tq70"]
-[ext_resource type="Script" uid="uid://c3mp3uvhtpaws" path="res://games_script/finemotor/LetterC/orange_food.gd" id="18_khgix"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="19_3njj2"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="20_kg65m"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="21_t2foo"]
@@ -61,7 +53,6 @@ offset_top = -0.440002
 offset_right = 747.88
 offset_bottom = 739.56
 texture = ExtResource("3_88l1x")
-script = ExtResource("4_uqvxr")
 
 [node name="Red" type="TextureRect" parent="Paws"]
 layout_mode = 1
@@ -74,7 +65,6 @@ offset_left = -0.920044
 offset_right = 668.08
 offset_bottom = 504.0
 texture = ExtResource("5_hqiad")
-script = ExtResource("6_d2bre")
 
 [node name="Gray" type="TextureRect" parent="Paws"]
 layout_mode = 1
@@ -88,7 +78,6 @@ offset_top = -0.0400391
 offset_right = 669.4
 offset_bottom = 503.96
 texture = ExtResource("7_chdyg")
-script = ExtResource("8_8f826")
 
 [node name="Orange" type="TextureRect" parent="Paws"]
 layout_mode = 1
@@ -102,7 +91,6 @@ offset_top = 0.399994
 offset_right = -0.840027
 offset_bottom = 926.4
 texture = ExtResource("9_urayb")
-script = ExtResource("10_6bhmh")
 
 [node name="Food" type="Control" parent="."]
 layout_mode = 1
@@ -125,7 +113,6 @@ offset_right = 319.64
 offset_bottom = 319.32
 texture = ExtResource("11_xjdvd")
 expand_mode = 1
-script = ExtResource("12_3vt42")
 
 [node name="PurpleFood" type="TextureRect" parent="Food"]
 layout_mode = 1
@@ -140,7 +127,6 @@ offset_right = 319.72
 offset_bottom = 318.48
 texture = ExtResource("13_vir34")
 expand_mode = 1
-script = ExtResource("14_x4eyt")
 
 [node name="RedFood" type="TextureRect" parent="Food"]
 layout_mode = 1
@@ -155,7 +141,6 @@ offset_right = 319.12
 offset_bottom = 319.12
 texture = ExtResource("15_qyvlh")
 expand_mode = 1
-script = ExtResource("16_jxoan")
 
 [node name="OrangeFood" type="TextureRect" parent="Food"]
 layout_mode = 1
@@ -170,7 +155,6 @@ offset_right = 319.2
 offset_bottom = 318.64
 texture = ExtResource("17_4tq70")
 expand_mode = 1
-script = ExtResource("18_khgix")
 
 [node name="Time" type="TextureRect" parent="."]
 layout_mode = 1

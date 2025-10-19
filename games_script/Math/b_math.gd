@@ -6,11 +6,11 @@ var completed_balloons = []
 
 # Mapping of balloon nodes to their actual numbers
 var balloon_number_mapping = {
-	"balloon1": 2,  # Balloon1 shows number 2
-	"balloon2": 1,  # Balloon2 shows number 1  
-	"balloon3": 5,  # Balloon3 shows number 5
-	"balloon4": 4,  # Balloon4 shows number 4
-	"balloon5": 3   # Balloon5 shows number 3
+	"balloon1": 2,  # Will be randomized
+	"balloon2": 1,  # Will be randomized
+	"balloon3": 5,  # Will be randomized
+	"balloon4": 4,  # Will be randomized
+	"balloon5": 3   # Will be randomized
 }
 
 var countdown := 15
@@ -24,10 +24,10 @@ var complete3_scene = preload("res://reward scene/Complete3.tscn")
 var retry_scene = preload("res://reward scene/Retry.tscn")
 
 var popup_instance: Control = null
-var popped_texture = preload("res://Game Assets/Math/5.png")  # Update this path
+var popped_texture = preload("res://Game Assets/Math/5.png")
 
-@onready var feedback_label = $Holder/Label  # Instructions/feedback label
-@onready var timer_label = $Time/Label      # Timer label
+@onready var feedback_label = $Holder/Label
+@onready var timer_label = $Time/Label
 
 # Balloon nodes
 @onready var balloon1 = $Balloon1
@@ -40,6 +40,9 @@ func _ready():
 	completed_balloons.clear()
 	current_balloon_index = 0
 	
+	# Randomize balloon number assignments
+	randomize_balloon_numbers()
+	
 	# Store original feedback text for reset
 	if feedback_label:
 		original_feedback_text = feedback_label.text
@@ -50,6 +53,39 @@ func _ready():
 	
 	# Setup balloon click handlers
 	setup_balloon_handlers()
+
+func randomize_balloon_numbers() -> void:
+	# Create a shuffled list of numbers 1-5
+	var numbers = [1, 2, 3, 4, 5]
+	numbers.shuffle()
+	
+	# Assign shuffled numbers to each balloon
+	balloon_number_mapping["balloon1"] = numbers[0]
+	balloon_number_mapping["balloon2"] = numbers[1]
+	balloon_number_mapping["balloon3"] = numbers[2]
+	balloon_number_mapping["balloon4"] = numbers[3]
+	balloon_number_mapping["balloon5"] = numbers[4]
+	
+	# Update the balloon label displays
+	update_balloon_labels()
+	
+	# Debug: Print the randomized mapping
+	print("🎈 Randomized Balloon Mapping:")
+	for balloon_name in balloon_number_mapping:
+		print("%s → %d" % [balloon_name, balloon_number_mapping[balloon_name]])
+
+func update_balloon_labels() -> void:
+	# Update label for each balloon - adjust the path if your labels are named differently
+	if balloon1 and balloon1.has_node("Label"):
+		balloon1.get_node("Label").text = str(balloon_number_mapping["balloon1"])
+	if balloon2 and balloon2.has_node("Label"):
+		balloon2.get_node("Label").text = str(balloon_number_mapping["balloon2"])
+	if balloon3 and balloon3.has_node("Label"):
+		balloon3.get_node("Label").text = str(balloon_number_mapping["balloon3"])
+	if balloon4 and balloon4.has_node("Label"):
+		balloon4.get_node("Label").text = str(balloon_number_mapping["balloon4"])
+	if balloon5 and balloon5.has_node("Label"):
+		balloon5.get_node("Label").text = str(balloon_number_mapping["balloon5"])
 
 func setup_balloon_handlers():
 	# Connect balloon click signals with correct number mapping
@@ -235,7 +271,6 @@ func _on_balloon_4_pressed() -> void:
 
 func _on_balloon_5_pressed() -> void:
 	_on_balloon_pressed(balloon_number_mapping["balloon5"], balloon5, "balloon5")
-
 
 func _on_quitbtn_pressed() -> void:
 	var letter_lower = Global.current_letter.to_lower()

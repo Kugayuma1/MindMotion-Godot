@@ -10,8 +10,9 @@ var required_eggplants := 5
 # Node references (based on your scene)
 @onready var timer_display = $Time/Label
 @onready var lady_zone = $Dropzone/Lady
-@onready var lady_label = $Dropzone/Lady/Label2
+@onready var lady_label = $Dropzone/TextureRect/Label2
 @onready var draggable_items = $Draggables
+@onready var holder_label = $Holder/Label  # Add this for the requirement display
 @onready var game_timer: Timer
 
 # Popup scenes
@@ -30,9 +31,9 @@ var drag_offset: Vector2
 
 # Lady messages
 var lady_messages = {
-	"welcome": "Give me exactly 5 eggplants, please!",
-	"correct_count": "Perfect! Thank you for the 5 eggplants!",
-	"too_many": "Whoa! I only need 5 eggplants, not more!",
+	"welcome": "Give me exactly %d eggplants, please!",
+	"correct_count": "Perfect! Thank you for the %d eggplants!",
+	"too_many": "Whoa! I only need %d eggplants, not more!",
 	"need_more": "I still need more eggplants... %d more to go!",
 	"game_over": "Time's up! Try again!"
 }
@@ -49,7 +50,7 @@ func setup_game():
 	game_timer.timeout.connect(_on_timer_tick)
 	add_child(game_timer)
 
-	# Win timer (still here but won’t be used anymore)
+	# Win timer (still here but won't be used anymore)
 	win_timer = Timer.new()
 	win_timer.wait_time = 3.0
 	win_timer.one_shot = true
@@ -149,13 +150,13 @@ func return_to_original_position(item: Control):
 
 func evaluate_eggplant_count():
 	if eggplants_given > required_eggplants:
-		update_lady_message("too_many")
+		update_lady_message("too_many", [required_eggplants])
 		await get_tree().create_timer(2.0).timeout
 		return_all_eggplants()
-		update_lady_message("welcome")
+		update_lady_message("welcome", [required_eggplants])
 	elif eggplants_given == required_eggplants:
-		update_lady_message("correct_count")
-		win_game() # 🛠 FIXED: call win immediately
+		update_lady_message("correct_count", [required_eggplants])
+		win_game()
 	else:
 		var remaining = required_eggplants - eggplants_given
 		update_lady_message("need_more", [remaining])
@@ -168,7 +169,6 @@ func return_all_eggplants():
 	eggplants_with_lady.clear()
 	eggplants_given = 0
 
-# 🛠 FIXED: win_timer no longer needed here, win is handled immediately
 func start_win_timer():
 	win_timer.start()
 
@@ -198,9 +198,18 @@ func start_game():
 	time_remaining = game_duration
 	eggplants_given = 0
 	eggplants_with_lady.clear()
+	
+	# Randomize how many eggplants the lady wants (between 3 and 5)
+	required_eggplants = randi_range(3, 5)
+	print("Lady wants: %d eggplants" % required_eggplants)
+	
+	# Update the holder label to show the requirement
+	if holder_label:
+		holder_label.text = "Give the lady: %d eggplants" % required_eggplants
+	
 	update_timer_display()
 	game_timer.start()
-	update_lady_message("welcome")
+	update_lady_message("welcome", [required_eggplants])
 
 func _on_timer_tick():
 	time_remaining -= 1
@@ -216,9 +225,8 @@ func update_timer_display():
 
 func win_game():
 	game_active = false
-	game_timer.stop() # 🛠 stop timer immediately when winning
+	game_timer.stop()
 
-	# ✅ Save successful progress
 	ProgressManager.save_progress("math", true)
 	Global.refresh_everything_after_stage_completion("math", true)
 
@@ -231,7 +239,6 @@ func game_over():
 	update_lady_message("game_over")
 	await get_tree().create_timer(1.0).timeout
 
-	# ✅ Save failed progress
 	ProgressManager.save_progress("math", false)
 
 	show_completion_screen(false, 0)
@@ -288,7 +295,9 @@ func restart_game():
 
 	if timer_display:
 		timer_display.modulate = Color.WHITE
-
+	
+	# Stop the timer before starting a new game
+	game_timer.stop()
 	start_game()
 
 func _on_quitbtn_pressed() -> void:

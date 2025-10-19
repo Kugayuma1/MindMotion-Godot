@@ -10,7 +10,7 @@ var required_pencils := 5
 # Node references (based on your scene)
 @onready var timer_display = $Time/Label
 @onready var kid_zone = $Dropzone/Kid
-@onready var kid_label = $Dropzone/Kid/Label2
+@onready var kid_label = $Dropzone/TextureRect/Label2
 @onready var draggable_items = $Draggables
 @onready var game_timer: Timer
 

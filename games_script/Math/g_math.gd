@@ -41,6 +41,9 @@ func _ready():
 	completed_gifts.clear()
 	current_gift_index = 0
 	
+	# Randomize gift number assignments
+	randomize_gift_numbers()
+	
 	if feedback_label:
 		original_feedback_text = feedback_label.text
 		feedback_label.text = "Tap the gifts in order: 11, 12, 13, 14, 15"
@@ -48,6 +51,39 @@ func _ready():
 	start_timer()
 	Global.start_time = Time.get_ticks_msec()
 	setup_gift_handlers()
+
+func randomize_gift_numbers() -> void:
+	# Create a shuffled list of numbers 11-15
+	var numbers = [11, 12, 13, 14, 15]
+	numbers.shuffle()
+	
+	# Assign shuffled numbers to each gift
+	gift_number_mapping["gift1"] = numbers[0]
+	gift_number_mapping["gift2"] = numbers[1]
+	gift_number_mapping["gift3"] = numbers[2]
+	gift_number_mapping["gift4"] = numbers[3]
+	gift_number_mapping["gift5"] = numbers[4]
+	
+	# Update the gift label displays
+	update_gift_labels()
+	
+	# Debug: Print the randomized mapping
+	print("🎁 Randomized Gift Mapping:")
+	for gift_name in gift_number_mapping:
+		print("%s → %d" % [gift_name, gift_number_mapping[gift_name]])
+
+func update_gift_labels() -> void:
+	# Update label for each gift - adjust the path if your labels are named differently
+	if gift1 and gift1.has_node("Label"):
+		gift1.get_node("Label").text = str(gift_number_mapping["gift1"])
+	if gift2 and gift2.has_node("Label"):
+		gift2.get_node("Label").text = str(gift_number_mapping["gift2"])
+	if gift3 and gift3.has_node("Label"):
+		gift3.get_node("Label").text = str(gift_number_mapping["gift3"])
+	if gift4 and gift4.has_node("Label"):
+		gift4.get_node("Label").text = str(gift_number_mapping["gift4"])
+	if gift5 and gift5.has_node("Label"):
+		gift5.get_node("Label").text = str(gift_number_mapping["gift5"])
 
 func setup_gift_handlers():
 	if gift1:

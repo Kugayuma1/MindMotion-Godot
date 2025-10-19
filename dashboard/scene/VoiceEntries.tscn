@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cixibcbtpnw3o" path="res://dashboard/script/voice_entries.gd" id="1_obgkd"]
 [ext_resource type="Texture2D" uid="uid://cwgfqyonunybf" path="res://assets/right_wave.png" id="2_obgkd"]
 [ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="3_7pqtt"]
-[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="4_dqhoy"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="5_obgkd"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -69,7 +69,7 @@ offset_right = 101.0
 offset_bottom = 155.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_dqhoy")
+theme_override_fonts/font = ExtResource("5_obgkd")
 theme_override_font_sizes/font_size = 80
 text = "Activity"
 

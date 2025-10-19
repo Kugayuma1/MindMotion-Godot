@@ -114,6 +114,24 @@ offset_bottom = 182.76
 texture = ExtResource("10_hm7uy")
 expand_mode = 1
 
+[node name="Label2" type="Label" parent="Dropzone/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.455
+anchor_right = 0.5
+anchor_bottom = 0.455
+offset_left = -100.5
+offset_top = -51.595
+offset_right = 96.5
+offset_bottom = 51.405
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_a64iy")
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
 [node name="Lady" type="TextureRect" parent="Dropzone"]
 layout_mode = 1
 anchors_preset = -1
@@ -126,24 +144,6 @@ offset_top = -329.64
 offset_right = 363.8
 offset_bottom = 397.36
 texture = ExtResource("11_vefhu")
-
-[node name="Label2" type="Label" parent="Dropzone/Lady"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.215
-anchor_top = 0.05
-anchor_right = 0.215
-anchor_bottom = 0.05
-offset_left = -98.305
-offset_top = -60.35
-offset_right = 98.695
-offset_bottom = 42.65
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_a64iy")
-theme_override_font_sizes/font_size = 25
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
 
 [node name="Draggables" type="Control" parent="."]
 layout_mode = 1

@@ -10,7 +10,7 @@ var required_kiwis := 3
 # Node references (based on your scene)
 @onready var timer_display = $Time/Label
 @onready var lady_zone = $Dropzone/Lady
-@onready var lady_label = $Dropzone/Lady/Label2
+@onready var lady_label = $Dropzone/Lady/TextureRect/Label2
 @onready var draggable_items = $Draggables
 @onready var game_timer: Timer
 

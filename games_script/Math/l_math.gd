@@ -40,6 +40,9 @@ func _ready():
 	completed_lollipops.clear()
 	current_lollipop_index = 0
 	
+	# Randomize lollipop number assignments
+	randomize_lollipop_numbers()
+	
 	if feedback_label:
 		original_feedback_text = feedback_label.text
 		feedback_label.text = "Tap the lollipops in order: 11, 12, 13, 14, 15"
@@ -47,6 +50,39 @@ func _ready():
 	start_timer()
 	Global.start_time = Time.get_ticks_msec()
 	setup_lollipop_handlers()
+
+func randomize_lollipop_numbers() -> void:
+	# Create a shuffled list of numbers 11-15
+	var numbers = [11, 12, 13, 14, 15]
+	numbers.shuffle()
+	
+	# Assign shuffled numbers to each lollipop
+	lollipop_number_mapping["lollipop1"] = numbers[0]
+	lollipop_number_mapping["lollipop2"] = numbers[1]
+	lollipop_number_mapping["lollipop3"] = numbers[2]
+	lollipop_number_mapping["lollipop4"] = numbers[3]
+	lollipop_number_mapping["lollipop5"] = numbers[4]
+	
+	# Update the lollipop label displays
+	update_lollipop_labels()
+	
+	# Debug: Print the randomized mapping
+	print("🍭 Randomized Lollipop Mapping:")
+	for lollipop_name in lollipop_number_mapping:
+		print("%s → %d" % [lollipop_name, lollipop_number_mapping[lollipop_name]])
+
+func update_lollipop_labels() -> void:
+	# Update label for each lollipop - adjust the path if your labels are named differently
+	if lollipop1 and lollipop1.has_node("Label"):
+		lollipop1.get_node("Label").text = str(lollipop_number_mapping["lollipop1"])
+	if lollipop2 and lollipop2.has_node("Label"):
+		lollipop2.get_node("Label").text = str(lollipop_number_mapping["lollipop2"])
+	if lollipop3 and lollipop3.has_node("Label"):
+		lollipop3.get_node("Label").text = str(lollipop_number_mapping["lollipop3"])
+	if lollipop4 and lollipop4.has_node("Label"):
+		lollipop4.get_node("Label").text = str(lollipop_number_mapping["lollipop4"])
+	if lollipop5 and lollipop5.has_node("Label"):
+		lollipop5.get_node("Label").text = str(lollipop_number_mapping["lollipop5"])
 
 func setup_lollipop_handlers():
 	if lollipop1:

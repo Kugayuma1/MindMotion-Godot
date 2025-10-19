@@ -1,9 +1,8 @@
-# DONUT MATCHING GAME CONTROLLER
-# Attach this to your main Control node
+# DONUT MATCHING GAME CONTROLLER WITH RANDOMIZED ASSIGNMENTS
 extends Control
 
 # Game settings
-var game_duration := 15 # seconds
+var game_duration := 15
 var time_remaining := 15
 var game_active := false
 var matches_completed := 0
@@ -21,11 +20,11 @@ var complete3_scene = preload("res://reward scene/Complete3.tscn")
 var retry_scene = preload("res://reward scene/Retry.tscn")
 
 # Tracking variables
-var donut_nodes = []  # All donut nodes
-var kid_nodes = []    # All kid nodes
-var original_positions = {}  # Store original positions for reset
-var kid_donut_mapping = {}   # Maps kid to their required donut type
-var completed_kids = []      # Kids who received correct donuts
+var donut_nodes = []
+var kid_nodes = []
+var original_positions = {}
+var kid_donut_mapping = {}  # Maps kid to their required donut type (randomized)
+var completed_kids = []
 
 # Game timer
 var game_timer: Timer
@@ -53,16 +52,42 @@ func setup_game():
 			donut_nodes.append(donut)
 			original_positions[donut.name] = donut.global_position
 	
-	# Get all kid nodes and set up their required donuts
+	# Get all kid nodes
 	for kid in dropzone.get_children():
 		if kid.name.to_lower().begins_with("kid"):
 			kid_nodes.append(kid)
-			setup_kid_requirements(kid)
 
-func setup_kid_requirements(kid: Control):
-	var kid_name_str = str(kid.name)
-	var donut_number = kid_name_str[kid_name_str.length() - 1]
-	kid_donut_mapping[kid.name] = "Donut" + donut_number
+func randomize_kid_requirements():
+	# Clear previous mapping
+	kid_donut_mapping.clear()
+	
+	# Create a list of available donuts
+	var available_donuts = donut_nodes.duplicate()
+	available_donuts.shuffle()
+	
+	# Assign each kid a random donut from the shuffled list
+	for i in range(kid_nodes.size()):
+		if i < available_donuts.size():
+			var kid = kid_nodes[i]
+			var donut = available_donuts[i]
+			kid_donut_mapping[kid.name] = donut.name
+			print("Kid %s wants: %s" % [kid.name, donut.name])
+			
+			# Update the visual donut shown in the kid's bubble
+			update_kid_visual(kid, donut)
+
+func update_kid_visual(kid: Control, donut: Control):
+	var texture_rect = kid.get_node_or_null("TextureRect")
+	if not texture_rect:
+		return
+	
+	var donut_bubble = texture_rect.get_node_or_null("Donut")
+	if donut_bubble and donut.has_meta("texture"):
+		# Copy the texture from the donut to the bubble
+		donut_bubble.texture = donut.get_meta("texture")
+	elif donut_bubble and donut is TextureRect:
+		# If donut is a TextureRect, copy its texture
+		donut_bubble.texture = donut.texture
 
 func initialize_donuts():
 	for donut in donut_nodes:
@@ -83,7 +108,7 @@ func setup_kid_dropzone(kid: Control):
 func _on_donut_input(event: InputEvent, donut: Control):
 	if not game_active:
 		return
-		
+	
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
@@ -103,7 +128,7 @@ func start_drag(donut: Control, mouse_pos: Vector2):
 func end_drag(donut: Control, mouse_pos: Vector2):
 	if dragging_donut != donut:
 		return
-		
+	
 	dragging_donut = null
 	donut.z_index = 0
 	var tween = create_tween()
@@ -130,7 +155,6 @@ func handle_donut_drop_on_kid(donut: Control, kid: Control):
 	else:
 		handle_wrong_match(donut, kid)
 
-# ✅ Fixed for TyLabel directly under TextureRect
 func handle_correct_match(donut: Control, kid: Control):
 	completed_kids.append(kid)
 	matches_completed += 1
@@ -148,7 +172,6 @@ func handle_correct_match(donut: Control, kid: Control):
 		ty_label.text = "Thank you!"
 		ty_label.move_to_front()
 
-		# Hide donut bubble but keep the TyLabel
 		if donut_bubble:
 			donut_bubble.visible = false
 	else:
@@ -194,6 +217,9 @@ func start_game():
 	matches_completed = 0
 	completed_kids.clear()
 	
+	# Randomize which donut each kid wants at the start of each game
+	randomize_kid_requirements()
+	
 	for kid in kid_nodes:
 		var texture_rect = kid.get_node_or_null("TextureRect")
 		var donut_bubble = texture_rect.get_node_or_null("Donut") if texture_rect else null
@@ -225,7 +251,7 @@ func _on_timer_tick():
 
 func update_timer_display():
 	if timer_display:
-		timer_display.text = "⏱️ " + str(time_remaining) + "s"
+		timer_display.text = " " + str(time_remaining) + "s"
 
 func win_game():
 	game_active = false
@@ -259,10 +285,10 @@ func show_completion_screen(success: bool, stars: int):
 	if has_node("Quitbtn"): $Quitbtn.visible = false
 	
 	if success:
-		print("🎉 Game completed successfully!")
+		print("Game completed successfully!")
 	else:
-		print("⏰ Game over - Time's up!")
-		
+		print("Game over - Time's up!")
+	
 	var popup_instance: Node = null
 	if success:
 		if stars == 3:
@@ -302,11 +328,9 @@ func restart_game():
 	
 	if timer_display:
 		timer_display.modulate = Color.WHITE
-		
-	
 	
 	start_game()
-		
+
 func _on_quitbtn_pressed() -> void:
 	var path = "res://scenes/Categories.tscn"
 	if ResourceLoader.exists(path):

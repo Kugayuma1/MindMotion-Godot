@@ -89,7 +89,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_1xqpm")
 theme_override_font_sizes/font_size = 55
 text = "Give the lady a
-4 Kiwis"
+3 Kiwis"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -101,20 +101,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Dropzone"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.628
-anchor_top = 0.353
-anchor_right = 0.628
-anchor_bottom = 0.353
-offset_left = -153.76
-offset_top = -126.24
-offset_right = 155.24
-offset_bottom = 182.76
-texture = ExtResource("6_gjfcu")
-expand_mode = 1
 
 [node name="Lady" type="TextureRect" parent="Dropzone"]
 layout_mode = 1
@@ -129,17 +115,31 @@ offset_right = 363.8
 offset_bottom = 397.36
 texture = ExtResource("7_a68gr")
 
-[node name="Label2" type="Label" parent="Dropzone/Lady"]
+[node name="TextureRect" type="TextureRect" parent="Dropzone/Lady"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.215
-anchor_top = 0.05
-anchor_right = 0.215
-anchor_bottom = 0.05
-offset_left = -98.305
-offset_top = -51.35
-offset_right = 98.695
-offset_bottom = 51.65
+anchor_left = 0.218
+anchor_top = 0.076
+anchor_right = 0.218
+anchor_bottom = 0.076
+offset_left = -154.486
+offset_top = -154.252
+offset_right = 154.514
+offset_bottom = 154.748
+texture = ExtResource("6_gjfcu")
+expand_mode = 1
+
+[node name="Label2" type="Label" parent="Dropzone/Lady/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.494
+anchor_top = 0.439
+anchor_right = 0.494
+anchor_bottom = 0.439
+offset_left = -98.646
+offset_top = -51.651
+offset_right = 98.354
+offset_bottom = 51.349
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_1xqpm")
 theme_override_font_sizes/font_size = 25
@@ -354,42 +354,56 @@ expand_mode = 1
 [node name="Kiwi1" type="TextureRect" parent="Draggables"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.314
-anchor_top = 0.842
-anchor_right = 0.314
-anchor_bottom = 0.842
-offset_left = -69.88
-offset_top = -70.36
-offset_right = 60.12
-offset_bottom = 59.64
+anchor_left = 0.297
+anchor_top = 0.839
+anchor_right = 0.297
+anchor_bottom = 0.839
+offset_left = -65.2401
+offset_top = -65.1201
+offset_right = 64.7599
+offset_bottom = 64.8799
 texture = ExtResource("11_bbq2r")
 expand_mode = 1
 
 [node name="Kiwi2" type="TextureRect" parent="Draggables"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.359
-anchor_top = 0.839
-anchor_right = 0.359
-anchor_bottom = 0.839
-offset_left = -64.28
-offset_top = -65.1201
-offset_right = 65.72
-offset_bottom = 64.8799
+anchor_left = 0.349
+anchor_top = 0.841
+anchor_right = 0.349
+anchor_bottom = 0.841
+offset_left = -64.08
+offset_top = -65.28
+offset_right = 65.92
+offset_bottom = 64.72
 texture = ExtResource("11_bbq2r")
 expand_mode = 1
 
 [node name="Kiwi3" type="TextureRect" parent="Draggables"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.413
-anchor_top = 0.842
-anchor_right = 0.413
-anchor_bottom = 0.842
-offset_left = -64.96
-offset_top = -65.36
-offset_right = 65.04
-offset_bottom = 64.64
+anchor_left = 0.401
+anchor_top = 0.844
+anchor_right = 0.401
+anchor_bottom = 0.844
+offset_left = -65.92
+offset_top = -65.52
+offset_right = 64.08
+offset_bottom = 64.48
+texture = ExtResource("11_bbq2r")
+expand_mode = 1
+
+[node name="Kiwi4" type="TextureRect" parent="Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.449
+anchor_top = 0.844
+anchor_right = 0.449
+anchor_bottom = 0.844
+offset_left = -64.0801
+offset_top = -64.52
+offset_right = 65.9199
+offset_bottom = 65.48
 texture = ExtResource("11_bbq2r")
 expand_mode = 1
 

@@ -248,6 +248,7 @@ vertical_alignment = 1
 [node name="LetterButtons" type="Control" parent="."]
 clip_contents = true
 layout_mode = 1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5

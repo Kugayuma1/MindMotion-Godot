@@ -4,11 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://diy6w4rj2rm83" path="res://assets/left_wave.png" id="2_b6vkk"]
 [ext_resource type="Texture2D" uid="uid://cwgfqyonunybf" path="res://assets/right_wave.png" id="3_qui8s"]
 [ext_resource type="Texture2D" uid="uid://8c8pdo5we8ap" path="res://assets/boy_avatar.png" id="4_ony6k"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="5_qui8s"]
 [ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="5_udxgc"]
 [ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="6_kojgu"]
-[ext_resource type="Texture2D" uid="uid://fmij2oschthx" path="res://assets/Cognitive Activities.png" id="7_nd4h3"]
-[ext_resource type="Texture2D" uid="uid://dd8suty8f15sv" path="res://assets/Motion Activities.png" id="8_b6vkk"]
-[ext_resource type="Texture2D" uid="uid://cv5k5ox84tc0a" path="res://assets/student_card_bg.png" id="9_qui8s"]
+[ext_resource type="Texture2D" uid="uid://dvuyrukbqx24d" path="res://assets/Buttons/Play.png" id="7_ony6k"]
+[ext_resource type="Texture2D" uid="uid://j4y18hph6tor" path="res://assets/Buttons/PlayHover.png" id="8_udxgc"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -76,7 +76,7 @@ offset_right = -58.0
 offset_bottom = 218.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("5_udxgc")
+theme_override_fonts/font = ExtResource("5_qui8s")
 theme_override_font_sizes/font_size = 50
 text = "name"
 
@@ -91,87 +91,90 @@ stretch_mode = 5
 
 [node name="CognitiveActivitiesButton" type="TextureButton" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -432.0
-offset_top = -223.0
-offset_right = -7.0
-offset_bottom = 215.0
+anchors_preset = -1
+anchor_left = 0.361
+anchor_top = 0.475
+anchor_right = 0.361
+anchor_bottom = 0.475
+offset_left = -212.12
+offset_top = -62.0
+offset_right = 212.88
+offset_bottom = 62.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("7_nd4h3")
+texture_normal = ExtResource("7_ony6k")
+texture_pressed = ExtResource("8_udxgc")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="CognitiveActivitiesButton"]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -159.5
-offset_top = -112.0
-offset_right = 159.5
-offset_bottom = -59.0
+anchor_bottom = 0.5
+offset_left = -163.5
+offset_top = -29.0
+offset_right = 155.5
+offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_udxgc")
 theme_override_font_sizes/font_size = 50
 text = "Cognitive Activities"
 
 [node name="MotionActivitiesButton" type="TextureButton" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 25.5
-offset_top = -219.0
-offset_right = 450.5
-offset_bottom = 219.0
+anchors_preset = -1
+anchor_left = 0.363
+anchor_top = 0.631
+anchor_right = 0.363
+anchor_bottom = 0.631
+offset_left = -212.96
+offset_top = -63.48
+offset_right = 212.04
+offset_bottom = 62.52
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("8_b6vkk")
+texture_normal = ExtResource("7_ony6k")
+texture_pressed = ExtResource("8_udxgc")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="MotionActivitiesButton"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -137.5
-offset_top = -112.0
-offset_right = 142.5
-offset_bottom = -59.0
+anchors_preset = -1
+anchor_left = 0.496
+anchor_top = 0.5
+anchor_right = 0.496
+anchor_bottom = 0.5
+offset_left = -139.8
+offset_top = -31.0
+offset_right = 140.2
+offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_udxgc")
 theme_override_font_sizes/font_size = 50
 text = "Motion Activities"
 
 [node name="VoiceActivitiesButton" type="TextureButton" parent="."]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -291.0
-offset_top = -284.0
-offset_right = 291.0
-offset_bottom = -73.0
+anchors_preset = -1
+anchor_left = 0.644
+anchor_top = 0.625
+anchor_right = 0.644
+anchor_bottom = 0.625
+offset_left = -230.48
+offset_top = -62.0
+offset_right = 194.52
+offset_bottom = 71.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(257, 157)
-texture_normal = ExtResource("9_qui8s")
+texture_normal = ExtResource("7_ony6k")
+texture_pressed = ExtResource("8_udxgc")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="VoiceActivitiesButton"]
@@ -187,42 +190,43 @@ offset_right = 107.0
 offset_bottom = 26.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_udxgc")
 theme_override_font_sizes/font_size = 50
 text = "Word Entries"
 
 [node name="PerformanceSummaryButton" type="TextureButton" parent="."]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 337.0
-offset_top = -279.0
-offset_right = 919.0
-offset_bottom = -68.0
+anchors_preset = -1
+anchor_left = 0.634
+anchor_top = 0.476
+anchor_right = 0.634
+anchor_bottom = 0.476
+offset_left = -211.28
+offset_top = -60.08
+offset_right = 211.72
+offset_bottom = 60.9199
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(257, 157)
-texture_normal = ExtResource("9_qui8s")
+texture_normal = ExtResource("7_ony6k")
+texture_pressed = ExtResource("8_udxgc")
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="PerformanceSummaryButton"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = -1
+anchor_left = 0.487
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 0.487
 anchor_bottom = 0.5
-offset_left = -73.0
-offset_top = -26.5
-offset_right = 81.0
-offset_bottom = 26.5
+offset_left = -77.001
+offset_top = -28.5
+offset_right = 76.999
+offset_bottom = 24.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("5_udxgc")
 theme_override_font_sizes/font_size = 50
 text = "Summary"

@@ -5,7 +5,7 @@ var correct_umbrella_order = [6, 7, 8, 9, 10]
 var current_umbrella_index = 0
 var completed_umbrellas = []
 
-# Mapping of umbrella nodes to their actual numbers (scene order: 6,7,10,9,8)
+# Mapping of umbrella nodes to their actual numbers
 var umbrella_number_mapping = {
 	"umbrella1": 6,
 	"umbrella2": 7,
@@ -40,6 +40,9 @@ func _ready():
 	completed_umbrellas.clear()
 	current_umbrella_index = 0
 	
+	# Randomize umbrella number assignments
+	randomize_umbrella_numbers()
+	
 	if feedback_label:
 		original_feedback_text = feedback_label.text
 		feedback_label.text = "Tap the umbrellas in order: 6, 7, 8, 9, 10"
@@ -47,6 +50,39 @@ func _ready():
 	start_timer()
 	Global.start_time = Time.get_ticks_msec()
 	setup_umbrella_handlers()
+
+func randomize_umbrella_numbers() -> void:
+	# Create a shuffled list of numbers 6-10
+	var numbers = [6, 7, 8, 9, 10]
+	numbers.shuffle()
+	
+	# Assign shuffled numbers to each umbrella
+	umbrella_number_mapping["umbrella1"] = numbers[0]
+	umbrella_number_mapping["umbrella2"] = numbers[1]
+	umbrella_number_mapping["umbrella3"] = numbers[2]
+	umbrella_number_mapping["umbrella4"] = numbers[3]
+	umbrella_number_mapping["umbrella5"] = numbers[4]
+	
+	# Update the umbrella label displays
+	update_umbrella_labels()
+	
+	# Debug: Print the randomized mapping
+	print("☂️ Randomized Umbrella Mapping:")
+	for umbrella_name in umbrella_number_mapping:
+		print("%s → %d" % [umbrella_name, umbrella_number_mapping[umbrella_name]])
+
+func update_umbrella_labels() -> void:
+	# Update label for each umbrella - adjust the path if your labels are named differently
+	if umbrella1 and umbrella1.has_node("Label"):
+		umbrella1.get_node("Label").text = str(umbrella_number_mapping["umbrella1"])
+	if umbrella2 and umbrella2.has_node("Label"):
+		umbrella2.get_node("Label").text = str(umbrella_number_mapping["umbrella2"])
+	if umbrella3 and umbrella3.has_node("Label"):
+		umbrella3.get_node("Label").text = str(umbrella_number_mapping["umbrella3"])
+	if umbrella4 and umbrella4.has_node("Label"):
+		umbrella4.get_node("Label").text = str(umbrella_number_mapping["umbrella4"])
+	if umbrella5 and umbrella5.has_node("Label"):
+		umbrella5.get_node("Label").text = str(umbrella_number_mapping["umbrella5"])
 
 func setup_umbrella_handlers():
 	if umbrella1:

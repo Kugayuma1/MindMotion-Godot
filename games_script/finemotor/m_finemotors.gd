@@ -185,9 +185,9 @@ func game_over():
 	show_completion_screen(false, 0)
 
 func calculate_star_rating() -> int:
-	if time_remaining >= 15:
+	if time_remaining >= 10:
 		return 3
-	elif time_remaining >= 8:
+	elif time_remaining >= 5:
 		return 2
 	else:
 		return 1

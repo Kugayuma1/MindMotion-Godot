@@ -5,7 +5,7 @@ var correct_truck_order = [16, 17, 18, 19, 20]
 var current_truck_index = 0
 var completed_trucks = []
 
-# Mapping of truck nodes to their actual numbers (scene order: 17,18,19,20,16)
+# Mapping of truck nodes to their actual numbers
 var truck_number_mapping = {
 	"truck1": 17,
 	"truck2": 18,
@@ -40,6 +40,9 @@ func _ready():
 	completed_trucks.clear()
 	current_truck_index = 0
 	
+	# Randomize truck number assignments
+	randomize_truck_numbers()
+	
 	if feedback_label:
 		original_feedback_text = feedback_label.text
 		feedback_label.text = "Tap the trucks in order: 16, 17, 18, 19, 20"
@@ -47,6 +50,39 @@ func _ready():
 	start_timer()
 	Global.start_time = Time.get_ticks_msec()
 	setup_truck_handlers()
+
+func randomize_truck_numbers() -> void:
+	# Create a shuffled list of numbers 16-20
+	var numbers = [16, 17, 18, 19, 20]
+	numbers.shuffle()
+	
+	# Assign shuffled numbers to each truck
+	truck_number_mapping["truck1"] = numbers[0]
+	truck_number_mapping["truck2"] = numbers[1]
+	truck_number_mapping["truck3"] = numbers[2]
+	truck_number_mapping["truck4"] = numbers[3]
+	truck_number_mapping["truck5"] = numbers[4]
+	
+	# Update the truck label displays
+	update_truck_labels()
+	
+	# Debug: Print the randomized mapping
+	print("🚚 Randomized Truck Mapping:")
+	for truck_name in truck_number_mapping:
+		print("%s → %d" % [truck_name, truck_number_mapping[truck_name]])
+
+func update_truck_labels() -> void:
+	# Update label for each truck - adjust the path if your labels are named differently
+	if truck1 and truck1.has_node("Label"):
+		truck1.get_node("Label").text = str(truck_number_mapping["truck1"])
+	if truck2 and truck2.has_node("Label"):
+		truck2.get_node("Label").text = str(truck_number_mapping["truck2"])
+	if truck3 and truck3.has_node("Label"):
+		truck3.get_node("Label").text = str(truck_number_mapping["truck3"])
+	if truck4 and truck4.has_node("Label"):
+		truck4.get_node("Label").text = str(truck_number_mapping["truck4"])
+	if truck5 and truck5.has_node("Label"):
+		truck5.get_node("Label").text = str(truck_number_mapping["truck5"])
 
 func setup_truck_handlers():
 	if truck1:
