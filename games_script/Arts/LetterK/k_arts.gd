@@ -102,8 +102,8 @@ func update_timer() -> void:
 			main_label.text = "⏰ Time's up!"
 			main_label.modulate = Color.RED
 		timer_active = false
-		ProgressManager.save_progress("kart", false)
-		Global.refresh_everything_after_stage_completion("kart", false)
+		ProgressManager.save_progress("art", false)
+		Global.refresh_everything_after_stage_completion("art", false)
 		game_over(false)
 		return
 	if timer_label:
@@ -213,8 +213,8 @@ func win_game():
 		main_label.modulate = Color.GREEN
 	if timer_label:
 		timer_label.text = "✅ Done in " + str(completion_time) + "s"
-	ProgressManager.save_progress("kart", true)
-	Global.refresh_everything_after_stage_completion("kart", true)
+	ProgressManager.save_progress("art", true)
+	Global.refresh_everything_after_stage_completion("art", true)
 	game_over(true)
 
 func game_over(success: bool):

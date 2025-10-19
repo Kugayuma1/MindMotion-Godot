@@ -1,0 +1,308 @@
+[gd_scene load_steps=25 format=3 uid="uid://b57rrkla6hdje"]
+
+[ext_resource type="Script" uid="uid://cq8o40kemrbkl" path="res://games_script/Arts/LetterS/s_arts.gd" id="1_6ut33"]
+[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_l55fc"]
+[ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="2_j2j0g"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_mpotc"]
+[ext_resource type="Texture2D" uid="uid://bhyxb4ja8l7gl" path="res://Game Assets/Arts/red.png" id="4_3cvi1"]
+[ext_resource type="Script" uid="uid://djswau4s4tf66" path="res://games_script/Arts/LetterS/node_2d_2.gd" id="4_xcqwv"]
+[ext_resource type="Texture2D" uid="uid://c8jfigrl7wxu8" path="res://Game Assets/Arts/yellow.png" id="5_80lpw"]
+[ext_resource type="Script" uid="uid://bxb63enn87ero" path="res://games_script/Arts/LetterS/polygon_2d.gd" id="5_k0edh"]
+[ext_resource type="Texture2D" uid="uid://qckic7o6mwpc" path="res://Game Assets/Arts/blue.png" id="6_i3e1c"]
+[ext_resource type="Script" uid="uid://dkncvf3r1nktw" path="res://games_script/Arts/LetterS/polygon_2d_2.gd" id="7_io34p"]
+[ext_resource type="Texture2D" uid="uid://cioiyt0bdivhf" path="res://Game Assets/Arts/2 (1).png" id="7_q4v2y"]
+[ext_resource type="Texture2D" uid="uid://b4fcft4nhtcia" path="res://Game Assets/Arts/subt 1.png" id="8_dlk6m"]
+[ext_resource type="Script" uid="uid://i2ugsnydin0j" path="res://games_script/Arts/LetterS/polygon_2d_3.gd" id="8_thqfq"]
+[ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="9_8ve5l"]
+[ext_resource type="Script" uid="uid://cganouhriv1mb" path="res://games_script/Arts/LetterS/polygon_2d_4.gd" id="9_vyudp"]
+[ext_resource type="Texture2D" uid="uid://b84uj3bj1r812" path="res://Game Assets/Arts/MathEbg (32).png" id="10_2ytcr"]
+[ext_resource type="Script" uid="uid://c2y6c3lljigg1" path="res://games_script/Arts/LetterS/polygon_2d_5.gd" id="10_xc0i6"]
+[ext_resource type="Script" uid="uid://bubo8t2dlu7vi" path="res://games_script/Arts/LetterS/polygon_2d_6.gd" id="11_j52jn"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="11_qeftw"]
+[ext_resource type="Script" uid="uid://b6imw7xcygik8" path="res://games_script/Arts/LetterS/polygon_2d_7.gd" id="12_y8hsr"]
+[ext_resource type="Script" uid="uid://bmnu7una5q2xr" path="res://games_script/Arts/LetterS/texture_button.gd" id="14_4bc48"]
+[ext_resource type="Script" uid="uid://l5y388nwl4n7" path="res://games_script/Arts/LetterS/texture_button_2.gd" id="16_1ivs1"]
+[ext_resource type="Script" uid="uid://d3t2xqw1k111s" path="res://games_script/Arts/LetterS/texture_button_3.gd" id="18_rxqy5"]
+[ext_resource type="Script" uid="uid://0td1yow0k80t" path="res://games_script/Arts/LetterS/texture_button_4.gd" id="20_8aqv2"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6ut33")
+
+[node name="Bg" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_l55fc")
+expand_mode = 1
+
+[node name="paper" type="TextureRect" parent="."]
+offset_left = 276.0
+offset_top = 209.0
+offset_right = 1684.0
+offset_bottom = 1001.0
+texture = ExtResource("2_j2j0g")
+expand_mode = 1
+
+[node name="Node2D2" type="Node2D" parent="."]
+script = ExtResource("4_xcqwv")
+
+[node name="Node2D" type="Node2D" parent="Node2D2"]
+
+[node name="Polygon2D" type="Polygon2D" parent="Node2D2/Node2D"]
+polygon = PackedVector2Array(964, 370, 943, 358, 934, 335, 936, 309, 944, 287, 961, 278, 981, 281, 998, 289, 1016, 302, 1027, 318, 1021, 333, 1025, 342, 1027, 360, 1025, 382, 1024, 407, 1026, 427, 1024, 439, 1009, 444, 980, 448, 970, 441, 969, 414, 972, 377)
+script = ExtResource("5_k0edh")
+
+[node name="Sub" type="Label" parent="Node2D2/Node2D/Polygon2D"]
+z_index = 25
+offset_left = 977.0
+offset_top = 367.0
+offset_right = 1018.0
+offset_bottom = 408.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_mpotc")
+theme_override_font_sizes/font_size = 35
+text = "1"
+horizontal_alignment = 1
+justification_flags = 171
+
+[node name="Polygon2D2" type="Polygon2D" parent="Node2D2/Node2D"]
+polygon = PackedVector2Array(870, 558, 871, 526, 888, 488, 918, 464, 944, 451, 974, 443, 1005, 443, 1034, 448, 1060, 457, 1084, 474, 1105, 492, 1120, 520, 1125, 555, 1106, 555, 1058, 545, 1019, 542, 975, 541, 915, 546, 887, 555)
+script = ExtResource("7_io34p")
+
+[node name="SUb" type="Label" parent="Node2D2/Node2D/Polygon2D2"]
+z_index = 25
+offset_left = 975.0
+offset_top = 467.0
+offset_right = 1020.0
+offset_bottom = 509.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_mpotc")
+theme_override_font_sizes/font_size = 35
+text = "2"
+horizontal_alignment = 1
+justification_flags = 171
+
+[node name="Polygon2D3" type="Polygon2D" parent="Node2D2/Node2D"]
+polygon = PackedVector2Array(803, 598, 814, 626, 818, 655, 825, 696, 824, 732, 822, 744, 821, 756, 840, 765, 940, 794, 1051, 800, 1171, 772, 1258, 731, 1253, 680, 1222, 618, 1155, 572, 1096, 553, 1036, 539, 970, 542, 908, 547, 838, 570, 806, 585)
+script = ExtResource("8_thqfq")
+
+[node name="Sub" type="Label" parent="Node2D2/Node2D/Polygon2D3"]
+z_index = 25
+offset_left = 1125.0
+offset_top = 622.0
+offset_right = 1149.0
+offset_bottom = 663.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_mpotc")
+theme_override_font_sizes/font_size = 35
+text = "4"
+horizontal_alignment = 1
+justification_flags = 171
+
+[node name="Polygon2D4" type="Polygon2D" parent="Node2D2/Node2D"]
+polygon = PackedVector2Array(916, 696, 917, 657, 932, 611, 952, 592, 969, 587, 986, 582, 1013, 583, 1043, 598, 1066, 626, 1071, 647, 1075, 667, 1070, 699, 1051, 734, 1030, 748, 998, 762, 976, 755, 947, 738, 929, 719)
+script = ExtResource("9_vyudp")
+
+[node name="Sub" type="Label" parent="Node2D2/Node2D/Polygon2D4"]
+z_index = 25
+offset_left = 920.0
+offset_top = 651.0
+offset_right = 1069.0
+offset_bottom = 692.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_mpotc")
+theme_override_font_sizes/font_size = 35
+text = "3"
+horizontal_alignment = 1
+justification_flags = 171
+
+[node name="Polygon2D5" type="Polygon2D" parent="Node2D2/Node2D"]
+polygon = PackedVector2Array(804, 594, 816, 624, 822, 667, 822, 726, 816, 779, 807, 825, 788, 812, 764, 792, 742, 755, 728, 718, 737, 666, 767, 628)
+script = ExtResource("10_xc0i6")
+
+[node name="Sub" type="Label" parent="Node2D2/Node2D/Polygon2D5"]
+z_index = 25
+offset_left = 737.0
+offset_top = 682.0
+offset_right = 816.0
+offset_bottom = 739.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_mpotc")
+theme_override_font_sizes/font_size = 35
+text = "2"
+horizontal_alignment = 1
+justification_flags = 171
+
+[node name="Polygon2D6" type="Polygon2D" parent="Node2D2/Node2D"]
+polygon = PackedVector2Array(818, 757, 805, 831, 881, 868, 983, 884, 1060, 877, 1136, 860, 1202, 819, 1240, 778, 1255, 731, 1216, 752, 1155, 780, 1089, 795, 997, 800, 885, 778, 853, 771)
+script = ExtResource("11_j52jn")
+
+[node name="Sub" type="Label" parent="Node2D2/Node2D/Polygon2D6"]
+z_index = 25
+offset_left = 958.0
+offset_top = 811.0
+offset_right = 1051.0
+offset_bottom = 878.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_mpotc")
+theme_override_font_sizes/font_size = 35
+text = "3"
+horizontal_alignment = 1
+justification_flags = 171
+
+[node name="Polygon2D7" type="Polygon2D" parent="Node2D2/Node2D"]
+polygon = PackedVector2Array(1202, 599, 1219, 568, 1243, 535, 1280, 518, 1292, 518, 1311, 536, 1314, 575, 1301, 646, 1259, 713, 1303, 804, 1305, 870, 1292, 898, 1277, 906, 1254, 903, 1225, 868, 1206, 832, 1199, 818, 1237, 778, 1254, 742, 1257, 719, 1252, 670, 1239, 646, 1213, 614)
+script = ExtResource("12_y8hsr")
+
+[node name="Sub" type="Label" parent="Node2D2/Node2D/Polygon2D7"]
+z_index = 25
+offset_left = 1215.0
+offset_top = 811.0
+offset_right = 1286.0
+offset_bottom = 852.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_mpotc")
+theme_override_font_sizes/font_size = 35
+text = "1"
+horizontal_alignment = 1
+justification_flags = 171
+
+[node name="Node2D2" type="Node2D" parent="Node2D2/Node2D"]
+
+[node name="TextureButton" type="TextureButton" parent="Node2D2/Node2D/Node2D2"]
+z_index = 15
+custom_minimum_size = Vector2(350, 150)
+anchors_preset = -1
+anchor_left = 0.23
+anchor_top = 0.687
+anchor_right = 0.298
+anchor_bottom = 1.0
+offset_left = 1571.0
+offset_top = 377.0
+offset_right = 1921.0
+offset_bottom = 527.0
+texture_normal = ExtResource("4_3cvi1")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("14_4bc48")
+
+[node name="TextureButton2" type="TextureButton" parent="Node2D2/Node2D/Node2D2"]
+z_index = 15
+custom_minimum_size = Vector2(350, 150)
+anchors_preset = -1
+anchor_left = 0.311
+anchor_top = 0.757
+anchor_right = 0.439
+anchor_bottom = 1.0
+offset_left = 1571.0
+offset_top = 512.0
+offset_right = 1921.0
+offset_bottom = 662.0
+texture_normal = ExtResource("5_80lpw")
+stretch_mode = 0
+script = ExtResource("16_1ivs1")
+
+[node name="TextureButton3" type="TextureButton" parent="Node2D2/Node2D/Node2D2"]
+z_index = 15
+custom_minimum_size = Vector2(350, 150)
+anchors_preset = -1
+anchor_left = 0.418
+anchor_top = 0.76
+anchor_right = 0.545
+anchor_bottom = 1.0
+offset_left = 1575.0
+offset_top = 639.0
+offset_right = 1925.0
+offset_bottom = 789.0
+texture_normal = ExtResource("6_i3e1c")
+stretch_mode = 0
+script = ExtResource("18_rxqy5")
+
+[node name="TextureButton4" type="TextureButton" parent="Node2D2/Node2D/Node2D2"]
+z_index = 15
+custom_minimum_size = Vector2(350, 150)
+anchors_preset = -1
+anchor_left = 0.527
+anchor_top = 0.755
+anchor_right = 0.655
+anchor_bottom = 1.0
+offset_left = 1578.0
+offset_top = 767.0
+offset_right = 1928.0
+offset_bottom = 917.0
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = ExtResource("7_q4v2y")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("20_8aqv2")
+
+[node name="label_main" type="Label" parent="Node2D2/Node2D/Node2D2"]
+z_index = 25
+offset_left = 727.0
+offset_top = 109.0
+offset_right = 1258.0
+offset_bottom = 212.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_mpotc")
+theme_override_font_sizes/font_size = 35
+text = "Color By Number:
+Elf"
+horizontal_alignment = 1
+justification_flags = 171
+
+[node name="Wood" type="TextureRect" parent="Node2D2/Node2D"]
+z_index = 14
+offset_left = 660.0
+offset_top = 62.0
+offset_right = 1312.0
+offset_bottom = 252.0
+texture = ExtResource("8_dlk6m")
+
+[node name="TextureRect5" type="TextureRect" parent="Node2D2/Node2D"]
+offset_left = 1676.0
+offset_top = 5.0
+offset_right = 1902.0
+offset_bottom = 220.0
+texture = ExtResource("9_8ve5l")
+expand_mode = 1
+
+[node name="TimerLabel" type="Label" parent="Node2D2/Node2D"]
+z_index = 30
+offset_left = 1672.0
+offset_top = 22.0
+offset_right = 1903.0
+offset_bottom = 254.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_mpotc")
+theme_override_font_sizes/font_size = 50
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 171
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 454.0
+offset_top = 257.0
+offset_right = 1530.0
+offset_bottom = 925.0
+texture = ExtResource("10_2ytcr")
+expand_mode = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+offset_left = 47.0
+offset_top = 45.0
+offset_right = 149.0
+offset_bottom = 154.0
+texture_normal = ExtResource("11_qeftw")
+ignore_texture_size = true
+stretch_mode = 0
