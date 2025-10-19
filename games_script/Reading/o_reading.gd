@@ -104,6 +104,8 @@ func check_answer(answer: String, button: TextureButton) -> void:
 			if selected_correct.size() == correct_answers.size():
 				feedback_label.text = "🎉 Good job! You found them all!"
 				timer_active = false
+				ProgressManager.save_progress("reading", true)
+				Global.refresh_everything_after_stage_completion("reading", true)
 				game_over(true)
 			else:
 				await get_tree().create_timer(1.5).timeout
