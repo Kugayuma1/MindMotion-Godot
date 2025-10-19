@@ -14,19 +14,29 @@ extends Control
 const FIREBASE_API_KEY = "AIzaSyC7bPi7suzy8DmMFSgP7n090t7zHXzI5Bk"
 const FIRESTORE_URL = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents"
 
-enum Stage { SIGNUP, STORE_DATA }
+enum Stage { SIGNUP, SEND_VERIFICATION, STORE_DATA }
 var current_stage: Stage
 var temp_uid = ""
 var temp_id_token = ""
 var temp_refresh_token = ""
+var temp_email = ""
 var loading_dialog: AcceptDialog = null
 var dialog_theme = preload("res://assets/main_theme.tres")
 var eye_open_icon = preload("res://assets/eye.png")
 var eye_closed_icon = preload("res://assets/eyeofthetiger.png")
 
+# Email verification
+var verification_check_timer: Timer = null
+var verification_attempts = 0
+const MAX_VERIFICATION_ATTEMPTS = 60  # Check for 5 minutes (every 5 seconds)
+
 # Terms and Privacy tracking
 var terms_read = false
 var privacy_read = false
+
+# Debug helper
+func debug_print(message: String, icon: String = "📋"):
+	print("%s %s" % [icon, message])
 
 func _ready():
 	setup_ui()
@@ -37,6 +47,12 @@ func _ready():
 	
 	if hidden_button:
 		hidden_button.texture_normal = eye_closed_icon
+	
+	# Setup verification timer
+	verification_check_timer = Timer.new()
+	add_child(verification_check_timer)
+	verification_check_timer.timeout.connect(_check_email_verification)
+	
 	# Restore data if returning from terms/privacy screens
 	restore_signup_data()
 
@@ -47,18 +63,15 @@ func setup_ui():
 	# Disable agreement checkbox initially but preserve its styling
 	agreement_checkbox.disabled = true
 	agreement_checkbox.button_pressed = false
-	# Keep the checkbox visually unchanged when disabled
 	agreement_checkbox.modulate = Color.WHITE
 
 func setup_terms_privacy_buttons():
-	# Connect to your existing buttons
 	if terms_button:
 		terms_button.pressed.connect(_on_terms_button_pressed)
 	if privacy_button:
 		privacy_button.pressed.connect(_on_privacy_button_pressed)
 
 func restore_signup_data():
-	# Restore form data when returning from terms/privacy screens
 	if Global.temp_signup_data and Global.temp_signup_data.get("return_scene") == "teacher_signup":
 		name_input.text = Global.temp_signup_data.get("name", "")
 		email_input.text = Global.temp_signup_data.get("email", "")
@@ -67,11 +80,9 @@ func restore_signup_data():
 		terms_read = Global.temp_signup_data.get("terms_read", false)
 		privacy_read = Global.temp_signup_data.get("privacy_read", false)
 		update_agreement_checkbox()
-		# Clear the temp data
 		Global.temp_signup_data = {}
 
 func _on_terms_button_pressed():
-	# Store current signup data and navigate to terms screen
 	Global.temp_signup_data = {
 		"name": name_input.text,
 		"email": email_input.text,
@@ -84,7 +95,6 @@ func _on_terms_button_pressed():
 	get_tree().change_scene_to_file("res://scenes/TermsScreen.tscn")
 
 func _on_privacy_button_pressed():
-	# Store current signup data and navigate to privacy screen
 	Global.temp_signup_data = {
 		"name": name_input.text,
 		"email": email_input.text,
@@ -97,14 +107,12 @@ func _on_privacy_button_pressed():
 	get_tree().change_scene_to_file("res://scenes/PrivacyScreen.tscn")
 
 func update_agreement_checkbox():
-	# Enable the main agreement checkbox only if both terms and privacy are read
 	agreement_checkbox.disabled = not (terms_read and privacy_read)
-	# Always keep the checkbox visually normal
 	agreement_checkbox.modulate = Color.WHITE
 	
 	if terms_read and privacy_read:
 		agreement_checkbox.button_pressed = true
-		print("Agreement checkbox enabled and checked")
+		debug_print("Agreement checkbox enabled and checked", "✅")
 	else:
 		agreement_checkbox.button_pressed = false
 
@@ -123,10 +131,11 @@ func _on_signup_pressed():
 	
 	show_loading("Creating your account...")
 	current_stage = Stage.SIGNUP
+	temp_email = email_input.text.strip_edges()
 	
 	var signup_url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + FIREBASE_API_KEY
 	var payload = {
-		"email": email_input.text.strip_edges(),
+		"email": temp_email,
 		"password": password_input.text.strip_edges(),
 		"returnSecureToken": true
 	}
@@ -170,99 +179,196 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 	
 	match current_stage:
 		Stage.SIGNUP: handle_signup_response(response_code, response)
+		Stage.SEND_VERIFICATION: handle_send_verification_response(response_code, response)
 		Stage.STORE_DATA: handle_store_data_response(response_code, response)
 
 func handle_signup_response(response_code: int, response: Dictionary):
 	if response_code == 200:
-		print("Teacher signup successful")
+		debug_print("Teacher signup successful", "✅")
 		temp_uid = response["localId"]
 		temp_id_token = response["idToken"]
 		temp_refresh_token = response.get("refreshToken", "")
 		
-		# Set user info with Firebase UID
-		Global.set_user_type("teacher")
-		print("DEBUG: User type set to: ", Global.user_type)
-		
-		Global.set_user_info(temp_uid, response["email"], name_input.text, temp_id_token, temp_refresh_token)
-		print("DEBUG: User info set - ID: ", temp_uid)
-		print("DEBUG: Is authenticated: ", Global.is_authenticated())
-		print("DEBUG: Students cache ready: ", Global.is_students_cache_ready())
-		
-		update_loading("Creating your profile...")
-		current_stage = Stage.STORE_DATA
-		create_teacher_document()
+		# Now send verification email
+		update_loading("Sending verification email...")
+		current_stage = Stage.SEND_VERIFICATION
+		send_verification_email()
 	else:
 		hide_loading()
 		handle_signup_error(response)
 
+func send_verification_email():
+	var verify_url = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" + FIREBASE_API_KEY
+	var payload = {
+		"requestType": "VERIFY_EMAIL",
+		"idToken": temp_id_token
+	}
+	
+	# Use direct request without extra authentication headers
+	var headers = ["Content-Type: application/json"]
+	http_request.request(verify_url, headers, HTTPClient.METHOD_POST, JSON.stringify(payload))
+
+func handle_send_verification_response(response_code: int, response: Dictionary):
+	if response_code == 200:
+		debug_print("Verification email sent successfully", "✅")
+		show_verification_dialog()
+	else:
+		debug_print("Failed to send verification email: %s" % str(response), "❌")
+		hide_loading()
+		show_error_dialog("Failed to send verification email. Please try again.")
+
+func show_verification_dialog():
+	hide_loading()
+	
+	var verify_dialog = AcceptDialog.new()
+	verify_dialog.name = "VerificationDialog"
+	add_child(verify_dialog)
+	verify_dialog.theme = dialog_theme
+	verify_dialog.title = "Email Verification Required"
+	verify_dialog.dialog_text = "A verification email has been sent to:\n%s\n\nPlease check your inbox and click the verification link.\n\nThis window will automatically continue once your email is verified.\n\n(This may take a few moments)" % temp_email
+	verify_dialog.get_ok_button().visible = false
+	verify_dialog.min_size = Vector2(400, 200)
+	verify_dialog.size = Vector2(400, 200)
+	
+	# Add a centered cancel button
+	var cancel_button = verify_dialog.add_button("Cancel Signup", false, "cancel")
+	cancel_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	
+	verify_dialog.custom_action.connect(func(action):
+		if action == "cancel":
+			cancel_verification()
+	)
+	
+	verify_dialog.popup_centered()
+	
+	# Start checking for verification
+	verification_attempts = 0
+	verification_check_timer.wait_time = 5.0  # Check every 5 seconds
+	verification_check_timer.start()
+
+func _check_email_verification():
+	verification_attempts += 1
+	
+	if verification_attempts > MAX_VERIFICATION_ATTEMPTS:
+		verification_check_timer.stop()
+		show_error_dialog("Email verification timed out. Please try signing up again.")
+		cancel_verification()
+		return
+	
+	debug_print("Checking email verification status (attempt %d/%d)" % [verification_attempts, MAX_VERIFICATION_ATTEMPTS], "🔍")
+	
+	# Get account info to check verification status
+	var account_url = "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=" + FIREBASE_API_KEY
+	var payload = {
+		"idToken": temp_id_token
+	}
+	
+	var temp_http = HTTPRequest.new()
+	add_child(temp_http)
+	temp_http.request_completed.connect(func(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
+		handle_verification_check_response(response_code, body, temp_http)
+	)
+	
+	var headers = ["Content-Type: application/json"]
+	temp_http.request(account_url, headers, HTTPClient.METHOD_POST, JSON.stringify(payload))
+
+func handle_verification_check_response(response_code: int, body: PackedByteArray, temp_http: HTTPRequest):
+	var response = JSON.parse_string(body.get_string_from_utf8())
+	
+	if response_code == 200 and response.has("users") and response.users.size() > 0:
+		var user_data = response.users[0]
+		var is_verified = user_data.get("emailVerified", false)
+		
+		if is_verified:
+			debug_print("Email verified successfully!", "✅")
+			verification_check_timer.stop()
+			
+			# Close verification dialog
+			var verify_dialog = get_node_or_null("VerificationDialog")
+			if verify_dialog:
+				verify_dialog.queue_free()
+			
+			# Continue with account creation
+			show_loading("Email verified! Creating your profile...")
+			proceed_with_account_creation()
+		else:
+			debug_print("Email not yet verified, will check again...", "⏳")
+	
+	temp_http.queue_free()
+
+func proceed_with_account_creation():
+	# Set user info with Firebase UID
+	Global.set_user_type("teacher")
+	debug_print("User type set to: %s" % Global.user_type, "👤")
+	
+	Global.set_user_info(temp_uid, temp_email, name_input.text, temp_id_token, temp_refresh_token)
+	debug_print("User info set - ID: %s" % temp_uid, "✅")
+	debug_print("Is authenticated: %s" % str(Global.is_authenticated()), "🔐")
+	
+	current_stage = Stage.STORE_DATA
+	create_teacher_document()
+
+func cancel_verification():
+	verification_check_timer.stop()
+	
+	# Delete the unverified account
+	delete_unverified_account()
+	
+	# Close verification dialog
+	var verify_dialog = get_node_or_null("VerificationDialog")
+	if verify_dialog:
+		verify_dialog.queue_free()
+	
+	# Re-enable form
+	set_inputs_enabled(true)
+
+func delete_unverified_account():
+	var delete_url = "https://identitytoolkit.googleapis.com/v1/accounts:delete?key=" + FIREBASE_API_KEY
+	var payload = {
+		"idToken": temp_id_token
+	}
+	
+	var temp_http = HTTPRequest.new()
+	add_child(temp_http)
+	temp_http.request_completed.connect(func(result, response_code, headers, body):
+		debug_print("Unverified account cleanup: %s" % ("success" if response_code == 200 else "failed"), "🗑️")
+		temp_http.queue_free()
+	)
+	
+	var headers = ["Content-Type: application/json"]
+	temp_http.request(delete_url, headers, HTTPClient.METHOD_POST, JSON.stringify(payload))
 
 func handle_store_data_response(response_code: int, response: Dictionary):
 	if response_code == 200:
-		print("Teacher data stored successfully.")
+		debug_print("Teacher data stored successfully", "✅")
+		
 		# Hide the AcceptDialog
 		hide_loading()
 		
 		# Show the global loading screen
 		LoadingScreen.show_loading()
-		# Force fresh fetch
+		
+		# Force fresh fetch of students
 		Global.refresh_students_cache()
 		
-		# ✅ Always wait for students cache (even if it was already ready)
+		# Wait for students cache to load
 		await Global.wait_for_students_cache()
 		
-		print("DEBUG: Students loaded:", Global.get_students_cache().size())
+		debug_print("Students loaded: %d" % Global.get_students_cache().size(), "👥")
 		get_tree().change_scene_to_file("res://scenes/TeacherMain.tscn")
 	else:
 		hide_loading()
 		show_error_dialog("Failed to create your profile. Please try again.")
 
-func await_students_cache_then_proceed():
-	print("DEBUG: Starting await_students_cache_then_proceed")
-	print("DEBUG: User type: ", Global.user_type)
-	print("DEBUG: Is authenticated: ", Global.is_authenticated())
-	
-	# Connect to the students cache signal if not already connected
-	if not Global.students_cache_updated.is_connected(_on_students_loaded):
-		Global.students_cache_updated.connect(_on_students_loaded)
-		print("DEBUG: Connected to students_cache_updated signal")
-	
-	# ALWAYS force a fresh fetch during signup, don't rely on potentially stale cache
-	if Global.user_type == "teacher" and Global.is_authenticated():
-		print("DEBUG: Forcing fresh students cache fetch during signup...")
-		Global.refresh_students_cache()  # This will trigger students_cache_updated when done
-	else:
-		print("DEBUG: Authentication or user type issue")
-		hide_loading()
-		show_error_dialog("Authentication issue. Please try logging in again.")
-
-func _on_students_loaded():
-	print("DEBUG: _on_students_loaded called")
-	var students = Global.get_students_cache()
-	print("DEBUG: Students loaded - count: ", students.size())
-	
-	# Print first few students for debugging
-	for i in range(min(3, students.size())):
-		print("DEBUG: Student %d: %s" % [i, students[i].name])
-	
-	
-	# Disconnect the signal to avoid duplicate calls
-	if Global.students_cache_updated.is_connected(_on_students_loaded):
-		Global.students_cache_updated.disconnect(_on_students_loaded)
-		print("DEBUG: Disconnected from students_cache_updated signal")
-	
-	# Now proceed to the main teacher dashboard
-	print("DEBUG: Proceeding to TeacherMain.tscn with %d students" % students.size())
-	get_tree().change_scene_to_file("res://scenes/TeacherMain.tscn")
-
 func create_teacher_document():
-	# Use Firebase's internal UID as document ID
 	var doc_url = "%s/users/%s" % [FIRESTORE_URL, temp_uid]
 	var teacher_data = {
 		"fields": {
 			"name": {"stringValue": name_input.text.strip_edges()},
-			"email": {"stringValue": email_input.text.strip_edges()},
+			"email": {"stringValue": temp_email},
 			"userType": {"stringValue": "teacher"},
-			"createdAt": {"integerValue": str(int(Time.get_unix_time_from_system()))}
+			"createdAt": {"integerValue": str(int(Time.get_unix_time_from_system()))},
+			"emailVerified": {"booleanValue": true}
 		}
 	}
 	
@@ -299,7 +405,7 @@ func show_loading(message: String):
 	loading_dialog.title = "Creating Account"
 	loading_dialog.get_ok_button().visible = false
 	loading_dialog.close_requested.connect(_on_loading_dialog_close)
-	loading_dialog.min_size = Vector2(350, 150)  # Width x Height
+	loading_dialog.min_size = Vector2(350, 150)
 	loading_dialog.size = Vector2(350, 150)
 	loading_dialog.popup_centered()
 
@@ -330,7 +436,7 @@ func show_error_dialog(message: String):
 	error_dialog.title = "Error"
 	error_dialog.confirmed.connect(_on_error_dialog_closed.bind(error_dialog))
 	error_dialog.close_requested.connect(_on_error_dialog_closed.bind(error_dialog))
-	error_dialog.min_size = Vector2(350, 150)  # Width x Height
+	error_dialog.min_size = Vector2(350, 150)
 	error_dialog.size = Vector2(350, 150)	
 	error_dialog.popup_centered()
 
@@ -347,7 +453,7 @@ func _on_hide_pressed() -> void:
 	
 	if hide_button:
 		if password_input.secret:
-			hide_button.texture_normal = eye_closed_icon  # Password hidden, show crossed eye
+			hide_button.texture_normal = eye_closed_icon
 		else:
 			hide_button.texture_normal = eye_open_icon
 
@@ -355,7 +461,7 @@ func _on_hidden_pressed() -> void:
 	confirm_password_input.secret = !confirm_password_input.secret
 	
 	if hidden_button:
-		if password_input.secret:
-			hidden_button.texture_normal = eye_closed_icon  # Password hidden, show crossed eye
+		if confirm_password_input.secret:
+			hidden_button.texture_normal = eye_closed_icon
 		else:
 			hidden_button.texture_normal = eye_open_icon

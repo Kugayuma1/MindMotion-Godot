@@ -7,6 +7,7 @@ extends Control
 @onready var cognitive_activities_button = $CognitiveActivitiesButton
 @onready var motion_activities_button = $MotionActivitiesButton
 @onready var voice_activities_button = $VoiceActivitiesButton
+@onready var performance_button = $PerformanceSummaryButton
 
 # Preload textures
 var boy_avatar = preload("res://assets/boy_avatar.png")
@@ -39,6 +40,7 @@ func _ready():
 	voice_activities_button.pressed.connect(_on_voice_activities_pressed)
 	cognitive_activities_button.pressed.connect(_on_cognitive_activities_pressed)
 	motion_activities_button.pressed.connect(_on_motion_activities_pressed)
+	performance_button.pressed.connect(_on_performance_summary_pressed)
 
 func setup_ui():
 	# Set student name
@@ -65,5 +67,9 @@ func _on_voice_activities_pressed():
 	print("Opening voice activities for student: %s" % current_student_data.name)
 	get_tree().change_scene_to_file("res://dashboard/scene/VoiceEntries.tscn")
 
+func _on_performance_summary_pressed():
+	print("Opening performance summary for student: %s" % current_student_data.name)
+	get_tree().change_scene_to_file("res://dashboard/scene/PerformanceSummary.tscn")
+	
 func go_back_to_student_list():
 	get_tree().change_scene_to_file("res://dashboard/scene/StudentList.tscn")

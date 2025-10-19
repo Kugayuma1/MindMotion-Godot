@@ -1,0 +1,71 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfuwx3qwkm7fa"]
+
+[ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="1_r5ukn"]
+[ext_resource type="Script" uid="uid://bo2c2m6r4wqlf" path="res://dashboard/script/performance_summary.gd" id="1_wakw2"]
+[ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="2_wakw2"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wakw2")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StudentNameLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -86.0
+offset_top = 64.0
+offset_right = 89.0
+offset_bottom = 169.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_r5ukn")
+theme_override_font_sizes/font_size = 100
+text = "name"
+
+[node name="BackButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 38.0
+offset_right = 153.0
+offset_bottom = 136.0
+texture_normal = ExtResource("2_wakw2")
+stretch_mode = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -659.0
+offset_top = -377.0
+offset_right = 659.0
+offset_bottom = 441.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SummaryContainer" type="VBoxContainer" parent="ScrollContainer/CenterContainer"]
+custom_minimum_size = Vector2(1300, 0)
+layout_mode = 2
+alignment = 1
