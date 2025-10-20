@@ -18,6 +18,8 @@ var cognitive_data: Dictionary = {}
 var motion_data: Dictionary = {}
 var voice_data: Dictionary = {}
 var all_data_loaded: int = 0  # Track how many datasets are loaded
+var current_month_filter: String = ""  # Format: "2025-10"
+var available_months: Array = []  # List of all months with data
 
 func _ready():
 	current_student_data = Global.selected_student_data
@@ -287,33 +289,313 @@ func create_voice_summary():
 		summary_scroll.add_child(no_data)
 		return
 	
-	# Count word frequency
-	var word_frequency = {}
+	# Create words per day timeline chart with month filtering
+	create_words_timeline_chart()
+
+func create_words_timeline_chart():
+	# Prepare available months from voice data
+	prepare_available_months()
+	
+	# If no current filter set, default to current month
+	if current_month_filter == "":
+		var today = Time.get_datetime_dict_from_system()
+		current_month_filter = "%04d-%02d" % [today.year, today.month]
+		
+		# If current month has no data, use the latest month with data
+		if not available_months.has(current_month_filter) and available_months.size() > 0:
+			current_month_filter = available_months[available_months.size() - 1]
+	
+	var chart_title = Label.new()
+	chart_title.text = "Words Detected Per Day"
+	chart_title.add_theme_font_size_override("font_size", 18)
+	chart_title.add_theme_color_override("font_color", Color("#3f4553"))
+	summary_scroll.add_child(chart_title)
+	
+	# Create month navigation controls
+	create_month_navigation()
+	
+	# Filter data for current month
+	var filtered_data = filter_voice_data_by_month(current_month_filter)
+	
+	if filtered_data.is_empty():
+		var no_data = Label.new()
+		no_data.text = "No data for %s" % format_month_year(current_month_filter)
+		no_data.add_theme_color_override("font_color", Color.GRAY)
+		summary_scroll.add_child(no_data)
+		return
+	
+	# Create data points for the filtered month
+	var dates_sorted = filtered_data.keys()
+	dates_sorted.sort()
+	
+	var data_points = []
+	for date in dates_sorted:
+		var word_count = filtered_data[date].size()
+		data_points.append({"date": date, "count": word_count})
+	
+	# Create chart
+	var chart = VoiceTimelineChart.new()
+	chart.data_points = data_points
+	chart.custom_minimum_size = Vector2(700, 300)
+	summary_scroll.add_child(chart)
+	
+	# Show date range
+	var date_range_label = Label.new()
+	if data_points.size() > 0:
+		date_range_label.text = "Showing %d days in %s" % [data_points.size(), format_month_year(current_month_filter)]
+	else:
+		date_range_label.text = "No data available"
+	date_range_label.add_theme_font_size_override("font_size", 12)
+	date_range_label.add_theme_color_override("font_color", Color.GRAY)
+	summary_scroll.add_child(date_range_label)
+
+func prepare_available_months():
+	available_months.clear()
+	var months_set = {}
+	
+	# Extract all unique months from voice data
 	for date in voice_data.keys():
-		for word_data in voice_data[date]:
-			var word = word_data.get("word", "")
-			if word != "":
-				word_frequency[word] = word_frequency.get(word, 0) + 1
+		var parts = date.split("-")
+		if parts.size() >= 2:
+			var month_key = "%s-%s" % [parts[0], parts[1]]
+			months_set[month_key] = true
 	
-	# Sort by frequency
-	var words_array = []
-	for word in word_frequency.keys():
-		words_array.append({"word": word, "count": word_frequency[word]})
+	# Convert to sorted array
+	for month in months_set.keys():
+		available_months.append(month)
 	
-	words_array.sort_custom(func(a, b): return a.count > b.count)
+	available_months.sort()
+
+func filter_voice_data_by_month(month: String) -> Dictionary:
+	var filtered = {}
 	
-	# Show top 5 words
-	var max_count = words_array[0].count if words_array.size() > 0 else 1
-	var show_count = min(5, words_array.size())
+	for date in voice_data.keys():
+		if date.begins_with(month):
+			filtered[date] = voice_data[date]
 	
-	for i in range(show_count):
-		var word_info = words_array[i]
-		create_bar_chart_item(
-			word_info.word,
-			word_info.count,
-			max_count,
-			Color.GREEN
+	return filtered
+
+func create_month_navigation():
+	var nav_container = HBoxContainer.new()
+	nav_container.add_theme_constant_override("separation", 15)
+	nav_container.alignment = BoxContainer.ALIGNMENT_CENTER
+	summary_scroll.add_child(nav_container)
+	
+	# Previous month button
+	var prev_button = Button.new()
+	prev_button.text = "◀ Previous"
+	prev_button.custom_minimum_size = Vector2(120, 40)
+	prev_button.disabled = not can_go_to_previous_month()
+	prev_button.pressed.connect(_on_previous_month_pressed)
+	nav_container.add_child(prev_button)
+	
+	# Current month label
+	var month_label = Label.new()
+	month_label.text = format_month_year(current_month_filter)
+	month_label.add_theme_font_size_override("font_size", 18)
+	month_label.add_theme_color_override("font_color", Color("#3f4553"))
+	month_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	month_label.custom_minimum_size = Vector2(150, 40)
+	month_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	nav_container.add_child(month_label)
+	
+	# Next month button
+	var next_button = Button.new()
+	next_button.text = "Next ▶"
+	next_button.custom_minimum_size = Vector2(120, 40)
+	next_button.disabled = not can_go_to_next_month()
+	next_button.pressed.connect(_on_next_month_pressed)
+	nav_container.add_child(next_button)
+
+func can_go_to_previous_month() -> bool:
+	if available_months.is_empty():
+		return false
+	var current_index = available_months.find(current_month_filter)
+	return current_index > 0
+
+func can_go_to_next_month() -> bool:
+	if available_months.is_empty():
+		return false
+	var current_index = available_months.find(current_month_filter)
+	return current_index < available_months.size() - 1 and current_index >= 0
+
+func _on_previous_month_pressed():
+	var current_index = available_months.find(current_month_filter)
+	if current_index > 0:
+		current_month_filter = available_months[current_index - 1]
+		refresh_voice_chart()
+
+func _on_next_month_pressed():
+	var current_index = available_months.find(current_month_filter)
+	if current_index >= 0 and current_index < available_months.size() - 1:
+		current_month_filter = available_months[current_index + 1]
+		refresh_voice_chart()
+
+func refresh_voice_chart():
+	# Clear the voice section and recreate it
+	var found_voice_section = false
+	var children_to_remove = []
+	
+	for child in summary_scroll.get_children():
+		if found_voice_section:
+			children_to_remove.append(child)
+		elif child is Label and child.text == "Voice Detection Summary":
+			found_voice_section = true
+			children_to_remove.append(child)
+	
+	for child in children_to_remove:
+		summary_scroll.remove_child(child)
+		child.queue_free()
+	
+	# Recreate voice section
+	create_voice_summary()
+
+func format_month_year(month_string: String) -> String:
+	var parts = month_string.split("-")
+	if parts.size() >= 2:
+		var year = parts[0]
+		var month_num = int(parts[1])
+		var month_names = ["", "January", "February", "March", "April", "May", "June", 
+						   "July", "August", "September", "October", "November", "December"]
+		if month_num >= 1 and month_num <= 12:
+			return "%s %s" % [month_names[month_num], year]
+	return month_string
+
+# Custom control for drawing the timeline chart (like Firebase Analytics style)
+class VoiceTimelineChart extends Control:
+	var data_points = []
+	
+	func _ready():
+		queue_redraw()
+	
+	func _draw():
+		if data_points.is_empty():
+			draw_string(ThemeDB.fallback_font, Vector2(20, 150), "No data to display", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.GRAY)
+			return
+		
+		var width = size.x - 100
+		var height = size.y - 80
+		var padding_left = 60
+		var padding_top = 20
+		var padding_bottom = 50
+		
+		# Find max value for scaling
+		var max_value = 0
+		for point in data_points:
+			if point.count > max_value:
+				max_value = point.count
+		
+		if max_value == 0:
+			max_value = 1
+		
+		# Draw background
+		draw_rect(Rect2(padding_left, padding_top, width, height), Color(0.95, 0.95, 0.95, 1))
+		
+		# Draw horizontal grid lines
+		var grid_steps = 4
+		for i in range(grid_steps + 1):
+			var y = padding_top + (i * height / grid_steps)
+			var value = int(max_value - (i * max_value / grid_steps))
+			
+			# Grid line
+			draw_line(
+				Vector2(padding_left, y), 
+				Vector2(padding_left + width, y), 
+				Color(0.8, 0.8, 0.8, 1), 
+				1
+			)
+			
+			# Y-axis label
+			draw_string(
+				ThemeDB.fallback_font, 
+				Vector2(10, y + 5), 
+				str(value), 
+				HORIZONTAL_ALIGNMENT_RIGHT, 
+				40, 
+				14, 
+				Color(0.4, 0.4, 0.4, 1)
+			)
+		
+		# Calculate point positions
+		var points = []
+		var point_spacing = width / float(max(1, data_points.size() - 1)) if data_points.size() > 1 else 0
+		
+		for i in range(data_points.size()):
+			var point = data_points[i]
+			var x = padding_left + (i * point_spacing) if data_points.size() > 1 else padding_left + width / 2
+			var normalized_value = point.count / float(max_value)
+			var y = padding_top + height - (normalized_value * height)
+			points.append(Vector2(x, y))
+		
+		# Draw line connecting points
+		if points.size() > 1:
+			for i in range(points.size() - 1):
+				draw_line(points[i], points[i + 1], Color(0.2, 0.6, 1.0, 1), 3)
+		
+		# Draw circles at each data point
+		for i in range(points.size()):
+			var point_pos = points[i]
+			
+			# Draw filled circle
+			draw_circle(point_pos, 6, Color(0.2, 0.6, 1.0, 1))
+			draw_circle(point_pos, 4, Color(1, 1, 1, 1))
+			
+			# Draw date label below (show every few dates to avoid crowding)
+			var show_label = false
+			if data_points.size() <= 7:
+				show_label = true
+			elif i == 0 or i == data_points.size() - 1:
+				show_label = true
+			elif i % max(1, int(data_points.size() / 7)) == 0:
+				show_label = true
+			
+			if show_label:
+				var date_label = format_chart_date(data_points[i].date)
+				var label_x = point_pos.x - 25
+				draw_string(
+					ThemeDB.fallback_font, 
+					Vector2(label_x, size.y - 20), 
+					date_label, 
+					HORIZONTAL_ALIGNMENT_LEFT, 
+					-1, 
+					11, 
+					Color(0.4, 0.4, 0.4, 1)
+				)
+		
+		# Draw axes
+		draw_line(
+			Vector2(padding_left, padding_top), 
+			Vector2(padding_left, padding_top + height), 
+			Color(0.3, 0.3, 0.3, 1), 
+			2
 		)
+		draw_line(
+			Vector2(padding_left, padding_top + height), 
+			Vector2(padding_left + width, padding_top + height), 
+			Color(0.3, 0.3, 0.3, 1), 
+			2
+		)
+	
+	func format_chart_date(date_string: String) -> String:
+		var parts = date_string.split("-")
+		if parts.size() == 3:
+			var month_names = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+			var month = int(parts[1])
+			var day = int(parts[2])
+			if month >= 1 and month <= 12:
+				return "%s %d" % [month_names[month], day]
+		return date_string
+
+func format_date(date_string: String) -> String:
+	var parts = date_string.split("-")
+	if parts.size() == 3:
+		var month_names = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+		var year = parts[0]
+		var month = int(parts[1])
+		var day = int(parts[2])
+		if month >= 1 and month <= 12:
+			return "%s %d, %s" % [month_names[month], day, year]
+	return date_string
 
 func create_bar_chart_item(label_text: String, value: float, max_value: float, bar_color: Color):
 	var hbox = HBoxContainer.new()

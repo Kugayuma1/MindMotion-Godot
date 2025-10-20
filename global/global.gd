@@ -404,8 +404,6 @@ func load_priority_stage_data():
 	for letter in letters:
 		if is_letter_unlocked(letter) and not priority_letters.has(letter):
 			priority_letters.append(letter)
-			if priority_letters.size() >= 3:
-				break
 	
 	for letter in priority_letters:
 		load_letter_stages_on_demand(letter)

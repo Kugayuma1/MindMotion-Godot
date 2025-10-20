@@ -173,7 +173,7 @@ func create_student_card(student_data: Dictionary):
 	card_button.texture_normal = student_card_bg
 	card_button.texture_pressed = student_card_pressed
 	var button_width = get_responsive_button_width()
-	card_button.custom_minimum_size = Vector2(button_width, 175)
+	card_button.custom_minimum_size = Vector2(button_width, 200)  # Increased height for rating
 	
 	card_button.stretch_mode = TextureButton.STRETCH_SCALE
 	
@@ -244,11 +244,107 @@ func create_student_card(student_data: Dictionary):
 	age_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	info_vbox.add_child(age_label)
 	
+	# Average Cognitive Rating (NEW)
+	var rating_label = Label.new()
+	rating_label.text = "Loading rating..."
+	rating_label.add_theme_color_override("font_color", Color.GRAY)
+	rating_label.add_theme_font_size_override("font_size", 14)
+	rating_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	info_vbox.add_child(rating_label)
+	
+	# Load and display rating asynchronously
+	load_student_rating(student_data.user_id, rating_label)
+	
 	# Connect button with custom handler to detect scroll vs tap
 	card_button.gui_input.connect(_on_card_input.bind(student_data))
 	
 	# Add to grid
 	student_grid.add_child(card_button)
+
+func load_student_rating(student_id: String, rating_label: Label):
+	# Create HTTP request for this student's cognitive data
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	
+	http_request.request_completed.connect(func(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
+		var rating_text = "Rating: N/A"
+		var rating_color = Color.GRAY
+		
+		if response_code == 200:
+			var response = body.get_string_from_utf8()
+			var json = JSON.new()
+			if json.parse(response) == OK:
+				var data = json.data
+				var avg_rating = calculate_student_avg_rating(data)
+				if avg_rating != "N/A":
+					rating_text = "Avg. Rating: %s" % avg_rating
+					rating_color = get_rating_color(avg_rating)
+				else:
+					rating_text = "Rating: No data"
+		else:
+			rating_text = "Rating: Error"
+		
+		rating_label.text = rating_text
+		rating_label.add_theme_color_override("font_color", rating_color)
+		
+		# Clean up HTTP request
+		http_request.queue_free()
+	)
+	
+	# Make the request
+	var url = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents/users/%s/progress" % student_id
+	Global.make_authenticated_request(http_request, url, HTTPClient.METHOD_GET)
+
+func calculate_student_avg_rating(data: Dictionary) -> String:
+	if not data.has("documents"):
+		return "N/A"
+	
+	var total_score = 0.0
+	var count = 0
+	
+	for doc in data.documents:
+		var fields = doc.get("fields", {})
+		var avg_time_field = fields.get("averageTime", {})
+		
+		if avg_time_field.has("integerValue"):
+			var avg_time = int(avg_time_field.integerValue)
+			if avg_time > 0:
+				var rating = StudentData.get_cognitive_rating(avg_time)
+				var score = get_rating_score(rating)
+				total_score += score
+				count += 1
+	
+	if count == 0:
+		return "N/A"
+	
+	var avg_score = total_score / count
+	return score_to_rating(avg_score)
+
+func get_rating_score(rating: String) -> float:
+	match rating:
+		"Very Good": return 5.0
+		"Good": return 4.0
+		"Average": return 3.0
+		"Low": return 2.0
+		"Very Low": return 1.0
+		_: return 0.0
+
+func score_to_rating(score: float) -> String:
+	if score >= 4.5: return "Very Good"
+	elif score >= 3.5: return "Good"
+	elif score >= 2.5: return "Average"
+	elif score >= 1.5: return "Low"
+	else: return "Very Low"
+
+func get_rating_color(rating: String) -> Color:
+	match rating:
+		"Very Good": return Color.GREEN
+		"Good": return Color.CYAN
+		"Average": return Color.YELLOW
+		"Low": return Color.ORANGE
+		"Very Low": return Color.RED
+		"N/A": return Color.GRAY
+		_: return Color.GRAY
 
 func _on_card_input(event: InputEvent, student_data: Dictionary):
 	# Only trigger if it was a tap, not a scroll
