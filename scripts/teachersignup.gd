@@ -226,18 +226,14 @@ func show_verification_dialog():
 	verify_dialog.theme = dialog_theme
 	verify_dialog.title = "Email Verification Required"
 	verify_dialog.dialog_text = "A verification email has been sent to:\n%s\n\nPlease check your inbox and click the verification link.\n\nThis window will automatically continue once your email is verified.\n\n(This may take a few moments)" % temp_email
-	verify_dialog.get_ok_button().visible = false
 	verify_dialog.min_size = Vector2(400, 200)
 	verify_dialog.size = Vector2(400, 200)
 	
 	# Add a centered cancel button
-	var cancel_button = verify_dialog.add_button("Cancel Signup", false, "cancel")
-	cancel_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	
-	verify_dialog.custom_action.connect(func(action):
-		if action == "cancel":
-			cancel_verification()
-	)
+	var ok_button = verify_dialog.get_ok_button()
+	ok_button.text = "Cancel Signup"
+
+	verify_dialog.confirmed.connect(cancel_verification)
 	
 	verify_dialog.popup_centered()
 	

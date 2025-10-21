@@ -147,8 +147,8 @@ func validate_inputs() -> bool:
 		show_error_dialog("Please enter a valid email address (e.g., user@example.com)")
 		return false
 	
-	if age == "" or not age.is_valid_int() or int(age) < 3 or int(age) > 18:
-		show_error_dialog("Please enter a valid age between 3 and 18")
+	if age == "" or not age.is_valid_int() or int(age) < 6 or int(age) > 12:
+		show_error_dialog("Please enter a valid age between 6 and 12")
 		return false
 	
 	if password.length() < 6:
@@ -258,18 +258,13 @@ func show_verification_dialog():
 	verify_dialog.theme = dialog_theme
 	verify_dialog.title = "Email Verification Required"
 	verify_dialog.dialog_text = "A verification email has been sent to:\n%s\n\nPlease check your inbox and click the verification link.\n\nThis window will automatically continue once your email is verified.\n\n(This may take a few moments)" % temp_email
-	verify_dialog.get_ok_button().visible = false
 	verify_dialog.min_size = Vector2(400, 200)
 	verify_dialog.size = Vector2(400, 200)
 	
-	# Add a centered cancel button
-	var cancel_button = verify_dialog.add_button("Cancel Signup", false, "cancel")
-	cancel_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	
-	verify_dialog.custom_action.connect(func(action):
-		if action == "cancel":
-			cancel_verification()
-	)
+	var ok_button = verify_dialog.get_ok_button()
+	ok_button.text = "Cancel Signup"
+
+	verify_dialog.confirmed.connect(cancel_verification)
 	
 	verify_dialog.popup_centered()
 	

@@ -258,9 +258,9 @@ func get_rating_color(rating: String) -> Color:
 		"Very Good":
 			return Color.GREEN
 		"Good":
-			return Color.CYAN
+			return Color("#007FFF")
 		"Average":
-			return Color.YELLOW
+			return Color("#D4D411")
 		"Low":
 			return Color.ORANGE
 		"Very Low":

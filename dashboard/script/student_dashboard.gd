@@ -1,8 +1,8 @@
 extends Control
 
 # Node references
-@onready var student_name_label = $StudentNameLabel
-@onready var student_avatar = $StudentAvatar  
+@onready var student_name_label = $HBoxContainer/StudentNameLabel
+@onready var student_avatar = $HBoxContainer/StudentAvatar  
 @onready var back_button = $BackButton
 @onready var cognitive_activities_button = $CognitiveActivitiesButton
 @onready var motion_activities_button = $MotionActivitiesButton

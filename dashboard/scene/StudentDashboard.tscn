@@ -53,28 +53,25 @@ texture = ExtResource("2_b6vkk")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="StudentAvatar" type="TextureRect" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -538.0
-offset_top = 16.0
-offset_right = -254.0
-offset_bottom = 313.0
+offset_left = -263.0
+offset_top = 101.0
+offset_right = 142.0
+offset_bottom = 398.0
 grow_horizontal = 2
+alignment = 1
+
+[node name="StudentAvatar" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(284, 297)
+layout_mode = 2
 texture = ExtResource("4_ony6k")
 
-[node name="StudentNameLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -146.0
-offset_top = 165.0
-offset_right = -58.0
-offset_bottom = 218.0
-grow_horizontal = 2
+[node name="StudentNameLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("5_qui8s")
 theme_override_font_sizes/font_size = 50

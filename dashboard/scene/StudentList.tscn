@@ -1,10 +1,41 @@
-[gd_scene load_steps=6 format=3 uid="uid://gxau3y2w6e86"]
+[gd_scene load_steps=11 format=3 uid="uid://gxau3y2w6e86"]
 
 [ext_resource type="Texture2D" uid="uid://diy6w4rj2rm83" path="res://assets/left_wave.png" id="1_2lxme"]
 [ext_resource type="Script" uid="uid://hetboifjccci" path="res://dashboard/script/student_list.gd" id="1_fi1m4"]
 [ext_resource type="Texture2D" uid="uid://cwgfqyonunybf" path="res://assets/right_wave.png" id="2_fi1m4"]
 [ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="3_fla65"]
 [ext_resource type="Texture2D" uid="uid://de66oso7wqfih" path="res://rewards/redo_btn.png" id="5_fla65"]
+[ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="6_dmkuf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y6kht"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aq1ww"]
+content_margin_left = 25.0
+bg_color = Color(0.909804, 0.952941, 1, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.505882, 0.466667, 0.466667, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tf7lr"]
+content_margin_left = 25.0
+bg_color = Color(0.909804, 0.952941, 1, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hfk0"]
+content_margin_left = 25.0
+bg_color = Color(0.909804, 0.952941, 1, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.505882, 0.466667, 0.466667, 1)
+border_blend = true
 
 [node name="StudentList" type="Control"]
 layout_mode = 3
@@ -70,6 +101,39 @@ offset_bottom = 133.0
 grow_horizontal = 0
 texture_normal = ExtResource("5_fla65")
 stretch_mode = 5
+
+[node name="FilterContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.701
+anchor_right = 0.701
+offset_left = -160.92
+offset_top = 35.0
+offset_right = 253.08
+offset_bottom = 105.0
+grow_horizontal = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="FilterLabel" type="Label" parent="FilterContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_dmkuf")
+theme_override_font_sizes/font_size = 40
+text = "Sort By:"
+
+[node name="SortDropdown" type="OptionButton" parent="FilterContainer"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_y6kht")
+theme_override_styles/hover = SubResource("StyleBoxFlat_aq1ww")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_tf7lr")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0hfk0")
 
 [node name="MainContainer" type="MarginContainer" parent="."]
 layout_mode = 1

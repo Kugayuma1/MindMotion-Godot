@@ -19,7 +19,7 @@ signal cognitive_data_loaded(data: Dictionary)
 signal motion_data_loaded(data: Dictionary) 
 signal letter_progress_loaded(letter: String, data: Dictionary)
 signal voice_data_loaded(data: Dictionary)
-
+var student_ratings_cache = {}  # {user_id: {rating: String, score: float}}
 func _ready():
 	# Initialize HTTP requests
 	cognitive_http_request = HTTPRequest.new()
@@ -326,3 +326,15 @@ func get_current_student_motion_data() -> Dictionary:
 
 func get_current_student_voice_data() -> Dictionary:
 	return student_voice_data.duplicate()
+
+
+func get_student_rating(user_id: String) -> Dictionary:
+	if student_ratings_cache.has(user_id):
+		return student_ratings_cache[user_id]
+	return {"rating": "Loading...", "score": 0.0}
+
+func set_student_rating(user_id: String, rating: String, score: float):
+	student_ratings_cache[user_id] = {"rating": rating, "score": score}
+
+func clear_ratings_cache():
+	student_ratings_cache.clear()
