@@ -452,5 +452,4 @@ func _on_back_button_pressed():
 func _on_refresh_button_pressed():
 	print("🔄 Refresh button pressed - fetching latest student data")
 	LoadingScreen.show_loading()
-	StudentData.clear_ratings_cache()  # Clear rating cache on refresh
 	Global.refresh_students_cache()
