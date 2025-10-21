@@ -45,6 +45,7 @@ texture = ExtResource("1_l55fc")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 276.0
 offset_top = 209.0
 offset_right = 1684.0
@@ -299,6 +300,7 @@ texture = ExtResource("10_2ytcr")
 expand_mode = 1
 
 [node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 0
 offset_left = 47.0
 offset_top = 45.0
 offset_right = 149.0

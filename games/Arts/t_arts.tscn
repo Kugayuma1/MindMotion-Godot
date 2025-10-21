@@ -45,6 +45,7 @@ texture = ExtResource("2_wsktc")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 276.0
 offset_top = 209.0
 offset_right = 1684.0
@@ -282,6 +283,7 @@ justification_flags = 171
 polygon = PackedVector2Array(1113, 886, 1105, 879, 1103, 871, 1105, 864, 1115, 860, 1251, 858, 1259, 873, 1252, 883)
 
 [node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 378.0
 offset_top = 250.0
 offset_right = 1647.0
@@ -292,6 +294,7 @@ expand_mode = 1
 
 [node name="Wood" type="TextureRect" parent="."]
 z_index = 14
+layout_mode = 0
 offset_left = 660.0
 offset_top = 62.0
 offset_right = 1312.0
@@ -299,6 +302,7 @@ offset_bottom = 252.0
 texture = ExtResource("14_v04ki")
 
 [node name="TextureRect5" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 1676.0
 offset_top = 5.0
 offset_right = 1902.0
@@ -308,6 +312,7 @@ expand_mode = 1
 
 [node name="TimerLabel" type="Label" parent="."]
 z_index = 30
+layout_mode = 0
 offset_left = 1672.0
 offset_top = 22.0
 offset_right = 1903.0

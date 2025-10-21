@@ -44,6 +44,7 @@ texture = ExtResource("1_q11ss")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 276.0
 offset_top = 209.0
 offset_right = 1684.0
@@ -260,6 +261,7 @@ horizontal_alignment = 1
 justification_flags = 171
 
 [node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 426.0
 offset_top = 287.0
 offset_right = 1590.0
@@ -270,6 +272,7 @@ expand_mode = 1
 
 [node name="Wood" type="TextureRect" parent="."]
 z_index = 14
+layout_mode = 0
 offset_left = 660.0
 offset_top = 62.0
 offset_right = 1312.0
@@ -277,6 +280,7 @@ offset_bottom = 252.0
 texture = ExtResource("22_775ve")
 
 [node name="TextureRect5" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 1676.0
 offset_top = 5.0
 offset_right = 1902.0
@@ -286,6 +290,7 @@ expand_mode = 1
 
 [node name="TimerLabel" type="Label" parent="."]
 z_index = 30
+layout_mode = 0
 offset_left = 1672.0
 offset_top = 22.0
 offset_right = 1903.0

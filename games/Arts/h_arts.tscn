@@ -13,20 +13,17 @@
 [ext_resource type="Script" uid="uid://bgv8che2j14c6" path="res://games_script/Arts/LetterH/polygon_2d_6.gd" id="11_7eg2l"]
 [ext_resource type="Script" uid="uid://d2pru6beb5c7u" path="res://games_script/Arts/LetterH/polygon_2d_7.gd" id="12_j6ql1"]
 [ext_resource type="Script" uid="uid://dtmw5d7y6hnhq" path="res://games_script/Arts/LetterH/texture_button.gd" id="13_7a3h1"]
+[ext_resource type="Texture2D" uid="uid://bhyxb4ja8l7gl" path="res://Game Assets/Arts/red.png" id="13_fyph1"]
 [ext_resource type="Script" uid="uid://c0vguixdau2pi" path="res://games_script/Arts/LetterH/texture_button_2.gd" id="14_58m8u"]
 [ext_resource type="Script" uid="uid://br4kkd8intvlp" path="res://games_script/Arts/LetterH/texture_button_3.gd" id="15_8ejlu"]
+[ext_resource type="Texture2D" uid="uid://c8jfigrl7wxu8" path="res://Game Assets/Arts/yellow.png" id="15_wwdkx"]
 [ext_resource type="Texture2D" uid="uid://wgc5gfdva3xj" path="res://Game Assets/Arts/brown4.png" id="16_43hgc"]
+[ext_resource type="Texture2D" uid="uid://qckic7o6mwpc" path="res://Game Assets/Arts/blue.png" id="17_r6nej"]
 [ext_resource type="Script" uid="uid://d28vnnmctudcs" path="res://games_script/Arts/LetterH/texture_button_4.gd" id="17_tnh81"]
 [ext_resource type="Texture2D" uid="uid://b4fcft4nhtcia" path="res://Game Assets/Arts/subt 1.png" id="18_02iav"]
 [ext_resource type="Texture2D" uid="uid://k0lg68ke3k7q" path="res://Game Assets/Arts/MathEbg (13).png" id="19_st5xh"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="20_ew6lw"]
 [ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="21_wgrpx"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1up7h"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_djswn"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_uf610"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -223,7 +220,7 @@ offset_left = 1566.0
 offset_top = 396.0
 offset_right = 1916.0
 offset_bottom = 546.0
-texture_normal = SubResource("CompressedTexture2D_1up7h")
+texture_normal = ExtResource("13_fyph1")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("13_7a3h1")
@@ -242,7 +239,7 @@ offset_right = 1914.0
 offset_bottom = 686.0
 grow_horizontal = 0
 grow_vertical = 2
-texture_normal = SubResource("CompressedTexture2D_djswn")
+texture_normal = ExtResource("15_wwdkx")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("14_58m8u")
@@ -261,7 +258,7 @@ offset_right = 1919.0
 offset_bottom = 812.0
 grow_horizontal = 0
 grow_vertical = 2
-texture_normal = SubResource("CompressedTexture2D_uf610")
+texture_normal = ExtResource("17_r6nej")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("15_8ejlu")

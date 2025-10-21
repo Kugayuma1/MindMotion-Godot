@@ -37,19 +37,26 @@ grow_vertical = 2
 script = ExtResource("7_oipxb")
 
 [node name="StickerContainer" type="ScrollContainer" parent="."]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 874.0
-offset_right = 1907.0
-offset_bottom = 1030.0
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = -249.0
+offset_right = 1347.0
+offset_bottom = -47.0
+grow_horizontal = 2
+grow_vertical = 0
+scroll_horizontal_custom_step = 1559.76
+scroll_vertical_custom_step = 1637.8
 horizontal_scroll_mode = 2
 vertical_scroll_mode = 0
 
 [node name="StickerGrid" type="GridContainer" parent="StickerContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-columns = 16
+columns = 26
 
 [node name="Quitbtn" type="TextureButton" parent="."]
 layout_mode = 1

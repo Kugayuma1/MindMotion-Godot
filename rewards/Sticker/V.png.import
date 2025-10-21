@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qckic7o6mwpc"
-path="res://.godot/imported/blue.png-3dded87510c145240332f20fd2874d1a.ctex"
+uid="uid://b42edngtn8wmt"
+path="res://.godot/imported/V.png-513e779182c8cba7694ec32a3da7cfc5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Arts/blue.png"
-dest_files=["res://.godot/imported/blue.png-3dded87510c145240332f20fd2874d1a.ctex"]
+source_file="res://rewards/Sticker/V.png"
+dest_files=["res://.godot/imported/V.png-513e779182c8cba7694ec32a3da7cfc5.ctex"]
 
 [params]
 
