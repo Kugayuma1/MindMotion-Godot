@@ -1,7 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://bnfa772ihqdv8"]
+[gd_scene load_steps=17 format=3 uid="uid://dhfx6e1xlmr7a"]
 
-[ext_resource type="Script" uid="uid://k34h7xu1jldo" path="res://games_script/finemotor/d_finemotors.gd" id="1_4gb7b"]
 [ext_resource type="Texture2D" uid="uid://dcow6tbewafbu" path="res://Game Bg/Background (2).png" id="1_14x2l"]
+[ext_resource type="Script" uid="uid://bb77e6dknpxgj" path="res://games_script/finemotor/d_finemotor.gd" id="1_bidkw"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="2_4gb7b"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_bidkw"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="4_bkpj1"]
@@ -24,7 +24,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_4gb7b")
+script = ExtResource("1_bidkw")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -38,15 +38,79 @@ color = Color(0.760784, 0.607843, 0.611765, 1)
 [node name="GameBG" type="TextureRect" parent="ColorRect"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.205
 anchor_top = 0.537
-anchor_right = 0.205
 anchor_bottom = 0.537
-offset_left = -533.6
+offset_left = -140.0
 offset_top = -508.96
-offset_right = 1231.4
+offset_right = 1625.0
 offset_bottom = 510.04
 texture = ExtResource("1_14x2l")
+expand_mode = 1
+
+[node name="Draggables" type="Control" parent="ColorRect/GameBG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Donut1" type="TextureRect" parent="ColorRect/GameBG/Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.401
+anchor_top = 0.697
+anchor_right = 0.401
+anchor_bottom = 0.697
+offset_left = -36.765
+offset_top = -33.2431
+offset_right = 35.235
+offset_bottom = 33.7569
+texture = ExtResource("6_jgayp")
+expand_mode = 1
+
+[node name="Donut2" type="TextureRect" parent="ColorRect/GameBG/Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.407
+anchor_top = 0.612
+anchor_right = 0.407
+anchor_bottom = 0.612
+offset_left = -34.355
+offset_top = -30.6281
+offset_right = 33.645
+offset_bottom = 30.3719
+texture = ExtResource("7_twdf5")
+expand_mode = 1
+
+[node name="Donut3" type="TextureRect" parent="ColorRect/GameBG/Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.283
+anchor_top = 0.697
+anchor_right = 0.283
+anchor_bottom = 0.697
+offset_left = -34.4951
+offset_top = -33.2431
+offset_right = 35.505
+offset_bottom = 32.7569
+texture = ExtResource("8_2k4as")
+expand_mode = 1
+
+[node name="Donut4" type="TextureRect" parent="ColorRect/GameBG/Draggables"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.292
+anchor_top = 0.612
+anchor_right = 0.292
+anchor_bottom = 0.612
+offset_left = -33.1491
+offset_top = -30.6281
+offset_right = 32.8509
+offset_bottom = 31.3719
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_18n5e")
 expand_mode = 1
 
 [node name="Time" type="TextureRect" parent="."]
@@ -76,88 +140,30 @@ theme_override_font_sizes/font_size = 45
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Draggables" type="Control" parent="."]
-layout_mode = 1
-anchor_right = 0.396
-anchor_bottom = 1.011
-offset_right = -2.32007
-offset_bottom = 0.119995
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Donut1" type="TextureRect" parent="Draggables"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.745
-anchor_top = 0.716
-anchor_right = 0.745
-anchor_bottom = 0.716
-offset_left = -35.71
-offset_top = -33.872
-offset_right = 36.29
-offset_bottom = 33.128
-texture = ExtResource("6_jgayp")
-expand_mode = 1
-
-[node name="Donut2" type="TextureRect" parent="Draggables"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.761
-anchor_top = 0.633
-anchor_right = 0.761
-anchor_bottom = 0.633
-offset_left = -33.838
-offset_top = -30.236
-offset_right = 34.162
-offset_bottom = 30.764
-texture = ExtResource("7_twdf5")
-expand_mode = 1
-
-[node name="Donut3" type="TextureRect" parent="Draggables"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.476
-anchor_top = 0.714
-anchor_right = 0.476
-anchor_bottom = 0.714
-offset_left = -34.808
-offset_top = -32.688
-offset_right = 35.192
-offset_bottom = 33.312
-texture = ExtResource("8_2k4as")
-expand_mode = 1
-
-[node name="Donut4" type="TextureRect" parent="Draggables"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.509
-anchor_top = 0.634
-anchor_right = 0.509
-anchor_bottom = 0.634
-offset_left = -32.822
-offset_top = -31.328
-offset_right = 33.178
-offset_bottom = 30.672
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("9_18n5e")
-expand_mode = 1
-
 [node name="DropZone" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = -5.0
+offset_right = 11.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="Kid1" type="TextureRect" parent="DropZone"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 22.65
-anchor_top = 27.025
-anchor_right = 22.65
-anchor_bottom = 27.025
-offset_left = -250.0
-offset_top = -500.0
-offset_right = 250.0
+anchor_left = 0.482
+anchor_top = 1.014
+anchor_right = 0.482
+anchor_bottom = 1.014
+offset_left = -250.44
+offset_top = -500.12
+offset_right = 249.56
+offset_bottom = -0.120117
 texture = ExtResource("10_s8qs3")
 
 [node name="TextureRect" type="TextureRect" parent="DropZone/Kid1"]
@@ -177,28 +183,28 @@ expand_mode = 1
 [node name="Donut" type="TextureRect" parent="DropZone/Kid1/TextureRect"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 14.35
-anchor_top = 19.675
-anchor_right = 14.35
-anchor_bottom = 19.675
-offset_left = -2533.0
-offset_top = -3493.5
-offset_right = -2465.0
-offset_bottom = -3432.5
+anchor_left = 9.092
+anchor_top = 19.575
+anchor_right = 9.092
+anchor_bottom = 19.575
+offset_left = -1585.56
+offset_top = -3480.5
+offset_right = -1515.56
+offset_bottom = -3417.5
 texture = ExtResource("6_jgayp")
 expand_mode = 1
 
 [node name="TyLabel" type="Label" parent="DropZone/Kid1/TextureRect"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.469
-anchor_top = 0.444
-anchor_right = 0.469
-anchor_bottom = 0.444
-offset_left = -44.42
-offset_top = -25.92
-offset_right = 44.58
-offset_bottom = 26.08
+anchor_left = 0.475
+anchor_top = 0.417
+anchor_right = 0.475
+anchor_bottom = 0.417
+offset_left = -44.5
+offset_top = -26.06
+offset_right = 44.5
+offset_bottom = 25.94
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("13_bidkw")
 theme_override_font_sizes/font_size = 25
@@ -207,13 +213,14 @@ autowrap_mode = 3
 [node name="Kid2" type="TextureRect" parent="DropZone"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 29.75
-anchor_top = 26.975
-anchor_right = 29.75
-anchor_bottom = 26.975
-offset_left = -250.0
-offset_top = -500.0
-offset_right = 250.0
+anchor_left = 0.645
+anchor_top = 1.016
+anchor_right = 0.645
+anchor_bottom = 1.016
+offset_left = -249.4
+offset_top = -500.28
+offset_right = 250.6
+offset_bottom = -0.280029
 texture = ExtResource("12_xatn6")
 
 [node name="TextureRect" type="TextureRect" parent="DropZone/Kid2"]
@@ -233,28 +240,28 @@ expand_mode = 1
 [node name="Donut" type="TextureRect" parent="DropZone/Kid2/TextureRect"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 14.344
-anchor_top = 17.225
-anchor_right = 14.344
-anchor_bottom = 17.225
-offset_left = -2527.92
-offset_top = -3051.5
-offset_right = -2460.92
-offset_bottom = -2991.5
+anchor_left = 9.092
+anchor_top = 19.575
+anchor_right = 9.092
+anchor_bottom = 19.575
+offset_left = -1585.56
+offset_top = -3480.5
+offset_right = -1515.56
+offset_bottom = -3417.5
 texture = ExtResource("7_twdf5")
 expand_mode = 1
 
 [node name="TyLabel" type="Label" parent="DropZone/Kid2/TextureRect"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.45
-anchor_right = 0.5
-anchor_bottom = 0.45
-offset_left = -46.0
-offset_top = -26.0
-offset_right = 43.0
-offset_bottom = 26.0
+anchor_left = 0.475
+anchor_top = 0.417
+anchor_right = 0.475
+anchor_bottom = 0.417
+offset_left = -44.5
+offset_top = -26.06
+offset_right = 44.5
+offset_bottom = 25.94
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("13_bidkw")
 theme_override_font_sizes/font_size = 25
@@ -263,13 +270,14 @@ autowrap_mode = 3
 [node name="Kid3" type="TextureRect" parent="DropZone"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 36.8
-anchor_top = 27.025
-anchor_right = 36.8
-anchor_bottom = 27.025
-offset_left = -250.0
-offset_top = -500.0
-offset_right = 250.0
+anchor_left = 0.814
+anchor_top = 1.022
+anchor_right = 0.814
+anchor_bottom = 1.022
+offset_left = -259.88
+offset_top = -498.76
+offset_right = 240.12
+offset_bottom = 1.23987
 texture = ExtResource("13_3ni2w")
 
 [node name="TextureRect" type="TextureRect" parent="DropZone/Kid3"]
@@ -319,13 +327,14 @@ autowrap_mode = 3
 [node name="Kid4" type="TextureRect" parent="DropZone"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 43.675
-anchor_top = 26.95
-anchor_right = 43.675
-anchor_bottom = 26.95
-offset_left = -250.0
+anchor_left = 0.932
+anchor_top = 1.025
+anchor_right = 0.932
+anchor_bottom = 1.025
+offset_left = -250.44
 offset_top = -500.0
-offset_right = 250.0
+offset_right = 249.56
+offset_bottom = -0.00012207
 texture = ExtResource("14_p8m5p")
 
 [node name="TextureRect" type="TextureRect" parent="DropZone/Kid4"]
@@ -345,28 +354,28 @@ expand_mode = 1
 [node name="Donut" type="TextureRect" parent="DropZone/Kid4/TextureRect"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 9.275
-anchor_top = 17.425
-anchor_right = 9.275
-anchor_bottom = 17.425
-offset_left = -1613.5
-offset_top = -3088.5
-offset_right = -1548.5
-offset_bottom = -3030.5
+anchor_left = 9.092
+anchor_top = 19.575
+anchor_right = 9.092
+anchor_bottom = 19.575
+offset_left = -1585.56
+offset_top = -3480.5
+offset_right = -1515.56
+offset_bottom = -3417.5
 texture = ExtResource("9_18n5e")
 expand_mode = 1
 
 [node name="TyLabel" type="Label" parent="DropZone/Kid4/TextureRect"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.503
-anchor_top = 0.444
-anchor_right = 0.503
-anchor_bottom = 0.444
-offset_left = -44.54
-offset_top = -25.92
-offset_right = 44.46
-offset_bottom = 26.08
+anchor_left = 0.475
+anchor_top = 0.417
+anchor_right = 0.475
+anchor_bottom = 0.417
+offset_left = -44.5
+offset_top = -26.06
+offset_right = 44.5
+offset_bottom = 25.94
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("13_bidkw")
 theme_override_font_sizes/font_size = 25

@@ -18,28 +18,21 @@ func _on_next_item_pressed() -> void:
 	AudioManager.play_sound("button_click")
 	AudioManager.stop_music(false)
 	
-	# Get the parent game scene and load next word
-	var game_scene = get_parent()
-	if game_scene and game_scene.has_method("next_word"):
-		game_scene.next_word()
-		queue_free()  # Remove the popup
+	# Next Item always goes to motion activity
+	var scene_path = RandomMotionSelector.get_random_motion_scene_path()
+	if ResourceLoader.exists(scene_path):
+		print("Loading random motion activity: ", scene_path)
+		get_tree().change_scene_to_file(scene_path)
 	else:
-		# Load random motion scene if we've completed all words
-		var scene_path = RandomMotionSelector.get_random_motion_scene_path()
-		if ResourceLoader.exists(scene_path):
-			print("Loading random motion activity: ", scene_path)
-			get_tree().change_scene_to_file(scene_path)
-		else:
-			push_error("Scene not found: " + scene_path)
-
+		push_error("Scene not found: " + scene_path)
 
 func _on_retry_pressed() -> void:
 	AudioManager.play_sound("button_click")
 	
-	# Get the parent game scene and load next word
+	# Retry restarts the entire game with NEW random choices
 	var game_scene = get_parent()
-	if game_scene and game_scene.has_method("next_word"):
-		game_scene.next_word()
+	if game_scene and game_scene.has_method("restart_game"):
+		game_scene.restart_game()
 		queue_free()  # Remove the popup
 	else:
 		# Fallback: reload current scene if something goes wrong

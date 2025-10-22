@@ -177,9 +177,16 @@ func _on_quitbtn_pressed() -> void:
 	else:	
 		print("Scene not found: ", path)
 
-# Call this function when moving to the next question (e.g., from a completion popup)
-func next_word() -> void:
+# Call this to move to next question when retrying
+func restart_game() -> void:
+	# Move to next question
 	current_question_index += 1
+	
+	# If we've gone through all questions, loop back to the beginning
+	if current_question_index >= question_data.size():
+		current_question_index = 0
+	
+	# Load the next question
 	load_current_question()
 	selected_correct.clear()
 	
@@ -193,4 +200,7 @@ func next_word() -> void:
 	if has_node("TextureRect/Time"): $TextureRect/Time.visible = true
 	if has_node("Quitbtn"): $Quitbtn.visible = true
 	
+	reset_feedback_label()
 	start_timer()
+	
+	print("Retrying with question: ", current_question_index)

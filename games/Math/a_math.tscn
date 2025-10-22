@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_0awbv"]
 [ext_resource type="Script" uid="uid://huod3x2ilht8" path="res://games_script/Math/a_math.gd" id="1_lkjdo"]
-[ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="2_lkjdo"]
+[ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="3_fu8tq"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="3_tftab"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="4_601vy"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="5_03gjv"]
@@ -32,16 +32,17 @@ texture = ExtResource("1_0awbv")
 [node name="Canvas" type="TextureRect" parent="GameBG"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.514
-anchor_top = 0.536
-anchor_right = 0.514
-anchor_bottom = 0.536
-offset_left = -622.852
-offset_top = -492.8
-offset_right = 623.148
-offset_bottom = 493.2
+anchor_left = 0.5
+anchor_top = 0.529
+anchor_right = 0.5
+anchor_bottom = 0.529
+offset_left = -825.0
+offset_top = -473.32
+offset_right = 825.0
+offset_bottom = 472.68
 mouse_filter = 2
-texture = ExtResource("2_lkjdo")
+texture = ExtResource("3_fu8tq")
+expand_mode = 1
 
 [node name="Holder" type="TextureRect" parent="."]
 layout_mode = 1

@@ -249,7 +249,7 @@ func _on_quitbtn_pressed() -> void:
 		print("Scene not found: ", path)
 
 # Call this function when moving to the next word (e.g., from a completion popup)
-func next_word() -> void:
+func restart_game() -> void:
 	current_word_index += 1
 	load_current_word()
 	setup_game()

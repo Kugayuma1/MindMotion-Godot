@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://ckl01qg8f7cms"]
 
-[ext_resource type="Script" uid="uid://cs8fq2nk4hnef" path="res://games_script/Reading/z_reading.gd" id="1_4sw8k"]
+[ext_resource type="Script" path="res://games_script/Reading/z_reading.gd" id="1_4sw8k"]
 [ext_resource type="Texture2D" uid="uid://uellerbhhm0a" path="res://Game Assets/Reading Assets/Logoqzmd/RDNGBG.png" id="1_ttn3v"]
 [ext_resource type="Texture2D" uid="uid://2csy70go1hl6" path="res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/36.png" id="2_4sw8k"]
 [ext_resource type="Texture2D" uid="uid://cqtgomvfv07m1" path="res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/30.png" id="3_cdx4t"]

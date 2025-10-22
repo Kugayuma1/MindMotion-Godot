@@ -153,7 +153,7 @@ func game_over(success: bool) -> void:
 	add_child(popup_instance)
 
 # --- NEXT QUESTION ---
-func next_word() -> void:
+func restart_game() -> void:
 	current_question_index += 1
 	if current_question_index < question_data.size():
 		for button in choice_buttons:

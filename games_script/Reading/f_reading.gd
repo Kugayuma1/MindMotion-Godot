@@ -153,19 +153,24 @@ func game_over(success: bool) -> void:
 	add_child(popup_instance)
 
 # --- NEXT QUESTION ---
-func next_word() -> void:
+func restart_game() -> void:
+	# Move to next question
 	current_question_index += 1
-	if current_question_index < question_data.size():
-		for button in choice_buttons:
-			button.visible = true
-		if has_node("TextureRect/Holder"): $TextureRect/Holder.visible = true
-		if has_node("TextureRect/Time"): $TextureRect/Time.visible = true
-		if has_node("Quitbtn"): $Quitbtn.visible = true
+	
+	# If we've gone through all questions, loop back to the beginning
+	if current_question_index >= question_data.size():
+		current_question_index = 0
+	
+	# Load the next question
+	load_current_question()
+	selected_correct.clear()
+	
+	if has_node("TextureRect/Holder"): $TextureRect/Holder.visible = true
+	if has_node("TextureRect/Time"): $TextureRect/Time.visible = true
+	if has_node("Quitbtn"): $Quitbtn.visible = true
 
-		load_current_question()
-		start_timer()
-	else:
-		print("✅ All questions completed!")
+	reset_feedback_label()
+	start_timer()
 
 # --- BUTTON SIGNALS ---
 func _on_fish_1_pressed() -> void:

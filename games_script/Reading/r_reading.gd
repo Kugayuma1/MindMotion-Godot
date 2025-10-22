@@ -152,7 +152,7 @@ func game_over(success: bool) -> void:
 	add_child(popup_instance)
 
 # --- NEXT QUESTION ---
-func next_word() -> void:
+func restart_game() -> void:
 	current_question_index += 1
 	load_current_question()
 	selected_correct.clear()

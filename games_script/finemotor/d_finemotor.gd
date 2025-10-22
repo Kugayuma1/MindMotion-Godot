@@ -10,7 +10,7 @@ var total_kids := 4
 
 # Node references
 @onready var timer_display = $Time/Label
-@onready var draggables = $Draggables
+@onready var draggables = $ColorRect/GameBG/Draggables
 @onready var dropzone = $DropZone
 
 # Popup scenes

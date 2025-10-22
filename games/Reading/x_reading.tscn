@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://upmxf2whvs47"]
 
-[ext_resource type="Script" uid="uid://clj7pmimpb5m7" path="res://games_script/Reading/x_reading.gd" id="1_2uo5s"]
+[ext_resource type="Script" path="res://games_script/Reading/x_reading.gd" id="1_2uo5s"]
 [ext_resource type="Texture2D" uid="uid://dkb5uaqbfwkw8" path="res://Game Assets/Reading Assets/Logoqzmd/Logoqz.png" id="1_ueybk"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="2_2uo5s"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_ds1xh"]
