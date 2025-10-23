@@ -234,7 +234,7 @@ func create_cognitive_summary():
 		return
 	
 	# Rating distribution
-	var ratings = {"Very Good": 0, "Good": 0, "Average": 0, "Low": 0, "Very Low": 0}
+	var ratings = {"Very Low": 0, "Low": 0, "Average": 0, "Good": 0, "Very Good": 0}
 	
 	for letter in cognitive_data.keys():
 		var avg_time = cognitive_data[letter].get("averageTime", 0)
@@ -242,11 +242,192 @@ func create_cognitive_summary():
 			var rating = StudentData.get_cognitive_rating(avg_time)
 			ratings[rating] += 1
 	
-	# Create bar chart for ratings
-	for rating_name in ["Very Good", "Good", "Average", "Low", "Very Low"]:
-		var count = ratings[rating_name]
-		if count > 0:
-			create_bar_chart_item(rating_name, count, cognitive_data.size(), get_rating_bar_color(rating_name))
+	# Create vertical bar chart
+	create_vertical_bar_chart(ratings)
+	
+func create_vertical_bar_chart(ratings: Dictionary):
+	var chart_container = Control.new()
+	chart_container.custom_minimum_size = Vector2(700, 350)
+	summary_scroll.add_child(chart_container)
+	
+	# Draw the chart
+	var chart = CognitiveBarChart.new()
+	chart.ratings_data = ratings
+	chart.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	chart_container.add_child(chart)
+	
+class CognitiveBarChart extends Control:
+	var ratings_data = {}
+	
+	func _ready():
+		queue_redraw()
+	
+	func _draw():
+		if ratings_data.is_empty():
+			return
+		
+		var width = size.x - 80
+		var height = size.y - 100
+		var padding_left = 60
+		var padding_top = 20
+		var chart_bottom = padding_top + height
+		
+		# Define rating order and colors
+		var rating_order = ["Very Low", "Low", "Average", "Good", "Very Good"]
+		var rating_colors = {
+			"Very Low": Color.RED,
+			"Low": Color.ORANGE,
+			"Average": Color.YELLOW,
+			"Good": Color.CYAN,
+			"Very Good": Color.GREEN
+		}
+		
+		# Find max value for scaling
+		var max_value = 0
+		for rating in rating_order:
+			var count = ratings_data.get(rating, 0)
+			if count > max_value:
+				max_value = count
+		
+		if max_value == 0:
+			max_value = 1
+		
+		# Calculate bar dimensions with equal spacing
+		var num_bars = rating_order.size()
+		var total_width = width - padding_left
+		var section_width = total_width / num_bars  # Each bar gets equal section
+		var bar_width = section_width * 0.8  # Bar takes 80% of section
+		var bar_spacing = section_width * 0.2  # 20% is spacing
+		
+		# Draw background grid lines
+		var grid_steps = min(max_value, 5)
+		if grid_steps > 0:
+			for i in range(int(grid_steps) + 1):
+				var y = chart_bottom - (i * height / grid_steps)
+				var value = int(i * max_value / grid_steps)
+				
+				# Grid line
+				draw_line(
+					Vector2(padding_left, y),
+					Vector2(width + padding_left, y),
+					Color(0.85, 0.85, 0.85, 1),
+					1
+				)
+				
+				# Y-axis label
+				draw_string(
+					ThemeDB.fallback_font,
+					Vector2(10, y + 5),
+					str(value),
+					HORIZONTAL_ALIGNMENT_RIGHT,
+					40,
+					14,
+					Color(0.4, 0.4, 0.4, 1)
+				)
+		
+		# Draw bars
+		for i in range(rating_order.size()):
+			var rating = rating_order[i]
+			var count = ratings_data.get(rating, 0)
+			var bar_color = rating_colors[rating]
+			
+			# Calculate bar position - centered in its section
+			var section_start = padding_left + (i * section_width)
+			var x = section_start + (bar_spacing / 2)
+			var section_center = section_start + (section_width / 2)
+			
+			var normalized_height = (count / float(max_value)) * height
+			var bar_height = max(normalized_height, 5)
+			var y = chart_bottom - bar_height
+			
+			# Draw bar
+			var bar_rect = Rect2(x, y, bar_width, bar_height)
+			draw_rect(bar_rect, bar_color)
+			
+			# Draw bar border
+			draw_rect(bar_rect, Color(0, 0, 0, 0.2), false, 1)
+			
+			# Draw count above bar - manually centered
+			if count > 0:
+				var count_text = str(count)
+				var font = ThemeDB.fallback_font
+				var font_size = 18
+				var text_width = font.get_string_size(count_text, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size).x
+				var text_x = section_center - (text_width / 2.0)
+				
+				draw_string(
+					font,
+					Vector2(text_x, y - 8),
+					count_text,
+					HORIZONTAL_ALIGNMENT_LEFT,
+					-1,
+					font_size,
+					Color("#3f4553")
+				)
+			
+			# Draw label below X-axis - manually centered
+			var label_y = chart_bottom + 25
+			var font = ThemeDB.fallback_font
+			var font_size = 13
+			
+			# Split "Very Low" and "Very Good" into two lines
+			if rating == "Very Low" or rating == "Very Good":
+				var parts = rating.split(" ")
+				
+				# First line
+				var text_width_1 = font.get_string_size(parts[0], HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+				var text_x_1 = section_center - (text_width_1 / 2.0)
+				draw_string(
+					font,
+					Vector2(text_x_1, label_y),
+					parts[0],
+					HORIZONTAL_ALIGNMENT_LEFT,
+					-1,
+					font_size,
+					Color(0.4, 0.4, 0.4, 1)
+				)
+				
+				# Second line
+				var text_width_2 = font.get_string_size(parts[1], HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+				var text_x_2 = section_center - (text_width_2 / 2.0)
+				draw_string(
+					font,
+					Vector2(text_x_2, label_y + 16),
+					parts[1],
+					HORIZONTAL_ALIGNMENT_LEFT,
+					-1,
+					font_size,
+					Color(0.4, 0.4, 0.4, 1)
+				)
+			else:
+				# Single line label
+				var text_width = font.get_string_size(rating, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+				var text_x = section_center - (text_width / 2.0)
+				draw_string(
+					font,
+					Vector2(text_x, label_y + 8),
+					rating,
+					HORIZONTAL_ALIGNMENT_LEFT,
+					-1,
+					font_size,
+					Color(0.4, 0.4, 0.4, 1)
+				)
+		
+		# Draw X-axis
+		draw_line(
+			Vector2(padding_left, chart_bottom),
+			Vector2(width + padding_left, chart_bottom),
+			Color(0.3, 0.3, 0.3, 1),
+			2
+		)
+		
+		# Draw Y-axis
+		draw_line(
+			Vector2(padding_left, padding_top),
+			Vector2(padding_left, chart_bottom),
+			Color(0.3, 0.3, 0.3, 1),
+			2
+		)
 
 func create_motion_summary():
 	var section_title = Label.new()

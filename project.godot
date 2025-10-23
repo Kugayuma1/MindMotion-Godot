@@ -13,6 +13,7 @@ config_version=5
 config/name="MindMotion"
 run/main_scene="uid://bcq1vf723pg2i"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/show_image=false
 config/icon="uid://fu70tsby8pu6"
 
 [autoload]
