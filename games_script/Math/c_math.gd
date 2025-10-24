@@ -27,7 +27,6 @@ var retry_scene = preload("res://reward scene/Retry.tscn")
 var chickens_with_farmer = []  # Array of chickens currently with farmer
 var original_positions = {}  # Store original positions for reset
 var chicken_nodes = []  # All chicken nodes
-var win_timer: Timer  # Timer to delay winning when exactly 3 chickens are given
 
 # Farmer messages
 var farmer_messages = {
@@ -39,26 +38,38 @@ var farmer_messages = {
 }
 
 func _ready():
+	# Don't reset time tracking here - wait until game actually starts
 	setup_game()
 	initialize_chickens()
 	initialize_farmer_zone()
 	start_game()
 
+func reset_time_tracking() -> void:
+	"""Reset the global start time for accurate time tracking"""
+	Global.start_time = Time.get_ticks_msec()
+	print("Time tracking reset at: ", Global.start_time)
+
+func stop_timer() -> void:
+	"""Stop the countdown timer"""
+	game_active = false
+	if game_timer:
+		game_timer.stop()
+
 func setup_game():
+	# Remove old timer if it exists (prevents duplicate timers on restart)
+	if game_timer:
+		game_timer.stop()
+		game_timer.queue_free()
+		game_timer = null
+	
 	# Create and configure game timer
 	game_timer = Timer.new()
 	game_timer.wait_time = 1.0
 	game_timer.timeout.connect(_on_timer_tick)
 	add_child(game_timer)
 	
-	# Create win timer (triggers win after 3 seconds of having exactly 3 chickens)
-	win_timer = Timer.new()
-	win_timer.wait_time = 3.0
-	win_timer.one_shot = true
-	win_timer.timeout.connect(_on_win_timer_timeout)
-	add_child(win_timer)
-	
 	# Get all chicken nodes and store original positions
+	chicken_nodes.clear()  # Clear first to prevent duplicates
 	for item in draggable_items.get_children():
 		if item.name.to_lower().begins_with("chicken"):
 			chicken_nodes.append(item)
@@ -144,8 +155,6 @@ func check_drop_on_farmer(chicken: Control, drop_position: Vector2):
 			# Just return to original position if not with farmer
 			return_to_original_position(chicken)
 
-
-
 func return_chicken_from_farmer(chicken: Control):
 	# Remove chicken from farmer's collection
 	if chicken in chickens_with_farmer:
@@ -180,21 +189,17 @@ func evaluate_chicken_count():
 		return_all_chickens()
 		update_farmer_message("welcome")
 	elif chickens_given == required_chickens:
-		# Perfect! Player gave exactly 3 chickens - but don't win yet
-		# Let them continue to see if they give more (testing attention)
+		# Perfect! Player gave exactly 3 chickens - WIN IMMEDIATELY!
 		update_farmer_message("correct_count")
-		# Start a timer to win if they don't give more chickens
-		start_win_timer()
+		# Small delay for visual feedback then win
+		await get_tree().create_timer(0.5).timeout
+		win_game()
 	else:
 		# Still need more chickens
 		var remaining = required_chickens - chickens_given
 		update_farmer_message("need_more", [remaining])
 
 func return_all_chickens():
-	# Stop win timer if it's running (player gave more chickens)
-	if win_timer.time_left > 0:
-		win_timer.stop()
-	
 	# Return all chickens to their original positions
 	for chicken in chickens_with_farmer.duplicate():  # Use duplicate to avoid modifying array while iterating
 		return_chicken_from_farmer(chicken)
@@ -203,23 +208,10 @@ func return_all_chickens():
 	chickens_with_farmer.clear()
 	chickens_given = 0
 
-func start_win_timer():
-	# Start countdown to win (gives player chance to add more chickens)
-	win_timer.start()
-
-func _on_win_timer_timeout():
-	# Player had exactly 3 chickens and didn't add more - they win!
-	if chickens_given == required_chickens:
-		win_game()
-
 func handle_chicken_drop_on_farmer(chicken: Control):
 	# If chicken is already with farmer, ignore
 	if chicken in chickens_with_farmer:
 		return
-	
-	# Stop win timer if running (player is still interacting)
-	if win_timer.time_left > 0:
-		win_timer.stop()
 	
 	# Add chicken to farmer
 	chickens_with_farmer.append(chicken)
@@ -258,6 +250,9 @@ func _on_farmer_zone_input(event: InputEvent):
 	pass
 
 func start_game():
+	# Reset time tracking RIGHT HERE when game actually starts
+	reset_time_tracking()
+	
 	game_active = true
 	time_remaining = game_duration
 	chickens_given = 0
@@ -266,8 +261,13 @@ func start_game():
 	update_timer_display()
 	game_timer.start()
 	update_farmer_message("welcome")
+	
+	print("Game started! Timer begins NOW at: ", Global.start_time)
 
 func _on_timer_tick():
+	if not game_active:  # ← ADD THIS CHECK
+		return
+		
 	time_remaining -= 1
 	update_timer_display()
 	
@@ -279,21 +279,35 @@ func _on_timer_tick():
 
 func update_timer_display():
 	if timer_display:
-		timer_display.text = "⏱️ " + str(time_remaining) + "s"
+		timer_display.text = " " + str(time_remaining) + "s"
 
 func win_game():
+	# Stop timer FIRST before any async operations
+	stop_timer()
 	game_active = false
-	game_timer.stop()
 	
 	# Calculate star rating based on time remaining and attempts
 	var star_rating = calculate_star_rating()
+	
+	# Save progress
+	print("🎉 Game completed successfully!")
+	ProgressManager.save_progress("math", true)
+	Global.refresh_everything_after_stage_completion("math", true)
+	
 	show_completion_screen(true, star_rating)
 
 func game_over():
+	# Stop timer FIRST before any async operations
+	stop_timer()
 	game_active = false
-	game_timer.stop()
 	
 	update_farmer_message("game_over")
+	
+	# Save failed attempt
+	print("⏰ Game over - Time's up!")
+	ProgressManager.save_progress("math", false)
+	Global.refresh_everything_after_stage_completion("math", false)
+	
 	await get_tree().create_timer(1.0).timeout
 	show_completion_screen(false, 0)
 
@@ -314,15 +328,6 @@ func show_completion_screen(success: bool, stars: int):
 	if has_node("Time"): $Time.visible = false
 	if has_node("Holder"): $Holder.visible = false
 	if has_node("Quitbtn"): $Quitbtn.visible = false
-
-	if success:
-		print("🎉 Game completed successfully!")
-		ProgressManager.save_progress("math", true)
-		Global.refresh_everything_after_stage_completion("math", true)
-	else:
-		print("⏰ Game over - Time's up!")
-		ProgressManager.save_progress("math", false)
-		Global.refresh_everything_after_stage_completion("math", false)
 	
 	var popup_instance: Node = null
 	
@@ -343,6 +348,16 @@ func show_completion_screen(success: bool, stars: int):
 	print("Game completed - Success: ", success, ", Stars: ", stars)
 
 func restart_game():
+	print("\n=== RESTARTING CHICKEN COUNTING GAME ===")
+	
+	# Stop and remove old timer completely
+	if game_timer:
+		game_timer.stop()
+		game_timer.queue_free()
+		game_timer = null
+	
+	# Don't reset time tracking here - wait until start_game() is called
+	
 	# Reset all variables
 	game_active = false
 	chickens_given = 0
@@ -355,26 +370,32 @@ func restart_game():
 			chicken.modulate = Color.WHITE
 			chicken.scale = Vector2.ONE
 			chicken.z_index = 0
-			chicken.visible = true  # Make sure chicken is visible
-			chicken.mouse_filter = Control.MOUSE_FILTER_PASS  # Enable interaction
-			
-			# Reconnect input if disconnected
-			if not chicken.gui_input.is_connected(_on_chicken_input):
-				chicken.gui_input.connect(_on_chicken_input.bind(chicken))
+			chicken.visible = true
+			chicken.mouse_filter = Control.MOUSE_FILTER_PASS
 	
 	# Reset UI visibility
 	if has_node("Dropzone"): $Dropzone.visible = true
 	if has_node("Draggable"): $Draggable.visible = true  
 	if has_node("Time"): $Time.visible = true
 	if has_node("Holder"): $Holder.visible = true
+	if has_node("Quitbtn"): $Quitbtn.visible = true
 	
 	if timer_display:
 		timer_display.modulate = Color.WHITE
 	
-	# Start new game
+	# Recreate timer
+	game_timer = Timer.new()
+	game_timer.wait_time = 1.0
+	game_timer.timeout.connect(_on_timer_tick)
+	add_child(game_timer)
+	
+	# Start new game (this will reset time tracking)
 	start_game()
+	
+	print("=== GAME RESTARTED ===\n")
 
 func _on_quitbtn_pressed() -> void:
+	stop_timer()  # ← ADD THIS to stop timer when quitting
 	var letter_lower = Global.current_letter.to_lower()
 	var path = "res://scenes/Categories.tscn"
 	if ResourceLoader.exists(path):

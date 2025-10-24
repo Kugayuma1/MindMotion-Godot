@@ -4,7 +4,7 @@ extends Control
 var question_data = [
 	{
 		"correct_answers": ["Alive", "Apple", "Art"],
-		"all_choices": ["Mouse", "Alive", "Apple", "Dove", "Art"]  # All 5 button labels
+		"all_choices": ["Mouse", "Alive", "Apple", "Dove", "Art"]
 	},
 	{
 		"correct_answers": ["Ate", "Ant", "Ape"],
@@ -18,8 +18,9 @@ var all_choices = []
 var selected_correct = []
 var original_feedback_text = ""
 var countdown := 15
-var timer_active = true
+var timer_active = false
 var start_time := 0
+var timer_node: SceneTreeTimer = null
 
 # Preload popup star scenes
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
@@ -43,11 +44,15 @@ var popup_instance: Control = null
 
 func _ready():
 	AudioManager.play_temp_music("game")
+	
+	# Shuffle questions on initial load
+	question_data.shuffle()
+	
 	load_current_question()
 	selected_correct.clear()
 	original_feedback_text = feedback_label.text
 	start_timer()
-	Global.start_time = Time.get_ticks_msec()
+	reset_time_tracking()
 
 func load_current_question() -> void:
 	# Get the current question data based on current_question_index
@@ -58,24 +63,43 @@ func load_current_question() -> void:
 	correct_answers = data["correct_answers"].duplicate()
 	all_choices = data["all_choices"].duplicate()
 	
+	# Shuffle the choices so buttons appear in random order each time
+	all_choices.shuffle()
+	
 	# Set button labels with the choices for this question
 	for i in range(choice_buttons.size()):
 		if i < all_choices.size():
 			var button = choice_buttons[i]
 			# Get the label child node and set its text
-			var label = button.get_node("Label")  # Adjust path if your label is named differently
+			var label = button.get_node("Label")
 			label.text = all_choices[i]
 			button.visible = true
 	
 	print("Loaded question: ", current_question_index, " with correct answers: ", correct_answers)
 
 func start_timer() -> void:
+	# Stop any existing timer first
+	stop_timer()
+	
 	timer_label.text = "15s"
 	countdown = 15
 	timer_active = true
 	update_timer()
 
+func stop_timer() -> void:
+	timer_active = false
+	# The timer will naturally stop on next check since timer_active is false
+
+func reset_time_tracking() -> void:
+	# Reset the global start time for accurate time tracking
+	Global.start_time = Time.get_ticks_msec()
+	start_time = Global.start_time
+	print("Time tracking reset at: ", start_time)
+
 func update_timer() -> void:
+	if !timer_active:
+		return
+		
 	if countdown <= 0:
 		timer_label.text = "Time's up!"
 		timer_active = false
@@ -86,8 +110,11 @@ func update_timer() -> void:
 
 	timer_label.text = " " + str(countdown) + "s"
 	countdown -= 1
+	
+	# Store the timer so we can check if it's still valid
 	await get_tree().create_timer(1.0).timeout
 
+	# Double-check timer is still active before continuing
 	if timer_active:
 		update_timer()
 
@@ -104,22 +131,25 @@ func check_answer(answer: String, button: TextureButton) -> void:
 
 			if selected_correct.size() == correct_answers.size():
 				feedback_label.text = "🎉You've got it all right!"
-				timer_active = false
+				stop_timer()  # Properly stop the timer
 				ProgressManager.save_progress("reading", true)
 				Global.refresh_everything_after_stage_completion("reading", true)
 				game_over(true)
 			else:
 				await get_tree().create_timer(1.5).timeout
-				reset_feedback_label()
+				if timer_active:  # Only reset if timer still active
+					reset_feedback_label()
 		else:
 			feedback_label.text = "👆 You already tapped that!"
 			await get_tree().create_timer(1.5).timeout
-			reset_feedback_label()
+			if timer_active:
+				reset_feedback_label()
 	else:
 		feedback_label.text = "❌ Wrong! Try again."
 		shake_button(button)
 		await get_tree().create_timer(1.5).timeout
-		reset_feedback_label()
+		if timer_active:
+			reset_feedback_label()
 
 func reset_feedback_label() -> void:
 	feedback_label.text = original_feedback_text
@@ -132,6 +162,9 @@ func shake_button(button: TextureButton) -> void:
 	tween.tween_property(button, "position", original_pos, 0.05).set_delay(0.10)
 
 func game_over(success: bool):
+	# CRITICAL: Stop the timer before showing popup
+	stop_timer()
+	
 	if has_node("TextureRect/ant1"): $TextureRect/ant1.visible = false
 	if has_node("TextureRect/ant2"): $TextureRect/ant2.visible = false
 	if has_node("TextureRect/ant3"): $TextureRect/ant3.visible = false
@@ -169,6 +202,7 @@ func _on_ant_5_pressed() -> void:
 	check_answer(all_choices[4], $TextureRect/ant5)
 
 func _on_quitbtn_pressed() -> void:
+	stop_timer()  # Stop timer when quitting
 	AudioManager.resume_previous_music() 
 	var letter_lower = Global.current_letter.to_lower()
 	var path = "res://scenes/Categories.tscn"
@@ -177,16 +211,23 @@ func _on_quitbtn_pressed() -> void:
 	else:	
 		print("Scene not found: ", path)
 
-# Call this to move to next question when retrying
+# Call this to restart with fresh shuffle
 func restart_game() -> void:
+	# Stop the old timer completely
+	stop_timer()
+	
+	# IMPORTANT: Reset time tracking for the new attempt
+	reset_time_tracking()
+	
 	# Move to next question
 	current_question_index += 1
 	
-	# If we've gone through all questions, loop back to the beginning
+	# If we've gone through all questions, reshuffle and start over
 	if current_question_index >= question_data.size():
 		current_question_index = 0
+		question_data.shuffle()  # Reshuffle for variety
 	
-	# Load the next question
+	# Load the next question (this will also shuffle the choices)
 	load_current_question()
 	selected_correct.clear()
 	
@@ -201,6 +242,6 @@ func restart_game() -> void:
 	if has_node("Quitbtn"): $Quitbtn.visible = true
 	
 	reset_feedback_label()
-	start_timer()
+	start_timer()  # Start fresh timer
 	
 	print("Retrying with question: ", current_question_index)

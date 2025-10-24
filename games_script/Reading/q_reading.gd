@@ -241,6 +241,15 @@ func game_over(success: bool):
 
 	add_child(popup_instance)
 
+func stop_timer() -> void:
+	"""Stop the countdown timer"""
+	timer_active = false
+
+func reset_time_tracking() -> void:
+	"""Reset the global start time for accurate time tracking"""
+	Global.start_time = Time.get_ticks_msec()
+	print("Time tracking reset at: ", Global.start_time)
+
 func _on_quitbtn_pressed() -> void:
 	var letter_lower = Global.current_letter.to_lower()
 	var path = "res://scenes/Categories.tscn"
@@ -251,7 +260,16 @@ func _on_quitbtn_pressed() -> void:
 
 # Call this function when moving to the next word (e.g., from a completion popup)
 func restart_game() -> void:
+	# Stop the old timer completely
+	stop_timer()
+	
+	# Reset time tracking for new attempt
+	reset_time_tracking()
+	
+	# Move to next word
 	current_word_index += 1
+	
+	# Load the next word (this will also shuffle letters)
 	load_current_word()
 	setup_game()
 	

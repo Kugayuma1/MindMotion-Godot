@@ -16,7 +16,7 @@ var min_total_sum := 4
 
 # === GAME STATE ===
 var countdown: int = GAME_TIME
-var timer_active: bool = true
+var timer_active: bool = false
 var correct_answer: int = 0
 var current_equation: String = ""
 var start_time: int = 0
@@ -59,7 +59,7 @@ var right_avocados: Array[Node] = []
 # === INITIALIZATION ===
 func _ready() -> void:
 	print("Avocado Math Game - Starting with Randomization")
-	start_time = Time.get_ticks_msec()
+	reset_time_tracking()
 	
 	debug_scene_structure()
 	initialize_game()
@@ -286,6 +286,16 @@ func setup_button_connections() -> void:
 			print("Cannot connect button %d - node is null" % (i + 1))
 
 # === TIMER SYSTEM ===
+func reset_time_tracking() -> void:
+	"""Reset the global start time for accurate time tracking"""
+	Global.start_time = Time.get_ticks_msec()
+	start_time = Global.start_time
+	print("Time tracking reset at: ", start_time)
+
+func stop_timer() -> void:
+	"""Stop the countdown timer"""
+	timer_active = false
+
 func start_countdown_timer() -> void:
 	"""Start the countdown timer"""
 	countdown = GAME_TIME
@@ -316,7 +326,7 @@ func update_timer_display() -> void:
 
 func handle_timeout() -> void:
 	"""Handle timer timeout"""
-	timer_active = false
+	stop_timer()
 	
 	if equation_label:
 		equation_label.text = "Time's up! Answer: %d" % correct_answer
@@ -357,7 +367,7 @@ func _on_button_pressed(button_index: int) -> void:
 
 func handle_correct_answer() -> void:
 	"""Handle correct answer selection"""
-	timer_active = false
+	stop_timer()
 	
 	if equation_label:
 		equation_label.text = "Correct! %d" % correct_answer
@@ -395,6 +405,7 @@ func animate_button_shake(button: TextureButton) -> void:
 # === GAME END ===
 func end_game(success: bool) -> void:
 	"""End the game and show results"""
+	stop_timer()  # Make sure timer is stopped
 	hide_game_ui()
 	show_result_popup(success)
 
@@ -427,8 +438,41 @@ func show_result_popup(success: bool) -> void:
 		add_child(popup_instance)
 
 func _on_quitbtn_pressed() -> void:
+	stop_timer()  # Stop timer when quitting
 	var path = "res://scenes/Categories.tscn"
 	if ResourceLoader.exists(path):
 		get_tree().change_scene_to_file(path)
 	else:	
 		print("Scene not found: ", path)
+
+# === RESTART GAME FUNCTION ===
+func restart_game() -> void:
+	"""Restart the game with new random numbers"""
+	print("\n=== RESTARTING GAME ===")
+	
+	# Stop the old timer completely
+	stop_timer()
+	
+	# Reset time tracking for new attempt
+	reset_time_tracking()
+	
+	# Show all UI elements again
+	show_game_ui()
+	
+	# Reinitialize the entire game with new random numbers
+	initialize_game()
+	
+	print("=== GAME RESTARTED ===\n")
+
+func show_game_ui() -> void:
+	"""Show all game UI elements"""
+	var ui_paths = [
+		"GameBG/Canvas", "Time", "Holder", "RightGroup", "LeftGroup", 
+		"Button1", "Button2", "Button3", "Button4", "Quitbtn", "Operations"
+	]
+	
+	for element_path in ui_paths:
+		var element = get_node_or_null(element_path)
+		if element:
+			element.visible = true
+			print("Shown: %s" % element_path)

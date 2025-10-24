@@ -4,8 +4,8 @@ extends Control
 var word_data = [
 	{"word": "BALL", "image_path": "res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/Ball.png", "available_letters": ["K", "A", "B", "Y", "A", "L", "I", "L"]},
 	{"word": "BOOK", "image_path": "res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/Book.png", "available_letters": ["G", "O", "K", "O", "T", "M", "K", "B"]},
-	{"word": "BOAT", "image_path": "res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/Boat.png", "available_letters": ["G", "A", "K", "O", "T", "M", "K", "B"]},]
-	
+	{"word": "BOAT", "image_path": "res://Game Assets/Reading Assets/Assetsulit/2NANAMAN/Boat.png", "available_letters": ["G", "A", "K", "O", "T", "M", "K", "B"]},
+]
 
 # Current game state
 var current_word_index = 0  # Tracks which word we're on
@@ -17,7 +17,7 @@ var available_letters = []
 var current_answer = []
 var current_slot_index = 0
 var countdown := 15
-var timer_active = true
+var timer_active = false
 
 # Preload popup scenes
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
@@ -60,21 +60,28 @@ var button_letters = {}
 var slot_to_button = {}
 
 func _ready():
+	# Shuffle words on initial load
+	word_data.shuffle()
+	
 	load_current_word()
 	setup_game()
 	setup_letter_holder_inputs()
 	start_timer()
-	Global.start_time = Time.get_ticks_msec()
+	reset_time_tracking()
 
 func load_current_word() -> void:
 	# Get the current word data based on current_word_index
 	if current_word_index >= word_data.size():
-		current_word_index = 0  # Loop back to the beginning if we've gone through all words
+		current_word_index = 0  # Loop back to the beginning
+		word_data.shuffle()  # Reshuffle when looping
 	
 	var data = word_data[current_word_index]
 	correct_answer = data["word"]
 	answer_length = correct_answer.length()
 	available_letters = data["available_letters"].duplicate()
+	
+	# Shuffle the available letters for variety
+	available_letters.shuffle()
 	
 	# Load and set the image
 	if ResourceLoader.exists(data["image_path"]):
@@ -94,6 +101,11 @@ func setup_game() -> void:
 	for label in letter_holders:
 		label.text = ""
 	
+	# Disconnect old connections to prevent duplicates
+	for button in letter_buttons:
+		if button.gui_input.is_connected(_on_letter_button_input):
+			button.gui_input.disconnect(_on_letter_button_input)
+	
 	# Set up letter buttons with available letters
 	for i in range(letter_buttons.size()):
 		if i < available_letters.size():
@@ -106,17 +118,39 @@ func setup_game() -> void:
 			button.gui_input.connect(_on_letter_button_input.bind(button))
 
 func setup_letter_holder_inputs() -> void:
+	# Disconnect old connections first
+	for i in range(letter_holder_controls.size()):
+		var holder = letter_holder_controls[i]
+		if holder.gui_input.is_connected(_on_letter_holder_input):
+			holder.gui_input.disconnect(_on_letter_holder_input)
+	
+	# Reconnect
 	for i in range(letter_holder_controls.size()):
 		var holder = letter_holder_controls[i]
 		holder.gui_input.connect(_on_letter_holder_input.bind(i))
 
+func reset_time_tracking() -> void:
+	"""Reset the global start time for accurate time tracking"""
+	Global.start_time = Time.get_ticks_msec()
+	print("Time tracking reset at: ", Global.start_time)
+
+func stop_timer() -> void:
+	"""Stop the countdown timer"""
+	timer_active = false
+
 func start_timer() -> void:
+	# Stop any existing timer first
+	stop_timer()
+	
 	timer_label.text = "15s"
 	countdown = 15
 	timer_active = true
 	update_timer()
 
 func update_timer() -> void:
+	if !timer_active:
+		return
+	
 	if countdown <= 0:
 		timer_label.text = "Time's up!"
 		timer_active = false
@@ -191,7 +225,7 @@ func check_complete_answer() -> void:
 	var player_word = "".join(current_answer)
 	
 	if player_word == correct_answer:
-		timer_active = false
+		stop_timer()
 		ProgressManager.save_progress("reading", true)
 		Global.refresh_everything_after_stage_completion("reading", true)
 		await get_tree().create_timer(0.5).timeout
@@ -199,7 +233,8 @@ func check_complete_answer() -> void:
 	else:
 		shake_letter_holders()
 		await get_tree().create_timer(1.0).timeout
-		reset_answer()
+		if timer_active:  # Only reset if timer still active
+			reset_answer()
 
 func reset_answer() -> void:
 	current_answer.clear()
@@ -222,6 +257,8 @@ func shake_letter_holders() -> void:
 		tween.tween_property(holder, "position", original_pos, 0.05).set_delay(0.10)
 
 func game_over(success: bool):
+	stop_timer()  # Stop timer when game ends
+	
 	if has_node("LetterHolders"): $LetterHolders.visible = false
 	if has_node("LetterButtons"): $LetterButtons.visible = false
 	if has_node("ItemHolder"): $ItemHolder.visible = false
@@ -241,6 +278,7 @@ func game_over(success: bool):
 	add_child(popup_instance)
 
 func _on_quitbtn_pressed() -> void:
+	stop_timer()  # Stop timer when quitting
 	var letter_lower = Global.current_letter.to_lower()
 	var path = "res://scenes/Categories.tscn"
 	if ResourceLoader.exists(path):
@@ -248,12 +286,24 @@ func _on_quitbtn_pressed() -> void:
 	else:	
 		print("Scene not found: ", path)
 
-# Call this function when moving to the next word (e.g., from a completion popup)
+# Call this function when restarting the game
 func restart_game() -> void:
+	print("\n=== RESTARTING WORD SPELLING GAME ===")
+	
+	# Stop the old timer completely
+	stop_timer()
+	
+	# Reset time tracking for new attempt
+	reset_time_tracking()
+	
+	# Move to next word
 	current_word_index += 1
+	
+	# Load the next word (this will also shuffle letters)
 	load_current_word()
 	setup_game()
 	
+	# Show UI elements again
 	if has_node("LetterHolders"): $LetterHolders.visible = true
 	if has_node("LetterButtons"): $LetterButtons.visible = true
 	if has_node("ItemHolder"): $ItemHolder.visible = true
@@ -261,3 +311,5 @@ func restart_game() -> void:
 	if has_node("Quitbtn"): $Quitbtn.visible = true
 	
 	start_timer()
+	
+	print("=== GAME RESTARTED ===\n")

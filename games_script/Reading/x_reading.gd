@@ -249,6 +249,7 @@ func game_over(success: bool):
 
 	add_child(popup_instance)
 
+
 func _on_quitbtn_pressed() -> void:
 	var letter_lower = Global.current_letter.to_lower()
 	var path = "res://scenes/Categories.tscn"

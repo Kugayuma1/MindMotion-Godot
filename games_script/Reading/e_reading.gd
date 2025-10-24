@@ -73,6 +73,9 @@ func load_current_word() -> void:
 	answer_length = correct_answer.length()
 	available_letters = data["available_letters"].duplicate()
 	
+	# Shuffle the available letters
+	available_letters.shuffle()
+	
 	# Load and set the image
 	if ResourceLoader.exists(data["image_path"]):
 		image_display.texture = load(data["image_path"])
@@ -128,6 +131,15 @@ func update_timer() -> void:
 
 	if timer_active:
 		update_timer()
+
+func stop_timer() -> void:
+	"""Stop the countdown timer"""
+	timer_active = false
+
+func reset_time_tracking() -> void:
+	"""Reset the global start time for accurate time tracking"""
+	Global.start_time = Time.get_ticks_msec()
+	print("Time tracking reset at: ", Global.start_time)
 
 func _on_letter_button_input(event: InputEvent, button: TextureRect) -> void:
 	if event is InputEventMouseButton:
@@ -247,7 +259,16 @@ func _on_quitbtn_pressed() -> void:
 
 # Call this function when moving to the next word (e.g., from a completion popup)
 func restart_game() -> void:
+	# Stop the old timer completely
+	stop_timer()
+	
+	# Reset time tracking for new attempt
+	reset_time_tracking()
+	
+	# Move to next word
 	current_word_index += 1
+	
+	# Load the next word (this will also shuffle letters)
 	load_current_word()
 	setup_game()
 	

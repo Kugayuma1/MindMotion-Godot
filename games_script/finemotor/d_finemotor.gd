@@ -39,7 +39,24 @@ func _ready():
 	initialize_kids()
 	start_game()
 
+func reset_time_tracking() -> void:
+	"""Reset the global start time for accurate time tracking"""
+	Global.start_time = Time.get_ticks_msec()
+	print("Time tracking reset at: ", Global.start_time)
+
+func stop_timer() -> void:
+	"""Stop the countdown timer"""
+	game_active = false
+	if game_timer:
+		game_timer.stop()
+
 func setup_game():
+	# Remove old timer if it exists (prevents duplicate timers on restart)
+	if game_timer:
+		game_timer.stop()
+		game_timer.queue_free()
+		game_timer = null
+	
 	# Create and configure game timer
 	game_timer = Timer.new()
 	game_timer.wait_time = 1.0
@@ -47,12 +64,14 @@ func setup_game():
 	add_child(game_timer)
 	
 	# Get all donut nodes and store original positions
+	donut_nodes.clear()
 	for donut in draggables.get_children():
 		if donut.name.to_lower().begins_with("donut"):
 			donut_nodes.append(donut)
 			original_positions[donut.name] = donut.global_position
 	
 	# Get all kid nodes
+	kid_nodes.clear()
 	for kid in dropzone.get_children():
 		if kid.name.to_lower().begins_with("kid"):
 			kid_nodes.append(kid)
@@ -212,6 +231,9 @@ func _on_kid_input(event: InputEvent, kid: Control):
 	pass
 
 func start_game():
+	# Reset time tracking when game starts
+	reset_time_tracking()
+	
 	game_active = true
 	time_remaining = game_duration
 	matches_completed = 0
@@ -240,10 +262,16 @@ func start_game():
 	
 	update_timer_display()
 	game_timer.start()
+	
+	print("Game started! Timer begins NOW at: ", Global.start_time)
 
 func _on_timer_tick():
+	if not game_active:
+		return
+	
 	time_remaining -= 1
 	update_timer_display()
+	
 	if time_remaining <= 0:
 		game_over()
 	elif time_remaining <= 10:
@@ -254,18 +282,20 @@ func update_timer_display():
 		timer_display.text = " " + str(time_remaining) + "s"
 
 func win_game():
-	game_active = false
-	game_timer.stop()
+	stop_timer()
+	
 	ProgressManager.save_progress("fine_motor", true)
 	Global.refresh_everything_after_stage_completion("fine_motor", true)
+	
 	var star_rating = calculate_star_rating()
 	show_completion_screen(true, star_rating)
 
 func game_over():
-	game_active = false
-	game_timer.stop()
+	stop_timer()
+	
 	ProgressManager.save_progress("fine_motor", false)
 	Global.refresh_everything_after_stage_completion("fine_motor", false)
+	
 	await get_tree().create_timer(1.0).timeout
 	show_completion_screen(false, 0)
 
@@ -279,7 +309,7 @@ func calculate_star_rating() -> int:
 
 func show_completion_screen(success: bool, stars: int):
 	if has_node("DropZone"): $DropZone.visible = false
-	if has_node("Draggables"): $Draggables.visible = false
+	if has_node("ColorRect/GameBG/Draggables"): $ColorRect/GameBG/Draggables.visible = false
 	if has_node("Time"): $Time.visible = false
 	if has_node("Holder"): $Holder.visible = false
 	if has_node("Quitbtn"): $Quitbtn.visible = false
@@ -306,10 +336,22 @@ func show_completion_screen(success: bool, stars: int):
 	print("Game completed - Success: ", success, ", Stars: ", stars)
 
 func restart_game():
+	print("\n=== RESTARTING DONUT MATCHING GAME ===")
+	
+	# Stop and remove old timer completely
+	if game_timer:
+		game_timer.stop()
+		game_timer.queue_free()
+		game_timer = null
+	
+	# Don't reset time tracking here - wait until start_game() is called
+	
+	# Reset all variables
 	game_active = false
 	matches_completed = 0
 	completed_kids.clear()
 	
+	# Reset donuts
 	for donut in donut_nodes:
 		if donut.name in original_positions:
 			donut.global_position = original_positions[donut.name]
@@ -318,20 +360,41 @@ func restart_game():
 			donut.z_index = 0
 			donut.visible = true
 			donut.mouse_filter = Control.MOUSE_FILTER_PASS
-			if not donut.gui_input.is_connected(_on_donut_input):
-				donut.gui_input.connect(_on_donut_input.bind(donut))
 	
+	# Reset kids
+	for kid in kid_nodes:
+		var texture_rect = kid.get_node_or_null("TextureRect")
+		var donut_bubble = texture_rect.get_node_or_null("Donut") if texture_rect else null
+		var ty_label = texture_rect.get_node_or_null("TyLabel") if texture_rect else null
+		
+		if donut_bubble:
+			donut_bubble.visible = true
+		if ty_label:
+			ty_label.visible = false
+	
+	# Reset UI visibility
 	if has_node("DropZone"): $DropZone.visible = true
-	if has_node("Draggables"): $Draggables.visible = true
+	if has_node("ColorRect/GameBG/Draggables"): $ColorRect/GameBG/Draggables.visible = true
 	if has_node("Time"): $Time.visible = true
 	if has_node("Holder"): $Holder.visible = true
+	if has_node("Quitbtn"): $Quitbtn.visible = true
 	
 	if timer_display:
 		timer_display.modulate = Color.WHITE
 	
+	# Recreate timer
+	game_timer = Timer.new()
+	game_timer.wait_time = 1.0
+	game_timer.timeout.connect(_on_timer_tick)
+	add_child(game_timer)
+	
+	# Start new game (this will reset time tracking)
 	start_game()
+	
+	print("=== GAME RESTARTED ===\n")
 
 func _on_quitbtn_pressed() -> void:
+	stop_timer()
 	var path = "res://scenes/Categories.tscn"
 	if ResourceLoader.exists(path):
 		get_tree().change_scene_to_file(path)
