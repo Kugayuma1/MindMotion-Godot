@@ -32,6 +32,7 @@ var dragging_item: Control = null
 var drag_offset: Vector2
 
 func _ready():
+	reset_time_tracking()
 	setup_game()
 	initialize_draggables()
 	initialize_dropzones()
@@ -39,15 +40,17 @@ func _ready():
 
 func setup_game():
 	# Create and configure game timer
-	game_timer = Timer.new()
-	game_timer.wait_time = 1.0
-	game_timer.timeout.connect(_on_timer_tick)
-	add_child(game_timer)
+	if not game_timer:
+		game_timer = Timer.new()
+		game_timer.wait_time = 1.0
+		game_timer.timeout.connect(_on_timer_tick)
+		add_child(game_timer)
 	
-	# Store original positions of draggable items
+	# Store original positions of draggable items (use local position)
+	original_positions.clear()  # Clear first
 	for item in draggable_container.get_children():
 		if item is Control:
-			original_positions[item.name] = item.global_position
+			original_positions[item.name] = item.position  # Use local position
 
 func initialize_draggables():
 	# Setup each draggable item
@@ -56,6 +59,14 @@ func initialize_draggables():
 			setup_draggable_item(item)
 
 func setup_draggable_item(item: Control):
+	# Disconnect if already connected to prevent duplicates
+	if item.gui_input.is_connected(_on_draggable_input):
+		item.gui_input.disconnect(_on_draggable_input)
+	if item.mouse_entered.is_connected(_on_item_hover_start):
+		item.mouse_entered.disconnect(_on_item_hover_start)
+	if item.mouse_exited.is_connected(_on_item_hover_end):
+		item.mouse_exited.disconnect(_on_item_hover_end)
+	
 	# Make item draggable
 	item.gui_input.connect(_on_draggable_input.bind(item))
 	
@@ -93,16 +104,16 @@ func restore_dropzone_opacity(zone: Control):
 	for child in zone.get_children():
 		if child is Control or child is Node2D:
 			tween.parallel().tween_property(child, "modulate:a", 1.0, 0.3)
-			
+
 func shuffle_draggables():
 	"""Randomize the positions of draggable items"""
 	var draggables = draggable_container.get_children()
 	var positions = []
 	
-	# Collect all current positions
+	# Collect all current positions (use position relative to parent, not global)
 	for item in draggables:
 		if item is Control:
-			positions.append(item.global_position)
+			positions.append(item.position)  # Use local position instead of global
 	
 	# Shuffle the positions array
 	positions.shuffle()
@@ -110,9 +121,11 @@ func shuffle_draggables():
 	# Assign shuffled positions back to items
 	for i in range(draggables.size()):
 		if draggables[i] is Control:
-			draggables[i].global_position = positions[i]
+			draggables[i].position = positions[i]  # Set local position
 			# Update original positions so they can return here
 			original_positions[draggables[i].name] = positions[i]
+	
+	print("Draggables shuffled to new positions")
 
 func _on_draggable_input(event: InputEvent, item: Control):
 	if not game_active:
@@ -191,12 +204,6 @@ func handle_drop_attempt(item: Control, zone: Control):
 		handle_incorrect_match(item, zone)
 
 func is_correct_match(item_name: String, zone_name: String) -> bool:
-	# The correct answer based on the phrase: "The Rabbit is eating a Carrot"
-	# Match specific pairs:
-	# "Rabbit" draggable -> "RabbitDrop" dropzone
-	# "Eating" draggable -> "EatingDrop" dropzone
-	# "Carrot" draggable -> "CarrotDrop" dropzone
-	
 	# Clean up the names - remove spaces and convert to lowercase
 	var clean_item = item_name.to_lower().replace(" ", "").strip_edges()
 	var clean_zone = zone_name.to_lower().replace(" ", "").strip_edges()
@@ -215,9 +222,6 @@ func is_correct_match(item_name: String, zone_name: String) -> bool:
 	return false
 
 func handle_correct_match(item: Control, zone: Control):
-	# Play success sound (if you have one)
-	# $SuccessSound.play()
-	
 	# Mark as placed
 	placed_items[item.name] = zone.name
 	dropzone_states[zone.name] = true
@@ -244,9 +248,6 @@ func handle_correct_match(item: Control, zone: Control):
 		win_game()
 
 func handle_incorrect_match(item: Control, zone: Control):
-	# Play error sound (if you have one)
-	# $ErrorSound.play()
-	
 	# Shake animation
 	shake_item(item)
 	
@@ -264,19 +265,19 @@ func snap_to_zone(item: Control, zone: Control):
 func return_to_original_position(item: Control):
 	if item.name in original_positions:
 		var tween = create_tween()
-		tween.tween_property(item, "global_position", original_positions[item.name], 0.4).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_property(item, "position", original_positions[item.name], 0.4).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 
 func shake_item(item: Control):
-	var original_pos = item.global_position
+	var original_pos = item.position  # Use local position
 	var tween = create_tween()
 	
 	# Flash red during shake
 	tween.parallel().tween_property(item, "modulate", Color.INDIAN_RED, 0.1)
 	
-	tween.tween_property(item, "global_position", original_pos + Vector2(-15, 0), 0.06)
-	tween.tween_property(item, "global_position", original_pos + Vector2(15, 0), 0.06)
-	tween.tween_property(item, "global_position", original_pos + Vector2(-10, 0), 0.06)
-	tween.tween_property(item, "global_position", original_pos, 0.06)
+	tween.tween_property(item, "position", original_pos + Vector2(-15, 0), 0.06)
+	tween.tween_property(item, "position", original_pos + Vector2(15, 0), 0.06)
+	tween.tween_property(item, "position", original_pos + Vector2(-10, 0), 0.06)
+	tween.tween_property(item, "position", original_pos, 0.06)
 	
 	# Return to white color
 	tween.parallel().tween_property(item, "modulate", Color.WHITE, 0.2)
@@ -302,17 +303,32 @@ func _on_item_hover_end(item: Control):
 		var tween = create_tween()
 		tween.tween_property(item, "modulate", Color.WHITE, 0.1)
 
+func reset_time_tracking() -> void:
+	"""Reset the global start time for accurate time tracking"""
+	Global.start_time = Time.get_ticks_msec()
+	print("Time tracking reset at: ", Global.start_time)
+
+func stop_timer() -> void:
+	"""Stop the countdown timer"""
+	game_active = false
+	if game_timer:
+		game_timer.stop()
+
 func start_game():
 	game_active = true
 	time_remaining = game_duration
 	matches_completed = 0
 	
-	shuffle_draggables()  
+	shuffle_draggables()
 	
 	update_timer_display()
-	game_timer.start()
+	if game_timer:
+		game_timer.start()
 
 func _on_timer_tick():
+	if not game_active:
+		return
+		
 	time_remaining -= 1
 	update_timer_display()
 	
@@ -333,8 +349,7 @@ func update_timer_display():
 		timer_display.text = " " + str(time_remaining) + "s"
 
 func win_game():
-	game_active = false
-	game_timer.stop()
+	stop_timer()
 	
 	# Save progress
 	ProgressManager.save_progress("reading", true)
@@ -345,8 +360,7 @@ func win_game():
 	show_completion_screen(true, star_rating)
 
 func game_over():
-	game_active = false
-	game_timer.stop()
+	stop_timer()
 	
 	# Save failed attempt
 	ProgressManager.save_progress("reading", false)
@@ -389,10 +403,18 @@ func show_completion_screen(success: bool, stars: int):
 	print("Game completed - Success: ", success, ", Stars: ", stars)
 
 func restart_game():
+	print("\n=== RESTARTING PHRASE MATCHING GAME ===")
+	
+	# Stop the old timer
+	stop_timer()
+	
+	# Reset time tracking
+	reset_time_tracking()
+	
 	# Reset all variables
-	game_active = false
 	matches_completed = 0
 	placed_items.clear()
+	dragging_item = null
 	
 	# Reset dropzone states and opacity
 	for zone in dropzone_container.get_children():
@@ -400,17 +422,37 @@ func restart_game():
 			dropzone_states[zone.name] = false
 			set_dropzone_opacity(zone, dropzone_opacity)
 	
-	# Reset item positions and visibility
+	# First, store the ORIGINAL positions before any modifications
+	var initial_positions = {}
 	for item in draggable_container.get_children():
-		if item is Control and item.name in original_positions:
+		if item is Control:
+			# Get the position from the editor (before shuffle)
+			if item.name not in original_positions:
+				initial_positions[item.name] = item.position
+			else:
+				initial_positions[item.name] = original_positions[item.name]
+	
+	# Reset item positions and properties to their initial state
+	for item in draggable_container.get_children():
+		if item is Control:
 			item.visible = true
-			item.global_position = original_positions[item.name]
 			item.modulate = Color.WHITE
+			item.modulate.a = 1.0  # Reset alpha
 			item.scale = Vector2.ONE
+			item.z_index = 0
 			
-			# Reconnect input if disconnected
-			if not item.gui_input.is_connected(_on_draggable_input):
-				item.gui_input.connect(_on_draggable_input.bind(item))
+			# Reset to initial position
+			if item.name in initial_positions:
+				item.position = initial_positions[item.name]
+	
+	# Update original_positions with current positions before shuffle
+	original_positions.clear()
+	for item in draggable_container.get_children():
+		if item is Control:
+			original_positions[item.name] = item.position
+	
+	# Reinitialize draggables to reconnect signals
+	initialize_draggables()
 	
 	# Reset UI
 	if has_node("DropZone"): $DropZone.visible = true
@@ -423,11 +465,13 @@ func restart_game():
 		timer_display.modulate = Color.WHITE
 		timer_display.scale = Vector2.ONE
 	
-	# Start new game
-	shuffle_draggables()
+	# Start new game (this will shuffle)
 	start_game()
+	
+	print("=== GAME RESTARTED ===\n")
 
 func _on_quitbtn_pressed() -> void:
+	stop_timer()  # Stop timer when quitting
 	var path = "res://scenes/Categories.tscn"
 	if ResourceLoader.exists(path):
 		get_tree().change_scene_to_file(path)

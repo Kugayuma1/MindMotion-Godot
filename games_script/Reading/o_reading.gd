@@ -1,6 +1,6 @@
 extends Control
 
-# ✅ Game configuration: 2 question sets for Letter O
+# ✅ GAME CONFIGURATION — 2 QUESTION SETS FOR LETTER O
 var question_data = [
 	{
 		"correct_answers": ["Orange", "Owl", "Octopus"],
@@ -18,9 +18,11 @@ var all_choices = []
 var selected_correct = []
 var original_feedback_text = ""
 var countdown := 15
-var timer_active = true
+var timer_active = false
+var start_time := 0
+var timer_node: SceneTreeTimer = null
 
-# 🌟 Popup star scenes
+# 🌟 POPUP STAR SCENES
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn")
 var complete3_scene = preload("res://reward scene/Complete3.tscn")
@@ -28,7 +30,7 @@ var retry_scene = preload("res://reward scene/Retry.tscn")
 
 var popup_instance: Control = null
 
-# 🧩 UI references
+# 🧩 UI REFERENCES
 @onready var feedback_label = $TextureRect/Holder/Label
 @onready var timer_label = $TextureRect/Time/Label
 @onready var choice_buttons = [
@@ -39,21 +41,23 @@ var popup_instance: Control = null
 	$TextureRect/Owl5
 ]
 
-func _ready() -> void:
+func _ready():
+	# AudioManager.play_temp_music("game")  # optional
+	question_data.shuffle()
+	load_current_question()
 	selected_correct.clear()
 	original_feedback_text = feedback_label.text
-	load_current_question()
 	start_timer()
+	reset_time_tracking()
 
-# --- LOAD CURRENT QUESTION ---
 func load_current_question() -> void:
 	if current_question_index >= question_data.size():
-		current_question_index = 0  # loop back after last question
-	
+		current_question_index = 0
+
 	var data = question_data[current_question_index]
 	correct_answers = data["correct_answers"].duplicate()
 	all_choices = data["all_choices"].duplicate()
-	selected_correct.clear()
+	all_choices.shuffle()
 
 	for i in range(choice_buttons.size()):
 		if i < all_choices.size():
@@ -61,69 +65,80 @@ func load_current_question() -> void:
 			var label = button.get_node("Label")
 			label.text = all_choices[i]
 			button.visible = true
-	
-	feedback_label.text = original_feedback_text
-	timer_label.text = "15s"
-	countdown = 15
-	timer_active = true
 
-# --- TIMER LOGIC ---
+	print("Loaded question: ", current_question_index, " with correct answers: ", correct_answers)
+
 func start_timer() -> void:
+	stop_timer()
+	timer_label.text = "15s"
 	countdown = 15
 	timer_active = true
 	update_timer()
 
+func stop_timer() -> void:
+	timer_active = false
+
+func reset_time_tracking() -> void:
+	Global.start_time = Time.get_ticks_msec()
+	start_time = Global.start_time
+	print("Time tracking reset at: ", start_time)
+
 func update_timer() -> void:
+	if !timer_active:
+		return
+
 	if countdown <= 0:
-		timer_label.text = "⏰ Time's up!"
+		timer_label.text = "Time's up!"
 		timer_active = false
 		ProgressManager.save_progress("reading", false)
 		Global.refresh_everything_after_stage_completion("reading", false)
 		game_over(false)
 		return
 
-	timer_label.text = str(countdown) + "s"
+	timer_label.text = " " + str(countdown) + "s"
 	countdown -= 1
+
 	await get_tree().create_timer(1.0).timeout
 
 	if timer_active:
 		update_timer()
 
-# --- CHECK ANSWERS ---
 func check_answer(answer: String, button: TextureButton) -> void:
 	if !timer_active:
-		feedback_label.text = "⏱️ Time's Up!"
+		feedback_label.text = "⏱️Time's Up!"
 		return
 
 	if correct_answers.has(answer):
 		if !selected_correct.has(answer):
 			selected_correct.append(answer)
-			feedback_label.text = "✅ Great! " + answer + " starts with O!"
+			feedback_label.text = "✅ Correct! " + answer
 			button.visible = false
 
 			if selected_correct.size() == correct_answers.size():
-				feedback_label.text = "🎉 Good job! You found them all!"
-				timer_active = false
+				feedback_label.text = "🎉You've got it all right!"
+				stop_timer()
 				ProgressManager.save_progress("reading", true)
 				Global.refresh_everything_after_stage_completion("reading", true)
 				game_over(true)
 			else:
 				await get_tree().create_timer(1.5).timeout
-				reset_feedback_label()
+				if timer_active:
+					reset_feedback_label()
 		else:
-			feedback_label.text = "👆 You already picked that!"
+			feedback_label.text = "👆 You already tapped that!"
 			await get_tree().create_timer(1.5).timeout
-			reset_feedback_label()
+			if timer_active:
+				reset_feedback_label()
 	else:
-		feedback_label.text = "❌ Oops! Try another one!"
+		feedback_label.text = "❌ Wrong! Try again."
 		shake_button(button)
 		await get_tree().create_timer(1.5).timeout
-		reset_feedback_label()
+		if timer_active:
+			reset_feedback_label()
 
 func reset_feedback_label() -> void:
 	feedback_label.text = original_feedback_text
 
-# --- SHAKE EFFECT ---
 func shake_button(button: TextureButton) -> void:
 	var original_pos = button.position
 	var tween = create_tween()
@@ -131,10 +146,14 @@ func shake_button(button: TextureButton) -> void:
 	tween.tween_property(button, "position", original_pos + Vector2(10, 0), 0.05).set_delay(0.05)
 	tween.tween_property(button, "position", original_pos, 0.05).set_delay(0.10)
 
-# --- GAME OVER / POPUP HANDLER ---
-func game_over(success: bool) -> void:
-	for button in choice_buttons:
-		button.visible = false
+func game_over(success: bool):
+	stop_timer()
+
+	if has_node("TextureRect/Owl1"): $TextureRect/Owl1.visible = false
+	if has_node("TextureRect/Owl2"): $TextureRect/Owl2.visible = false
+	if has_node("TextureRect/Owl3"): $TextureRect/Owl3.visible = false
+	if has_node("TextureRect/Owl4"): $TextureRect/Owl4.visible = false
+	if has_node("TextureRect/Owl5"): $TextureRect/Owl5.visible = false
 	if has_node("TextureRect/Holder"): $TextureRect/Holder.visible = false
 	if has_node("TextureRect/Time"): $TextureRect/Time.visible = false
 	if has_node("Quitbtn"): $Quitbtn.visible = false
@@ -151,22 +170,6 @@ func game_over(success: bool) -> void:
 
 	add_child(popup_instance)
 
-# --- NEXT QUESTION ---
-func restart_game() -> void:
-	current_question_index += 1
-	load_current_question()
-	selected_correct.clear()
-	if current_question_index < question_data.size():
-		for button in choice_buttons:
-			button.visible = true
-		if has_node("TextureRect/Holder"): $TextureRect/Holder.visible = true
-		if has_node("TextureRect/Time"): $TextureRect/Time.visible = true
-		if has_node("Quitbtn"): $Quitbtn.visible = true
-
-	else:
-		print("✅ All questions completed!")
-
-# --- BUTTON SIGNALS ---
 func _on_owl_1_pressed() -> void:
 	check_answer(all_choices[0], $TextureRect/Owl1)
 
@@ -182,10 +185,35 @@ func _on_owl_4_pressed() -> void:
 func _on_owl_5_pressed() -> void:
 	check_answer(all_choices[4], $TextureRect/Owl5)
 
-# --- QUIT BUTTON ---
 func _on_quitbtn_pressed() -> void:
+	stop_timer()
 	var path = "res://scenes/Categories.tscn"
 	if ResourceLoader.exists(path):
 		get_tree().change_scene_to_file(path)
 	else:
 		print("Scene not found: ", path)
+
+func restart_game() -> void:
+	stop_timer()
+	reset_time_tracking()
+
+	current_question_index += 1
+	if current_question_index >= question_data.size():
+		current_question_index = 0
+		question_data.shuffle()
+
+	load_current_question()
+	selected_correct.clear()
+
+	if has_node("TextureRect/Owl1"): $TextureRect/Owl1.visible = true
+	if has_node("TextureRect/Owl2"): $TextureRect/Owl2.visible = true
+	if has_node("TextureRect/Owl3"): $TextureRect/Owl3.visible = true
+	if has_node("TextureRect/Owl4"): $TextureRect/Owl4.visible = true
+	if has_node("TextureRect/Owl5"): $TextureRect/Owl5.visible = true
+	if has_node("TextureRect/Holder"): $TextureRect/Holder.visible = true
+	if has_node("TextureRect/Time"): $TextureRect/Time.visible = true
+	if has_node("Quitbtn"): $Quitbtn.visible = true
+
+	reset_feedback_label()
+	start_timer()
+	print("Retrying with question: ", current_question_index)

@@ -287,6 +287,16 @@ func setup_button_connections() -> void:
 		else:
 			print("Cannot connect button %d - node is null" % (i + 1))
 
+func reset_time_tracking() -> void:
+	"""Reset the global start time for accurate time tracking"""
+	Global.start_time = Time.get_ticks_msec()
+	start_time = Global.start_time
+	print("Time tracking reset at: ", start_time)
+
+func stop_timer() -> void:
+	"""Stop the countdown timer"""
+	timer_active = false
+
 # === TIMER SYSTEM ===
 func start_countdown_timer() -> void:
 	"""Start the countdown timer"""
@@ -427,6 +437,37 @@ func show_result_popup(success: bool) -> void:
 	
 	if popup_instance:
 		add_child(popup_instance)
+
+func restart_game() -> void:
+	"""Restart the game with new random numbers"""
+	print("\n=== RESTARTING GAME ===")
+	
+	# Stop the old timer completely
+	stop_timer()
+	
+	# Reset time tracking for new attempt
+	reset_time_tracking()
+	
+	# Show all UI elements again
+	show_game_ui()
+	
+	# Reinitialize the entire game with new random numbers
+	initialize_game()
+	
+	print("=== GAME RESTARTED ===\n")
+
+func show_game_ui() -> void:
+	"""Show all game UI elements"""
+	var ui_paths = [
+		"GameBG/Canvas", "Time", "Holder", "RightGroup", "LeftGroup", 
+		"Button1", "Button2", "Button3", "Button4", "Quitbtn", "Operations"
+	]
+	
+	for element_path in ui_paths:
+		var element = get_node_or_null(element_path)
+		if element:
+			element.visible = true
+			print("Shown: %s" % element_path)
 
 func _on_quitbtn_pressed() -> void:
 	var path = "res://scenes/Categories.tscn"

@@ -32,6 +32,7 @@ var game_timer: Timer
 func _ready():
 	setup_game()
 	start_game()
+	Global.start_time = Time.get_ticks_msec()
 
 func setup_game():
 	# Timer setup
@@ -108,7 +109,7 @@ func handle_correct_drop(item: TextureRect):
 	# Center vertically inside nest
 	var y = (nest_rect.size.y - (item.size.y * target_scale.y)) / 2
 
-	# Place relative to nest’s position
+	# Place relative to nest's position
 	var target_pos = nest.position + Vector2(start_x + eggs_in_nest * spacing, y)
 	item.position = target_pos
 
@@ -173,7 +174,7 @@ func _on_timer_tick():
 
 func update_timer_display():
 	if timer_display:
-		timer_display.text = "⏱️ " + str(time_remaining) + "s"
+		timer_display.text = " " + str(time_remaining) + "s"
 
 func win_game():
 	game_active = false
@@ -222,6 +223,8 @@ func show_completion_screen(success: bool, stars: int):
 		add_child(popup_instance)
 
 func restart_game():
+	# Reset the start time when restarting
+	Global.start_time = Time.get_ticks_msec()
 	start_game()
 
 func _on_quitbtn_pressed() -> void:

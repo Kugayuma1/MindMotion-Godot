@@ -58,7 +58,7 @@ var right_necklaces: Array[Node] = []
 # === INITIALIZATION ===
 func _ready() -> void:
 	print("Necklace Math Game - Starting with Randomization")
-	start_time = Time.get_ticks_msec()
+	reset_time_tracking()
 	
 	debug_scene_structure()
 	initialize_game()
@@ -267,7 +267,7 @@ func assign_options_to_buttons(options: Array[int]) -> void:
 func setup_ui() -> void:
 	"""Setup initial UI state"""
 	if equation_label:
-		equation_label.text = "Solve the necklace: " + current_equation
+		equation_label.text = "Solve the necklace: %d - %d = ?" % [random_left_count, random_right_count]
 		print("Equation label set")
 	else:
 		print("Equation label not found")
@@ -283,6 +283,16 @@ func setup_button_connections() -> void:
 				print("Connected button %d signal" % (i + 1))
 		else:
 			print("Cannot connect button %d - node is null" % (i + 1))
+
+func reset_time_tracking() -> void:
+	"""Reset the global start time for accurate time tracking"""
+	Global.start_time = Time.get_ticks_msec()
+	start_time = Global.start_time
+	print("Time tracking reset at: ", start_time)
+
+func stop_timer() -> void:
+	"""Stop the countdown timer"""
+	timer_active = false
 
 # === TIMER SYSTEM ===
 func start_countdown_timer() -> void:
@@ -377,7 +387,7 @@ func handle_wrong_answer(button: TextureButton) -> void:
 	
 	await get_tree().create_timer(1.5).timeout
 	if timer_active and equation_label:
-		equation_label.text = "Solve the necklace: " + current_equation
+		equation_label.text = "Solve the necklace: %d - %d = ?" % [random_left_count, random_right_count]
 
 func animate_button_shake(button: TextureButton) -> void:
 	"""Animate button shake effect"""
@@ -424,6 +434,37 @@ func show_result_popup(success: bool) -> void:
 	
 	if popup_instance:
 		add_child(popup_instance)
+
+func restart_game() -> void:
+	"""Restart the game with new random numbers"""
+	print("\n=== RESTARTING GAME ===")
+	
+	# Stop the old timer completely
+	stop_timer()
+	
+	# Reset time tracking for new attempt
+	reset_time_tracking()
+	
+	# Show all UI elements again
+	show_game_ui()
+	
+	# Reinitialize the entire game with new random numbers
+	initialize_game()
+	
+	print("=== GAME RESTARTED ===\n")
+
+func show_game_ui() -> void:
+	"""Show all game UI elements"""
+	var ui_paths = [
+		"GameBG/Canvas", "Time", "Holder", "RightGroup", "LeftGroup", 
+		"Button1", "Button2", "Button3", "Button4", "Quitbtn", "Operations"
+	]
+	
+	for element_path in ui_paths:
+		var element = get_node_or_null(element_path)
+		if element:
+			element.visible = true
+			print("Shown: %s" % element_path)
 
 func _on_quitbtn_pressed() -> void:
 	var path = "res://scenes/Categories.tscn"

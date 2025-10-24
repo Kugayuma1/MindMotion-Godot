@@ -42,6 +42,7 @@ func _ready():
 	setup_game()
 	initialize_items()
 	start_game()
+	Global.start_time = Time.get_ticks_msec()
 
 func setup_game():
 	# Timer
@@ -240,6 +241,7 @@ func game_over():
 	await get_tree().create_timer(1.0).timeout
 
 	ProgressManager.save_progress("math", false)
+	Global.refresh_everything_after_stage_completion("math", false)
 
 	show_completion_screen(false, 0)
 
@@ -298,6 +300,10 @@ func restart_game():
 	
 	# Stop the timer before starting a new game
 	game_timer.stop()
+	
+	# Reset the start time when restarting
+	Global.start_time = Time.get_ticks_msec()
+	
 	start_game()
 
 func _on_quitbtn_pressed() -> void:
