@@ -63,7 +63,7 @@ var right_strawberries: Array[Node] = []
 # === INITIALIZATION ===
 func _ready() -> void:
 	print("Strawberry Math Game - Starting with Randomization")
-	start_time = Time.get_ticks_msec()
+	Global.start_time = Time.get_ticks_msec()
 	
 	debug_scene_structure()
 	initialize_game()

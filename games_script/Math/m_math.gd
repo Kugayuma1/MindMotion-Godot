@@ -39,7 +39,7 @@ var money_names = ["Money1", "Money2", "Money3", "Money4", "Money5"]
 var money_nodes = []
 
 func _ready():
-	start_time = Time.get_ticks_msec()
+	Global.start_time = Time.get_ticks_msec()
 	find_all_money()
 	setup_counting_game()
 	start_timer()

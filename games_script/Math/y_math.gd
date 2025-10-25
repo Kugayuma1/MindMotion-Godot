@@ -61,7 +61,7 @@ var right_yarns: Array[Node] = []
 # === INITIALIZATION ===
 func _ready() -> void:
 	print("Yarn Math Game - Starting with Randomization")
-	start_time = Time.get_ticks_msec()
+	Global.start_time = Time.get_ticks_msec()
 	
 	debug_scene_structure()
 	initialize_game()

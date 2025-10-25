@@ -30,6 +30,7 @@ var placed_jewels: Array = []  # Stores jewels already placed
 
 func _ready():
 	setup_game()
+	Global.start_time = Time.get_ticks_msec()
 	start_game()
 
 func setup_game():

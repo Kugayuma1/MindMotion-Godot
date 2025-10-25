@@ -39,7 +39,7 @@ var xylophone_names = ["Xylophone1", "Xylophone2", "Xylophone3", "Xylophone4", "
 var xylophone_nodes = []
 
 func _ready():
-	start_time = Time.get_ticks_msec()
+	Global.start_time = Time.get_ticks_msec()
 	find_all_xylophones()
 	setup_counting_game()
 	start_timer()

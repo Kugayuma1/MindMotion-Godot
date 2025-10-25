@@ -30,6 +30,7 @@ var placed_nuts := []  # Track nuts placed in basket
 
 func _ready():
 	setup_game()
+	Global.start_time = Time.get_ticks_msec()
 	start_game()
 
 func setup_game():

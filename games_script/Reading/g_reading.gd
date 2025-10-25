@@ -401,6 +401,18 @@ func show_completion_screen(success: bool, stars: int):
 		add_child(popup_instance)
 	
 	print("Game completed - Success: ", success, ", Stars: ", stars)
+	
+func remove_all_popups():
+	"""Remove any existing popup scenes from previous game attempts"""
+	for child in get_children():
+		# Check if child is a popup by checking its scene file path
+		if child.scene_file_path != null and child.scene_file_path != "":
+			if "Complete1.tscn" in child.scene_file_path or \
+			   "Complete2.tscn" in child.scene_file_path or \
+			   "Complete3.tscn" in child.scene_file_path or \
+			   "Retry.tscn" in child.scene_file_path:
+				print("Removing old popup: ", child.scene_file_path)
+				child.queue_free()
 
 func restart_game():
 	print("\n=== RESTARTING PHRASE MATCHING GAME ===")
@@ -408,6 +420,7 @@ func restart_game():
 	# Stop the old timer
 	stop_timer()
 	
+	remove_all_popups()
 	# Reset time tracking
 	reset_time_tracking()
 	

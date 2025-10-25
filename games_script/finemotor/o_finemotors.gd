@@ -30,6 +30,7 @@ var placed_octopus := []  # Track caught octopus
 
 func _ready():
 	setup_game()
+	Global.start_time = Time.get_ticks_msec()
 	start_game()
 
 func setup_game():

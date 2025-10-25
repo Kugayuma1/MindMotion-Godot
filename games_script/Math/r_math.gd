@@ -38,6 +38,7 @@ var lady_messages = {
 }
 
 func _ready():
+	Global.start_time = Time.get_ticks_msec()
 	setup_game()
 	initialize_items()
 	start_game()

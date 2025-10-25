@@ -41,7 +41,7 @@ var hotdog_names = ["Hotdog1", "Hotdog2", "Hotdog3", "Hotdog4", "Hotdog5"]
 var hotdog_nodes = []
 
 func _ready():
-	start_time = Time.get_ticks_msec()
+	Global.start_time = Time.get_ticks_msec()
 	find_all_hotdogs()
 	setup_counting_game()
 	start_timer()

@@ -42,7 +42,7 @@ var zebra_names = [
 var zebra_nodes = []
 
 func _ready():
-	start_time = Time.get_ticks_msec()
+	Global.start_time = Time.get_ticks_msec()
 	find_all_zebras()
 	setup_counting_game()
 	start_timer()

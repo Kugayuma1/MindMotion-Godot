@@ -31,6 +31,7 @@ var game_timer: Timer
 
 func _ready():
 	setup_game()
+	Global.start_time = Time.get_ticks_msec()
 	start_game()
 
 func setup_game():

@@ -129,6 +129,7 @@ func _on_item_hover_end(item: Control):
 
 func start_game():
 	game_active = true
+	Global.start_time = Time.get_ticks_msec()
 	time_remaining = game_duration
 	tools_given = 0
 
@@ -145,6 +146,7 @@ func start_game():
 func _on_timer_tick():
 	time_remaining -= 1
 	update_timer_display()
+	
 	if time_remaining <= 0:
 		game_over()
 	elif time_remaining <= 10:
@@ -152,7 +154,7 @@ func _on_timer_tick():
 
 func update_timer_display():
 	if timer_display:
-		timer_display.text = "⏱️ " + str(time_remaining) + "s"
+		timer_display.text = " " + str(time_remaining) + "s"
 
 func win_game():
 	game_active = false

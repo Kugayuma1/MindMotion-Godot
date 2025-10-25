@@ -7,7 +7,7 @@ var game_duration := 15  # seconds
 var time_remaining := 15
 var game_active := false
 var matches_completed := 0
-var total_required_matches := 3  # Rabbit, Eating, Carrot dropzones
+var total_required_matches := 3  # Student, Holding, Notebook dropzones
 
 # Node references
 @onready var timer_display = $Time/Label
@@ -32,6 +32,7 @@ var dragging_item: Control = null
 var drag_offset: Vector2
 
 func _ready():
+	reset_time_tracking()
 	setup_game()
 	initialize_draggables()
 	initialize_dropzones()
@@ -39,12 +40,14 @@ func _ready():
 
 func setup_game():
 	# Create and configure game timer
-	game_timer = Timer.new()
-	game_timer.wait_time = 1.0
-	game_timer.timeout.connect(_on_timer_tick)
-	add_child(game_timer)
+	if not game_timer:
+		game_timer = Timer.new()
+		game_timer.wait_time = 1.0
+		game_timer.timeout.connect(_on_timer_tick)
+		add_child(game_timer)
 	
 	# Store original positions of draggable items
+	original_positions.clear()
 	for item in draggable_container.get_children():
 		if item is Control:
 			original_positions[item.name] = item.global_position
@@ -56,6 +59,14 @@ func initialize_draggables():
 			setup_draggable_item(item)
 
 func setup_draggable_item(item: Control):
+	# Disconnect if already connected to prevent duplicates
+	if item.gui_input.is_connected(_on_draggable_input):
+		item.gui_input.disconnect(_on_draggable_input)
+	if item.mouse_entered.is_connected(_on_item_hover_start):
+		item.mouse_entered.disconnect(_on_item_hover_start)
+	if item.mouse_exited.is_connected(_on_item_hover_end):
+		item.mouse_exited.disconnect(_on_item_hover_end)
+	
 	# Make item draggable
 	item.gui_input.connect(_on_draggable_input.bind(item))
 	
@@ -113,6 +124,8 @@ func shuffle_draggables():
 			draggables[i].global_position = positions[i]
 			# Update original positions so they can return here
 			original_positions[draggables[i].name] = positions[i]
+	
+	print("Draggables shuffled to new positions")
 
 func _on_draggable_input(event: InputEvent, item: Control):
 	if not game_active:
@@ -191,11 +204,11 @@ func handle_drop_attempt(item: Control, zone: Control):
 		handle_incorrect_match(item, zone)
 
 func is_correct_match(item_name: String, zone_name: String) -> bool:
-	# The correct answer based on the phrase: "The Rabbit is eating a Carrot"
+	# The correct answer based on the phrase: "The Student is holding a Notebook"
 	# Match specific pairs:
-	# "Rabbit" draggable -> "RabbitDrop" dropzone
-	# "Eating" draggable -> "EatingDrop" dropzone
-	# "Carrot" draggable -> "CarrotDrop" dropzone
+	# "Student" draggable -> "StudentDrop" dropzone
+	# "Holding" draggable -> "HoldingDrop" dropzone
+	# "Notebook" draggable -> "NotebookDrop" dropzone
 	
 	# Clean up the names - remove spaces and convert to lowercase
 	var clean_item = item_name.to_lower().replace(" ", "").strip_edges()
@@ -215,9 +228,6 @@ func is_correct_match(item_name: String, zone_name: String) -> bool:
 	return false
 
 func handle_correct_match(item: Control, zone: Control):
-	# Play success sound (if you have one)
-	# $SuccessSound.play()
-	
 	# Mark as placed
 	placed_items[item.name] = zone.name
 	dropzone_states[zone.name] = true
@@ -244,9 +254,6 @@ func handle_correct_match(item: Control, zone: Control):
 		win_game()
 
 func handle_incorrect_match(item: Control, zone: Control):
-	# Play error sound (if you have one)
-	# $ErrorSound.play()
-	
 	# Shake animation
 	shake_item(item)
 	
@@ -302,6 +309,17 @@ func _on_item_hover_end(item: Control):
 		var tween = create_tween()
 		tween.tween_property(item, "modulate", Color.WHITE, 0.1)
 
+func reset_time_tracking() -> void:
+	"""Reset the global start time for accurate time tracking"""
+	Global.start_time = Time.get_ticks_msec()
+	print("Time tracking reset at: ", Global.start_time)
+
+func stop_timer() -> void:
+	"""Stop the countdown timer"""
+	game_active = false
+	if game_timer:
+		game_timer.stop()
+
 func start_game():
 	game_active = true
 	time_remaining = game_duration
@@ -310,9 +328,13 @@ func start_game():
 	shuffle_draggables() 
 	
 	update_timer_display()
-	game_timer.start()
+	if game_timer:
+		game_timer.start()
 
 func _on_timer_tick():
+	if not game_active:
+		return
+		
 	time_remaining -= 1
 	update_timer_display()
 	
@@ -333,8 +355,7 @@ func update_timer_display():
 		timer_display.text = " " + str(time_remaining) + "s"
 
 func win_game():
-	game_active = false
-	game_timer.stop()
+	stop_timer()
 	
 	# Save progress
 	ProgressManager.save_progress("reading", true)
@@ -345,8 +366,7 @@ func win_game():
 	show_completion_screen(true, star_rating)
 
 func game_over():
-	game_active = false
-	game_timer.stop()
+	stop_timer()
 	
 	# Save failed attempt
 	ProgressManager.save_progress("reading", false)
@@ -388,11 +408,34 @@ func show_completion_screen(success: bool, stars: int):
 	
 	print("Game completed - Success: ", success, ", Stars: ", stars)
 
+func remove_all_popups():
+	"""Remove any existing popup scenes from previous game attempts"""
+	for child in get_children():
+		# Check if child is a popup by checking its scene file path
+		if child.scene_file_path != null and child.scene_file_path != "":
+			if "Complete1.tscn" in child.scene_file_path or \
+			   "Complete2.tscn" in child.scene_file_path or \
+			   "Complete3.tscn" in child.scene_file_path or \
+			   "Retry.tscn" in child.scene_file_path:
+				print("Removing old popup: ", child.scene_file_path)
+				child.queue_free()
+
 func restart_game():
+	print("\n=== RESTARTING PHRASE MATCHING GAME ===")
+	
+	# Stop the old timer
+	stop_timer()
+	
+	# CRITICAL FIX: Remove any existing popups before restarting
+	remove_all_popups()
+	
+	# Reset time tracking
+	reset_time_tracking()
+	
 	# Reset all variables
-	game_active = false
 	matches_completed = 0
 	placed_items.clear()
+	dragging_item = null
 	
 	# Reset dropzone states and opacity
 	for zone in dropzone_container.get_children():
@@ -400,17 +443,37 @@ func restart_game():
 			dropzone_states[zone.name] = false
 			set_dropzone_opacity(zone, dropzone_opacity)
 	
-	# Reset item positions and visibility
+	# Store ORIGINAL positions before any modifications
+	var initial_positions = {}
 	for item in draggable_container.get_children():
-		if item is Control and item.name in original_positions:
+		if item is Control:
+			# Get the position from the editor (before shuffle)
+			if item.name not in original_positions:
+				initial_positions[item.name] = item.global_position
+			else:
+				initial_positions[item.name] = original_positions[item.name]
+	
+	# Reset item positions and properties to their initial state
+	for item in draggable_container.get_children():
+		if item is Control:
 			item.visible = true
-			item.global_position = original_positions[item.name]
 			item.modulate = Color.WHITE
+			item.modulate.a = 1.0  # Reset alpha
 			item.scale = Vector2.ONE
+			item.z_index = 0
 			
-			# Reconnect input if disconnected
-			if not item.gui_input.is_connected(_on_draggable_input):
-				item.gui_input.connect(_on_draggable_input.bind(item))
+			# Reset to initial position
+			if item.name in initial_positions:
+				item.global_position = initial_positions[item.name]
+	
+	# Update original_positions with current positions before shuffle
+	original_positions.clear()
+	for item in draggable_container.get_children():
+		if item is Control:
+			original_positions[item.name] = item.global_position
+	
+	# Reinitialize draggables to reconnect signals
+	initialize_draggables()
 	
 	# Reset UI
 	if has_node("DropZone"): $DropZone.visible = true
@@ -423,11 +486,13 @@ func restart_game():
 		timer_display.modulate = Color.WHITE
 		timer_display.scale = Vector2.ONE
 	
-	# Start new game
-	shuffle_draggables() 
+	# Start new game (this will shuffle)
 	start_game()
+	
+	print("=== GAME RESTARTED ===\n")
 
 func _on_quitbtn_pressed() -> void:
+	stop_timer()
 	var path = "res://scenes/Categories.tscn"
 	if ResourceLoader.exists(path):
 		get_tree().change_scene_to_file(path)

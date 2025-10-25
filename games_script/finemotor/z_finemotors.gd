@@ -42,6 +42,7 @@ var drag_offset: Vector2
 
 func _ready():
 	setup_game()
+	Global.start_time = Time.get_ticks_msec()
 	initialize_items()
 	start_game()
 

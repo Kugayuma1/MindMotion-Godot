@@ -39,7 +39,7 @@ var quail_names = ["Quail1", "Quail2", "Quail3", "Quail4", "Quail5", "Quail6", "
 var quail_nodes = []
 
 func _ready():
-	start_time = Time.get_ticks_msec()
+	Global.start_time = Time.get_ticks_msec()
 	find_all_quail()
 	setup_counting_game()
 	start_timer()

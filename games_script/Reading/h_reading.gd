@@ -37,6 +37,7 @@ var popup_instance: Control = null
 
 func _ready() -> void:
 	load_game()
+	Global.start_time = Time.get_ticks_msec()
 	start_timer()
 
 func load_game() -> void:
