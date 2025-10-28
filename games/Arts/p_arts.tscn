@@ -264,6 +264,7 @@ texture = ExtResource("21_m1v1n")
 expand_mode = 1
 
 [node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 0
 offset_left = 47.0
 offset_top = 45.0
 offset_right = 149.0

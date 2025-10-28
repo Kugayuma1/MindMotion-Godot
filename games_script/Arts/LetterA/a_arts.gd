@@ -262,26 +262,54 @@ func get_polygon_count() -> int:
 	return get_all_polygons_in_node(target_node).size()
 
 func restart_game():
-	game_completed = false
-	timer_active = false
-	countdown = 15
+	print("🔄 Restarting A_Arts game...")
+	
+	# Remove popup first if it exists
 	if popup_instance and is_instance_valid(popup_instance):
 		popup_instance.queue_free()
 		popup_instance = null
+	
+	# Reset game state
+	game_completed = false
+	timer_active = false
+	countdown = 15
+	
+	# Reset drag state
+	is_dragging = false
+	drag_source = null
+	if drag_preview:
+		var canvas_layer = drag_preview.get_meta("canvas_layer", null)
+		if canvas_layer:
+			canvas_layer.queue_free()
+		else:
+			drag_preview.queue_free()
+		drag_preview = null
+	
+	# Show all game elements
 	show_game_elements()
+	
+	# Reset UI labels
 	if timer_label:
 		timer_label.text = "⏱️ 15s"
 		timer_label.modulate = Color.WHITE
+	
 	if main_label:
 		main_label.text = original_main_text
 		main_label.modulate = Color.WHITE
 		main_label.scale = Vector2.ONE
+	
+	# Reset all polygons to their original uncolored state
 	if target_node:
 		var polygons = get_all_polygons_in_node(target_node)
+		print("Resetting ", polygons.size(), " polygons")
 		for polygon in polygons:
 			if polygon.has_method("reset_color"):
 				polygon.reset_color()
+	
+	# Restart the timer
 	start_timer()
+	
+	print("✅ A_Arts game restarted successfully!")
 
 func _input(event):
 	if event.is_action_pressed("ui_accept") and game_completed:

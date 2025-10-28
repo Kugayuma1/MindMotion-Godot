@@ -8,7 +8,7 @@ var drag_source: TextureButton
 var drag_preview: Control
 
 # ---------------- TIMER ----------------
-var countdown := 30
+var countdown := 15
 var timer_active := false
 # Use get_node with error handling instead of @onready
 var timer_label: Label
@@ -110,13 +110,13 @@ func on_polygon_reset(polygon_unique_id: String):
 func start_timer() -> void:
 	print("🕐 Starting timer...")
 	if timer_label:
-		timer_label.text = "⏱️ 30s"
+		timer_label.text = "⏱️ 15s"
 		timer_label.visible = true
 		print("✅ Timer label set to: ", timer_label.text)
 	else:
 		print("❌ Timer label not found!")
 		
-	countdown = 30
+	countdown = 15
 	timer_active = true
 	game_completed = false
 	
@@ -345,7 +345,7 @@ func win_game():
 	game_completed = true
 	timer_active = false
 	
-	var completion_time = 30 - countdown
+	var completion_time = 15 - countdown
 	
 	if main_label:
 		main_label.text = "✅ Done!"
@@ -415,10 +415,10 @@ func restart_game():
 	print("🔄 Restarting game...")
 	game_completed = false
 	timer_active = false
-	countdown = 30
+	countdown = 15
 	
 	if timer_label:
-		timer_label.text = "⏱️ 30s"
+		timer_label.text = "⏱️ 151s"
 		timer_label.modulate = Color.WHITE
 		timer_label.visible = true
 	if main_label:

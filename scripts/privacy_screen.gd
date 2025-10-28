@@ -90,138 +90,76 @@ func _input(event):
 
 func load_privacy_text():
 	var privacy_content = """[center][b][font_size=24]Privacy Policy[/font_size][/b][/center]
+[center][i]Last Updated: October 2025[/i][/center]
 
-[b][font_size=18]1. Information We Collect[/font_size][/b]
-We collect the following types of information:
+[b][font_size=18]1. Introduction[/font_size][/b]
+MindMotion respects your privacy and is committed to protecting the personal information of its users. This Privacy Policy explains how MindMotion collects, uses, stores, and safeguards information when you use the application.
 
-[b]Personal Information:[/b]
-• Name (first name and last initial)
-• Email address (for account management)
-• Age (to provide age-appropriate content)
-• Gender (for personalized learning experiences)
+MindMotion is a supplementary Android-based learning tool developed by students from [b]CSTC College of Sciences, Technology and Communications, Inc.[/b] in collaboration with [b]Pauline Jane Education Consultancy Services (PJECS)[/b]. It aims to support cognitive and gross motor training for children with ADHD through motion-based activities using MediaPipe Pose Estimation.
 
-[b]Educational Data:[/b]
-• Learning progress and completion rates
-• Time spent on activities
-• Performance scores and improvements
-• Preferred learning styles
+[b][font_size=18]2. Information We Collect[/font_size][/b]
+MindMotion is designed with child safety and privacy in mind. The app collects minimal data and does not gather or store personal identifiers such as names, photos, or contact information.
 
-[b]Technical Information:[/b]
-• Device type and operating system
-• App usage patterns
-• Error logs and crash reports (anonymous)
+The following types of information may be collected:
+• [b]Activity Performance Data:[/b] Scores, activity completion times, and task results used to monitor progress.
+• [b]Usage Information:[/b] The number of sessions, last activity time, and interaction logs for educational tracking.
+• [b]Device Information:[/b] Basic non-identifiable technical data (e.g., device model or OS version) to improve compatibility and performance.
 
-[b][font_size=18]2. How We Use Information[/font_size][/b]
-Your information is used to:
+[b][color=green]MindMotion does not record, store, or transmit video footage captured by the camera. Pose tracking happens in real time and remains entirely on the device.[/color][/b]
 
-• [b]Provide Educational Services:[/b] Deliver personalized learning content
-• [b]Track Learning Progress:[/b] Monitor improvement and suggest next steps
-• [b]Improve Our Platform:[/b] Enhance features and fix issues
-• [b]Communicate Updates:[/b] Send important service notifications
-• [b]Ensure Safety:[/b] Protect children and maintain a safe environment
-• [b]Research & Development:[/b] Improve educational methodologies (anonymized data only)
+[b][font_size=18]3. How We Use the Information[/font_size][/b]
+The data collected is used only for educational and research purposes:
+• To track and display user progress in training activities.
+• To improve the effectiveness of the app's exercises.
+• To support teacher or guardian monitoring of learning outcomes.
+• To ensure system functionality and app performance.
 
-[b][font_size=18]3. Information Sharing[/b]
-We [b]NEVER[/b]:
-• Sell or trade your personal information
-• Share data with advertisers
-• Use data for commercial marketing to children
-• Share individual progress data publicly
+[b]No data is sold, shared, or used for advertising purposes.[/b]
 
-We [b]MAY[/b] share information only when:
-• Required by law or legal process
-• Necessary to protect safety or prevent harm
-• With your explicit consent
-• With educational institutions (teachers/parents only)
+[b][font_size=18]4. Data Storage and Security[/font_size][/b]
+MindMotion uses secure, research-approved methods to store activity data, which may include limited cloud storage via Firebase. All stored data is:
+• Encrypted and accessible only to authorized project personnel.
+• Used solely for educational or research evaluation purposes.
+• Deleted or anonymized once the study or training period concludes.
 
-[b][font_size=18]4. Data Security[/font_size][/b]
-We implement industry-standard security measures:
+The app follows local data privacy laws and ethical standards consistent with the [b]Data Privacy Act of 2012 (Republic Act No. 10173)[/b].
 
-• [b]Encryption:[/b] All data transmitted using SSL/TLS encryption
-• [b]Access Control:[/b] Limited employee access on need-to-know basis
-• [b]Regular Audits:[/b] Periodic security assessments
-• [b]Secure Storage:[/b] Data stored in certified secure facilities
-• [b]Backup Systems:[/b] Regular backups with encryption
-• [b]Incident Response:[/b] Immediate action plan for any security issues
+[b][font_size=18]5. Parental or Guardian Consent[/font_size][/b]
+Because the app is designed for children, parental or guardian consent is required before use. Teachers or facilitators are responsible for obtaining and confirming consent forms prior to a child's participation in MindMotion activities.
 
-[b][font_size=18]5. Children's Privacy (COPPA Compliance)[/font_size][/b]
-We take special care with children's information:
+[b][font_size=18]6. Data Sharing and Disclosure[/font_size][/b]
+MindMotion does not share any personal data with third parties. However, anonymous, aggregated results may be used for:
+• Academic reporting and project evaluation, or
+• Research publications related to educational technology and child development.
 
-• Minimal data collection for children under 13
-• Parental consent required for children under 13
-• No behavioral advertising to children
-• No public profiles for minors
-• Enhanced security for children's accounts
-• Regular deletion of unnecessary data
+[b]Such data will never identify individual users.[/b]
 
-[b]Parents have the right to:[/b]
-• Review their child's information
-• Request deletion of their child's data
-• Refuse further data collection
-• Contact us with privacy concerns
+[b][font_size=18]7. User Rights[/font_size][/b]
+Parents, guardians, or authorized educators have the right to:
+• Request access to activity records.
+• Request correction or deletion of stored data.
+• Withdraw consent for data collection at any time.
 
-[b][font_size=18]6. Cookies and Tracking[/font_size][/b]
-We use minimal cookies for:
-• Maintaining login sessions
-• Remembering user preferences
-• Analyzing usage patterns (anonymous)
+To make a request, please contact the project team through the details below.
 
-We [b]DO NOT[/b] use cookies for:
-• Cross-site tracking
-• Targeted advertising
-• Third-party data sharing
+[b][font_size=18]8. Changes to This Policy[/font_size][/b]
+Developers may update this Privacy Policy periodically to reflect improvements or legal requirements. Any changes will be communicated through the app or official project channels.
 
-[b][font_size=18]7. Data Retention[/font_size][/b]
-We retain information:
-• [b]Account Data:[/b] Until account deletion
-• [b]Educational Progress:[/b] For continued learning (can be deleted on request)
-• [b]Technical Logs:[/b] 90 days maximum
-• [b]Deleted Accounts:[/b] 30-day recovery period, then permanent deletion
+[b][font_size=18]9. Contact Information[/font_size][/b]
+For questions, requests, or concerns about data privacy, please contact:
 
-[b][font_size=18]8. Your Rights[/font_size][/b]
-You have the right to:
-• Access your personal information
-• Update or correct your data
-• Delete your account and data
-• Export your educational progress
-• Opt-out of non-essential communications
-• File complaints with privacy authorities
+[b]Pauline Jane Education Consultancy Services (PJECS)[/b]
+Educational Partner – MindMotion Project
+📧 [b]Email:[/b] mindmotionproject@gmail.com
 
-[b][font_size=18]9. International Users[/font_size][/b]
-For users outside the United States:
-• We comply with GDPR (European users)
-• Data may be processed in the United States
-• We maintain adequate protection standards
-• Contact us for region-specific privacy rights
+[b]CSTC College of Sciences, Technology and Communications, Inc.[/b]
 
-[b][font_size=18]10. Updates to Privacy Policy[/font_size][/b]
-We may update this policy to:
-• Reflect new features or services
-• Comply with legal requirements
-• Improve our privacy practices
-
-When we make significant changes:
-• Users will be notified via email
-• New policy will be posted on our website
-• Continued use indicates acceptance
-
-[b][font_size=18]11. Contact Us[/font_size][/b]
-For privacy-related questions or concerns:
-
-📧 [b]Email:[/b] privacy@mindmotion.com
-📞 [b]Phone:[/b] 1-800-MINDMOTION (ext. 2)
-📧 [b]Data Protection Officer:[/b] dpo@mindmotion.com
-📮 [b]Mail:[/b] 
-MindMotion Privacy Team
-123 Education Street
-Learning City, LC 12345
-
-[i]Last updated: [current_date][/i]
+[center]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/center]
 
 [center][b]Your privacy and your child's safety are our top priorities.[/b][/center]"""
 	
 	if privacy_text:
-		privacy_text.text = privacy_content.replace("[current_date]", Time.get_datetime_string_from_system())
+		privacy_text.text = privacy_content
 		# Ensure RichTextLabel allows mouse filter pass for scrolling
 		privacy_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
 

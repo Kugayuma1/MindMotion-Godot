@@ -92,72 +92,54 @@ func load_terms_text():
 	var terms_content = """[center][b][font_size=24]Terms & Conditions[/font_size][/b][/center]
 
 [b][font_size=18]1. Acceptance of Terms[/font_size][/b]
-By using MindMotion, you agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use our service.
+By downloading, installing, or using the MindMotion application, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use the app.
 
-[b][font_size=18]2. Use of Service[/font_size][/b]
-This educational platform is designed for children aged 3-18 to improve their learning skills through interactive activities including:
-• Reading comprehension exercises
-• Fine motor skill development
-• Mathematical problem solving
-• Creative art activities
+[b][font_size=18]2. Purpose of the Application[/font_size][/b]
+MindMotion is designed as a supplementary educational tool to assist children with Attention-Deficit/Hyperactivity Disorder (ADHD) in developing their cognitive and gross motor skills through interactive and motion-based activities.
 
-[b][font_size=18]3. User Accounts[/font_size][/b]
-You are responsible for:
-• Maintaining the confidentiality of your account information
-• All activities that occur under your account
-• Ensuring accurate information is provided during registration
-• Notifying us immediately of any unauthorized use
+[b]Important:[/b] It is not a medical application and does not replace professional therapy, diagnosis, or treatment.
 
-[b][font_size=18]4. Content and Conduct[/font_size][/b]
-Users must not:
-• Upload harmful, offensive, or inappropriate content
-• Share personal information of minors publicly
-• Attempt to hack or disrupt the service
-• Use the platform for any illegal activities
+[b][font_size=18]3. Eligibility[/font_size][/b]
+The application is intended for use under the supervision of a parent, guardian, or authorized teacher. All users must have consent from a parent or guardian before using the app.
 
-All activities should be educational and appropriate for children.
+[b][font_size=18]4. User Responsibilities[/font_size][/b]
+• Use the app in a safe environment with adequate space for movement.
+• Ensure that the device's camera and sensors are used appropriately and only within the app's intended functions.
+• Do not attempt to modify, distribute, or misuse any part of the application.
 
-[b][font_size=18]5. Privacy[/font_size][/b]
-We are committed to protecting user privacy, especially for minors. We:
-• Collect minimal necessary information
-• Never share personal data with third parties
-• Implement strong security measures
-• Comply with COPPA regulations
+[b][font_size=18]5. Data Collection and Privacy[/font_size][/b]
+MindMotion respects your privacy:
+• The app does not store or share personal video data; pose detection occurs in real time using the device's camera.
+• Limited user progress data (e.g., scores, activity timestamps) may be stored securely to monitor learning outcomes.
+• No personally identifiable information (PII) is collected without explicit consent from the parent, guardian, or school representative.
 
-Please review our Privacy Policy for detailed information.
+For more details, please refer to the Privacy Policy.
 
-[b][font_size=18]6. Educational Content[/font_size][/b]
-Our educational content is designed by certified educators and child development specialists. While we strive for accuracy:
-• Content is for educational purposes only
-• Results may vary between individual children
-• We recommend parental supervision for younger users
-• Professional educational assessment should supplement our tools
+[b][font_size=18]6. Parental or Guardian Consent[/font_size][/b]
+By allowing a child to use MindMotion, the parent, guardian, or authorized educator acknowledges and accepts responsibility for the child's app usage. A consent form may be required before the child participates in any activity.
 
-[b][font_size=18]7. Modifications[/font_size][/b]
-We reserve the right to modify these terms at any time. When we do:
-• Users will be notified of significant changes
-• Continued use constitutes acceptance of modified terms
-• You may discontinue use if you disagree with changes
+[b][font_size=18]7. Intellectual Property[/font_size][/b]
+All contents of the MindMotion application—including software, graphics, logos, and activity designs—are owned by the developers and their academic institution, [b]CSTC College of Sciences, Technology and Communications, Inc.[/b], and are protected under applicable copyright laws.
 
-[b][font_size=18]8. Limitation of Liability[/font_size][/b]
-MindMotion is provided "as is" without warranties of any kind. We are not liable for:
-• Any damages arising from the use of this service
-• Technical issues or service interruptions
-• Loss of user data (though we implement backup systems)
-• Educational outcomes or learning results
+[b][font_size=18]8. Limitations of Liability[/font_size][/b]
+The developers are not liable for:
+• Any injury resulting from improper use of the app or failure to follow safety guidelines.
+• Any data loss, system error, or malfunction arising from unauthorized modification.
+• Any assumption that the app provides medical advice or treatment.
 
-[b][font_size=18]9. Termination[/font_size][/b]
-We may terminate accounts that:
-• Violate these terms of service
-• Engage in harmful behavior
-• Provide false information
-• Remain inactive for extended periods
+[b][font_size=18]9. Updates and Modifications[/font_size][/b]
+The developers reserve the right to update, modify, or discontinue the app or its features at any time, with or without prior notice.
 
-[b][font_size=18]10. Contact Information[/font_size][/b]
-For questions about these terms, please contact us at:
-📧 Email: support@mindmotion.com
-📞 Phone: 1-800-MINDMOTION
-🌐 Website: www.mindmotion.com
+[b][font_size=18]10. Termination[/font_size][/b]
+Use of the app may be terminated without notice if you violate any of these terms. Upon termination, you must uninstall the app and cease all usage.
+
+[b][font_size=18]11. Contact Information[/font_size][/b]
+For concerns, inquiries, or feedback, please contact:
+
+[b]Pauline Jane Educational Consultancy Services (PJECS)[/b]
+Educational Partner of the MindMotion Project
+
+📧 [b]Email:[/b] mindmotionproject@gmail.com
 
 [i]Last updated: [current_date][/i]
 

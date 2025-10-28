@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://dlhs2pubimg8p"]
+[gd_scene load_steps=15 format=3 uid="uid://dlhs2pubimg8p"]
 
 [ext_resource type="Script" uid="uid://beeo01pr7uobn" path="res://global/loading_screen.gd" id="1_ykd5q"]
 [ext_resource type="Texture2D" uid="uid://de3bk13vkni5i" path="res://Gross-Motor Assets/Walking/1.png" id="2_sjvxp"]
 [ext_resource type="Texture2D" uid="uid://bha7pwdk2lcm0" path="res://assets/student_bg.png" id="2_xqmwg"]
+[ext_resource type="Texture2D" uid="uid://dt8loyb4fforl" path="res://Gross-Motor Assets/Walking/Walking2314.png" id="3_iybrr"]
 [ext_resource type="Texture2D" uid="uid://b1gouaq48akmi" path="res://Gross-Motor Assets/Walking/2.png" id="3_xqmwg"]
 [ext_resource type="Texture2D" uid="uid://dy7iooly2eeqw" path="res://Gross-Motor Assets/Walking/3.png" id="4_iybrr"]
 [ext_resource type="Texture2D" uid="uid://cn026o7nf3cxq" path="res://Gross-Motor Assets/Walking/4.png" id="5_el6ln"]
@@ -17,10 +18,16 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("3_iybrr")
+}, {
+"duration": 1.0,
 "texture": ExtResource("2_sjvxp")
 }, {
 "duration": 1.0,
 "texture": ExtResource("3_xqmwg")
+}, {
+"duration": 0.8,
+"texture": ExtResource("3_iybrr")
 }, {
 "duration": 1.0,
 "texture": ExtResource("4_iybrr")
@@ -28,11 +35,17 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_el6ln")
 }, {
+"duration": 0.8,
+"texture": ExtResource("3_iybrr")
+}, {
 "duration": 1.0,
 "texture": ExtResource("6_gnueo")
 }, {
 "duration": 1.0,
 "texture": ExtResource("7_ctgv3")
+}, {
+"duration": 0.8,
+"texture": ExtResource("3_iybrr")
 }, {
 "duration": 1.0,
 "texture": ExtResource("8_irxsv")
@@ -42,6 +55,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("10_hdi2t")
+}, {
+"duration": 0.8,
+"texture": ExtResource("3_iybrr")
 }],
 "loop": true,
 "name": &"default",
@@ -81,6 +97,7 @@ theme_override_constants/separation = 5
 position = Vector2(-66.125, 6.37501)
 scale = Vector2(0.3395, 0.3055)
 sprite_frames = SubResource("SpriteFrames_d6wpl")
+frame_progress = 0.811173
 
 [node name="Label" type="Label" parent="CenterContainer/HBoxContainer"]
 layout_mode = 2
