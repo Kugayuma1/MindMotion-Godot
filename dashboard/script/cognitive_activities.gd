@@ -9,6 +9,8 @@ extends Control
 # Button textures
 var activity_button_normal = preload("res://assets/student_card_bg.png")
 var activity_button_pressed = preload("res://assets/student_card_pressed.png")
+var custom_font = preload("res://font/LilitaOne-Regular.ttf")
+var custom_font1 = preload("res://font/Summary Notes.ttf")
 
 var current_student_data: Dictionary = {}
 var cognitive_data: Dictionary = {}
@@ -29,11 +31,13 @@ var has_moved = false
 func get_responsive_button_width() -> float:
 	var viewport_width = get_viewport().get_visible_rect().size.x
 	
-	# Single column - use percentage of viewport width
-	var button_width = viewport_width * 0.85  # 85% of screen width
+	# Two columns - calculate width based on viewport with gap
+	var gap = 20  # Gap between columns
+	var margin = 40  # Total horizontal margin (20 on each side)
+	var button_width = (viewport_width - margin - gap) / 2.0
 	
-	# Clamp between reasonable values for landscape
-	return clamp(button_width, 500, 1100)
+	# Clamp between reasonable values
+	return clamp(button_width, 250, 550)
 
 func _ready():
 	current_student_data = Global.selected_student_data
@@ -67,15 +71,17 @@ func setup_scroll_container():
 	if scroll_container:
 		# ScrollContainer settings for Godot 4.4
 		scroll_container.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-		scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+		scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 		scroll_container.follow_focus = false
 		
 		# Enable input processing
 		scroll_container.mouse_filter = Control.MOUSE_FILTER_PASS
 	
-	# Set GridContainer to 1 column
+	# Set GridContainer to 2 columns
 	if activities_grid:
-		activities_grid.columns = 1
+		activities_grid.columns = 2
+		activities_grid.add_theme_constant_override("h_separation", 20)
+		activities_grid.add_theme_constant_override("v_separation", 20)
 
 func _process(delta):
 	# Apply scroll momentum/inertia
@@ -154,8 +160,8 @@ func update_button_ratings():
 		if button_index < activities_grid.get_child_count():
 			var button_container = activities_grid.get_child(button_index)
 			var activity_button = button_container.get_child(0)
-			var content_hbox = activity_button.get_child(0)
-			var rating_label = content_hbox.get_child(3)
+			var content_vbox = activity_button.get_child(0)
+			var rating_label = content_vbox.get_child(1)
 			
 			var rating_text = get_letter_rating(letter)
 			rating_label.text = rating_text
@@ -168,7 +174,7 @@ func create_letter_button(letter: String):
 	# Main button container with responsive width
 	var button_container = Control.new()
 	var button_width = get_responsive_button_width()
-	button_container.custom_minimum_size = Vector2(button_width, 80)
+	button_container.custom_minimum_size = Vector2(button_width, 180)
 	
 	# Activity button
 	var activity_button = TextureButton.new()
@@ -182,51 +188,49 @@ func create_letter_button(letter: String):
 	
 	button_container.add_child(activity_button)
 	
-	# Button content container
-	var content_hbox = HBoxContainer.new()
-	content_hbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	content_hbox.add_theme_constant_override("separation", 10)
-	content_hbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	activity_button.add_child(content_hbox)
+	# Button content container - VBoxContainer for vertical layout
+	var content_vbox = VBoxContainer.new()
+	content_vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	content_vbox.add_theme_constant_override("separation", 15)
+	content_vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	activity_button.add_child(content_vbox)
 	
-	# Add margins
-	var margin_left = Control.new()
-	margin_left.custom_minimum_size = Vector2(20, 0)
-	content_hbox.add_child(margin_left)
+	# Add top margin
+	var margin_top = Control.new()
+	margin_top.custom_minimum_size = Vector2(0, 20)
+	content_vbox.add_child(margin_top)
 	
-	# Letter label
+	# Letter label - centered and larger
 	var letter_label = Label.new()
 	letter_label.text = letter
 	letter_label.add_theme_color_override("font_color", Color("#3f4553"))
-	letter_label.add_theme_font_size_override("font_size", 36)
+	letter_label.add_theme_font_size_override("font_size", 55)
+	letter_label.add_theme_font_override("font", custom_font)
+	letter_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	letter_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	letter_label.custom_minimum_size = Vector2(60, 0)
-	content_hbox.add_child(letter_label)
+	letter_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content_vbox.add_child(letter_label)
 	
-	# Spacer
-	var spacer = Control.new()
-	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	content_hbox.add_child(spacer)
-	
-	# Rating label
+	# Rating label - centered below letter
 	var rating_label = Label.new()
-	rating_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	rating_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	rating_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	rating_label.add_theme_font_size_override("font_size", 18)
-	rating_label.custom_minimum_size = Vector2(120, 0)
+	rating_label.add_theme_font_size_override("font_size", 30)
+	rating_label.add_theme_font_override("font", custom_font1)
+	rating_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	
 	var rating_text = get_letter_rating(letter)
-	rating_label.text = rating_text
+	rating_label.text = "Avg. Rating: " + rating_text
 	
 	var rating_color = get_rating_color(rating_text)
 	rating_label.add_theme_color_override("font_color", rating_color)
 	
-	content_hbox.add_child(rating_label)
+	content_vbox.add_child(rating_label)
 	
-	# Add margin right
-	var margin_right = Control.new()
-	margin_right.custom_minimum_size = Vector2(20, 0)
-	content_hbox.add_child(margin_right)
+	# Add bottom margin
+	var margin_bottom = Control.new()
+	margin_bottom.custom_minimum_size = Vector2(0, 20)
+	content_vbox.add_child(margin_bottom)
 	
 	# Connect button with custom handler to detect scroll vs tap
 	activity_button.gui_input.connect(_on_button_input.bind(letter))

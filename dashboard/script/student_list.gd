@@ -10,9 +10,12 @@ extends Control
 # Preload avatar textures
 var boy_avatar = preload("res://assets/boy_avatar.png")
 var girl_avatar = preload("res://assets/girl_avatar.png")
-var student_card_bg = preload("res://assets/student_card_bg.png")
-var student_card_pressed = preload("res://assets/student_card_pressed.png")
+var student_card_bg = preload("res://assets/Container1.png")
+var student_card_pressed = preload("res://assets/Container_Pressed.png")
 var dialog_theme = preload("res://assets/main_theme.tres")
+var custom_font = preload("res://font/LilitaOne-Regular.ttf")
+var custom_font1 = preload("res://font/Summary Notes.ttf")
+
 # Touch scrolling for mobile
 var touch_scrolling = false
 var touch_start_y = 0.0
@@ -54,7 +57,7 @@ func _ready():
 func setup_scroll_container():
 	if scroll_container:
 		scroll_container.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-		scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+		scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 		scroll_container.follow_focus = false
 		scroll_container.mouse_filter = Control.MOUSE_FILTER_PASS
 	
@@ -210,7 +213,7 @@ func create_student_card(student_data: Dictionary):
 	card_button.texture_normal = student_card_bg
 	card_button.texture_pressed = student_card_pressed
 	var button_width = get_responsive_button_width()
-	card_button.custom_minimum_size = Vector2(button_width, 200)
+	card_button.custom_minimum_size = Vector2(button_width, 280)  # Increased height for separated rating
 	card_button.stretch_mode = TextureButton.STRETCH_SCALE
 	card_button.mouse_filter = Control.MOUSE_FILTER_STOP
 	
@@ -222,10 +225,17 @@ func create_student_card(student_data: Dictionary):
 	card_margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card_button.add_child(card_margin)
 	
+	# Main vertical container to separate top content from rating
+	var main_vbox = VBoxContainer.new()
+	main_vbox.add_theme_constant_override("separation", 40)
+	main_vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card_margin.add_child(main_vbox)
+	
+	# Top section with avatar and info
 	var card_hbox = HBoxContainer.new()
-	card_hbox.add_theme_constant_override("separation", 20)
+	card_hbox.add_theme_constant_override("separation", 1)
 	card_hbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	card_margin.add_child(card_hbox)
+	main_vbox.add_child(card_hbox)
 	
 	var profile_pic = TextureRect.new()
 	profile_pic.custom_minimum_size = Vector2(150, 150)
@@ -244,26 +254,36 @@ func create_student_card(student_data: Dictionary):
 	var name_label = Label.new()
 	name_label.text = student_data.name
 	name_label.add_theme_color_override("font_color", Color("#3f4553"))
-	name_label.add_theme_font_size_override("font_size", 24)
+	name_label.add_theme_font_size_override("font_size", 30)
+	name_label.add_theme_font_override("font", custom_font)
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	info_vbox.add_child(name_label)
 	
 	var email_label = Label.new()
 	email_label.text = student_data.email
 	email_label.add_theme_color_override("font_color", Color("#3f4553"))
-	email_label.add_theme_font_size_override("font_size", 16)
+	email_label.add_theme_font_size_override("font_size", 20)
+	email_label.add_theme_font_override("font", custom_font1)
 	email_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	info_vbox.add_child(email_label)
 	
 	var age_label = Label.new()
 	age_label.text = "Age: %d" % student_data.age if student_data.age > 0 else "Age: Not specified"
 	age_label.add_theme_color_override("font_color", Color("#3f4553"))
-	age_label.add_theme_font_size_override("font_size", 16)
+	age_label.add_theme_font_size_override("font_size", 20)
+	age_label.add_theme_font_override("font", custom_font1)
 	age_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	info_vbox.add_child(age_label)
 	
-	# Rating label - get from cache
+	# Separated and centered rating section
+	var rating_container = CenterContainer.new()
+	rating_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	main_vbox.add_child(rating_container)
+	
 	var rating_label = Label.new()
+	rating_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	rating_label.custom_minimum_size = Vector2(button_width - 40, 0)  # Full width minus margins
+	rating_label.add_theme_font_override("font", custom_font)
 	var rating_data = StudentData.get_student_rating(student_data.user_id)
 	
 	if rating_data.rating == "Loading...":
@@ -278,9 +298,9 @@ func create_student_card(student_data: Dictionary):
 	else:
 		update_rating_label(rating_label, rating_data.rating)
 	
-	rating_label.add_theme_font_size_override("font_size", 14)
+	rating_label.add_theme_font_size_override("font_size", 40)  # Slightly larger for prominence
 	rating_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	info_vbox.add_child(rating_label)
+	rating_container.add_child(rating_label)
 	
 	card_button.gui_input.connect(_on_card_input.bind(student_data))
 	student_grid.add_child(card_button)

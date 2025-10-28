@@ -70,7 +70,7 @@ offset_bottom = 155.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("5_obgkd")
-theme_override_font_sizes/font_size = 80
+theme_override_font_sizes/font_size = 60
 text = "Activity"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
@@ -89,6 +89,7 @@ grow_vertical = 2
 scroll_horizontal_custom_step = 935.457
 scroll_vertical_custom_step = 896.438
 horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
 scroll_deadzone = 7
 
 [node name="VoiceGrid" type="GridContainer" parent="ScrollContainer"]

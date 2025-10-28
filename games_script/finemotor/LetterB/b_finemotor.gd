@@ -49,8 +49,11 @@ func _ready():
 		feedback_label.text = "Drag the one that starts at letter \"B\""
 	
 	reset_all_labels()
+	
+	# IMPORTANT: Store positions BEFORE shuffling
 	store_original_positions()
 	setup_all_draggables()
+	shuffle_fruit_positions()
 	
 	start_timer()
 	Global.start_time = Time.get_ticks_msec()
@@ -60,8 +63,8 @@ func _ready():
 func store_original_positions():
 	if fruits_container:
 		for child in fruits_container.get_children():
+			# Store the actual current position in the scene
 			original_positions[child.name] = child.position
-	shuffle_fruit_positions()
 
 func setup_all_draggables():
 	if fruits_container:
@@ -82,18 +85,19 @@ func shuffle_fruit_positions():
 	var fruits = fruits_container.get_children()
 	var positions = []
 	
-	# Collect all original positions
+	# Collect all current positions
 	for fruit in fruits:
-		if fruit.name in original_positions:
-			positions.append(original_positions[fruit.name])
+		positions.append(fruit.position)
 	
 	# Shuffle the positions array
 	positions.shuffle()
 	
-	# Assign shuffled positions to fruits
+	# Assign shuffled positions to fruits AND update original_positions
 	for i in range(fruits.size()):
 		if i < positions.size():
 			fruits[i].position = positions[i]
+			# CRITICAL FIX: Update the stored original position to the new shuffled position
+			original_positions[fruits[i].name] = positions[i]
 
 # ========== DRAG AND DROP ==========
 
@@ -114,6 +118,7 @@ func _on_fruit_input(event: InputEvent, fruit: Node):
 
 func start_drag(fruit: Node, mouse_pos: Vector2):
 	dragging_item = fruit
+	# Calculate offset from current global position (which reflects shuffled position)
 	drag_offset = mouse_pos - fruit.global_position
 	fruit.z_index = 100
 	var tween = create_tween()

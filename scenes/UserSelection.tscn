@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://c8jrl0pgsf0k2"]
 
 [ext_resource type="Script" uid="uid://dvnpb55g60ayk" path="res://scripts/user_selection.gd" id="1_2ucj4"]
-[ext_resource type="Texture2D" uid="uid://crxf5fjyp7ncf" path="res://assets/container.png" id="1_512yq"]
+[ext_resource type="Texture2D" uid="uid://c71b6d1xaqpfe" path="res://assets/container.png" id="1_512yq"]
 [ext_resource type="Texture2D" uid="uid://b8lf8vmcx55l4" path="res://assets/mindmotion_logo.png" id="2_6x8v3"]
 [ext_resource type="Texture2D" uid="uid://seccw72dbtc1" path="res://assets/student_button.png" id="2_haymk"]
 [ext_resource type="Texture2D" uid="uid://ck37it82t4joe" path="res://assets/teacher_button.png" id="3_2gb3k"]

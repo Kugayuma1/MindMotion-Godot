@@ -26,6 +26,10 @@ border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
 border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hfk0"]
 content_margin_left = 25.0
@@ -34,8 +38,12 @@ border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
-border_color = Color(0.505882, 0.466667, 0.466667, 1)
+border_color = Color(0.921176, 0.909235, 0.909184, 1)
 border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [node name="StudentList" type="Control"]
 layout_mode = 3
@@ -60,10 +68,10 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -572.0
-offset_top = 1.0
-offset_right = 1.0
-offset_bottom = 1.0
+offset_left = -569.0
+offset_top = -2.0
+offset_right = 4.0
+offset_bottom = -2.0
 grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("2_fi1m4")
@@ -105,12 +113,12 @@ stretch_mode = 5
 [node name="FilterContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.701
-anchor_right = 0.701
-offset_left = -160.92
-offset_top = 35.0
-offset_right = 253.08
-offset_bottom = 105.0
+anchor_left = 0.158
+anchor_right = 0.158
+offset_left = 0.639984
+offset_top = 32.0
+offset_right = 414.64
+offset_bottom = 102.0
 grow_horizontal = 2
 theme_override_constants/separation = 10
 alignment = 1
@@ -119,7 +127,7 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("6_dmkuf")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 30
 text = "Sort By:"
 
 [node name="SortDropdown" type="OptionButton" parent="FilterContainer"]
@@ -145,7 +153,7 @@ anchor_bottom = 0.5
 offset_left = -577.0
 offset_top = -449.0
 offset_right = 753.0
-offset_bottom = 450.0
+offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 20
@@ -159,6 +167,7 @@ mouse_force_pass_scroll_events = false
 scroll_horizontal_custom_step = 913.839
 scroll_vertical_custom_step = 955.387
 horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
 scroll_deadzone = 7
 
 [node name="StudentGrid" type="GridContainer" parent="MainContainer/ScrollContainer"]

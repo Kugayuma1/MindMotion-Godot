@@ -9,6 +9,8 @@ extends Control
 # Button textures
 var motion_button_normal = preload("res://assets/student_card_bg.png")
 var motion_button_pressed = preload("res://assets/student_card_pressed.png")
+var custom_font = preload("res://font/LilitaOne-Regular.ttf")
+var custom_font1 = preload("res://font/Summary Notes.ttf")
 var buttons_created: bool = false
 var loading_label: Label
 var loading_timer: Timer
@@ -43,8 +45,10 @@ func _ready():
 	# Setup UI
 	student_name_label.text = "%s - Motion Activities" % current_student_data.get("name", "Unknown")
 	
-	activities_grid.columns = 1
-	activities_grid.add_theme_constant_override("v_separation", 75)
+	# Set to 2 columns with spacing
+	activities_grid.columns = 2
+	activities_grid.add_theme_constant_override("h_separation", 20)
+	activities_grid.add_theme_constant_override("v_separation", 20)
 	
 	create_loading_animation()
 	
@@ -71,7 +75,7 @@ func setup_scroll_container():
 	if scroll_container:
 		# ScrollContainer settings for Godot 4.4
 		scroll_container.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-		scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+		scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 		scroll_container.follow_focus = false
 		
 		# Enable input processing
@@ -80,11 +84,13 @@ func setup_scroll_container():
 func get_responsive_button_width() -> float:
 	var viewport_width = get_viewport().get_visible_rect().size.x
 	
-	# Single column - use percentage of viewport width
-	var button_width = viewport_width * 0.85  # 85% of screen width
+	# Two columns - calculate width based on viewport with gap
+	var gap = 20  # Gap between columns
+	var margin = 40  # Total horizontal margin (20 on each side)
+	var button_width = (viewport_width - margin - gap) / 2.0
 	
-	# Clamp between reasonable values for landscape
-	return clamp(button_width, 500, 1100)
+	# Clamp between reasonable values
+	return clamp(button_width, 250, 550)
 
 func _process(delta):
 	# Apply scroll momentum/inertia
@@ -180,7 +186,8 @@ func create_motion_button(motion_type: String):
 	# Main button container with responsive width
 	var button_container = Control.new()
 	var button_width = get_responsive_button_width()
-	button_container.custom_minimum_size = Vector2(button_width, 100)
+	# Increased height to 200 for better visibility
+	button_container.custom_minimum_size = Vector2(button_width, 200)
 	
 	# Motion button
 	var motion_button = TextureButton.new()
@@ -196,53 +203,68 @@ func create_motion_button(motion_type: String):
 	
 	# Button content container
 	var content_margin = MarginContainer.new()
-	content_margin.add_theme_constant_override("margin_left", 20)
-	content_margin.add_theme_constant_override("margin_right", 20)
-	content_margin.add_theme_constant_override("margin_top", 15)
-	content_margin.add_theme_constant_override("margin_bottom", 15)
+	content_margin.add_theme_constant_override("margin_left", 25)
+	content_margin.add_theme_constant_override("margin_right", 25)
+	content_margin.add_theme_constant_override("margin_top", 25)
+	content_margin.add_theme_constant_override("margin_bottom", 25)
 	content_margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	content_margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	motion_button.add_child(content_margin)
 	
 	var content_vbox = VBoxContainer.new()
-	content_vbox.add_theme_constant_override("separation", 8)
+	content_vbox.add_theme_constant_override("separation", 15)
+	content_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	content_margin.add_child(content_vbox)
 	
-	# Activity name
+	# Activity name - centered and larger
 	var name_label = Label.new()
 	name_label.text = motion_type.capitalize()
 	name_label.add_theme_color_override("font_color", Color("#3f4553"))
-	name_label.add_theme_font_size_override("font_size", 24)
-	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	name_label.add_theme_font_size_override("font_size", 32)
+	name_label.add_theme_font_override("font", custom_font)
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	content_vbox.add_child(name_label)
 	
-	# Stats container
-	var stats_hbox = HBoxContainer.new()
-	stats_hbox.add_theme_constant_override("separation", 30)
-	content_vbox.add_child(stats_hbox)
-	
-	# Attempts count
+	# Attempts count - centered
 	var attempts_label = Label.new()
 	var attempt_count = StudentData.get_motion_attempt_count(motion_type)
 	attempts_label.text = "Attempts: %d" % attempt_count
-	attempts_label.add_theme_color_override("font_color", Color.CYAN)
-	attempts_label.add_theme_font_size_override("font_size", 16)
-	stats_hbox.add_child(attempts_label)
+	attempts_label.add_theme_color_override("font_color", Color.REBECCA_PURPLE)
+	attempts_label.add_theme_font_size_override("font_size", 20)
+	attempts_label.add_theme_font_override("font", custom_font1)
+	attempts_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	attempts_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content_vbox.add_child(attempts_label)
 	
-	# Success rate
+	# Success rate - centered
 	var success_label = Label.new()
 	var success_rate = StudentData.get_motion_success_rate(motion_type)
 	success_label.text = "Success Rate: %.1f%%" % success_rate
-	success_label.add_theme_font_size_override("font_size", 16)
+	success_label.add_theme_font_size_override("font_size", 20)
+	success_label.add_theme_font_override("font", custom_font1)
+	success_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	success_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	
 	# Color code success rate
 	var success_color = get_success_rate_color(success_rate)
 	success_label.add_theme_color_override("font_color", success_color)
 	
-	stats_hbox.add_child(success_label)
+	content_vbox.add_child(success_label)
+	
+	# Connect button with custom handler to detect scroll vs tap
+	motion_button.gui_input.connect(_on_button_input.bind(motion_type))
 	
 	# Add to grid
 	activities_grid.add_child(button_container)
+
+func _on_button_input(event: InputEvent, motion_type: String):
+	# Only trigger if it was a tap, not a scroll
+	if event is InputEventScreenTouch or event is InputEventMouseButton:
+		if not event.pressed and not has_moved:
+			# This was a tap, not a scroll - you can add navigation here if needed
+			print("Motion activity pressed: %s" % motion_type)
+			# Example: get_tree().change_scene_to_file("res://scenes/MotionDetail.tscn")
 
 func get_success_rate_color(success_rate: float) -> Color:
 	if success_rate >= 80.0:

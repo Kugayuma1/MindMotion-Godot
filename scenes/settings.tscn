@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://c3fprmvf2rkhl"]
 
-[ext_resource type="Texture2D" uid="uid://crxf5fjyp7ncf" path="res://assets/container.png" id="1_6wm04"]
+[ext_resource type="Texture2D" uid="uid://c71b6d1xaqpfe" path="res://assets/container.png" id="1_6wm04"]
 [ext_resource type="Script" uid="uid://b4g7ojoabs5qk" path="res://scripts/settings.gd" id="1_es4n0"]
 [ext_resource type="Texture2D" uid="uid://b8lf8vmcx55l4" path="res://assets/mindmotion_logo.png" id="2_f4mfi"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="4_es4n0"]

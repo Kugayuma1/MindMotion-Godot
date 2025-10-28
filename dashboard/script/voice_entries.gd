@@ -10,6 +10,8 @@ extends Control
 var date_button_normal = preload("res://assets/student_card_bg.png")
 var date_button_pressed = preload("res://assets/student_card_pressed.png")
 var word_button_normal = preload("res://assets/student_card_bg.png")
+var custom_font = preload("res://font/LilitaOne-Regular.ttf")
+var custom_font1 = preload("res://font/Summary Notes.ttf")
 
 # Loading animation variables
 var loading_label: Label
@@ -74,7 +76,7 @@ func setup_scroll_container():
 	if scroll_container:
 		# ScrollContainer settings for Godot 4.4
 		scroll_container.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-		scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+		scroll_container.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
 		scroll_container.follow_focus = false
 		
 		# Enable input processing
@@ -221,7 +223,8 @@ func create_no_data_message():
 	var message_label = Label.new()
 	message_label.text = "No voice data found for this student"
 	message_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	message_label.add_theme_font_size_override("font_size", 16)
+	message_label.add_theme_font_size_override("font_size", 25)
+	message_label.add_theme_font_override("font", custom_font)
 	message_label.add_theme_color_override("font_color", Color.GRAY)
 	activities_grid.add_child(message_label)
 
@@ -262,6 +265,7 @@ func create_date_section(date: String, words: Array):
 	icon_label.text = "▼" if is_expanded else "▶"
 	icon_label.add_theme_color_override("font_color", Color("#3f4553"))
 	icon_label.add_theme_font_size_override("font_size", 20)
+	icon_label.add_theme_font_override("font", custom_font)
 	icon_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	icon_label.custom_minimum_size = Vector2(30, 0)
 	header_hbox.add_child(icon_label)
@@ -270,7 +274,8 @@ func create_date_section(date: String, words: Array):
 	var date_label = Label.new()
 	date_label.text = format_date(date)
 	date_label.add_theme_color_override("font_color", Color("#3f4553"))
-	date_label.add_theme_font_size_override("font_size", 20)
+	date_label.add_theme_font_size_override("font_size", 40)
+	date_label.add_theme_font_override("font", custom_font)
 	date_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	header_hbox.add_child(date_label)
 	
@@ -283,7 +288,8 @@ func create_date_section(date: String, words: Array):
 	var count_label = Label.new()
 	count_label.text = "%d words" % word_count
 	count_label.add_theme_color_override("font_color", Color.GRAY)
-	count_label.add_theme_font_size_override("font_size", 16)
+	count_label.add_theme_font_size_override("font_size", 20)
+	count_label.add_theme_font_override("font", custom_font1)
 	count_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	header_hbox.add_child(count_label)
 	
@@ -339,7 +345,8 @@ func create_word_card(parent: VBoxContainer, word_data: Dictionary):
 	var word_label = Label.new()
 	word_label.text = word_data.get("word", "Unknown")
 	word_label.add_theme_color_override("font_color", Color("#3f4553"))
-	word_label.add_theme_font_size_override("font_size", 18)
+	word_label.add_theme_font_size_override("font_size", 30)
+	word_label.add_theme_font_override("font", custom_font1)
 	word_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	word_hbox.add_child(word_label)
 	
@@ -354,7 +361,8 @@ func create_word_card(parent: VBoxContainer, word_data: Dictionary):
 	var time_str = format_timestamp(timestamp)
 	info_label.text = time_str
 	info_label.add_theme_color_override("font_color", Color.GRAY)
-	info_label.add_theme_font_size_override("font_size", 14)
+	info_label.add_theme_font_size_override("font_size", 20)
+	info_label.add_theme_font_override("font", custom_font)
 	info_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	word_hbox.add_child(info_label)
 	
