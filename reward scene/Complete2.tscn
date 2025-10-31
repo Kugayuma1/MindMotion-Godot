@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bku41ltjvncmu"]
+[gd_scene load_steps=10 format=3 uid="uid://bku41ltjvncmu"]
 
 [ext_resource type="Script" uid="uid://077wsqq32emk" path="res://reward scene/reward script/complete_2.gd" id="1_b053g"]
 [ext_resource type="Texture2D" uid="uid://d3ihetivvic56" path="res://rewards/Group 289735.png" id="2_ma262"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://c0mheemniqy81" path="res://rewards/Group 5.png" id="4_r8oax"]
 [ext_resource type="Texture2D" uid="uid://de66oso7wqfih" path="res://rewards/redo_btn.png" id="5_ulq3g"]
 [ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="6_ma262"]
+[ext_resource type="FontFile" uid="uid://bpfrjvnxq2u4s" path="res://font/Summary Notes.ttf" id="6_ulq3g"]
+[ext_resource type="FontFile" uid="uid://b2ibgmpsr3ino" path="res://font/Montserrat-VariableFont_wght.ttf" id="7_7eb6g"]
+[ext_resource type="Texture2D" uid="uid://c8ik5orraiod5" path="res://rewards/Sticker/A.png" id="8_7dwsi"]
 
 [node name="CanvasLayer" type="Control"]
 layout_mode = 3
@@ -57,6 +60,46 @@ offset_right = 522.0
 offset_bottom = 753.0
 texture_normal = ExtResource("5_ulq3g")
 stretch_mode = 0
+
+[node name="PraiseLabel" type="Label" parent="TextureRect"]
+offset_left = 69.0
+offset_top = 382.0
+offset_right = 537.0
+offset_bottom = 429.0
+theme_override_colors/font_color = Color(0.992157, 0.545098, 0.258824, 1)
+theme_override_fonts/font = ExtResource("6_ulq3g")
+theme_override_font_sizes/font_size = 45
+text = "You did a Great Job!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RewardTitle" type="Label" parent="TextureRect"]
+offset_left = 96.0
+offset_top = 431.0
+offset_right = 514.0
+offset_bottom = 478.0
+theme_override_colors/font_color = Color(0.992157, 0.545098, 0.258824, 1)
+theme_override_colors/font_shadow_color = Color(0.992157, 0.545098, 0.258824, 1)
+theme_override_colors/font_outline_color = Color(0.992157, 0.545098, 0.262745, 1)
+theme_override_fonts/font = ExtResource("7_7eb6g")
+theme_override_font_sizes/font_size = 23
+text = "Complete all to unlock the sticker"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sticker" type="TextureRect" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.718
+anchor_right = 0.5
+anchor_bottom = 0.718
+offset_left = -81.0
+offset_top = -71.476
+offset_right = 81.0
+offset_bottom = 71.524
+texture = ExtResource("8_7dwsi")
+expand_mode = 1
 
 [node name="Label2" type="Label" parent="."]
 layout_mode = 1

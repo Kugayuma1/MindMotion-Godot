@@ -220,7 +220,7 @@ func create_motion_button(motion_type: String):
 	var name_label = Label.new()
 	name_label.text = motion_type.capitalize()
 	name_label.add_theme_color_override("font_color", Color("#3f4553"))
-	name_label.add_theme_font_size_override("font_size", 32)
+	name_label.add_theme_font_size_override("font_size", 40)
 	name_label.add_theme_font_override("font", custom_font)
 	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -231,7 +231,7 @@ func create_motion_button(motion_type: String):
 	var attempt_count = StudentData.get_motion_attempt_count(motion_type)
 	attempts_label.text = "Attempts: %d" % attempt_count
 	attempts_label.add_theme_color_override("font_color", Color.REBECCA_PURPLE)
-	attempts_label.add_theme_font_size_override("font_size", 20)
+	attempts_label.add_theme_font_size_override("font_size", 35)
 	attempts_label.add_theme_font_override("font", custom_font1)
 	attempts_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	attempts_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -241,7 +241,7 @@ func create_motion_button(motion_type: String):
 	var success_label = Label.new()
 	var success_rate = StudentData.get_motion_success_rate(motion_type)
 	success_label.text = "Success Rate: %.1f%%" % success_rate
-	success_label.add_theme_font_size_override("font_size", 20)
+	success_label.add_theme_font_size_override("font_size", 35)
 	success_label.add_theme_font_override("font", custom_font1)
 	success_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	success_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL

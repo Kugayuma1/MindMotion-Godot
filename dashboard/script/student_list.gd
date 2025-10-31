@@ -254,7 +254,7 @@ func create_student_card(student_data: Dictionary):
 	var name_label = Label.new()
 	name_label.text = student_data.name
 	name_label.add_theme_color_override("font_color", Color("#3f4553"))
-	name_label.add_theme_font_size_override("font_size", 30)
+	name_label.add_theme_font_size_override("font_size", 35)
 	name_label.add_theme_font_override("font", custom_font)
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	info_vbox.add_child(name_label)
@@ -262,7 +262,7 @@ func create_student_card(student_data: Dictionary):
 	var email_label = Label.new()
 	email_label.text = student_data.email
 	email_label.add_theme_color_override("font_color", Color("#3f4553"))
-	email_label.add_theme_font_size_override("font_size", 20)
+	email_label.add_theme_font_size_override("font_size", 25)
 	email_label.add_theme_font_override("font", custom_font1)
 	email_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	info_vbox.add_child(email_label)
@@ -270,7 +270,7 @@ func create_student_card(student_data: Dictionary):
 	var age_label = Label.new()
 	age_label.text = "Age: %d" % student_data.age if student_data.age > 0 else "Age: Not specified"
 	age_label.add_theme_color_override("font_color", Color("#3f4553"))
-	age_label.add_theme_font_size_override("font_size", 20)
+	age_label.add_theme_font_size_override("font_size", 27)
 	age_label.add_theme_font_override("font", custom_font1)
 	age_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	info_vbox.add_child(age_label)

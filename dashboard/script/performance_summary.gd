@@ -7,6 +7,19 @@ extends Control
 
 # Card textures
 var card_bg = preload("res://assets/student_card_bg.png")
+var custom_font = preload("res://font/Summary Notes.ttf")
+var custom_font1 = preload("res://font/Summary Notes.ttf")
+
+# Font sizes - uniform configuration
+const TITLE_FONT_SIZE = 40
+const SECTION_TITLE_FONT_SIZE = 35
+const CARD_TITLE_FONT_SIZE = 30
+const CARD_VALUE_FONT_SIZE = 33
+const LABEL_FONT_SIZE = 30
+const SUBTITLE_FONT_SIZE = 25
+const CHART_LABEL_FONT_SIZE = 25
+const CHART_VALUE_FONT_SIZE = 25
+const LOADING_FONT_SIZE = 25
 
 # Loading animation
 var loading_label: Label
@@ -17,9 +30,9 @@ var current_student_data: Dictionary = {}
 var cognitive_data: Dictionary = {}
 var motion_data: Dictionary = {}
 var voice_data: Dictionary = {}
-var all_data_loaded: int = 0  # Track how many datasets are loaded
-var current_month_filter: String = ""  # Format: "2025-10"
-var available_months: Array = []  # List of all months with data
+var all_data_loaded: int = 0
+var current_month_filter: String = ""
+var available_months: Array = []
 
 func _ready():
 	current_student_data = Global.selected_student_data
@@ -39,18 +52,15 @@ func _ready():
 	
 	back_button.pressed.connect(_on_back_button_pressed)
 	
-	# Connect to all data signals
 	StudentData.cognitive_data_loaded.connect(_on_cognitive_loaded)
 	StudentData.motion_data_loaded.connect(_on_motion_loaded)
 	StudentData.voice_data_loaded.connect(_on_voice_loaded)
 	
-	# Check if data already exists or load it
 	check_and_load_data()
 
 func check_and_load_data():
 	var needs_loading = false
 	
-	# Check cognitive data
 	if StudentData.get_current_student_cognitive_data().size() > 0:
 		cognitive_data = StudentData.get_current_student_cognitive_data()
 		all_data_loaded += 1
@@ -58,7 +68,6 @@ func check_and_load_data():
 		StudentData.load_student_cognitive_data()
 		needs_loading = true
 	
-	# Check motion data
 	if StudentData.get_current_student_motion_data().size() > 0:
 		motion_data = StudentData.get_current_student_motion_data()
 		all_data_loaded += 1
@@ -66,7 +75,6 @@ func check_and_load_data():
 		StudentData.load_student_motion_data()
 		needs_loading = true
 	
-	# Check voice data
 	if StudentData.get_current_student_voice_data().size() > 0:
 		voice_data = StudentData.get_current_student_voice_data()
 		all_data_loaded += 1
@@ -74,7 +82,6 @@ func check_and_load_data():
 		StudentData.load_student_voice_data()
 		needs_loading = true
 	
-	# If all data already loaded, create summary immediately
 	if all_data_loaded >= 3:
 		create_performance_summary()
 
@@ -108,8 +115,8 @@ func create_loading_animation():
 	
 	loading_label = Label.new()
 	loading_label.text = "Generating report."
-	loading_label.add_theme_font_size_override("font_size", 18)
-	loading_label.add_theme_color_override("font_color", Color.GRAY)
+	loading_label.add_theme_font_size_override("font_size", LOADING_FONT_SIZE)
+	loading_label.add_theme_color_override("font_color", Color(0.4, 0.4, 0.4, 1))
 	center_container.add_child(loading_label)
 	
 	add_child(loading_container)
@@ -129,7 +136,6 @@ func _on_loading_timer_timeout():
 		3: loading_label.text = "Generating report"
 
 func create_performance_summary():
-	# Stop loading
 	if loading_timer:
 		loading_timer.stop()
 		loading_timer.queue_free()
@@ -139,11 +145,9 @@ func create_performance_summary():
 	if loading_container:
 		loading_container.queue_free()
 	
-	# Clear existing content
 	for child in summary_scroll.get_children():
 		child.queue_free()
 	
-	# Create summary sections
 	create_overview_cards()
 	create_cognitive_summary()
 	create_motion_summary()
@@ -152,8 +156,9 @@ func create_performance_summary():
 func create_overview_cards():
 	var title = Label.new()
 	title.text = "Overall Performance"
-	title.add_theme_font_size_override("font_size", 24)
-	title.add_theme_color_override("font_color", Color.BLACK)
+	title.add_theme_font_size_override("font_size", TITLE_FONT_SIZE)
+	title.add_theme_font_override("font", custom_font)
+	title.add_theme_color_override("font_color", Color(0.25, 0.27, 0.33, 1))
 	summary_scroll.add_child(title)
 	
 	var cards_grid = GridContainer.new()
@@ -162,7 +167,6 @@ func create_overview_cards():
 	cards_grid.add_theme_constant_override("v_separation", 15)
 	summary_scroll.add_child(cards_grid)
 	
-	# Calculate stats
 	var letters_completed = 0
 	for letter in cognitive_data.keys():
 		if cognitive_data[letter].get("letterCompleted", false):
@@ -178,7 +182,6 @@ func create_overview_cards():
 	
 	var avg_rating = calculate_average_rating()
 	
-	# Create stat cards
 	create_stat_card(cards_grid, "Letters Completed", "%d / 26" % letters_completed, Color.CYAN)
 	create_stat_card(cards_grid, "Avg. Cognitive Rating", avg_rating, get_rating_display_color(avg_rating))
 	create_stat_card(cards_grid, "Motion Attempts", str(total_motion_attempts), Color.ORANGE)
@@ -207,13 +210,15 @@ func create_stat_card(parent: GridContainer, title_text: String, value_text: Str
 	
 	var title_label = Label.new()
 	title_label.text = title_text
-	title_label.add_theme_font_size_override("font_size", 14)
-	title_label.add_theme_color_override("font_color", Color.GRAY)
+	title_label.add_theme_font_size_override("font_size", CARD_TITLE_FONT_SIZE)
+	title_label.add_theme_font_override("font", custom_font)
+	title_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7, 1))
 	vbox.add_child(title_label)
 	
 	var value_label = Label.new()
 	value_label.text = value_text
-	value_label.add_theme_font_size_override("font_size", 28)
+	value_label.add_theme_font_size_override("font_size", CARD_VALUE_FONT_SIZE)
+	value_label.add_theme_font_override("font", custom_font)
 	value_label.add_theme_color_override("font_color", color)
 	vbox.add_child(value_label)
 	
@@ -222,18 +227,20 @@ func create_stat_card(parent: GridContainer, title_text: String, value_text: Str
 func create_cognitive_summary():
 	var section_title = Label.new()
 	section_title.text = "Cognitive Activities Performance"
-	section_title.add_theme_font_size_override("font_size", 20)
-	section_title.add_theme_color_override("font_color", Color("#3f4553"))
+	section_title.add_theme_font_size_override("font_size", SECTION_TITLE_FONT_SIZE)
+	section_title.add_theme_font_override("font", custom_font)
+	section_title.add_theme_color_override("font_color", Color(0.25, 0.27, 0.33, 1))
 	summary_scroll.add_child(section_title)
 	
 	if cognitive_data.is_empty():
 		var no_data = Label.new()
 		no_data.text = "No cognitive data available"
-		no_data.add_theme_color_override("font_color", Color.GRAY)
+		no_data.add_theme_font_size_override("font_size", LABEL_FONT_SIZE)
+		no_data.add_theme_font_override("font", custom_font)
+		no_data.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6, 1))
 		summary_scroll.add_child(no_data)
 		return
 	
-	# Rating distribution
 	var ratings = {"Very Low": 0, "Low": 0, "Average": 0, "Good": 0, "Very Good": 0}
 	
 	for letter in cognitive_data.keys():
@@ -242,7 +249,6 @@ func create_cognitive_summary():
 			var rating = StudentData.get_cognitive_rating(avg_time)
 			ratings[rating] += 1
 	
-	# Create vertical bar chart
 	create_vertical_bar_chart(ratings)
 	
 func create_vertical_bar_chart(ratings: Dictionary):
@@ -250,7 +256,6 @@ func create_vertical_bar_chart(ratings: Dictionary):
 	chart_container.custom_minimum_size = Vector2(700, 350)
 	summary_scroll.add_child(chart_container)
 	
-	# Draw the chart
 	var chart = CognitiveBarChart.new()
 	chart.ratings_data = ratings
 	chart.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -258,6 +263,7 @@ func create_vertical_bar_chart(ratings: Dictionary):
 	
 class CognitiveBarChart extends Control:
 	var ratings_data = {}
+	var custom_font = preload("res://font/LilitaOne-Regular.ttf")
 	
 	func _ready():
 		queue_redraw()
@@ -272,7 +278,6 @@ class CognitiveBarChart extends Control:
 		var padding_top = 20
 		var chart_bottom = padding_top + height
 		
-		# Define rating order and colors
 		var rating_order = ["Very Low", "Low", "Average", "Good", "Very Good"]
 		var rating_colors = {
 			"Very Low": Color.RED,
@@ -282,7 +287,6 @@ class CognitiveBarChart extends Control:
 			"Very Good": Color.GREEN
 		}
 		
-		# Find max value for scaling
 		var max_value = 0
 		for rating in rating_order:
 			var count = ratings_data.get(rating, 0)
@@ -292,21 +296,18 @@ class CognitiveBarChart extends Control:
 		if max_value == 0:
 			max_value = 1
 		
-		# Calculate bar dimensions with equal spacing
 		var num_bars = rating_order.size()
 		var total_width = width - padding_left
-		var section_width = total_width / num_bars  # Each bar gets equal section
-		var bar_width = section_width * 0.8  # Bar takes 80% of section
-		var bar_spacing = section_width * 0.2  # 20% is spacing
+		var section_width = total_width / num_bars
+		var bar_width = section_width * 0.8
+		var bar_spacing = section_width * 0.2
 		
-		# Draw background grid lines
 		var grid_steps = min(max_value, 5)
 		if grid_steps > 0:
 			for i in range(int(grid_steps) + 1):
 				var y = chart_bottom - (i * height / grid_steps)
 				var value = int(i * max_value / grid_steps)
 				
-				# Grid line
 				draw_line(
 					Vector2(padding_left, y),
 					Vector2(width + padding_left, y),
@@ -314,24 +315,21 @@ class CognitiveBarChart extends Control:
 					1
 				)
 				
-				# Y-axis label
 				draw_string(
 					ThemeDB.fallback_font,
 					Vector2(10, y + 5),
 					str(value),
 					HORIZONTAL_ALIGNMENT_RIGHT,
 					40,
-					14,
+					16,  # Increased from 14
 					Color(0.4, 0.4, 0.4, 1)
 				)
 		
-		# Draw bars
 		for i in range(rating_order.size()):
 			var rating = rating_order[i]
 			var count = ratings_data.get(rating, 0)
 			var bar_color = rating_colors[rating]
 			
-			# Calculate bar position - centered in its section
 			var section_start = padding_left + (i * section_width)
 			var x = section_start + (bar_spacing / 2)
 			var section_center = section_start + (section_width / 2)
@@ -340,18 +338,14 @@ class CognitiveBarChart extends Control:
 			var bar_height = max(normalized_height, 5)
 			var y = chart_bottom - bar_height
 			
-			# Draw bar
 			var bar_rect = Rect2(x, y, bar_width, bar_height)
 			draw_rect(bar_rect, bar_color)
-			
-			# Draw bar border
 			draw_rect(bar_rect, Color(0, 0, 0, 0.2), false, 1)
 			
-			# Draw count above bar - manually centered
 			if count > 0:
 				var count_text = str(count)
-				var font = ThemeDB.fallback_font
-				var font_size = 18
+				var font = custom_font
+				var font_size = 21  # Increased from 20
 				var text_width = font.get_string_size(count_text, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size).x
 				var text_x = section_center - (text_width / 2.0)
 				
@@ -362,19 +356,16 @@ class CognitiveBarChart extends Control:
 					HORIZONTAL_ALIGNMENT_LEFT,
 					-1,
 					font_size,
-					Color("#3f4553")
+					Color(0.25, 0.27, 0.33, 1)
 				)
 			
-			# Draw label below X-axis - manually centered
 			var label_y = chart_bottom + 25
-			var font = ThemeDB.fallback_font
-			var font_size = 13
+			var font = custom_font
+			var font_size = 20  # Increased from 13
 			
-			# Split "Very Low" and "Very Good" into two lines
 			if rating == "Very Low" or rating == "Very Good":
 				var parts = rating.split(" ")
 				
-				# First line
 				var text_width_1 = font.get_string_size(parts[0], HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
 				var text_x_1 = section_center - (text_width_1 / 2.0)
 				draw_string(
@@ -387,7 +378,6 @@ class CognitiveBarChart extends Control:
 					Color(0.4, 0.4, 0.4, 1)
 				)
 				
-				# Second line
 				var text_width_2 = font.get_string_size(parts[1], HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
 				var text_x_2 = section_center - (text_width_2 / 2.0)
 				draw_string(
@@ -400,7 +390,6 @@ class CognitiveBarChart extends Control:
 					Color(0.4, 0.4, 0.4, 1)
 				)
 			else:
-				# Single line label
 				var text_width = font.get_string_size(rating, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
 				var text_x = section_center - (text_width / 2.0)
 				draw_string(
@@ -413,7 +402,6 @@ class CognitiveBarChart extends Control:
 					Color(0.4, 0.4, 0.4, 1)
 				)
 		
-		# Draw X-axis
 		draw_line(
 			Vector2(padding_left, chart_bottom),
 			Vector2(width + padding_left, chart_bottom),
@@ -421,7 +409,6 @@ class CognitiveBarChart extends Control:
 			2
 		)
 		
-		# Draw Y-axis
 		draw_line(
 			Vector2(padding_left, padding_top),
 			Vector2(padding_left, chart_bottom),
@@ -432,18 +419,20 @@ class CognitiveBarChart extends Control:
 func create_motion_summary():
 	var section_title = Label.new()
 	section_title.text = "Motion Activities Performance"
-	section_title.add_theme_font_size_override("font_size", 20)
-	section_title.add_theme_color_override("font_color", Color.BLACK)
+	section_title.add_theme_font_size_override("font_size", SECTION_TITLE_FONT_SIZE)
+	section_title.add_theme_font_override("font", custom_font)
+	section_title.add_theme_color_override("font_color", Color(0.25, 0.27, 0.33, 1))
 	summary_scroll.add_child(section_title)
 	
 	if motion_data.is_empty():
 		var no_data = Label.new()
 		no_data.text = "No motion data available"
-		no_data.add_theme_color_override("font_color", Color.GRAY)
+		no_data.add_theme_font_size_override("font_size", LABEL_FONT_SIZE)
+		no_data.add_theme_font_override("font", custom_font)
+		no_data.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6, 1))
 		summary_scroll.add_child(no_data)
 		return
 	
-	# Show success rates for each activity type
 	for activity_type in motion_data.keys():
 		var success_rate = StudentData.get_motion_success_rate(activity_type)
 		var attempts = StudentData.get_motion_attempt_count(activity_type)
@@ -459,53 +448,52 @@ func create_motion_summary():
 func create_voice_summary():
 	var section_title = Label.new()
 	section_title.text = "Voice Detection Summary"
-	section_title.add_theme_font_size_override("font_size", 20)
-	section_title.add_theme_color_override("font_color", Color("#3f4553"))
+	section_title.add_theme_font_size_override("font_size", SECTION_TITLE_FONT_SIZE)
+	section_title.add_theme_font_override("font", custom_font)
+	section_title.add_theme_color_override("font_color", Color(0.25, 0.27, 0.33, 1))
 	summary_scroll.add_child(section_title)
 	
 	if voice_data.is_empty():
 		var no_data = Label.new()
 		no_data.text = "No voice data available"
-		no_data.add_theme_color_override("font_color", Color.GRAY)
+		no_data.add_theme_font_size_override("font_size", LABEL_FONT_SIZE)
+		no_data.add_theme_font_override("font", custom_font)
+		no_data.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6, 1))
 		summary_scroll.add_child(no_data)
 		return
 	
-	# Create words per day timeline chart with month filtering
 	create_words_timeline_chart()
 
 func create_words_timeline_chart():
-	# Prepare available months from voice data
 	prepare_available_months()
 	
-	# If no current filter set, default to current month
 	if current_month_filter == "":
 		var today = Time.get_datetime_dict_from_system()
 		current_month_filter = "%04d-%02d" % [today.year, today.month]
 		
-		# If current month has no data, use the latest month with data
 		if not available_months.has(current_month_filter) and available_months.size() > 0:
 			current_month_filter = available_months[available_months.size() - 1]
 	
 	var chart_title = Label.new()
 	chart_title.text = "Words Detected Per Day"
-	chart_title.add_theme_font_size_override("font_size", 18)
-	chart_title.add_theme_color_override("font_color", Color("#3f4553"))
+	chart_title.add_theme_font_size_override("font_size", CARD_VALUE_FONT_SIZE)
+	chart_title.add_theme_font_override("font", custom_font)
+	chart_title.add_theme_color_override("font_color", Color(0.25, 0.27, 0.33, 1))
 	summary_scroll.add_child(chart_title)
 	
-	# Create month navigation controls
 	create_month_navigation()
 	
-	# Filter data for current month
 	var filtered_data = filter_voice_data_by_month(current_month_filter)
 	
 	if filtered_data.is_empty():
 		var no_data = Label.new()
 		no_data.text = "No data for %s" % format_month_year(current_month_filter)
-		no_data.add_theme_color_override("font_color", Color.GRAY)
+		no_data.add_theme_font_size_override("font_size", LABEL_FONT_SIZE)
+		no_data.add_theme_font_override("font", custom_font)
+		no_data.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6, 1))
 		summary_scroll.add_child(no_data)
 		return
 	
-	# Create data points for the filtered month
 	var dates_sorted = filtered_data.keys()
 	dates_sorted.sort()
 	
@@ -514,34 +502,31 @@ func create_words_timeline_chart():
 		var word_count = filtered_data[date].size()
 		data_points.append({"date": date, "count": word_count})
 	
-	# Create chart
 	var chart = VoiceTimelineChart.new()
 	chart.data_points = data_points
 	chart.custom_minimum_size = Vector2(700, 300)
 	summary_scroll.add_child(chart)
 	
-	# Show date range
 	var date_range_label = Label.new()
 	if data_points.size() > 0:
 		date_range_label.text = "Showing %d days in %s" % [data_points.size(), format_month_year(current_month_filter)]
 	else:
 		date_range_label.text = "No data available"
-	date_range_label.add_theme_font_size_override("font_size", 12)
-	date_range_label.add_theme_color_override("font_color", Color.GRAY)
+	date_range_label.add_theme_font_size_override("font_size", SUBTITLE_FONT_SIZE)
+	date_range_label.add_theme_font_override("font", custom_font)
+	date_range_label.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6, 1))
 	summary_scroll.add_child(date_range_label)
 
 func prepare_available_months():
 	available_months.clear()
 	var months_set = {}
 	
-	# Extract all unique months from voice data
 	for date in voice_data.keys():
 		var parts = date.split("-")
 		if parts.size() >= 2:
 			var month_key = "%s-%s" % [parts[0], parts[1]]
 			months_set[month_key] = true
 	
-	# Convert to sorted array
 	for month in months_set.keys():
 		available_months.append(month)
 	
@@ -562,28 +547,30 @@ func create_month_navigation():
 	nav_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	summary_scroll.add_child(nav_container)
 	
-	# Previous month button
 	var prev_button = Button.new()
 	prev_button.text = "◀ Previous"
 	prev_button.custom_minimum_size = Vector2(120, 40)
+	prev_button.add_theme_font_size_override("font_size", LABEL_FONT_SIZE)
+	prev_button.add_theme_font_override("font", custom_font)
 	prev_button.disabled = not can_go_to_previous_month()
 	prev_button.pressed.connect(_on_previous_month_pressed)
 	nav_container.add_child(prev_button)
 	
-	# Current month label
 	var month_label = Label.new()
 	month_label.text = format_month_year(current_month_filter)
-	month_label.add_theme_font_size_override("font_size", 18)
-	month_label.add_theme_color_override("font_color", Color("#3f4553"))
+	month_label.add_theme_font_size_override("font_size", CARD_VALUE_FONT_SIZE)
+	month_label.add_theme_font_override("font", custom_font)
+	month_label.add_theme_color_override("font_color", Color(0.25, 0.27, 0.33, 1))
 	month_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	month_label.custom_minimum_size = Vector2(150, 40)
 	month_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nav_container.add_child(month_label)
 	
-	# Next month button
 	var next_button = Button.new()
 	next_button.text = "Next ▶"
 	next_button.custom_minimum_size = Vector2(120, 40)
+	next_button.add_theme_font_size_override("font_size", LABEL_FONT_SIZE)
+	next_button.add_theme_font_override("font", custom_font)
 	next_button.disabled = not can_go_to_next_month()
 	next_button.pressed.connect(_on_next_month_pressed)
 	nav_container.add_child(next_button)
@@ -613,7 +600,6 @@ func _on_next_month_pressed():
 		refresh_voice_chart()
 
 func refresh_voice_chart():
-	# Clear the voice section and recreate it
 	var found_voice_section = false
 	var children_to_remove = []
 	
@@ -628,7 +614,6 @@ func refresh_voice_chart():
 		summary_scroll.remove_child(child)
 		child.queue_free()
 	
-	# Recreate voice section
 	create_voice_summary()
 
 func format_month_year(month_string: String) -> String:
@@ -642,16 +627,16 @@ func format_month_year(month_string: String) -> String:
 			return "%s %s" % [month_names[month_num], year]
 	return month_string
 
-# Custom control for drawing the timeline chart (like Firebase Analytics style)
 class VoiceTimelineChart extends Control:
 	var data_points = []
+	var custom_font = preload("res://font/LilitaOne-Regular.ttf")
 	
 	func _ready():
 		queue_redraw()
 	
 	func _draw():
 		if data_points.is_empty():
-			draw_string(ThemeDB.fallback_font, Vector2(20, 150), "No data to display", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color.GRAY)
+			draw_string(custom_font, Vector2(20, 150), "No data to display", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color(0.6, 0.6, 0.6, 1))
 			return
 		
 		var width = size.x - 100
@@ -660,7 +645,6 @@ class VoiceTimelineChart extends Control:
 		var padding_top = 20
 		var padding_bottom = 50
 		
-		# Find max value for scaling
 		var max_value = 0
 		for point in data_points:
 			if point.count > max_value:
@@ -669,16 +653,13 @@ class VoiceTimelineChart extends Control:
 		if max_value == 0:
 			max_value = 1
 		
-		# Draw background
 		draw_rect(Rect2(padding_left, padding_top, width, height), Color(0.95, 0.95, 0.95, 1))
 		
-		# Draw horizontal grid lines
 		var grid_steps = 4
 		for i in range(grid_steps + 1):
 			var y = padding_top + (i * height / grid_steps)
 			var value = int(max_value - (i * max_value / grid_steps))
 			
-			# Grid line
 			draw_line(
 				Vector2(padding_left, y), 
 				Vector2(padding_left + width, y), 
@@ -686,18 +667,16 @@ class VoiceTimelineChart extends Control:
 				1
 			)
 			
-			# Y-axis label
 			draw_string(
-				ThemeDB.fallback_font, 
+				custom_font, 
 				Vector2(10, y + 5), 
 				str(value), 
 				HORIZONTAL_ALIGNMENT_RIGHT, 
 				40, 
-				14, 
+				16,  # Increased from 14
 				Color(0.4, 0.4, 0.4, 1)
 			)
 		
-		# Calculate point positions
 		var points = []
 		var point_spacing = width / float(max(1, data_points.size() - 1)) if data_points.size() > 1 else 0
 		
@@ -708,20 +687,16 @@ class VoiceTimelineChart extends Control:
 			var y = padding_top + height - (normalized_value * height)
 			points.append(Vector2(x, y))
 		
-		# Draw line connecting points
 		if points.size() > 1:
 			for i in range(points.size() - 1):
 				draw_line(points[i], points[i + 1], Color(0.2, 0.6, 1.0, 1), 3)
 		
-		# Draw circles at each data point
 		for i in range(points.size()):
 			var point_pos = points[i]
 			
-			# Draw filled circle
 			draw_circle(point_pos, 6, Color(0.2, 0.6, 1.0, 1))
 			draw_circle(point_pos, 4, Color(1, 1, 1, 1))
 			
-			# Draw date label below (show every few dates to avoid crowding)
 			var show_label = false
 			if data_points.size() <= 7:
 				show_label = true
@@ -734,16 +709,15 @@ class VoiceTimelineChart extends Control:
 				var date_label = format_chart_date(data_points[i].date)
 				var label_x = point_pos.x - 25
 				draw_string(
-					ThemeDB.fallback_font, 
+					custom_font, 
 					Vector2(label_x, size.y - 20), 
 					date_label, 
 					HORIZONTAL_ALIGNMENT_LEFT, 
 					-1, 
-					11, 
+					13,  # Increased from 11
 					Color(0.4, 0.4, 0.4, 1)
 				)
 		
-		# Draw axes
 		draw_line(
 			Vector2(padding_left, padding_top), 
 			Vector2(padding_left, padding_top + height), 
@@ -783,26 +757,24 @@ func create_bar_chart_item(label_text: String, value: float, max_value: float, b
 	hbox.custom_minimum_size = Vector2(0, 50)
 	hbox.add_theme_constant_override("separation", 10)
 	
-	# Label
 	var label = Label.new()
 	label.text = label_text
 	label.custom_minimum_size = Vector2(120, 0)
-	label.add_theme_color_override("font_color", Color.BLACK)
+	label.add_theme_font_size_override("font_size", LABEL_FONT_SIZE)
+	label.add_theme_font_override("font", custom_font)
+	label.add_theme_color_override("font_color", Color(0.25, 0.27, 0.33, 1))
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	hbox.add_child(label)
 	
-	# Bar container
 	var bar_container = Control.new()
 	bar_container.custom_minimum_size = Vector2(300, 30)
 	hbox.add_child(bar_container)
 	
-	# Background
 	var bar_bg = ColorRect.new()
 	bar_bg.color = Color(0.2, 0.2, 0.2, 1)
 	bar_bg.size = Vector2(300, 30)
 	bar_container.add_child(bar_bg)
 	
-	# Bar fill
 	var bar_width = (value / max_value) * 300 if max_value > 0 else 0
 	var bar_fill = ColorRect.new()
 	bar_fill.color = bar_color
@@ -810,13 +782,14 @@ func create_bar_chart_item(label_text: String, value: float, max_value: float, b
 	bar_container.add_child(bar_fill)
 	
 	var spacer_small = Control.new()
-	spacer_small.custom_minimum_size = Vector2(10, 0)  # Just 10 pixels gap
+	spacer_small.custom_minimum_size = Vector2(10, 0)
 	hbox.add_child(spacer_small)
 	
-	# Value label
 	var value_label = Label.new()
 	value_label.text = str(int(value))
-	value_label.add_theme_color_override("font_color", Color.BLACK)
+	value_label.add_theme_font_size_override("font_size", LABEL_FONT_SIZE)
+	value_label.add_theme_font_override("font", custom_font)
+	value_label.add_theme_color_override("font_color", Color(0.25, 0.27, 0.33, 1))
 	value_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	hbox.add_child(value_label)
 	
@@ -828,7 +801,9 @@ func create_progress_bar_item(label_text: String, value: float, max_value: float
 	
 	var label = Label.new()
 	label.text = label_text
-	label.add_theme_color_override("font_color", Color("#3f4553"))
+	label.add_theme_font_size_override("font_size", LABEL_FONT_SIZE)
+	label.add_theme_font_override("font", custom_font)
+	label.add_theme_color_override("font_color", Color(0.25, 0.27, 0.33, 1))
 	item.add_child(label)
 	
 	var bar_container = Control.new()
@@ -849,8 +824,9 @@ func create_progress_bar_item(label_text: String, value: float, max_value: float
 	
 	var subtitle_label = Label.new()
 	subtitle_label.text = subtitle
-	subtitle_label.add_theme_color_override("font_color", Color.GRAY)
-	subtitle_label.add_theme_font_size_override("font_size", 12)
+	subtitle_label.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6, 1))
+	subtitle_label.add_theme_font_size_override("font_size", SUBTITLE_FONT_SIZE)
+	subtitle_label.add_theme_font_override("font", custom_font)
 	item.add_child(subtitle_label)
 	
 	summary_scroll.add_child(item)

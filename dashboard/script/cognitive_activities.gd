@@ -161,10 +161,10 @@ func update_button_ratings():
 			var button_container = activities_grid.get_child(button_index)
 			var activity_button = button_container.get_child(0)
 			var content_vbox = activity_button.get_child(0)
-			var rating_label = content_vbox.get_child(1)
+			var rating_label = content_vbox.get_child(2)  # Changed from 1 to 2 - this is the rating label
 			
 			var rating_text = get_letter_rating(letter)
-			rating_label.text = rating_text
+			rating_label.text = "Avg. Rating: " + rating_text
 			var rating_color = get_rating_color(rating_text)
 			rating_label.add_theme_color_override("font_color", rating_color)
 		
