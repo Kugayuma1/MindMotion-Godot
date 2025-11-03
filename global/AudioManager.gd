@@ -23,7 +23,9 @@ var music_tracks = {
 }
 
 var sound_effects = {
-	"button_click": preload("res://audio/sounds/pop1.mp3")
+	"button_click": preload("res://audio/sounds/pop1.mp3"),
+	"motivational_5s": preload("res://audio/sounds/luvvoice.com-20251103-aHbLGC.mp3"),
+	"motivational_10s": preload("res://audio/sounds/luvvoice.com-20251103-aHbLGC.mp3")
 }
 
 func _ready():

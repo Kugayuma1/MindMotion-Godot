@@ -24,6 +24,10 @@ func _ready():
 	setup_timer()
 	connect_signals()
 	
+	var custom_font = load("res://font/Summary Notes.ttf")  # Change path to your font
+	instruction_label.add_theme_font_override("font", custom_font)
+	status_label.add_theme_font_override("font", custom_font)
+	
 	# Get current user from your login system
 	load_current_user()
 	
