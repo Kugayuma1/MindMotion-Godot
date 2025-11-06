@@ -17,7 +17,7 @@ var button_to_choice = {}
 
 # Timer setup
 var countdown := 15
-var timer_active := true
+var timer_active := false
 
 # Popup reward scenes
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
@@ -38,8 +38,16 @@ var popup_instance: Control = null
 
 func _ready() -> void:
 	load_game()
-	Global.start_time = Time.get_ticks_msec()
 	start_timer()
+
+func reset_time_tracking() -> void:
+	"""Reset the global start time for accurate time tracking"""
+	Global.start_time = Time.get_ticks_msec()
+	print("Time tracking reset at: ", Global.start_time)
+
+func stop_timer() -> void:
+	"""Stop the countdown timer"""
+	timer_active = false
 
 func load_game() -> void:
 	shuffled_choices = []
@@ -73,19 +81,29 @@ func load_game() -> void:
 	print("Correct answer '", correct_answer, "' is now on button: ", correct_button)
 
 func start_timer() -> void:
+	# Reset time tracking when timer starts
+	reset_time_tracking()
+	
 	countdown = 15
 	timer_active = true
 	update_timer()
+	
+	print("Game started! Timer begins NOW at: ", Global.start_time)
 
 func update_timer() -> void:
+	if not timer_active:
+		return
+	
 	if countdown <= 0:
-		timer_label.text = "Time's up!"
-		timer_active = false
+		timer_label.text = "⏰ Time's up!"
+		stop_timer()
 		game_over(false)
 		return
-	timer_label.text = "" + str(countdown) + "s"
+	
+	timer_label.text = " " + str(countdown) + "s"
 	countdown -= 1
 	await get_tree().create_timer(1.0).timeout
+	
 	if timer_active:
 		update_timer()
 
@@ -95,16 +113,17 @@ func check_answer(choice: String, node: Control) -> void:
 		return
 	
 	if choice == correct_answer:
-		timer_active = false
+		stop_timer()
 		feedback_label.text = success_message
 		highlight_correct(node)
 		await get_tree().create_timer(2.0).timeout
 		game_over(true)
 	else:
-		feedback_label.text = "Try again."
+		feedback_label.text = "❌ Try again."
 		shake_button(node)
 		await get_tree().create_timer(1.5).timeout
-		feedback_label.text = clue_short
+		if timer_active:  # Only restore clue if game is still active
+			feedback_label.text = clue_short
 
 func shake_button(node: Control) -> void:
 	var original_pos = node.position
@@ -118,6 +137,8 @@ func highlight_correct(node: Control) -> void:
 	tween.tween_property(node, "modulate", Color(0, 1, 0, 1), 0.5)
 
 func game_over(success: bool) -> void:
+	stop_timer()
+	
 	$House.visible = false
 	$Uniform.visible = false
 	$Out.visible = false
@@ -151,6 +172,7 @@ func _on_out_pressed() -> void:
 	check_answer(button_to_choice[$Out], $Out)
 
 func _on_quitbtn_pressed() -> void:
+	stop_timer()
 	var letter_lower = Global.current_letter.to_lower()
 	var path = "res://scenes/Categories.tscn"
 	if ResourceLoader.exists(path):

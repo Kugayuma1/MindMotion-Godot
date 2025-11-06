@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://b1b4rn5n1lw8q"]
+[gd_scene load_steps=8 format=3 uid="uid://b1b4rn5n1lw8q"]
 
-[ext_resource type="Texture2D" uid="uid://bl7knbc05mqce" path="res://Game Assets/Fine Motor Assets/BG/24.png" id="1_m1mli"]
+[ext_resource type="Script" uid="uid://bdsdu8p88njni" path="res://games_script/finemotor/u_finemotors.gd" id="1_8ky2c"]
 [ext_resource type="Texture2D" uid="uid://bwg8et4vsn8xi" path="res://Game Assets/subt 1.png" id="2_bjr7o"]
+[ext_resource type="Texture2D" uid="uid://cxhdam28608cm" path="res://Game Assets/Fine Motor Assets/BG/23.png" id="2_uq4mu"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_8ky2c"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="4_uq4mu"]
 [ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="5_mjpp0"]
+[ext_resource type="Texture2D" uid="uid://ccl8yti16jfml" path="res://Game Assets/Fine Motor Assets/Uranus.png" id="6_mjpp0"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -13,6 +15,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_8ky2c")
 
 [node name="GameBG" type="TextureRect" parent="."]
 layout_mode = 1
@@ -21,7 +24,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_m1mli")
+texture = ExtResource("2_uq4mu")
 
 [node name="Holder" type="TextureRect" parent="."]
 layout_mode = 1
@@ -46,7 +49,7 @@ offset_bottom = 202.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_8ky2c")
 theme_override_font_sizes/font_size = 55
-text = "Put the Nuts into the basket"
+text = "Tap all the Uranus"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -83,6 +86,112 @@ theme_override_font_sizes/font_size = 45
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Remove" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Uranus" type="TextureRect" parent="Remove"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.163
+anchor_top = 0.406
+anchor_right = 0.163
+anchor_bottom = 0.406
+offset_left = -153.96
+offset_top = -145.48
+offset_right = 148.04
+offset_bottom = 165.52
+texture = ExtResource("6_mjpp0")
+expand_mode = 1
+
+[node name="Uranus2" type="TextureRect" parent="Remove"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.267
+anchor_top = 0.69
+anchor_right = 0.267
+anchor_bottom = 0.69
+offset_left = -150.64
+offset_top = -155.2
+offset_right = 151.36
+offset_bottom = 155.8
+texture = ExtResource("6_mjpp0")
+expand_mode = 1
+
+[node name="Uranus3" type="TextureRect" parent="Remove"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.422
+anchor_top = 0.476
+anchor_right = 0.422
+anchor_bottom = 0.476
+offset_left = -151.24
+offset_top = -155.08
+offset_right = 150.76
+offset_bottom = 155.92
+texture = ExtResource("6_mjpp0")
+expand_mode = 1
+
+[node name="Uranus4" type="TextureRect" parent="Remove"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.531
+anchor_top = 0.767
+anchor_right = 0.531
+anchor_bottom = 0.767
+offset_left = -150.52
+offset_top = -155.36
+offset_right = 151.48
+offset_bottom = 155.64
+texture = ExtResource("6_mjpp0")
+expand_mode = 1
+
+[node name="Uranus5" type="TextureRect" parent="Remove"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.671
+anchor_top = 0.476
+anchor_right = 0.671
+anchor_bottom = 0.476
+offset_left = -150.32
+offset_top = -155.08
+offset_right = 151.68
+offset_bottom = 155.92
+texture = ExtResource("6_mjpp0")
+expand_mode = 1
+
+[node name="Uranus6" type="TextureRect" parent="Remove"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.781
+anchor_top = 0.788
+anchor_right = 0.781
+anchor_bottom = 0.788
+offset_left = -151.52
+offset_top = -155.04
+offset_right = 150.48
+offset_bottom = 155.96
+texture = ExtResource("6_mjpp0")
+expand_mode = 1
+
+[node name="Uranus7" type="TextureRect" parent="Remove"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.889
+anchor_top = 0.5
+anchor_right = 0.889
+anchor_bottom = 0.5
+offset_left = -151.88
+offset_top = -167.0
+offset_right = 150.12
+offset_bottom = 144.0
+texture = ExtResource("6_mjpp0")
+expand_mode = 1
+
 [node name="Quitbtn" type="TextureButton" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -96,11 +205,3 @@ offset_right = 105.72
 offset_bottom = 109.96
 texture_normal = ExtResource("5_mjpp0")
 stretch_mode = 0
-
-[node name="Removables" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2

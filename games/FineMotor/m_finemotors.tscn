@@ -56,8 +56,7 @@ offset_bottom = 202.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_1jp78")
 theme_override_font_sizes/font_size = 55
-text = "Give the Gardener his
-things"
+text = "Drop the Mails in the right Mailbox"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
