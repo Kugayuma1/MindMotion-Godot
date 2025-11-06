@@ -1,7 +1,7 @@
-[gd_scene load_steps=25 format=3 uid="uid://bp6aae0sy2uk7"]
+[gd_scene load_steps=26 format=3 uid="uid://bp6aae0sy2uk7"]
 
 [ext_resource type="Script" uid="uid://qmm4qkcj0406" path="res://games_script/Arts/LetterT/control.gd" id="1_miu4a"]
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="2_wsktc"]
+[ext_resource type="Texture2D" uid="uid://dgojqma62afdo" path="res://Game Assets/Arts/MathEbg (52).png" id="2_mik0u"]
 [ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="3_u30cm"]
 [ext_resource type="Texture2D" uid="uid://cmeo0i14hmpkb" path="res://Game Assets/Arts/Gray.png" id="4_eoxah"]
 [ext_resource type="Script" uid="uid://7u4kebdij50k" path="res://games_script/Arts/LetterT/node_2d_2.gd" id="4_ssve0"]
@@ -24,6 +24,7 @@
 [ext_resource type="Script" uid="uid://3hiqcng53l7b" path="res://games_script/Arts/LetterT/texture_button_3.gd" id="19_xbi3r"]
 [ext_resource type="Texture2D" uid="uid://dar0xbmdwsoyw" path="res://Game Assets/Arts/black.png" id="20_x8vtm"]
 [ext_resource type="Script" uid="uid://dwkdvwl3ur727" path="res://games_script/Arts/LetterT/texture_button_4.gd" id="21_mp2wu"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="25_mik0u"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -41,7 +42,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_wsktc")
+texture = ExtResource("2_mik0u")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
@@ -323,3 +324,15 @@ theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
 justification_flags = 171
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 45.0
+offset_right = 149.0
+offset_bottom = 154.0
+texture_normal = ExtResource("25_mik0u")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="Quitbtn" to="." method="_on_quitbtn_pressed"]

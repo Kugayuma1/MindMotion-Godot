@@ -118,9 +118,9 @@ func update_timer() -> void:
 		
 	if countdown <= 0:
 		if timer_label:
-			timer_label.text = "⏰ Times Up"
+			timer_label.text = "Times Up"
 		if main_label:
-			main_label.text = "⏰ Time's up!"
+			main_label.text = "Time's up!"
 			main_label.modulate = Color.RED
 		timer_active = false
 		ProgressManager.save_progress("art", false)

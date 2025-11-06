@@ -1,7 +1,7 @@
 [gd_scene load_steps=25 format=3 uid="uid://b57rrkla6hdje"]
 
 [ext_resource type="Script" uid="uid://cq8o40kemrbkl" path="res://games_script/Arts/LetterS/s_arts.gd" id="1_6ut33"]
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_l55fc"]
+[ext_resource type="Texture2D" uid="uid://dwmx8xwlqccje" path="res://Game Assets/Arts/MathEbg (44).png" id="2_6ut33"]
 [ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="2_j2j0g"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="3_mpotc"]
 [ext_resource type="Texture2D" uid="uid://bhyxb4ja8l7gl" path="res://Game Assets/Arts/red.png" id="4_3cvi1"]
@@ -41,7 +41,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_l55fc")
+texture = ExtResource("2_6ut33")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]

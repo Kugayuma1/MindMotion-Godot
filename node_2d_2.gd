@@ -6,6 +6,9 @@ var dragging_color_number: int
 var is_dragging = false
 var drag_source: TextureButton
 var drag_preview: Control
+var motivational_10s_played := false
+var motivational_5s_played := false
+
 
 # ---------------- TIMER ----------------
 var countdown := 15
@@ -144,7 +147,7 @@ func on_polygon_reset(polygon_unique_id: String):
 func start_timer() -> void:
 	print("🕐 Starting timer...")
 	if timer_label:
-		timer_label.text = "⏱️ 15s"
+		timer_label.text = "15s"
 		timer_label.visible = true
 		print("✅ Timer label set to: ", timer_label.text)
 	else:
@@ -153,6 +156,9 @@ func start_timer() -> void:
 	countdown = 15
 	timer_active = true
 	game_completed = false
+	
+	motivational_10s_played = false
+	motivational_5s_played = false
 	
 	# Start the timer loop
 	timer_loop()
@@ -167,6 +173,17 @@ func timer_loop():
 		countdown -= 1
 		update_timer_display()
 		
+		if countdown == 10 and not motivational_10s_played:
+			AudioManager.play_sound("motivational_10s")
+			motivational_10s_played = true
+			print("🎵 Playing 10-second motivational audio")
+		
+		if countdown == 5 and not motivational_5s_played:
+			AudioManager.play_sound("motivational_5s")
+			motivational_5s_played = true
+			print("🎵 Playing 5-second motivational audio")
+
+		
 		# Check win condition each second
 		check_win_condition()
 	
@@ -176,16 +193,16 @@ func timer_loop():
 
 func update_timer_display():
 	if timer_label and countdown >= 0:
-		timer_label.text = "⏱️ " + str(countdown) + "s"
-		print("⏰ Timer: ", countdown, "s")
+		timer_label.text = " " + str(countdown) + "s"
+		print("Timer: ", countdown, "s")
 
 func time_up():
-	print("⏰ Time's up!")
+	print("Time's up!")
 	if timer_label:
-		timer_label.text = "⏰ Times Up"
+		timer_label.text = "Times Up"
 		timer_label.modulate = Color.RED
 	if main_label:
-		main_label.text = "⏰ Time's up!"
+		main_label.text = "Time's up!"
 		main_label.modulate = Color.RED
 	timer_active = false
 	# Save progress as failed and show retry popup
@@ -495,6 +512,9 @@ func restart_game():
 	timer_active = false
 	countdown = 15
 	
+	motivational_10s_played = false
+	motivational_5s_played = false
+	
 	# Remove existing popup
 	if popup_instance and is_instance_valid(popup_instance):
 		popup_instance.queue_free()
@@ -504,7 +524,7 @@ func restart_game():
 	show_game_elements()
 	
 	if timer_label:
-		timer_label.text = "⏱️ 15s"
+		timer_label.text = "15s"
 		timer_label.modulate = Color.WHITE
 		timer_label.visible = true
 	if main_label:

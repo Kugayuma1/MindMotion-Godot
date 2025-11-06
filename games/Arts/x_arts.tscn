@@ -1,28 +1,29 @@
-[gd_scene load_steps=24 format=3 uid="uid://f2t2ujb4fmy0"]
+[gd_scene load_steps=25 format=3 uid="uid://f2t2ujb4fmy0"]
 
 [ext_resource type="Script" uid="uid://bhopgh1fua86u" path="res://games_script/Arts/LetterX/x_arts.gd" id="1_a082u"]
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_q11ss"]
+[ext_resource type="Texture2D" uid="uid://c6ukshx5rfpte" path="res://Game Assets/Arts/MathEbg (56).png" id="2_73mth"]
 [ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="2_tq2f8"]
-[ext_resource type="Texture2D" uid="uid://cmeo0i14hmpkb" path="res://Game Assets/Arts/Gray.png" id="3_gy5ev"]
 [ext_resource type="Script" uid="uid://dfnv4yfe23cwb" path="res://games_script/Arts/LetterX/node_2d_2.gd" id="4_73mth"]
 [ext_resource type="Script" uid="uid://epvec2mmfdqw" path="res://games_script/Arts/LetterX/polygon_2d.gd" id="5_2g6oi"]
 [ext_resource type="Texture2D" uid="uid://c8jfigrl7wxu8" path="res://Game Assets/Arts/yellow.png" id="5_x8pw0"]
 [ext_resource type="Texture2D" uid="uid://qckic7o6mwpc" path="res://Game Assets/Arts/blue.png" id="7_wen0h"]
 [ext_resource type="Script" uid="uid://dki0k2lmuyvk3" path="res://games_script/Arts/LetterX/polygon_2d_2.gd" id="7_wpdpf"]
 [ext_resource type="Script" uid="uid://ccvprceywsxfu" path="res://games_script/Arts/LetterX/polygon_2d_3.gd" id="8_x7bbe"]
-[ext_resource type="Texture2D" uid="uid://dar0xbmdwsoyw" path="res://Game Assets/Arts/black.png" id="9_7kc7o"]
 [ext_resource type="Script" uid="uid://dvds4cqqtdlui" path="res://games_script/Arts/LetterX/polygon_2d_4.gd" id="9_bmhn1"]
 [ext_resource type="Script" uid="uid://b7ob5bjhqe2mm" path="res://games_script/Arts/LetterX/polygon_2d_5.gd" id="10_7qfim"]
 [ext_resource type="Script" uid="uid://bimqto8o4rgkn" path="res://games_script/Arts/LetterX/polygon_2d_6.gd" id="11_m24x4"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="11_q8hfr"]
 [ext_resource type="Texture2D" uid="uid://bpiysvw7jbm32" path="res://Game Assets/Arts/MathEbg (38).png" id="12_a082u"]
 [ext_resource type="Script" uid="uid://c4qp322kjvlm6" path="res://games_script/Arts/LetterX/polygon_2d_7.gd" id="12_dy3qp"]
+[ext_resource type="Texture2D" uid="uid://bhyxb4ja8l7gl" path="res://Game Assets/Arts/red.png" id="13_73mth"]
 [ext_resource type="Script" uid="uid://5lcq2ev1wj45" path="res://games_script/Arts/LetterX/texture_button.gd" id="14_yff3r"]
 [ext_resource type="Script" uid="uid://de601qvx828bu" path="res://games_script/Arts/LetterX/texture_button_2.gd" id="16_mgubd"]
 [ext_resource type="Script" uid="uid://c3fjsuv3uk6ny" path="res://games_script/Arts/LetterX/texture_button_3.gd" id="18_pab2r"]
+[ext_resource type="Texture2D" uid="uid://by1u7yvygi3rg" path="res://Game Assets/Arts/pink (1).png" id="19_2g6oi"]
 [ext_resource type="Script" uid="uid://mrjb4lrj7juv" path="res://games_script/Arts/LetterX/texture_button_4.gd" id="20_nwhx2"]
 [ext_resource type="Texture2D" uid="uid://b4fcft4nhtcia" path="res://Game Assets/Arts/subt 1.png" id="22_775ve"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="23_hnknq"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="24_73mth"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -40,7 +41,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_q11ss")
+texture = ExtResource("2_73mth")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
@@ -190,7 +191,7 @@ offset_left = 1571.0
 offset_top = 377.0
 offset_right = 1921.0
 offset_bottom = 527.0
-texture_normal = ExtResource("3_gy5ev")
+texture_normal = ExtResource("13_73mth")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("14_yff3r")
@@ -241,7 +242,7 @@ offset_right = 1928.0
 offset_bottom = 917.0
 grow_horizontal = 0
 grow_vertical = 2
-texture_normal = ExtResource("9_7kc7o")
+texture_normal = ExtResource("19_2g6oi")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("20_nwhx2")
@@ -301,3 +302,13 @@ theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
 justification_flags = 171
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 45.0
+offset_right = 149.0
+offset_bottom = 154.0
+texture_normal = ExtResource("24_73mth")
+ignore_texture_size = true
+stretch_mode = 0

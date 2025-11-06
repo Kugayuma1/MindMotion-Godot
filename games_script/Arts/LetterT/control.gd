@@ -116,7 +116,7 @@ func collect_game_elements():
 
 func start_timer() -> void:
 	if timer_label:
-		timer_label.text = "⏱️ 15s"
+		timer_label.text = "15s"
 	countdown = 15
 	timer_active = true
 	game_completed = false
@@ -131,9 +131,9 @@ func update_timer() -> void:
 		
 	if countdown <= 0:
 		if timer_label:
-			timer_label.text = "⏰ Times Up"
+			timer_label.text = "Times Up"
 		if main_label:
-			main_label.text = "⏰ Time's up!"
+			main_label.text = "Time's up!"
 			main_label.modulate = Color.RED
 		timer_active = false
 		# Save progress as failed and show retry popup
@@ -143,7 +143,7 @@ func update_timer() -> void:
 		return
 	
 	if timer_label:
-		timer_label.text = "⏱️ " + str(countdown) + "s"
+		timer_label.text = "" + str(countdown) + "s"
 	countdown -= 1
 	
 	await get_tree().create_timer(1.0).timeout
@@ -362,7 +362,7 @@ func restart_game():
 	
 	# Reset UI elements
 	if timer_label:
-		timer_label.text = "⏱️ 15s"
+		timer_label.text = "15s"
 		timer_label.modulate = Color.WHITE
 	if main_label:
 		main_label.text = original_main_text

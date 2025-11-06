@@ -1,11 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://c8doffkk2v2kk"]
+[gd_scene load_steps=23 format=3 uid="uid://c8doffkk2v2kk"]
 
 [ext_resource type="Script" uid="uid://bu4gxqfr2exsr" path="res://games_script/Arts/LetterE/e_arts.gd" id="1_3nu2e"]
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_aoum5"]
-[ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="2_1ceht"]
+[ext_resource type="Texture2D" uid="uid://bya687oapfdtk" path="res://Game Assets/Arts/MathEbg (47).png" id="2_ogwoa"]
 [ext_resource type="Texture2D" uid="uid://bhyxb4ja8l7gl" path="res://Game Assets/Arts/red.png" id="3_2jmiw"]
+[ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="3_ogwoa"]
 [ext_resource type="Script" uid="uid://bu3g4bpn2h1o4" path="res://games_script/Arts/LetterE/node_2d.gd" id="4_gdokr"]
-[ext_resource type="Script" uid="uid://cdbndgsov8arr" path="res://games_script/Arts/LetterE/polygon_2d.gd" id="5_2p7cj"]
 [ext_resource type="Texture2D" uid="uid://c8jfigrl7wxu8" path="res://Game Assets/Arts/yellow.png" id="5_tpdmx"]
 [ext_resource type="Script" uid="uid://c0ed4opts22mk" path="res://games_script/Arts/LetterE/polygon_2d_2.gd" id="7_bfsmk"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="7_xqwq1"]
@@ -15,7 +14,6 @@
 [ext_resource type="Script" uid="uid://cnfgw7b3mglrm" path="res://games_script/Arts/LetterE/polygon_2d_4.gd" id="9_ryxjv"]
 [ext_resource type="Script" uid="uid://d2ukbsny4q8ew" path="res://games_script/Arts/LetterE/polygon_2d_5.gd" id="10_0h8os"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="10_qns1p"]
-[ext_resource type="Script" uid="uid://bow5y261gpmj6" path="res://games_script/Arts/LetterE/polygon_2d_6.gd" id="11_qk5my"]
 [ext_resource type="Script" uid="uid://crsyoxhb864ia" path="res://games_script/Arts/LetterE/polygon_2d_7.gd" id="12_kw8hm"]
 [ext_resource type="Script" uid="uid://bfe84db5brbqv" path="res://games_script/Arts/LetterE/texture_button.gd" id="14_6r14e"]
 [ext_resource type="Texture2D" uid="uid://c0kpo40q8nu5f" path="res://Game Assets/Arts/brown3.png" id="15_8psh6"]
@@ -41,43 +39,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_aoum5")
+texture = ExtResource("2_ogwoa")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 386.0
-offset_top = 122.0
-offset_right = 1654.0
-offset_bottom = 999.0
-texture = ExtResource("2_1ceht")
+offset_left = 233.0
+offset_top = 95.0
+offset_right = 1731.0
+offset_bottom = 1017.0
+texture = ExtResource("3_ogwoa")
+expand_mode = 1
 
 [node name="Node2D2" type="Node2D" parent="."]
 script = ExtResource("4_gdokr")
 
 [node name="Node2D" type="Node2D" parent="Node2D2"]
-
-[node name="Polygon2D" type="Polygon2D" parent="Node2D2/Node2D"]
-polygon = PackedVector2Array(1218, 269, 1205, 273, 1196, 283, 1194, 303, 1197, 313, 1209, 325, 1222, 326, 1235, 321, 1246, 305, 1245, 287, 1238, 275, 1219, 267)
-script = ExtResource("5_2p7cj")
-
-[node name="Area2D" type="Area2D" parent="Node2D2/Node2D/Polygon2D"]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node2D2/Node2D/Polygon2D/Area2D"]
-polygon = PackedVector2Array(1218, 269, 1205, 273, 1196, 283, 1194, 303, 1197, 313, 1209, 325, 1222, 326, 1235, 321, 1246, 305, 1245, 287, 1238, 275, 1219, 267)
-
-[node name="Hat1" type="Label" parent="Node2D2/Node2D/Polygon2D"]
-z_index = 25
-offset_left = 1191.0
-offset_top = 278.0
-offset_right = 1248.0
-offset_bottom = 344.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_xqwq1")
-theme_override_font_sizes/font_size = 35
-text = "1"
-horizontal_alignment = 1
-justification_flags = 171
 
 [node name="Polygon2D2" type="Polygon2D" parent="Node2D2/Node2D"]
 polygon = PackedVector2Array(830, 450, 838, 419, 849, 393, 867, 362, 894, 328, 921, 300, 959, 275, 993, 260, 1031, 251, 1068, 249, 1105, 253, 1128, 259, 1150, 266, 1173, 277, 1192, 289, 1179, 295, 1159, 307, 1134, 321, 1124, 339, 1120, 351, 1121, 372, 1128, 399, 1141, 432, 1143, 436, 1134, 440, 1120, 445, 1111, 441, 1104, 421, 1097, 396, 1072, 408, 1056, 420, 1044, 432, 1028, 415, 1012, 396, 992, 381, 954, 426, 900, 401, 890, 399, 882, 443, 872, 464)
@@ -164,28 +141,6 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("7_xqwq1")
 theme_override_font_sizes/font_size = 35
 text = "1"
-horizontal_alignment = 1
-justification_flags = 171
-
-[node name="Polygon2D6" type="Polygon2D" parent="Node2D2/Node2D"]
-polygon = PackedVector2Array(983, 745, 991, 732, 998, 744, 1011, 747, 1004, 757, 1004, 773, 992, 767, 979, 773, 979, 759, 970, 748)
-script = ExtResource("11_qk5my")
-
-[node name="Area2D" type="Area2D" parent="Node2D2/Node2D/Polygon2D6"]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node2D2/Node2D/Polygon2D6/Area2D"]
-polygon = PackedVector2Array(983, 745, 991, 732, 998, 744, 1011, 747, 1004, 757, 1004, 773, 992, 767, 979, 773, 979, 759, 970, 748)
-
-[node name="star2" type="Label" parent="Node2D2/Node2D/Polygon2D6"]
-z_index = 25
-offset_left = 975.0
-offset_top = 740.0
-offset_right = 1006.0
-offset_bottom = 770.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_xqwq1")
-theme_override_font_sizes/font_size = 25
-text = "2"
 horizontal_alignment = 1
 justification_flags = 171
 

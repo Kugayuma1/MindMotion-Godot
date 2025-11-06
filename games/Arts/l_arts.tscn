@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=3 uid="uid://bu5f3wq4clcun"]
 
 [ext_resource type="Script" uid="uid://dpog1whmvt2xu" path="res://games_script/Arts/LetterL/control.gd" id="1_bur23"]
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="2_jo3i5"]
+[ext_resource type="Texture2D" uid="uid://cb2bm3pcwne5x" path="res://Game Assets/Arts/MathEbg (23).png" id="2_jo3i5"]
 [ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="3_wmjna"]
 [ext_resource type="Script" uid="uid://b1u3anp8qj6t0" path="res://games_script/Arts/LetterL/node_2d_2.gd" id="4_tjf5c"]
 [ext_resource type="Script" uid="uid://dx12rb1t7i633" path="res://games_script/Arts/LetterL/polygon_2d.gd" id="5_rtr1f"]
@@ -44,10 +44,10 @@ expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 276.0
-offset_top = 209.0
-offset_right = 1684.0
-offset_bottom = 1001.0
+offset_left = 194.0
+offset_top = 95.0
+offset_right = 1731.0
+offset_bottom = 1017.0
 texture = ExtResource("3_wmjna")
 expand_mode = 1
 

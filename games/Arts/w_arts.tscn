@@ -1,7 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://cehisrwexvdlw"]
+[gd_scene load_steps=25 format=3 uid="uid://cehisrwexvdlw"]
 
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_gesx2"]
 [ext_resource type="Script" uid="uid://q6dpditot47d" path="res://games_script/Arts/LetterW/w_arts.gd" id="1_s2yyd"]
+[ext_resource type="Texture2D" uid="uid://blsksqtamqeac" path="res://Game Assets/Arts/MathEbg (55).png" id="2_pryfg"]
 [ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="2_ysnqx"]
 [ext_resource type="Texture2D" uid="uid://dtiwg13brdg1i" path="res://Game Assets/Arts/MathEbg (36).png" id="3_u8bey"]
 [ext_resource type="Script" uid="uid://0cxkqqujfp2w" path="res://games_script/Arts/LetterW/node_2d_2.gd" id="4_pryfg"]
@@ -23,6 +23,7 @@
 [ext_resource type="Script" uid="uid://44s5kbjvtks5" path="res://games_script/Arts/LetterW/texture_button_4.gd" id="20_v53hi"]
 [ext_resource type="Texture2D" uid="uid://b4fcft4nhtcia" path="res://Game Assets/Arts/subt 1.png" id="22_3d45n"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="23_u83kt"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="24_pryfg"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -40,7 +41,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_gesx2")
+texture = ExtResource("2_pryfg")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
@@ -301,3 +302,13 @@ theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
 justification_flags = 171
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 45.0
+offset_right = 149.0
+offset_bottom = 154.0
+texture_normal = ExtResource("24_pryfg")
+ignore_texture_size = true
+stretch_mode = 0

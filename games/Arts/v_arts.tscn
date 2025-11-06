@@ -1,7 +1,7 @@
-[gd_scene load_steps=23 format=3 uid="uid://c0iquc4v3pc6j"]
+[gd_scene load_steps=24 format=3 uid="uid://c0iquc4v3pc6j"]
 
 [ext_resource type="Script" uid="uid://c2x7vv1jdcgv1" path="res://games_script/Arts/LetterV/v_arts.gd" id="1_rulvf"]
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_vu5h0"]
+[ext_resource type="Texture2D" uid="uid://j4i0bw6483xj" path="res://Game Assets/Arts/MathEbg (54).png" id="2_2biew"]
 [ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="2_veklj"]
 [ext_resource type="Texture2D" uid="uid://bhyxb4ja8l7gl" path="res://Game Assets/Arts/red.png" id="3_o8f30"]
 [ext_resource type="Script" uid="uid://ehvhv4qmgw8g" path="res://games_script/Arts/LetterV/node_2d_2.gd" id="4_2biew"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" uid="uid://d1lgfpej2q70s" path="res://games_script/Arts/LetterV/texture_button_2.gd" id="15_755d7"]
 [ext_resource type="Script" uid="uid://cf2jskjoealup" path="res://games_script/Arts/LetterV/texture_button_3.gd" id="17_jrb34"]
 [ext_resource type="Script" uid="uid://cggfsswkvjgx6" path="res://games_script/Arts/LetterV/texture_button_4.gd" id="19_ro8d4"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="23_2biew"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -39,7 +40,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_vu5h0")
+texture = ExtResource("2_2biew")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
@@ -283,3 +284,13 @@ theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
 justification_flags = 171
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 45.0
+offset_right = 149.0
+offset_bottom = 154.0
+texture_normal = ExtResource("23_2biew")
+ignore_texture_size = true
+stretch_mode = 0

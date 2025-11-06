@@ -1,8 +1,8 @@
 [gd_scene load_steps=25 format=3 uid="uid://cipdb81tuesou"]
 
 [ext_resource type="Script" uid="uid://nlb7cjsc3edw" path="res://games_script/Arts/LetterJ/control.gd" id="1_inafm"]
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="2_8rj4e"]
-[ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="3_1arku"]
+[ext_resource type="Texture2D" uid="uid://bya687oapfdtk" path="res://Game Assets/Arts/MathEbg (47).png" id="2_nnuwq"]
+[ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="3_inafm"]
 [ext_resource type="Script" uid="uid://caq65ky336yay" path="res://games_script/Arts/LetterJ/node_2d_2.gd" id="4_nnuwq"]
 [ext_resource type="Script" uid="uid://nf8ecr0fwes3" path="res://games_script/Arts/LetterJ/polygon_2d.gd" id="5_r3pas"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="6_m2fh3"]
@@ -13,20 +13,17 @@
 [ext_resource type="Script" uid="uid://cq45l6gbgvhlw" path="res://games_script/Arts/LetterJ/polygon_2d_6.gd" id="11_bymtw"]
 [ext_resource type="Script" uid="uid://dmemc4k84e4uu" path="res://games_script/Arts/LetterJ/polygon_2d_7.gd" id="12_r2wpm"]
 [ext_resource type="Script" uid="uid://dt1ks7qd2asyu" path="res://games_script/Arts/LetterJ/texture_button.gd" id="13_nhteo"]
+[ext_resource type="Texture2D" uid="uid://bhyxb4ja8l7gl" path="res://Game Assets/Arts/red.png" id="13_r3pas"]
 [ext_resource type="Script" uid="uid://dkl3p613fynbr" path="res://games_script/Arts/LetterJ/texture_button_2.gd" id="14_5pfg6"]
 [ext_resource type="Script" uid="uid://bpammcg8kag5f" path="res://games_script/Arts/LetterJ/texture_button_3.gd" id="15_5d4w3"]
+[ext_resource type="Texture2D" uid="uid://c8jfigrl7wxu8" path="res://Game Assets/Arts/yellow.png" id="15_m2fh3"]
 [ext_resource type="Texture2D" uid="uid://by1u7yvygi3rg" path="res://Game Assets/Arts/pink (1).png" id="16_foyn2"]
+[ext_resource type="Texture2D" uid="uid://qckic7o6mwpc" path="res://Game Assets/Arts/blue.png" id="17_hqkln"]
 [ext_resource type="Script" uid="uid://dfuwxygre21xb" path="res://games_script/Arts/LetterJ/texture_button_4.gd" id="17_jbqqr"]
 [ext_resource type="Texture2D" uid="uid://b4fcft4nhtcia" path="res://Game Assets/Arts/subt 1.png" id="18_inaqy"]
 [ext_resource type="Texture2D" uid="uid://7saqtidg200v" path="res://Game Assets/Arts/MathEbg (16).png" id="19_xa6n6"]
 [ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="20_ry0b6"]
 [ext_resource type="Texture2D" uid="uid://dmw6oq1rsiq3g" path="res://assets/TimerHolder.png" id="21_lxcvl"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_siyas"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mmql1"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qkqyi"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -44,16 +41,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_8rj4e")
+texture = ExtResource("2_nnuwq")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 386.0
-offset_top = 119.0
-offset_right = 1654.0
-offset_bottom = 996.0
-texture = ExtResource("3_1arku")
+offset_left = 194.0
+offset_top = 95.0
+offset_right = 1731.0
+offset_bottom = 1017.0
+texture = ExtResource("3_inafm")
+expand_mode = 1
 
 [node name="Node2D2" type="Node2D" parent="."]
 script = ExtResource("4_nnuwq")
@@ -230,7 +228,7 @@ offset_left = 1566.0
 offset_top = 396.0
 offset_right = 1916.0
 offset_bottom = 546.0
-texture_normal = SubResource("CompressedTexture2D_siyas")
+texture_normal = ExtResource("13_r3pas")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("13_nhteo")
@@ -249,7 +247,7 @@ offset_right = 1914.0
 offset_bottom = 686.0
 grow_horizontal = 0
 grow_vertical = 2
-texture_normal = SubResource("CompressedTexture2D_mmql1")
+texture_normal = ExtResource("15_m2fh3")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("14_5pfg6")
@@ -268,7 +266,7 @@ offset_right = 1919.0
 offset_bottom = 812.0
 grow_horizontal = 0
 grow_vertical = 2
-texture_normal = SubResource("CompressedTexture2D_qkqyi")
+texture_normal = ExtResource("17_hqkln")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("15_5d4w3")

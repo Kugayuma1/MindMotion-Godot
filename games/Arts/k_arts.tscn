@@ -1,8 +1,8 @@
 [gd_scene load_steps=25 format=3 uid="uid://b3ysxrpj1lls8"]
 
 [ext_resource type="Script" uid="uid://c4jcxrbmwim85" path="res://games_script/Arts/LetterK/k_arts.gd" id="1_5llo6"]
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="2_iggef"]
-[ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="3_rycqv"]
+[ext_resource type="Texture2D" uid="uid://cxs218c74phx8" path="res://Game Assets/Arts/MathEbg (18).png" id="2_gm47e"]
+[ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="3_gm47e"]
 [ext_resource type="Script" uid="uid://bltkuop16q31v" path="res://games_script/Arts/LetterK/node_2d_2.gd" id="4_gm47e"]
 [ext_resource type="Script" uid="uid://ckaj6l3mwa6hu" path="res://games_script/Arts/LetterK/polygon_2d.gd" id="5_hyf2f"]
 [ext_resource type="Script" uid="uid://jhteq6iodc6r" path="res://games_script/Arts/LetterK/polygon_2d_2.gd" id="6_sh162"]
@@ -41,16 +41,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_iggef")
+texture = ExtResource("2_gm47e")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 386.0
-offset_top = 119.0
-offset_right = 1654.0
-offset_bottom = 996.0
-texture = ExtResource("3_rycqv")
+offset_left = 194.0
+offset_top = 95.0
+offset_right = 1731.0
+offset_bottom = 1017.0
+texture = ExtResource("3_gm47e")
+expand_mode = 1
 
 [node name="Node2D2" type="Node2D" parent="."]
 script = ExtResource("4_gm47e")

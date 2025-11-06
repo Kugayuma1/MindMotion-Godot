@@ -108,6 +108,7 @@ func apply_color(new_color: Color, color_number: int) -> bool:
 		return true
 	else:
 		show_error_feedback()
+		Input.vibrate_handheld(200)
 		notify_wrong_color()
 		print("Wrong color number! Polygon ", assigned_number, " got color number ", color_number)
 		return false

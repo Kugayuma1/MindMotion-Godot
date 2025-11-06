@@ -1,7 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://cguv5j2khxns3"]
+[gd_scene load_steps=23 format=3 uid="uid://cguv5j2khxns3"]
 
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_pid8k"]
 [ext_resource type="Script" uid="uid://n30cbj2kstgm" path="res://games_script/Arts/LetterZ/z_arts.gd" id="1_sx4os"]
+[ext_resource type="Texture2D" uid="uid://1w5qhbblvrl1" path="res://Game Assets/Arts/MathEbg (49).png" id="2_8tu2m"]
 [ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="2_nnt60"]
 [ext_resource type="Script" uid="uid://c7j3xit5drogw" path="res://games_script/Arts/LetterZ/node_2d_2.gd" id="4_8tu2m"]
 [ext_resource type="Script" uid="uid://dq2cmd2gy5xqx" path="res://games_script/Arts/LetterZ/polygon_2d.gd" id="5_arjy1"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://dorwbiocc0inf" path="res://games_script/Arts/LetterZ/texture_button_3.gd" id="16_m1rwu"]
 [ext_resource type="Texture2D" uid="uid://dar0xbmdwsoyw" path="res://Game Assets/Arts/black.png" id="17_16veg"]
 [ext_resource type="Script" uid="uid://l4mdokr0nwai" path="res://games_script/Arts/LetterZ/texture_button_4.gd" id="18_3ujm8"]
+[ext_resource type="Texture2D" uid="uid://dbed4urdikj4q" path="res://rewards/close_btn.png" id="22_8tu2m"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -38,10 +39,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_pid8k")
+texture = ExtResource("2_8tu2m")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 276.0
 offset_top = 209.0
 offset_right = 1684.0
@@ -260,3 +262,13 @@ offset_right = 1497.0
 offset_bottom = 875.0
 texture = ExtResource("14_l10ew")
 expand_mode = 1
+
+[node name="Quitbtn" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 45.0
+offset_right = 149.0
+offset_bottom = 154.0
+texture_normal = ExtResource("22_8tu2m")
+ignore_texture_size = true
+stretch_mode = 0

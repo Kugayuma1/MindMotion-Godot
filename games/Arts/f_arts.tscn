@@ -1,8 +1,8 @@
 [gd_scene load_steps=26 format=3 uid="uid://dpgd6k6dntom"]
 
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="1_21y1r"]
 [ext_resource type="Script" uid="uid://djwyb313jfby6" path="res://games_script/Arts/LetterF/f_arts.gd" id="1_xmhj7"]
-[ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="2_q8njr"]
+[ext_resource type="Texture2D" uid="uid://dwmx8xwlqccje" path="res://Game Assets/Arts/MathEbg (44).png" id="2_6oeew"]
+[ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="3_6oeew"]
 [ext_resource type="Script" uid="uid://cn1lums3xweqp" path="res://games_script/Arts/LetterF/polygon_2d.gd" id="3_7xu87"]
 [ext_resource type="Texture2D" uid="uid://dnbe73abonari" path="res://Game Assets/Arts/MathEbg (8).png" id="3_wumhg"]
 [ext_resource type="Script" uid="uid://d4cgifyws3tsw" path="res://games_script/Arts/LetterF/polygon_2d_2.gd" id="4_0almw"]
@@ -42,16 +42,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_21y1r")
+texture = ExtResource("2_6oeew")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 386.0
-offset_top = 119.0
-offset_right = 1654.0
-offset_bottom = 996.0
-texture = ExtResource("2_q8njr")
+offset_left = 194.0
+offset_top = 95.0
+offset_right = 1731.0
+offset_bottom = 1017.0
+texture = ExtResource("3_6oeew")
+expand_mode = 1
 
 [node name="Node2D2" type="Node2D" parent="."]
 script = ExtResource("4_6oeew")

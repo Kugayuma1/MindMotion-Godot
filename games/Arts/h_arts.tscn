@@ -1,8 +1,8 @@
 [gd_scene load_steps=25 format=3 uid="uid://cc50ghk1fo4ih"]
 
 [ext_resource type="Script" uid="uid://dy3rdencncncj" path="res://games/Arts/control.gd" id="1_jdiac"]
-[ext_resource type="Texture2D" uid="uid://dgxab457x8f8l" path="res://Game Assets/Math/Math Item.png" id="2_wgrpx"]
-[ext_resource type="Texture2D" uid="uid://dnxhn0kpuysuw" path="res://Game Assets/Math/ambulance 1.png" id="3_3gfn0"]
+[ext_resource type="Texture2D" uid="uid://cv6x0jbipve84" path="res://Game Assets/Arts/MathEbg (46).png" id="2_fyph1"]
+[ext_resource type="Texture2D" uid="uid://bb5jksuaf3t3i" path="res://Game Assets/Arts/MathEbg (20).png" id="3_fyph1"]
 [ext_resource type="Script" uid="uid://d3t6rbc6l1ggj" path="res://games_script/Arts/LetterH/node_2d_2.gd" id="4_potl0"]
 [ext_resource type="Script" uid="uid://fnh7407rfwwt" path="res://games_script/Arts/LetterH/polygon_2d.gd" id="5_fyph1"]
 [ext_resource type="FontFile" uid="uid://cep8wig308yy1" path="res://font/LilitaOne-Regular.ttf" id="6_wwdkx"]
@@ -41,16 +41,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_wgrpx")
+texture = ExtResource("2_fyph1")
 expand_mode = 1
 
 [node name="paper" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 386.0
-offset_top = 119.0
-offset_right = 1654.0
-offset_bottom = 996.0
-texture = ExtResource("3_3gfn0")
+offset_left = 194.0
+offset_top = 95.0
+offset_right = 1731.0
+offset_bottom = 1017.0
+texture = ExtResource("3_fyph1")
+expand_mode = 1
 
 [node name="Node2D2" type="Node2D" parent="."]
 script = ExtResource("4_potl0")
