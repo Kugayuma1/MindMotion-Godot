@@ -27,6 +27,9 @@ var original_positions = {}  # store original positions for reset
 var dropzone_opacity := 0.15  # Lower opacity for empty dropzones
 var dropzone_states = {}  # Track which dropzones are filled
 
+var motivational_5s_played = false
+var motivational_10s_played = false
+
 # Drag variables
 var dragging_item: Control = null
 var drag_offset: Vector2
@@ -37,6 +40,8 @@ func _ready():
 	initialize_draggables()
 	initialize_dropzones()
 	start_game()
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 
 func setup_game():
 	# Create and configure game timer
@@ -343,6 +348,18 @@ func _on_timer_tick():
 		tween.tween_property(timer_display, "scale", Vector2.ONE, 0.5)
 	elif time_remaining <= 10:
 		timer_display.modulate = Color.ORANGE
+		
+	var elapsed_time = game_duration - time_remaining
+	
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 
 func update_timer_display():
 	if timer_display:
@@ -423,6 +440,8 @@ func restart_game():
 	remove_all_popups()
 	# Reset time tracking
 	reset_time_tracking()
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 	
 	# Reset all variables
 	matches_completed = 0

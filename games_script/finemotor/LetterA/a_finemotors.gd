@@ -19,10 +19,14 @@ var popup_instance: Control = null
 @onready var feedback_label = $Holder/Label  # Instructions/feedback label
 @onready var timer_label = $Time/Label      # Timer label
 
+var motivational_5s_played = false
+var motivational_10s_played = false
+
 func _ready():
 	AudioManager.play_temp_music("game")
 	completed_matches.clear()
-	
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 	# Store original feedback text for reset
 	if feedback_label:
 		original_feedback_text = feedback_label.text
@@ -68,7 +72,17 @@ func update_timer() -> void:
 		timer_active = false
 		game_over(false)  # Time's up - game failed
 		return
-	
+	var elapsed_time = 15 - countdown
+		
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 	if timer_label:
 		timer_label.text = " " + str(countdown) + "s"
 	countdown -= 1

@@ -23,6 +23,10 @@ var start_time: int = 0
 var random_left_count := 0
 var random_right_count := 0
 
+# Motivational audio tracking
+var motivational_5s_played = false
+var motivational_10s_played = false
+
 # === SCENE RESOURCES ===
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn")
@@ -59,6 +63,11 @@ var right_avocados: Array[Node] = []
 # === INITIALIZATION ===
 func _ready() -> void:
 	print("Avocado Math Game - Starting with Randomization")
+	
+	# Initialize motivational flags
+	motivational_5s_played = false
+	motivational_10s_played = false
+	
 	reset_time_tracking()
 	
 	debug_scene_structure()
@@ -300,6 +309,11 @@ func start_countdown_timer() -> void:
 	"""Start the countdown timer"""
 	countdown = GAME_TIME
 	timer_active = true
+	
+	# Reset motivational flags when starting timer
+	motivational_5s_played = false
+	motivational_10s_played = false
+	
 	update_timer_display()
 	countdown_loop()
 
@@ -312,6 +326,20 @@ func countdown_loop() -> void:
 			break
 			
 		countdown -= 1
+		
+		# Calculate elapsed time (GAME_TIME - countdown = seconds elapsed)
+		var elapsed_time = GAME_TIME - countdown
+		
+		# Play motivational sounds at specific marks
+		if elapsed_time == 5 and !motivational_5s_played:
+			AudioManager.play_sound("motivational_5s")
+			motivational_5s_played = true
+			print("Playing 5-second motivational audio")
+		elif elapsed_time == 10 and !motivational_10s_played:
+			AudioManager.play_sound("motivational_10s")
+			motivational_10s_played = true
+			print("Playing 10-second motivational audio")
+		
 		update_timer_display()
 	
 	if timer_active and countdown <= 0:
@@ -455,6 +483,10 @@ func restart_game() -> void:
 	
 	# Reset time tracking for new attempt
 	reset_time_tracking()
+	
+	# Reset motivational flags
+	motivational_5s_played = false
+	motivational_10s_played = false
 	
 	# Show all UI elements again
 	show_game_ui()

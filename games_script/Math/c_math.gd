@@ -23,6 +23,8 @@ var complete2_scene = preload("res://reward scene/Complete2.tscn")
 var complete3_scene = preload("res://reward scene/Complete3.tscn")
 var retry_scene = preload("res://reward scene/Retry.tscn")
 
+var motivational_5s_played = false
+var motivational_10s_played = false
 # Tracking variables
 var chickens_with_farmer = []  # Array of chickens currently with farmer
 var original_positions = {}  # Store original positions for reset
@@ -43,6 +45,8 @@ func _ready():
 	initialize_chickens()
 	initialize_farmer_zone()
 	start_game()
+	motivational_5s_played = false
+	motivational_10s_played = false
 
 func reset_time_tracking() -> void:
 	"""Reset the global start time for accurate time tracking"""
@@ -269,6 +273,17 @@ func _on_timer_tick():
 		return
 		
 	time_remaining -= 1
+
+	var elapsed_time = game_duration - time_remaining
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 	update_timer_display()
 	
 	if time_remaining <= 0:
@@ -276,6 +291,7 @@ func _on_timer_tick():
 	elif time_remaining <= 10:
 		# Warning colors for last 10 seconds
 		timer_display.modulate = Color.RED
+
 
 func update_timer_display():
 	if timer_display:
@@ -388,6 +404,9 @@ func restart_game():
 	game_timer.wait_time = 1.0
 	game_timer.timeout.connect(_on_timer_tick)
 	add_child(game_timer)
+	
+	motivational_5s_played = false
+	motivational_10s_played = false
 	
 	# Start new game (this will reset time tracking)
 	start_game()

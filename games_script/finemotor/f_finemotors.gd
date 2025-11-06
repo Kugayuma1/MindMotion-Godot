@@ -21,11 +21,15 @@ var retry_scene = preload("res://reward scene/Retry.tscn")
 
 # Timer
 var game_timer: Timer
+var motivational_5s_played = false
+var motivational_10s_played = false
 
 func _ready():
 	reset_time_tracking()
 	setup_game()
 	start_game()
+	motivational_5s_played = false
+	motivational_10s_played = false
 
 func setup_game():
 	# Timer setup
@@ -93,6 +97,17 @@ func reset_time_tracking():
 
 func _on_timer_tick():
 	time_remaining -= 1
+	var elapsed_time = game_duration - time_remaining
+	
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 	update_timer_display()
 	
 	if time_remaining <= 0:
@@ -172,6 +187,8 @@ func restart_game():
 	
 	# Reset time tracking for new attempt
 	reset_time_tracking()
+	motivational_5s_played = false
+	motivational_10s_played = false
 	
 	# Show all UI elements again
 	show_game_ui()

@@ -14,6 +14,10 @@ var button_to_choice = {}
 var countdown := 15
 var timer_active := false
 
+# Motivational audio tracking
+var motivational_5s_played = false
+var motivational_10s_played = false
+
 # Popup reward scenes
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn")
@@ -32,6 +36,10 @@ var popup_instance: Control = null
 ]
 
 func _ready() -> void:
+	# Initialize motivational flags
+	motivational_5s_played = false
+	motivational_10s_played = false
+	
 	load_game()
 	start_timer()
 
@@ -79,6 +87,10 @@ func start_timer() -> void:
 	# Reset time tracking when timer starts
 	reset_time_tracking()
 	
+	# Reset motivational flags
+	motivational_5s_played = false
+	motivational_10s_played = false
+	
 	countdown = 15
 	timer_active = true
 	update_timer()
@@ -94,6 +106,19 @@ func update_timer() -> void:
 		stop_timer()
 		game_over(false)
 		return
+	
+	# Calculate elapsed time (15 - countdown = seconds elapsed)
+	var elapsed_time = 15 - countdown
+	
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 	
 	timer_label.text = " " + str(countdown) + "s"
 	countdown -= 1
@@ -176,6 +201,10 @@ func _on_quitbtn_pressed() -> void:
 		print("Scene not found: ", path)
 
 func next_round() -> void:
+	# Reset motivational flags for new round
+	motivational_5s_played = false
+	motivational_10s_played = false
+	
 	load_game()
 	
 	$Cat.visible = true

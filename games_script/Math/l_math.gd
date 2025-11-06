@@ -18,6 +18,8 @@ var countdown := 15
 var timer_active := true
 var start_time := 0
 var original_feedback_text = ""
+var motivational_5s_played = false
+var motivational_10s_played = false
 
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn")
@@ -50,6 +52,8 @@ func _ready():
 	start_timer()
 	Global.start_time = Time.get_ticks_msec()
 	setup_lollipop_handlers()
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 
 func randomize_lollipop_numbers() -> void:
 	# Create a shuffled list of numbers 11-15
@@ -112,7 +116,17 @@ func update_timer() -> void:
 		timer_active = false
 		game_over(false)
 		return
-	
+	var elapsed_time = 15 - countdown
+		
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 	if timer_label:
 		timer_label.text = str(countdown) + "s"
 	countdown -= 1

@@ -26,11 +26,15 @@ var original_positions = {}
 var dragging_item: Control = null
 var drag_offset: Vector2
 var game_timer: Timer
+var motivational_5s_played = false
+var motivational_10s_played = false
 
 func _ready():
 	setup_game()
 	Global.start_time = Time.get_ticks_msec()
 	start_game()
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 
 func setup_game():
 	game_timer = Timer.new()
@@ -141,6 +145,17 @@ func start_game():
 
 func _on_timer_tick():
 	time_remaining -= 1
+	var elapsed_time = game_duration - time_remaining
+	
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 	update_timer_display()
 	if time_remaining <= 0:
 		game_over()
@@ -197,6 +212,8 @@ func show_completion_screen(success: bool, stars: int):
 		add_child(popup_instance)
 
 func restart_game():
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 	start_game()
 
 func _on_quitbtn_pressed() -> void:

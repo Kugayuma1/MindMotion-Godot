@@ -30,6 +30,8 @@ var dropzone_states = {}  # Track which dropzones are filled
 # Drag variables
 var dragging_item: Control = null
 var drag_offset: Vector2
+var motivational_5s_played = false
+var motivational_10s_played = false
 
 func _ready():
 	reset_time_tracking()
@@ -37,6 +39,8 @@ func _ready():
 	initialize_draggables()
 	initialize_dropzones()
 	start_game()
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 
 func setup_game():
 	# Create and configure game timer
@@ -350,6 +354,18 @@ func _on_timer_tick():
 	elif time_remaining <= 10:
 		timer_display.modulate = Color.ORANGE
 
+	var elapsed_time = game_duration - time_remaining
+	
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
+
 func update_timer_display():
 	if timer_display:
 		timer_display.text = " " + str(time_remaining) + "s"
@@ -431,7 +447,8 @@ func restart_game():
 	
 	# Reset time tracking
 	reset_time_tracking()
-	
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 	# Reset all variables
 	matches_completed = 0
 	placed_items.clear()

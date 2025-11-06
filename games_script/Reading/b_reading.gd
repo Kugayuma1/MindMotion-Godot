@@ -19,6 +19,9 @@ var current_slot_index = 0
 var countdown := 15
 var timer_active = false
 
+var motivational_5s_played = false
+var motivational_10s_played = false
+
 # Preload popup scenes
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn")
@@ -68,6 +71,9 @@ func _ready():
 	setup_letter_holder_inputs()
 	start_timer()
 	reset_time_tracking()
+
+	motivational_5s_played = false
+	motivational_10s_played = false
 
 func load_current_word() -> void:
 	# Get the current word data based on current_word_index
@@ -158,6 +164,18 @@ func update_timer() -> void:
 		Global.refresh_everything_after_stage_completion("reading", false)
 		game_over(false)
 		return
+	# Calculate elapsed time (15 - countdown = seconds elapsed)
+	var elapsed_time = 15 - countdown
+	
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 
 	timer_label.text = " " + str(countdown) + "s"
 	countdown -= 1
@@ -295,6 +313,9 @@ func restart_game() -> void:
 	
 	# Reset time tracking for new attempt
 	reset_time_tracking()
+
+	motivational_5s_played = false
+	motivational_10s_played = false
 	
 	# Move to next word
 	current_word_index += 1

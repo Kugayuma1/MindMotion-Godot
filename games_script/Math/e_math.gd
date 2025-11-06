@@ -15,6 +15,7 @@ var required_eggplants := 5
 @onready var holder_label = $Holder/Label  # Add this for the requirement display
 @onready var game_timer: Timer
 
+
 # Popup scenes
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn") 
@@ -22,6 +23,8 @@ var complete3_scene = preload("res://reward scene/Complete3.tscn")
 var retry_scene = preload("res://reward scene/Retry.tscn")
 
 # Tracking
+var motivational_5s_played = false
+var motivational_10s_played = false
 var eggplants_with_lady = []
 var original_positions = {}
 var all_draggable_nodes = []
@@ -43,6 +46,8 @@ func _ready():
 	initialize_items()
 	start_game()
 	Global.start_time = Time.get_ticks_msec()
+	motivational_5s_played = false
+	motivational_10s_played = false
 
 func setup_game():
 	# Timer
@@ -214,6 +219,17 @@ func start_game():
 
 func _on_timer_tick():
 	time_remaining -= 1
+	var elapsed_time = game_duration - time_remaining
+
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 	update_timer_display()
 	if time_remaining <= 0:
 		game_over()
@@ -278,6 +294,8 @@ func restart_game():
 	game_active = false
 	eggplants_given = 0
 	eggplants_with_lady.clear()
+	motivational_5s_played = false
+	motivational_10s_played = false
 
 	for item in all_draggable_nodes:
 		if item.name in original_positions:

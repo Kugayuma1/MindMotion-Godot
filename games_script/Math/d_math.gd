@@ -7,6 +7,8 @@ var countdown := 15
 var timer_active := true
 var correct_answer := 0
 var current_question := "How many Ducks are in the pond?"
+var motivational_5s_played = false
+var motivational_10s_played = false
 
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn")
@@ -48,6 +50,8 @@ func _ready():
 	debug_everything()
 	start_timer()
 	setup_buttons()
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 
 func find_all_ducks():
 	
@@ -283,7 +287,17 @@ func update_timer() -> void:
 		await get_tree().create_timer(2.0).timeout
 		game_over(false)
 		return
-
+	var elapsed_time = 15 - countdown
+		
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 	# Show time
 	if timer_label:
 		timer_label.text = str(countdown) + "s"

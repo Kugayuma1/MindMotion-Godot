@@ -39,12 +39,16 @@ var all_draggable_nodes = []
 var win_timer: Timer
 var dragging_item: Control = null
 var drag_offset: Vector2
+var motivational_5s_played = false
+var motivational_10s_played = false
 
 func _ready():
 	setup_game()
 	Global.start_time = Time.get_ticks_msec()
 	initialize_items()
 	start_game()
+	motivational_5s_played = false
+	motivational_10s_played = false
 
 func setup_game():
 	# Timer
@@ -185,6 +189,17 @@ func start_game():
 
 func _on_timer_tick():
 	time_remaining -= 1
+	var elapsed_time = game_duration - time_remaining
+	
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 	update_timer_display()
 	if time_remaining <= 0:
 		game_over()
@@ -248,6 +263,8 @@ func restart_game():
 	game_active = false
 	zombies_cured = 0
 	cured_zombies.clear()
+	motivational_5s_played = false
+	motivational_10s_played = false
 
 	# Reset all antidotes
 	for item in all_draggable_nodes:

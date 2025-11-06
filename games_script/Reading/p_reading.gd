@@ -25,6 +25,8 @@ var complete3_scene = preload("res://reward scene/Complete3.tscn")
 var retry_scene = preload("res://reward scene/Retry.tscn")
 
 var popup_instance: Control = null
+var motivational_5s_played = false
+var motivational_10s_played = false
 
 # Node references
 @onready var timer_label = $Time/Label
@@ -66,6 +68,8 @@ func _ready():
 	setup_letter_holder_inputs()
 	start_timer()
 	Global.start_time = Time.get_ticks_msec()
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 
 func load_current_word() -> void:
 	# Get the current word data based on current_word_index
@@ -125,7 +129,17 @@ func update_timer() -> void:
 		Global.refresh_everything_after_stage_completion("reading", false)
 		game_over(false)
 		return
-
+	var elapsed_time = 15 - countdown
+	
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 	timer_label.text = " " + str(countdown) + "s"
 	countdown -= 1
 	await get_tree().create_timer(1.0).timeout
@@ -263,6 +277,8 @@ func restart_game() -> void:
 	# Stop the old timer completely
 	stop_timer()
 	
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 	# Reset time tracking for new attempt
 	reset_time_tracking()
 	

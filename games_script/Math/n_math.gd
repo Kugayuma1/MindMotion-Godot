@@ -54,15 +54,17 @@ var right_necklace_paths: Array[String] = [
 # Necklace collections
 var left_necklaces: Array[Node] = []
 var right_necklaces: Array[Node] = []
+var motivational_5s_played = false
+var motivational_10s_played = false
 
 # === INITIALIZATION ===
 func _ready() -> void:
 	print("Necklace Math Game - Starting with Randomization")
+	motivational_5s_played = false
+	motivational_10s_played = false
 	reset_time_tracking()
-	
 	debug_scene_structure()
 	initialize_game()
-
 func debug_scene_structure() -> void:
 	"""Debug function to see what nodes actually exist"""
 	print("\n=== DEBUGGING SCENE STRUCTURE ===")
@@ -301,6 +303,8 @@ func start_countdown_timer() -> void:
 	timer_active = true
 	update_timer_display()
 	countdown_loop()
+	motivational_5s_played = false
+	motivational_10s_played = false
 
 func countdown_loop() -> void:
 	"""Main countdown loop"""
@@ -311,6 +315,17 @@ func countdown_loop() -> void:
 			break
 			
 		countdown -= 1
+		var elapsed_time = GAME_TIME - countdown
+		
+		# Play motivational sounds at specific marks
+		if elapsed_time == 5 and !motivational_5s_played:
+			AudioManager.play_sound("motivational_5s")
+			motivational_5s_played = true
+			print("Playing 5-second motivational audio")
+		elif elapsed_time == 10 and !motivational_10s_played:
+			AudioManager.play_sound("motivational_10s")
+			motivational_10s_played = true
+			print("Playing 10-second motivational audio")
 		update_timer_display()
 	
 	if timer_active and countdown <= 0:
@@ -444,6 +459,8 @@ func restart_game() -> void:
 	
 	# Reset time tracking for new attempt
 	reset_time_tracking()
+	motivational_5s_played = false
+	motivational_10s_played = false
 	
 	# Show all UI elements again
 	show_game_ui()

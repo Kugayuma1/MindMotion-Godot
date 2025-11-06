@@ -40,6 +40,8 @@ var retry_scene = preload("res://reward scene/Retry.tscn")
 var dragging_item: Node = null
 var drag_offset: Vector2
 var original_positions = {}
+var motivational_5s_played = false
+var motivational_10s_played = false
 
 func _ready():
 	completed_matches.clear()
@@ -57,6 +59,8 @@ func _ready():
 	
 	start_timer()
 	Global.start_time = Time.get_ticks_msec()
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 
 # ========== SETUP ==========
 
@@ -300,7 +304,17 @@ func update_timer() -> void:
 		timer_active = false
 		game_over(false)
 		return
-	
+	var elapsed_time = 15 - countdown
+		
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 	if timer_label:
 		timer_label.text = "" + str(countdown) + "s"
 	countdown -= 1

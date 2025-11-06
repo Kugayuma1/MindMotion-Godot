@@ -32,12 +32,16 @@ var game_timer: Timer
 # Drag and drop variables
 var dragging_donut: Control = null
 var drag_offset: Vector2
+var motivational_5s_played = false
+var motivational_10s_played = false
 
 func _ready():
 	setup_game()
 	initialize_donuts()
 	initialize_kids()
 	start_game()
+	motivational_5s_played = false
+	motivational_10s_played = false
 
 func reset_time_tracking() -> void:
 	"""Reset the global start time for accurate time tracking"""
@@ -270,6 +274,17 @@ func _on_timer_tick():
 		return
 	
 	time_remaining -= 1
+	var elapsed_time = game_duration - time_remaining
+	
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 	update_timer_display()
 	
 	if time_remaining <= 0:
@@ -389,6 +404,8 @@ func restart_game():
 	add_child(game_timer)
 	
 	# Start new game (this will reset time tracking)
+	motivational_5s_played = false
+	motivational_10s_played = false
 	start_game()
 	
 	print("=== GAME RESTARTED ===\n")

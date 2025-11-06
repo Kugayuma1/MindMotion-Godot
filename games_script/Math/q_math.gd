@@ -37,6 +37,8 @@ var start_time: int = 0
 var quail_names = ["Quail1", "Quail2", "Quail3", "Quail4", "Quail5", "Quail6", "Quail7", "Quail8"]
 
 var quail_nodes = []
+var motivational_5s_played = false
+var motivational_10s_played = false
 
 func _ready():
 	Global.start_time = Time.get_ticks_msec()
@@ -44,6 +46,9 @@ func _ready():
 	setup_counting_game()
 	start_timer()
 	setup_buttons()
+	motivational_5s_played = false
+	motivational_10s_played = false
+
 
 func find_all_quail():
 	quail_nodes.clear()
@@ -160,7 +165,17 @@ func update_timer() -> void:
 			question_label.text = "⏱️ Time's up! Answer: " + str(correct_answer) + " Quails"
 		game_over(false)
 		return
-	
+	var elapsed_time = 15 - countdown
+		
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 	if timer_label:
 		timer_label.text = str(countdown) + "s"
 	countdown -= 1

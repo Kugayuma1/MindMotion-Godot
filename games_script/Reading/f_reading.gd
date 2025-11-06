@@ -22,6 +22,9 @@ var timer_active = false
 var start_time := 0
 var timer_node: SceneTreeTimer = null
 
+var motivational_5s_played = false
+var motivational_10s_played = false
+
 # Preload popup star scenes
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn")
@@ -50,6 +53,8 @@ func _ready():
 	original_feedback_text = feedback_label.text
 	start_timer()
 	reset_time_tracking()
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 
 func load_current_question() -> void:
 	if current_question_index >= question_data.size():
@@ -95,7 +100,17 @@ func update_timer() -> void:
 		Global.refresh_everything_after_stage_completion("reading", false)
 		game_over(false)
 		return
-
+	var elapsed_time = 15 - countdown
+	
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 	timer_label.text = " " + str(countdown) + "s"
 	countdown -= 1
 	
@@ -198,6 +213,9 @@ func _on_quitbtn_pressed() -> void:
 func restart_game() -> void:
 	stop_timer()
 	reset_time_tracking()
+	
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 	
 	current_question_index += 1
 	if current_question_index >= question_data.size():

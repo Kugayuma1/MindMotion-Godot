@@ -23,6 +23,8 @@ var start_time: int = 0
 var random_left_count := 0
 var random_right_count := 0
 
+
+
 # === SCENE RESOURCES ===
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
 var complete2_scene = preload("res://reward scene/Complete2.tscn")
@@ -58,12 +60,15 @@ var right_fire_paths: Array[String] = [
 # Fire collections
 var left_fires: Array[Node] = []
 var right_fires: Array[Node] = []
+var motivational_5s_played = false
+var motivational_10s_played = false
 
 # === INITIALIZATION ===
 func _ready() -> void:
 	print("Fire Math Game - Starting with Randomization")
+	motivational_5s_played = false
+	motivational_10s_played = false
 	reset_time_tracking()
-	
 	debug_scene_structure()
 	initialize_game()
 
@@ -304,6 +309,8 @@ func start_countdown_timer() -> void:
 	timer_active = true
 	update_timer_display()
 	countdown_loop()
+	motivational_5s_played = false
+	motivational_10s_played = false
 
 func countdown_loop() -> void:
 	"""Main countdown loop"""
@@ -315,9 +322,20 @@ func countdown_loop() -> void:
 			
 		countdown -= 1
 		update_timer_display()
-	
+		var elapsed_time = GAME_TIME - countdown
+		
+		# Play motivational sounds at specific marks
+		if elapsed_time == 5 and !motivational_5s_played:
+			AudioManager.play_sound("motivational_5s")
+			motivational_5s_played = true
+			print("Playing 5-second motivational audio")
+		elif elapsed_time == 10 and !motivational_10s_played:
+			AudioManager.play_sound("motivational_10s")
+			motivational_10s_played = true
+			print("Playing 10-second motivational audio")
 	if timer_active and countdown <= 0:
 		handle_timeout()
+
 
 func update_timer_display() -> void:
 	"""Update timer label"""
@@ -447,6 +465,8 @@ func restart_game() -> void:
 	
 	# Reset time tracking for new attempt
 	reset_time_tracking()
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 	
 	# Show all UI elements again
 	show_game_ui()

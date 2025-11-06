@@ -9,6 +9,10 @@ var game_active := false
 var matches_completed := 0
 var total_required_matches := 3  # Rabbit, Eating, Carrot dropzones
 
+# Motivational audio tracking
+var motivational_5s_played = false
+var motivational_10s_played = false
+
 # Node references
 @onready var timer_display = $Time/Label
 @onready var dropzone_container = $DropZone/Holder
@@ -37,6 +41,10 @@ func _ready():
 	initialize_draggables()
 	initialize_dropzones()
 	start_game()
+	
+	# Initialize motivational flags
+	motivational_5s_played = false
+	motivational_10s_played = false
 
 func setup_game():
 	# Create and configure game timer
@@ -325,6 +333,10 @@ func start_game():
 	time_remaining = game_duration
 	matches_completed = 0
 	
+	# Reset motivational flags when starting game
+	motivational_5s_played = false
+	motivational_10s_played = false
+	
 	shuffle_draggables()
 	
 	update_timer_display()
@@ -336,6 +348,20 @@ func _on_timer_tick():
 		return
 		
 	time_remaining -= 1
+	
+	# Calculate elapsed time (15 - time_remaining = seconds elapsed)
+	var elapsed_time = game_duration - time_remaining
+	
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
+	
 	update_timer_display()
 	
 	if time_remaining <= 0:
@@ -432,6 +458,10 @@ func restart_game():
 	# Reset time tracking
 	reset_time_tracking()
 	
+	# Reset motivational flags
+	motivational_5s_played = false
+	motivational_10s_played = false
+	
 	# Reset all variables
 	matches_completed = 0
 	placed_items.clear()
@@ -486,7 +516,7 @@ func restart_game():
 		timer_display.modulate = Color.WHITE
 		timer_display.scale = Vector2.ONE
 	
-	# Start new game (this will shuffle)
+	# Start new game (this will shuffle and reset motivational flags)
 	start_game()
 	
 	print("=== GAME RESTARTED ===\n")

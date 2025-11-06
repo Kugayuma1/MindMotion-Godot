@@ -6,6 +6,8 @@ var correct_answer := "Zebra"
 # Timer setup
 var countdown := 15
 var timer_active := true
+var motivational_5s_played = false
+var motivational_10s_played = false
 
 # Popup reward scenes (adjust paths if needed)
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
@@ -21,6 +23,8 @@ var popup_instance: Control = null
 func _ready() -> void:
 	feedback_label.text = "🔍The one who's in the Safari"
 	start_timer()
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 
 # 🕒 Timer functions
 func start_timer() -> void:
@@ -34,6 +38,17 @@ func update_timer() -> void:
 		timer_active = false
 		game_over(false)
 		return
+	var elapsed_time = 15 - countdown
+	
+	# Play motivational sounds at specific marks
+	if elapsed_time == 5 and !motivational_5s_played:
+		AudioManager.play_sound("motivational_5s")
+		motivational_5s_played = true
+		print("Playing 5-second motivational audio")
+	elif elapsed_time == 10 and !motivational_10s_played:
+		AudioManager.play_sound("motivational_10s")
+		motivational_10s_played = true
+		print("Playing 10-second motivational audio")
 
 	timer_label.text = "" + str(countdown) + "s"
 	countdown -= 1

@@ -17,6 +17,8 @@ var current_answer = []
 var current_slot_index = 0
 var countdown := 15
 var timer_active = true
+var motivational_5s_played = false
+var motivational_10s_played = false
 
 # Preload popup scenes
 var complete1_scene = preload("res://reward scene/Complete1.tscn")
@@ -66,6 +68,8 @@ func _ready():
 	setup_letter_holder_inputs()
 	start_timer()
 	Global.start_time = Time.get_ticks_msec()
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 
 func load_current_word() -> void:
 	# Get the current word data based on current_word_index
@@ -263,6 +267,8 @@ func restart_game() -> void:
 	current_word_index += 1
 	load_current_word()
 	setup_game()
+	var motivational_5s_played = false
+	var motivational_10s_played = false
 	
 	if has_node("LetterHolders"): $LetterHolders.visible = true
 	if has_node("LetterButtons"): $LetterButtons.visible = true
