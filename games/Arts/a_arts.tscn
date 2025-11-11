@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bykhkmswih4qa"]
+[gd_scene load_steps=26 format=3 uid="uid://bykhkmswih4qa"]
 
 [ext_resource type="Script" uid="uid://ca6c3aeiqva76" path="res://games_script/Arts/LetterA/a_arts.gd" id="1_ii7ix"]
 [ext_resource type="Texture2D" uid="uid://cxs218c74phx8" path="res://Game Assets/Arts/MathEbg (18).png" id="2_mh6vr"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://b1l0yr8aqltu4" path="res://games_script/Arts/LetterA/polygon_2d.gd" id="5_adl1h"]
 [ext_resource type="Texture2D" uid="uid://c8jfigrl7wxu8" path="res://Game Assets/Arts/yellow.png" id="5_pi75f"]
 [ext_resource type="Script" uid="uid://vnc4jiukcidr" path="res://games_script/Arts/LetterA/polygon_2d_2.gd" id="6_g2rvk"]
-[ext_resource type="Script" uid="uid://bbvccfbi8kqk0" path="res://games_script/Arts/LetterA/polygon_2d_5.gd" id="9_uvcr8"]
 [ext_resource type="Script" uid="uid://bhah30rgog6wl" path="res://games_script/Arts/LetterA/polygon_2d_11.gd" id="10_ngnm3"]
 [ext_resource type="Script" uid="uid://ok8exy4da83s" path="res://games_script/Arts/LetterA/polygon_2d_8.gd" id="12_4a8l5"]
 [ext_resource type="Script" uid="uid://fub4ys2bwmot" path="res://games_script/Arts/LetterA/polygon_2d_10.gd" id="14_dxr4o"]
@@ -198,29 +197,6 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("28_ngnm3")
 theme_override_font_sizes/font_size = 35
 text = "3"
-horizontal_alignment = 1
-justification_flags = 171
-
-[node name="Polygon2D5" type="Polygon2D" parent="Node2D2/Node2D1"]
-position = Vector2(0, 157)
-polygon = PackedVector2Array(939, 263, 1010, 264, 1010, 214, 989, 190, 969, 190, 949, 196, 940, 219)
-script = ExtResource("9_uvcr8")
-
-[node name="Area2D" type="Area2D" parent="Node2D2/Node2D1/Polygon2D5"]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node2D2/Node2D1/Polygon2D5/Area2D"]
-polygon = PackedVector2Array(939, 263, 1010, 264, 1010, 214, 989, 190, 969, 190, 949, 196, 940, 219)
-
-[node name="fire" type="Label" parent="Node2D2/Node2D1/Polygon2D5"]
-z_index = 25
-offset_left = 904.0
-offset_top = 219.0
-offset_right = 1041.0
-offset_bottom = 260.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("28_ngnm3")
-theme_override_font_sizes/font_size = 35
-text = "1"
 horizontal_alignment = 1
 justification_flags = 171
 

@@ -19,7 +19,7 @@ signal motion_completed(success: bool)
 signal scene_finished
 
 func _ready():
-	AudioManager.play_temp_music("motion")
+	AudioManager.play_temp_music("wave")
 	setup_motion_manager()
 	setup_timer()
 	connect_signals()

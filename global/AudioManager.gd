@@ -19,12 +19,13 @@ var previous_music: String = ""
 var music_tracks = {
 	"menu": preload("res://audio/music/Falling Behind (Instrumental).mp3"),
 	"game": preload("res://audio/music/gamebg1.mp3"),
-	"motion": preload("res://audio/music/gamebg1.mp3")
+	"clap": preload("res://audio/music/Clap.mp3"),
+	"wave": preload("res://audio/music/wave.mp3")
 }
 
 var sound_effects = {
 	"button_click": preload("res://audio/sounds/pop1.mp3"),
-	"motivational_5s": preload("res://audio/sounds/luvvoice.com-20251103-aHbLGC.mp3"),
+	"motivational_5s": preload("res://audio/sounds/10secs.mp3"),
 	"motivational_10s": preload("res://audio/sounds/luvvoice.com-20251103-aHbLGC.mp3")
 }
 
