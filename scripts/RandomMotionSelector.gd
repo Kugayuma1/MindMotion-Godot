@@ -12,6 +12,11 @@ const MOTION_ACTIVITIES = {
 		"scene_path": "res://scenes/Wave.tscn", 
 		"display_name": "Waving",
 		"description": "Wave both hands"
+	},
+	"jump": {
+		"scene_path": "res://scenes/Jump.tscn",
+		"display_name": "Jumping",
+		"description": "Jump up in the air"
 	}
 }
 
@@ -53,7 +58,7 @@ static func get_activity_info(activity_type: String) -> Dictionary:
 static func get_weighted_random_activity(weights: Dictionary = {}) -> Dictionary:
 	# Default equal weights if none provided
 	if weights.is_empty():
-		weights = {"clap": 1.0, "wave": 1.0}
+		weights = {"clap": 1.0, "wave": 1.0, "jump": 1.0}
 	
 	var total_weight = 0.0
 	for weight in weights.values():

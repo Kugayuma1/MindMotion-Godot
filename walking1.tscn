@@ -75,4 +75,3 @@ texture = ExtResource("1_b5vdu")
 position = Vector2(905, 673)
 scale = Vector2(1.1375, 1.1375)
 sprite_frames = SubResource("SpriteFrames_ahe8b")
-frame_progress = 0.0373906
