@@ -91,7 +91,95 @@ func load_student_voice_data():
 	var success = Global.make_authenticated_request(voice_http_request, url, HTTPClient.METHOD_GET)
 	print("DEBUG: Voice request initiated: %s" % success)
 	return success
+# Add this to StudentData.gd after the existing load functions
 
+# Enhanced cognitive data loading that includes levels
+func load_student_cognitive_data_with_levels():
+	if current_student_id.is_empty():
+		print("ERROR: No student ID set")
+		return false
+	
+	print("DEBUG: Loading cognitive data with levels for student: %s" % current_student_id)
+	var url = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents/users/%s/progress" % current_student_id
+	
+	var success = Global.make_authenticated_request(cognitive_http_request, url, HTTPClient.METHOD_GET)
+	return success
+
+# Modified process to fetch levels for each letter
+func process_cognitive_data(data: Dictionary):
+	student_cognitive_data.clear()
+	
+	print("DEBUG: Processing cognitive data: %s" % var_to_str(data))
+	
+	if data.has("documents"):
+		print("DEBUG: Found %d documents" % data.documents.size())
+		var letters_to_load = []
+		
+		for doc in data.documents:
+			var letter = doc.name.split("/")[-1]
+			var doc_data = extract_document_fields(doc)
+			print("DEBUG: Letter %s data: %s" % [letter, var_to_str(doc_data)])
+			student_cognitive_data[letter] = doc_data
+			letters_to_load.append(letter)
+		
+		# Load levels for each letter
+		for letter in letters_to_load:
+			load_levels_for_letter(letter)
+	else:
+		print("DEBUG: No documents found in response")
+		cognitive_data_loaded.emit(student_cognitive_data)
+
+# Load levels for a specific letter
+func load_levels_for_letter(letter: String):
+	if current_student_id.is_empty():
+		return
+	
+	var url = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents/users/%s/progress/%s/levels" % [current_student_id, letter]
+	
+	var level_request = HTTPRequest.new()
+	add_child(level_request)
+	
+	# Connect with letter parameter
+	level_request.request_completed.connect(func(result, response_code, headers, body):
+		_on_level_data_completed(letter, result, response_code, headers, body, level_request)
+	)
+	
+	Global.make_authenticated_request(level_request, url, HTTPClient.METHOD_GET)
+
+var pending_level_requests = 0
+var total_letters = 0
+
+func _on_level_data_completed(letter: String, result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray, request_node: HTTPRequest):
+	var response_text = body.get_string_from_utf8()
+	
+	print("DEBUG: Level data for letter %s completed with code: %d" % [letter, response_code])
+	
+	if response_code == 200:
+		var json = JSON.new()
+		if json.parse(response_text) == OK:
+			var level_docs = json.data
+			
+			if level_docs.has("documents"):
+				var levels_array = []
+				for level_doc in level_docs.documents:
+					var level_data = extract_document_fields(level_doc)
+					level_data["level_id"] = level_doc.name.split("/")[-1]
+					levels_array.append(level_data)
+				
+				# Add levels to the letter data
+				if student_cognitive_data.has(letter):
+					student_cognitive_data[letter]["levels"] = levels_array
+					print("DEBUG: Added %d levels to letter %s" % [levels_array.size(), letter])
+	
+	# Clean up request node
+	request_node.queue_free()
+	
+	pending_level_requests -= 1
+	
+	# Emit signal when all levels are loaded
+	if pending_level_requests <= 0:
+		print("DEBUG: All levels loaded, emitting cognitive_data_loaded")
+		cognitive_data_loaded.emit(student_cognitive_data)
 # Process cognitive data response
 func _on_cognitive_data_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
 	var response_text = body.get_string_from_utf8()
@@ -173,25 +261,6 @@ func _on_voice_data_completed(result: int, response_code: int, headers: PackedSt
 		print("DEBUG: Voice Response body: %s" % response_text)
 		student_voice_data = {}
 		voice_data_loaded.emit(student_voice_data)
-
-# Process cognitive data from Firebase
-func process_cognitive_data(data: Dictionary):
-	student_cognitive_data.clear()
-	
-	print("DEBUG: Processing cognitive data: %s" % var_to_str(data))
-	
-	if data.has("documents"):
-		print("DEBUG: Found %d documents" % data.documents.size())
-		for doc in data.documents:
-			var letter = doc.name.split("/")[-1]  # Extract letter from document path
-			var doc_data = extract_document_fields(doc)
-			print("DEBUG: Letter %s data: %s" % [letter, var_to_str(doc_data)])
-			student_cognitive_data[letter] = doc_data
-	else:
-		print("DEBUG: No documents found in response")
-	
-	print("DEBUG: Final cognitive data: %s" % var_to_str(student_cognitive_data))
-	cognitive_data_loaded.emit(student_cognitive_data)
 
 # Process motion data from Firebase
 func process_motion_data(data: Dictionary):

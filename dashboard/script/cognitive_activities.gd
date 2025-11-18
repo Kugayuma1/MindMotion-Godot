@@ -9,13 +9,41 @@ extends Control
 # Button textures
 var activity_button_normal = preload("res://assets/student_card_bg.png")
 var activity_button_pressed = preload("res://assets/student_card_pressed.png")
-var custom_font = preload("res://font/LilitaOne-Regular.ttf")
-var custom_font1 = preload("res://font/Summary Notes.ttf")
+var custom_font = preload("res://font/Summary Notes.ttf")
+var custom_font1 = preload("res://font/LilitaOne-Regular.ttf")
 
 var current_student_data: Dictionary = {}
 var cognitive_data: Dictionary = {}
 var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", 
 			   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+
+const LETTER_CATEGORY_ORDER = ["Reading", "Fine Motor", "Math", "Arts"]
+const LETTER_STAGE_CATEGORY_MAP = {
+	"reading": "Reading",
+	"letters": "Reading",
+	"phonics": "Reading",
+	"story": "Reading",
+	
+	"fine_motor": "Fine Motor",
+	"fine-motor": "Fine Motor",
+	"motor": "Fine Motor",
+	"tracing": "Fine Motor",
+	"drawing": "Fine Motor",
+	
+	"math": "Math",
+	"counting": "Math",
+	"numbers": "Math",
+	
+	"art": "Arts",
+	"arts": "Arts",
+	"craft": "Arts",
+	"coloring": "Arts",
+	"painting": "Arts"
+}
+
+var detail_window: AcceptDialog
+var detail_content: VBoxContainer
+var detail_theme = preload("res://assets/main_theme.tres")
 
 # Touch scrolling for mobile
 var touch_scrolling = false
@@ -46,6 +74,9 @@ func _ready():
 		print("ERROR: No student data found!")
 		go_back()
 		return
+	
+	# Setup UI helpers
+	setup_detail_window()
 	
 	# Setup ScrollContainer for mobile
 	setup_scroll_container()
@@ -82,6 +113,51 @@ func setup_scroll_container():
 		activities_grid.columns = 2
 		activities_grid.add_theme_constant_override("h_separation", 20)
 		activities_grid.add_theme_constant_override("v_separation", 20)
+
+func setup_detail_window():
+	if detail_window:
+		return
+	
+	detail_window = AcceptDialog.new()
+	detail_window.title = "Letter Details"
+	detail_window.visible = false
+	detail_window.min_size = Vector2i(640, 520)
+	detail_window.exclusive = true
+	detail_window.dialog_hide_on_ok = true
+	detail_window.ok_button_text = "Close"
+	if detail_theme:
+		detail_window.theme = detail_theme
+	detail_window.close_requested.connect(func(): detail_window.hide())
+	add_child(detail_window)
+	
+	var content_root = VBoxContainer.new()
+	content_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	content_root.add_theme_constant_override("separation", 0)
+	content_root.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content_root.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	detail_window.add_child(content_root)
+	
+	var margin = MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 10)
+	margin.add_theme_constant_override("margin_right", 10)
+	margin.add_theme_constant_override("margin_top", 10)
+	margin.add_theme_constant_override("margin_bottom", 10)
+	margin.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	margin.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content_root.add_child(margin)
+	
+	var scroll = ScrollContainer.new()
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.mouse_filter = Control.MOUSE_FILTER_PASS
+	scroll.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	margin.add_child(scroll)
+	
+	detail_content = VBoxContainer.new()
+	detail_content.add_theme_constant_override("separation", 18)
+	detail_content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	detail_content.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.add_child(detail_content)
 
 func _process(delta):
 	# Apply scroll momentum/inertia
@@ -205,7 +281,7 @@ func create_letter_button(letter: String):
 	letter_label.text = letter
 	letter_label.add_theme_color_override("font_color", Color("#3f4553"))
 	letter_label.add_theme_font_size_override("font_size", 55)
-	letter_label.add_theme_font_override("font", custom_font)
+	letter_label.add_theme_font_override("font", custom_font1)
 	letter_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	letter_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	letter_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -274,10 +350,226 @@ func get_rating_color(rating: String) -> Color:
 		_:
 			return Color.GRAY
 
+func show_letter_details(letter: String):
+	if detail_window == null or detail_content == null:
+		setup_detail_window()
+	
+	for child in detail_content.get_children():
+		child.queue_free()
+	
+	if not cognitive_data.has(letter):
+		var no_data = create_detail_label("No data available for letter %s yet." % letter, 26, Color(0.6, 0.6, 0.6, 1), custom_font)
+		no_data.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		detail_content.add_child(no_data)
+		detail_window.popup_centered(detail_window.min_size + Vector2i(40, 40))
+		return
+	
+	var letter_data = cognitive_data[letter]
+	
+	var title_label = create_detail_label("Letter %s" % letter, 48, Color("#3f4553"), custom_font1)
+	title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	detail_content.add_child(title_label)
+	
+	var rating_text = get_letter_rating(letter)
+	var rating_label = create_detail_label("Average Rating: %s" % rating_text, 30, get_rating_color(rating_text), custom_font)
+	rating_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	detail_content.add_child(rating_label)
+	
+	add_category_section(letter_data)
+	add_activity_section(letter_data)
+	
+	detail_window.popup_centered(detail_window.min_size + Vector2i(60, 80))
+
+func add_category_section(letter_data: Dictionary):
+	var section_title = create_detail_label("Best Time by Category", 34, Color("#3f4553"), custom_font1)
+	detail_content.add_child(section_title)
+	
+	var category_stats = get_letter_category_stats(letter_data)
+	var any_data = false
+	
+	for category in LETTER_CATEGORY_ORDER:
+		var data = category_stats.get(category, {"best_time": 0.0})
+		var best_time = data.get("best_time", 0.0)
+		if best_time <= 0.0:
+			continue
+		
+		any_data = true
+		var value_text = "%s : %s" % [category, format_time_seconds(best_time)]
+		var value_label = create_detail_label(value_text, 28, Color(0.25, 0.27, 0.33, 1), custom_font)
+		value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		detail_content.add_child(value_label)
+	
+	if not any_data:
+		var no_data = create_detail_label("No completed categories yet.", 26, Color(0.6, 0.6, 0.6, 1), custom_font)
+		no_data.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		detail_content.add_child(no_data)
+
+func add_activity_section(letter_data: Dictionary):
+	var section_title = create_detail_label("Recent Activities", 34, Color("#3f4553"), custom_font1)
+	detail_content.add_child(section_title)
+	
+	var entries = build_activity_entries(letter_data)
+	if entries.is_empty():
+		var no_data = create_detail_label("No activities played yet.", 26, Color(0.6, 0.6, 0.6, 1), custom_font)
+		no_data.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		detail_content.add_child(no_data)
+		return
+	
+	entries.sort_custom(func(a, b):
+		return a.get("last_played_raw", "") > b.get("last_played_raw", "")
+	)
+	
+	var max_entries = min(entries.size(), 8)
+	for i in range(max_entries):
+		var entry = entries[i]
+		var panel = PanelContainer.new()
+		panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var style = StyleBoxFlat.new()
+		style.bg_color = Color(1, 1, 1, 1)
+		style.corner_radius_top_left = 12
+		style.corner_radius_top_right = 12
+		style.corner_radius_bottom_left = 12
+		style.corner_radius_bottom_right = 12
+		panel.add_theme_stylebox_override("panel", style)
+		
+		var margin = MarginContainer.new()
+		margin.add_theme_constant_override("margin_left", 16)
+		margin.add_theme_constant_override("margin_right", 16)
+		margin.add_theme_constant_override("margin_top", 12)
+		margin.add_theme_constant_override("margin_bottom", 12)
+		panel.add_child(margin)
+		
+		var vbox = VBoxContainer.new()
+		vbox.add_theme_constant_override("separation", 6)
+		margin.add_child(vbox)
+		
+		var name_text = entry.get("name", "Activity")
+		var category_name = entry.get("category")
+		if category_name != "":
+			name_text = "%s" % [category_name]
+		var name_label = create_detail_label(name_text, 30, Color("#3f4553"), custom_font1)
+		vbox.add_child(name_label)
+		
+		var best_time = entry.get("best_time", 0.0)
+		var last_time = entry.get("last_time", 0.0)
+		var summary_parts = []
+		if best_time > 0.0:
+			summary_parts.append("Best %s" % format_time_seconds(best_time))
+		if last_time > 0.0 and last_time != best_time:
+			summary_parts.append("Recent %s" % format_time_seconds(last_time))
+		if summary_parts.is_empty():
+			summary_parts.append("No timing data yet")
+		var summary_label = create_detail_label("  :  ".join(summary_parts), 24, Color(0.1, 0.45, 0.6, 1), custom_font)
+		vbox.add_child(summary_label)
+		
+		var last_played = entry.get("last_played", "")
+		var last_played_text = last_played if last_played != "" else "Not played yet"
+		var played_label = create_detail_label("Last played %s" % last_played_text, 24, Color(0.25, 0.27, 0.33, 1), custom_font)
+		vbox.add_child(played_label)
+		
+		detail_content.add_child(panel)
+
+func create_detail_label(text: String, font_size: int, color: Color, font_resource: Font) -> Label:
+	var label = Label.new()
+	label.text = text
+	label.add_theme_font_override("font", font_resource)
+	label.add_theme_font_size_override("font_size", font_size)
+	label.add_theme_color_override("font_color", color)
+	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	return label
+
+func get_letter_category_stats(letter_data: Dictionary) -> Dictionary:
+	var result = {}
+	for category in LETTER_CATEGORY_ORDER:
+		result[category] = {"best_time": 0.0}
+	
+	if not letter_data.has("levels"):
+		return result
+	
+	for level_data in letter_data["levels"]:
+		if typeof(level_data) != TYPE_DICTIONARY:
+			continue
+		
+		var category = resolve_level_category(level_data)
+		if category == "":
+			continue
+		
+		var best_time = extract_time_seconds(level_data, ["bestTime", "lastAttemptTime", "averageTime"])
+		if best_time <= 0.0:
+			continue
+		
+		if result[category]["best_time"] == 0.0 or best_time < result[category]["best_time"]:
+			result[category]["best_time"] = best_time
+	
+	return result
+
+func resolve_level_category(level_data: Dictionary) -> String:
+	var candidates = []
+	
+	if level_data.has("stage"):
+		candidates.append(str(level_data["stage"]).to_lower())
+	if level_data.has("level_id"):
+		candidates.append(str(level_data["level_id"]).to_lower())
+	if level_data.has("name"):
+		candidates.append(str(level_data["name"]).to_lower())
+	
+	for candidate in candidates:
+		for key in LETTER_STAGE_CATEGORY_MAP.keys():
+			if candidate == key or candidate.contains(key):
+				return LETTER_STAGE_CATEGORY_MAP[key]
+	
+	return ""
+
+func build_activity_entries(letter_data: Dictionary) -> Array:
+	var entries: Array = []
+	if not letter_data.has("levels"):
+		return entries
+	
+	for level_data in letter_data["levels"]:
+		if typeof(level_data) != TYPE_DICTIONARY:
+			continue
+		
+		var raw_last_played = str(level_data.get("lastPlayedAt", ""))
+		
+		var entry = {
+			"name": str(level_data.get("stage", level_data.get("level_id", "Activity"))),
+			"category": resolve_level_category(level_data),
+			"best_time": extract_time_seconds(level_data, ["bestTime", "averageTime"]),
+			"last_time": extract_time_seconds(level_data, ["lastAttemptTime"]),
+			"last_played": format_last_played(raw_last_played),
+			"last_played_raw": raw_last_played
+		}
+		
+		entries.append(entry)
+	
+	return entries
+
+func extract_time_seconds(data: Dictionary, keys: Array) -> float:
+	for key in keys:
+		if data.has(key):
+			var value = data[key]
+			if typeof(value) in [TYPE_INT, TYPE_FLOAT] and value > 0:
+				return float(value) / 1000.0
+	return 0.0
+
+func format_time_seconds(value: float) -> String:
+	return "%.1fs" % value
+
+func format_last_played(raw_value: String) -> String:
+	if raw_value == "":
+		return ""
+	if raw_value.find("T") != -1:
+		var parts = raw_value.split("T")
+		if parts.size() >= 2:
+			var date_part = parts[0]
+			var time_part = parts[1].substr(0, 5)
+			return "%s at %s" % [date_part, time_part]
+	return raw_value
+
 func _on_activity_button_pressed(letter: String):
 	print("Letter %s pressed for student: %s" % [letter, current_student_data.name])
 	Global.current_letter = letter
-	get_tree().change_scene_to_file("res://scenes/LetterDetail.tscn")
+	show_letter_details(letter)
 
 func _on_back_button_pressed():
 	go_back()

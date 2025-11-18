@@ -241,167 +241,350 @@ func create_cognitive_summary():
 		summary_scroll.add_child(no_data)
 		return
 	
-	var ratings = {"Very Low": 0, "Low": 0, "Average": 0, "Good": 0, "Very Good": 0}
+	# Calculate overall time stats by category
+	var category_stats = calculate_category_time_stats()
 	
-	for letter in cognitive_data.keys():
-		var avg_time = cognitive_data[letter].get("averageTime", 0)
-		if avg_time > 0:
-			var rating = StudentData.get_cognitive_rating(avg_time)
-			ratings[rating] += 1
+	create_category_bar_chart(category_stats)
+
+func calculate_category_time_stats() -> Dictionary:
+	var stage_to_category = {
+		"fine_motor": "Fine Motor Skills",
+		"fine-motor": "Fine Motor Skills",
+		"motor": "Fine Motor Skills",
+		"tracing": "Fine Motor Skills",
+		"drawing": "Fine Motor Skills",
+		
+		"art": "Arts & Crafts",
+		"arts": "Arts & Crafts",
+		"craft": "Arts & Crafts",
+		"coloring": "Arts & Crafts",
+		"painting": "Arts & Crafts",
+		
+		"reading": "Reading",
+		"letters": "Reading",
+		"phonics": "Reading",
+		
+		"math": "Math",
+		"counting": "Math",
+		"numbers": "Math"
+	}
 	
-	create_vertical_bar_chart(ratings)
+	var category_data = {
+		"Fine Motor Skills": {"total_time": 0.0, "count": 0, "best_samples": []},
+		"Arts & Crafts": {"total_time": 0.0, "count": 0, "best_samples": []},
+		"Reading": {"total_time": 0.0, "count": 0, "best_samples": []},
+		"Math": {"total_time": 0.0, "count": 0, "best_samples": []}
+	}
 	
-func create_vertical_bar_chart(ratings: Dictionary):
+	for letter_id in cognitive_data.keys():
+		var letter_data = cognitive_data[letter_id]
+		var level_data_found = false
+		
+		if letter_data.has("levels"):
+			for level_data in letter_data["levels"]:
+				if typeof(level_data) != TYPE_DICTIONARY:
+					continue
+				
+				var category = resolve_level_category(level_data, stage_to_category)
+				if category == "":
+					continue
+				
+				var best_time_sec = get_time_seconds_from_entry(level_data)
+				if best_time_sec <= 0:
+					continue
+				
+				add_category_sample(category_data, category, best_time_sec)
+				level_data_found = true
+		
+		# Fallback: use the letter-level stats if no level data/time is available
+		if not level_data_found:
+			var fallback_time = get_time_seconds_from_entry(letter_data)
+			if fallback_time > 0:
+				add_category_sample(category_data, "Reading", fallback_time)
+	
+	return build_category_stats_result(category_data)
+
+func resolve_level_category(level_data: Dictionary, stage_to_category: Dictionary) -> String:
+	var candidates = []
+	
+	if level_data.has("level_id"):
+		candidates.append(str(level_data["level_id"]).to_lower())
+	if level_data.has("stage"):
+		candidates.append(str(level_data["stage"]).to_lower())
+	if level_data.has("name"):
+		candidates.append(str(level_data["name"]).to_lower())
+	
+	for candidate in candidates:
+		for key in stage_to_category.keys():
+			if candidate == key or candidate.contains(key):
+				return stage_to_category[key]
+	
+	return ""
+
+func get_time_seconds_from_entry(entry: Dictionary) -> float:
+	var keys = ["bestTime", "averageTime", "lastAttemptTime"]
+	
+	for key in keys:
+		if entry.has(key):
+			var value = entry[key]
+			if typeof(value) in [TYPE_INT, TYPE_FLOAT]:
+				if value > 0:
+					return float(value) / 1000.0
+	
+	return 0.0
+
+func add_category_sample(category_data: Dictionary, category: String, time_value: float):
+	if not category_data.has(category):
+		return
+	
+	category_data[category]["total_time"] += time_value
+	category_data[category]["count"] += 1
+	category_data[category]["best_samples"].append(time_value)
+
+func build_category_stats_result(category_data: Dictionary) -> Dictionary:
+	var result = {}
+	
+	for category in category_data.keys():
+		var data = category_data[category]
+		var total_time = data["total_time"]
+		var count = data["count"]
+		var avg_time = total_time / count if count > 0 else 0.0
+		var best_time = 0.0
+		if data["best_samples"].size() > 0:
+			best_time = data["best_samples"].min()
+		
+		result[category] = {
+			"total_time": total_time,
+			"average_time": avg_time,
+			"best_time": best_time,
+			"count": count
+		}
+		
+		print("DEBUG: Category %s: total_time=%.2f, avg_time=%.2f (count=%d)" % [category, total_time, avg_time, count])
+	
+	return result
+
+func create_category_bar_chart(category_stats: Dictionary):
 	var chart_container = Control.new()
 	chart_container.custom_minimum_size = Vector2(700, 350)
 	summary_scroll.add_child(chart_container)
 	
-	var chart = CognitiveBarChart.new()
-	chart.ratings_data = ratings
+	var chart = CategoryBarChart.new()
+	chart.category_stats = category_stats
 	chart.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	chart_container.add_child(chart)
-	
-class CognitiveBarChart extends Control:
-	var ratings_data = {}
+
+class CategoryBarChart extends Control:
+	var category_stats = {}
 	var custom_font = preload("res://font/LilitaOne-Regular.ttf")
+	var bar_regions = {}
+	var selected_category: String = ""
 	
 	func _ready():
+		bar_regions.clear()
 		queue_redraw()
 	
+	func _gui_input(event):
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			var click_pos = event.position
+			var newly_selected = ""
+			
+			for category in bar_regions.keys():
+				if bar_regions[category].has_point(click_pos):
+					newly_selected = category
+					break
+			
+			if newly_selected != selected_category:
+				selected_category = newly_selected
+				queue_redraw()
+	
+	func time_to_rating_score(time_seconds: float) -> float:
+		# Convert time to rating score (1-5 scale)
+		if time_seconds <= 3.0:
+			return 5.0  # Very Good
+		elif time_seconds <= 6.0:
+			return 4.0  # Good
+		elif time_seconds <= 9.0:
+			return 3.0  # Average
+		elif time_seconds <= 12.0:
+			return 2.0  # Low
+		else:
+			return 1.0  # Very Low
+	
+	func time_to_rating_text(time_seconds: float) -> String:
+		if time_seconds <= 3.0:
+			return "Very Good"
+		elif time_seconds <= 6.0:
+			return "Good"
+		elif time_seconds <= 9.0:
+			return "Average"
+		elif time_seconds <= 12.0:
+			return "Low"
+		else:
+			return "Very Low"
+	
+	func get_rating_color(rating_score: float) -> Color:
+		if rating_score >= 4.5:
+			return Color(0.2, 0.8, 0.2, 1)  # Green - Very Good
+		elif rating_score >= 3.5:
+			return Color(0.3, 0.6, 0.9, 1)  # Cyan - Good
+		elif rating_score >= 2.5:
+			return Color(0.9, 0.9, 0.2, 1)  # Yellow - Average
+		elif rating_score >= 1.5:
+			return Color(0.9, 0.6, 0.2, 1)  # Orange - Low
+		else:
+			return Color(0.9, 0.2, 0.2, 1)  # Red - Very Low
+	
 	func _draw():
-		if ratings_data.is_empty():
+		bar_regions.clear()
+		
+		if category_stats.is_empty():
 			return
 		
-		var width = size.x - 80
+		var width = size.x - 120
 		var height = size.y - 100
-		var padding_left = 60
+		var padding_left = 100
 		var padding_top = 20
 		var chart_bottom = padding_top + height
 		
-		var rating_order = ["Very Low", "Low", "Average", "Good", "Very Good"]
-		var rating_colors = {
-			"Very Low": Color.RED,
-			"Low": Color.ORANGE,
-			"Average": Color.YELLOW,
-			"Good": Color.CYAN,
-			"Very Good": Color.GREEN
-		}
+		var category_order = ["Fine Motor Skills", "Arts & Crafts", "Reading", "Math"]
 		
-		var max_value = 0
-		for rating in rating_order:
-			var count = ratings_data.get(rating, 0)
-			if count > max_value:
-				max_value = count
-		
-		if max_value == 0:
-			max_value = 1
-		
-		var num_bars = rating_order.size()
+		var num_bars = category_order.size()
 		var total_width = width - padding_left
 		var section_width = total_width / num_bars
-		var bar_width = section_width * 0.8
-		var bar_spacing = section_width * 0.2
+		var bar_width = section_width * 0.7
+		var bar_spacing = section_width * 0.3
 		
-		var grid_steps = min(max_value, 5)
-		if grid_steps > 0:
-			for i in range(int(grid_steps) + 1):
-				var y = chart_bottom - (i * height / grid_steps)
-				var value = int(i * max_value / grid_steps)
-				
-				draw_line(
-					Vector2(padding_left, y),
-					Vector2(width + padding_left, y),
-					Color(0.85, 0.85, 0.85, 1),
-					1
-				)
-				
-				draw_string(
-					ThemeDB.fallback_font,
-					Vector2(10, y + 5),
-					str(value),
-					HORIZONTAL_ALIGNMENT_RIGHT,
-					40,
-					16,  # Increased from 14
-					Color(0.4, 0.4, 0.4, 1)
-				)
+		var rating_labels = ["Very Low", "Low", "Average", "Good", "Very Good"]
+		var max_rating = 5.0
 		
-		for i in range(rating_order.size()):
-			var rating = rating_order[i]
-			var count = ratings_data.get(rating, 0)
-			var bar_color = rating_colors[rating]
+		# Draw grid lines and y-axis labels for ratings
+		for i in range(rating_labels.size()):
+			var rating_value = i + 1  # 1 to 5
+			var y = chart_bottom - ((rating_value / max_rating) * height)
+			
+			draw_line(
+				Vector2(padding_left, y),
+				Vector2(width + padding_left, y),
+				Color(0.85, 0.85, 0.85, 1),
+				1
+			)
+			
+			var label = rating_labels[i]
+			var font_size = 14
+			var text_size = custom_font.get_string_size(label, HORIZONTAL_ALIGNMENT_RIGHT, -1, font_size)
+			draw_string(
+				custom_font,
+				Vector2(padding_left - text_size.x - 10, y + 5),
+				label,
+				HORIZONTAL_ALIGNMENT_RIGHT,
+				-1,
+				font_size,
+				Color(0.4, 0.4, 0.4, 1)
+			)
+		
+		# Draw bars
+		for i in range(category_order.size()):
+			var category = category_order[i]
+			var stats = category_stats.get(category, {})
+			var total_time = stats.get("total_time", 0.0)
+			var average_time = stats.get("average_time", 0.0)
+			var sample_count = stats.get("count", 0)
 			
 			var section_start = padding_left + (i * section_width)
 			var x = section_start + (bar_spacing / 2)
 			var section_center = section_start + (section_width / 2)
 			
-			var normalized_height = (count / float(max_value)) * height
-			var bar_height = max(normalized_height, 5)
-			var y = chart_bottom - bar_height
-			
-			var bar_rect = Rect2(x, y, bar_width, bar_height)
-			draw_rect(bar_rect, bar_color)
-			draw_rect(bar_rect, Color(0, 0, 0, 0.2), false, 1)
-			
-			if count > 0:
-				var count_text = str(count)
-				var font = custom_font
-				var font_size = 21  # Increased from 20
-				var text_width = font.get_string_size(count_text, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size).x
-				var text_x = section_center - (text_width / 2.0)
+			if total_time > 0 and sample_count > 0:
+				var rating_score = time_to_rating_score(average_time)
+				var rating_text = time_to_rating_text(average_time)
+				var bar_color = get_rating_color(rating_score)
 				
-				draw_string(
-					font,
-					Vector2(text_x, y - 8),
-					count_text,
-					HORIZONTAL_ALIGNMENT_LEFT,
-					-1,
-					font_size,
-					Color(0.25, 0.27, 0.33, 1)
-				)
-			
-			var label_y = chart_bottom + 25
-			var font = custom_font
-			var font_size = 20  # Increased from 13
-			
-			if rating == "Very Low" or rating == "Very Good":
-				var parts = rating.split(" ")
+				# Calculate bar height based on rating score (1-5 scale)
+				var normalized_height = rating_score / max_rating
+				var bar_height = max(normalized_height * height, 5)
+				var y = chart_bottom - bar_height
 				
-				var text_width_1 = font.get_string_size(parts[0], HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
-				var text_x_1 = section_center - (text_width_1 / 2.0)
-				draw_string(
-					font,
-					Vector2(text_x_1, label_y),
-					parts[0],
-					HORIZONTAL_ALIGNMENT_LEFT,
-					-1,
-					font_size,
-					Color(0.4, 0.4, 0.4, 1)
-				)
+				# Draw bar
+				var bar_rect = Rect2(x, y, bar_width, bar_height)
+				draw_rect(bar_rect, bar_color)
+				draw_rect(bar_rect, Color(0, 0, 0, 0.2), false, 1)
 				
-				var text_width_2 = font.get_string_size(parts[1], HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
-				var text_x_2 = section_center - (text_width_2 / 2.0)
-				draw_string(
-					font,
-					Vector2(text_x_2, label_y + 16),
-					parts[1],
-					HORIZONTAL_ALIGNMENT_LEFT,
-					-1,
-					font_size,
-					Color(0.4, 0.4, 0.4, 1)
-				)
+				bar_regions[category] = bar_rect
+				
+				if category == selected_category:
+					# Draw total time value above bar
+					var time_text = "Total %.1fs" % total_time
+					var font_size = 18
+					var text_width = custom_font.get_string_size(time_text, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size).x
+					var text_x = section_center - (text_width / 2.0)
+					
+					draw_string(
+						custom_font,
+						Vector2(text_x, y - 8),
+						time_text,
+						HORIZONTAL_ALIGNMENT_LEFT,
+						-1,
+						font_size,
+						Color(0.25, 0.27, 0.33, 1)
+					)
+					# Draw average best time and rating text
+					var avg_text = "Avg %.1fs - %s" % [average_time, rating_text]
+					var rating_font_size = 16
+					var rating_width = custom_font.get_string_size(avg_text, HORIZONTAL_ALIGNMENT_CENTER, -1, rating_font_size).x
+					var rating_x = section_center - (rating_width / 2.0)
+					draw_string(
+						custom_font,
+						Vector2(rating_x, y - 32),
+						avg_text,
+						HORIZONTAL_ALIGNMENT_LEFT,
+						-1,
+						rating_font_size,
+						bar_color.darkened(0.2)
+					)
 			else:
-				var text_width = font.get_string_size(rating, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+				# No data - draw minimal bar
+				var bar_height = 5
+				var y = chart_bottom - bar_height
+				var bar_rect = Rect2(x, y, bar_width, bar_height)
+				draw_rect(bar_rect, Color(0.7, 0.7, 0.7, 1))
+				bar_regions[category] = bar_rect
+			
+			# Draw category label (split into multiple lines if needed)
+			var label_y = chart_bottom + 25
+			var font_size = 18
+			
+			var words = category.split(" ")
+			if words.size() > 1:
+				# Multi-word category - split across lines
+				for word_idx in range(words.size()):
+					var word = words[word_idx]
+					var text_width = custom_font.get_string_size(word, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+					var text_x = section_center - (text_width / 2.0)
+					draw_string(
+						custom_font,
+						Vector2(text_x, label_y + (word_idx * 18)),
+						word,
+						HORIZONTAL_ALIGNMENT_LEFT,
+						-1,
+						font_size,
+						Color(0.4, 0.4, 0.4, 1)
+					)
+			else:
+				# Single word
+				var text_width = custom_font.get_string_size(category, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
 				var text_x = section_center - (text_width / 2.0)
 				draw_string(
-					font,
+					custom_font,
 					Vector2(text_x, label_y + 8),
-					rating,
+					category,
 					HORIZONTAL_ALIGNMENT_LEFT,
 					-1,
 					font_size,
 					Color(0.4, 0.4, 0.4, 1)
 				)
 		
+		# Draw axes
 		draw_line(
 			Vector2(padding_left, chart_bottom),
 			Vector2(width + padding_left, chart_bottom),
@@ -673,7 +856,7 @@ class VoiceTimelineChart extends Control:
 				str(value), 
 				HORIZONTAL_ALIGNMENT_RIGHT, 
 				40, 
-				16,  # Increased from 14
+				16,
 				Color(0.4, 0.4, 0.4, 1)
 			)
 		
@@ -714,7 +897,7 @@ class VoiceTimelineChart extends Control:
 					date_label, 
 					HORIZONTAL_ALIGNMENT_LEFT, 
 					-1, 
-					13,  # Increased from 11
+					13,
 					Color(0.4, 0.4, 0.4, 1)
 				)
 		
