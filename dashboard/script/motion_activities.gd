@@ -173,7 +173,7 @@ func create_motion_buttons():
 		child.queue_free()
 	
 	# Define motion activities in alphabetical order
-	var motion_types = ["clapping", "wave"]
+	var motion_types = ["clapping", "wave", "jump", "raise_hand"]
 	
 	for motion_type in motion_types:
 		create_motion_button(motion_type)
