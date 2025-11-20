@@ -19,7 +19,11 @@ signal cognitive_data_loaded(data: Dictionary)
 signal motion_data_loaded(data: Dictionary) 
 signal letter_progress_loaded(letter: String, data: Dictionary)
 signal voice_data_loaded(data: Dictionary)
+
 var student_ratings_cache = {}  # {user_id: {rating: String, score: float}}
+var pending_level_requests = 0
+var total_letters = 0
+
 func _ready():
 	# Initialize HTTP requests
 	cognitive_http_request = HTTPRequest.new()
@@ -70,28 +74,41 @@ func load_letter_progress(letter: String):
 	var url = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents/users/%s/progress/%s/levels" % [current_student_id, letter]
 	return Global.make_authenticated_request(letter_progress_http_request, url, HTTPClient.METHOD_GET)
 
-# Load motion activities data
+# Load motion activities data with pagination
 func load_student_motion_data():
 	if current_student_id.is_empty():
 		return false
 	
-	var url = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents/users/%s/activities" % current_student_id
+	student_motion_data.clear()  # Clear before loading all pages
+	return _load_motion_page("")
+
+func _load_motion_page(page_token: String):
+	var url = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents/users/%s/activities?pageSize=1000" % current_student_id
+	
+	if page_token != "":
+		url += "&pageToken=" + page_token
+	
+	print("DEBUG: Loading motion page, token: %s" % page_token)
 	return Global.make_authenticated_request(motion_http_request, url, HTTPClient.METHOD_GET)
 
-# Load voice activities data
+# Load voice activities data with pagination
 func load_student_voice_data():
 	if current_student_id.is_empty():
 		print("ERROR: No student ID set for voice data")
 		return false
 	
 	print("DEBUG: Loading voice data for student: %s" % current_student_id)
-	var url = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents/users/%s/voice_data" % current_student_id
-	print("DEBUG: Voice request URL: %s" % url)
+	student_voice_data.clear()  # Clear before loading all pages
+	return _load_voice_page("")
+
+func _load_voice_page(page_token: String):
+	var url = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents/users/%s/voice_data?pageSize=1000" % current_student_id
 	
-	var success = Global.make_authenticated_request(voice_http_request, url, HTTPClient.METHOD_GET)
-	print("DEBUG: Voice request initiated: %s" % success)
-	return success
-# Add this to StudentData.gd after the existing load functions
+	if page_token != "":
+		url += "&pageToken=" + page_token
+	
+	print("DEBUG: Loading voice page, token: %s" % page_token)
+	return Global.make_authenticated_request(voice_http_request, url, HTTPClient.METHOD_GET)
 
 # Enhanced cognitive data loading that includes levels
 func load_student_cognitive_data_with_levels():
@@ -146,9 +163,6 @@ func load_levels_for_letter(letter: String):
 	
 	Global.make_authenticated_request(level_request, url, HTTPClient.METHOD_GET)
 
-var pending_level_requests = 0
-var total_letters = 0
-
 func _on_level_data_completed(letter: String, result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray, request_node: HTTPRequest):
 	var response_text = body.get_string_from_utf8()
 	
@@ -180,6 +194,7 @@ func _on_level_data_completed(letter: String, result: int, response_code: int, h
 	if pending_level_requests <= 0:
 		print("DEBUG: All levels loaded, emitting cognitive_data_loaded")
 		cognitive_data_loaded.emit(student_cognitive_data)
+
 # Process cognitive data response
 func _on_cognitive_data_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
 	var response_text = body.get_string_from_utf8()
@@ -221,7 +236,7 @@ func _on_letter_progress_completed(result: int, response_code: int, headers: Pac
 	else:
 		letter_progress_loaded.emit("", {})
 
-# Process motion data response  
+# Process motion data response with pagination support
 func _on_motion_data_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
 	var response_text = body.get_string_from_utf8()
 	
@@ -229,6 +244,14 @@ func _on_motion_data_completed(result: int, response_code: int, headers: PackedS
 		var json = JSON.new()
 		if json.parse(response_text) == OK:
 			process_motion_data(json.data)
+			
+			# Check if there are more pages
+			if json.data.has("nextPageToken"):
+				print("DEBUG: Loading next motion page...")
+				_load_motion_page(json.data.nextPageToken)
+			else:
+				print("DEBUG: All motion pages loaded. Total activities: %d" % _count_total_motion_activities())
+				motion_data_loaded.emit(student_motion_data)
 		else:
 			student_motion_data = {}
 			motion_data_loaded.emit(student_motion_data)
@@ -236,7 +259,7 @@ func _on_motion_data_completed(result: int, response_code: int, headers: PackedS
 		student_motion_data = {}
 		motion_data_loaded.emit(student_motion_data)
 
-# Process voice data response
+# Process voice data response with pagination support
 func _on_voice_data_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
 	var response_text = body.get_string_from_utf8()
 	
@@ -250,6 +273,14 @@ func _on_voice_data_completed(result: int, response_code: int, headers: PackedSt
 		if json.parse(response_text) == OK:
 			print("DEBUG: Voice JSON parsed successfully")
 			process_voice_data(json.data)
+			
+			# Check if there are more pages
+			if json.data.has("nextPageToken"):
+				print("DEBUG: Loading next voice page...")
+				_load_voice_page(json.data.nextPageToken)
+			else:
+				print("DEBUG: All voice pages loaded. Total entries: %d" % _count_total_voice_entries())
+				voice_data_loaded.emit(student_voice_data)
 		else:
 			print("DEBUG: Voice JSON parsing failed")
 			student_voice_data = {}
@@ -262,9 +293,9 @@ func _on_voice_data_completed(result: int, response_code: int, headers: PackedSt
 		student_voice_data = {}
 		voice_data_loaded.emit(student_voice_data)
 
-# Process motion data from Firebase
+# Process motion data from Firebase (accumulates across pages)
 func process_motion_data(data: Dictionary):
-	student_motion_data.clear()
+	# Don't clear - we're accumulating pages
 	
 	if data.has("documents"):
 		for doc in data.documents:
@@ -286,17 +317,15 @@ func process_motion_data(data: Dictionary):
 	# Sort activities by timestamp (newest first)
 	for activity_type in student_motion_data.keys():
 		student_motion_data[activity_type].sort_custom(func(a, b): return a.timestamp > b.timestamp)
-	
-	motion_data_loaded.emit(student_motion_data)
 
-# Process voice data from Firebase
+# Process voice data from Firebase (accumulates across pages)
 func process_voice_data(data: Dictionary):
-	student_voice_data.clear()
+	# Don't clear - we're accumulating pages
 	
 	print("DEBUG: Processing voice data: %s" % var_to_str(data))
 	
 	if data.has("documents"):
-		print("DEBUG: Found %d voice documents" % data.documents.size())
+		print("DEBUG: Found %d voice documents in this page" % data.documents.size())
 		for doc in data.documents:
 			var voice_id = doc.name.split("/")[-1]  # Extract voice ID
 			var doc_data = extract_document_fields(doc)
@@ -314,14 +343,13 @@ func process_voice_data(data: Dictionary):
 				"date": date
 			})
 	else:
-		print("DEBUG: No voice documents found in response")
+		print("DEBUG: No voice documents found in this page")
 	
 	# Sort each date's words by timestamp (newest first)
 	for date in student_voice_data.keys():
 		student_voice_data[date].sort_custom(func(a, b): return a.timestamp > b.timestamp)
 	
-	print("DEBUG: Final voice data: %s" % var_to_str(student_voice_data))
-	voice_data_loaded.emit(student_voice_data)
+	print("DEBUG: Current voice data count: %d dates" % student_voice_data.size())
 
 # Extract fields from Firebase document
 func extract_document_fields(doc: Dictionary) -> Dictionary:
@@ -396,7 +424,6 @@ func get_current_student_motion_data() -> Dictionary:
 func get_current_student_voice_data() -> Dictionary:
 	return student_voice_data.duplicate()
 
-
 func get_student_rating(user_id: String) -> Dictionary:
 	if student_ratings_cache.has(user_id):
 		return student_ratings_cache[user_id]
@@ -407,3 +434,16 @@ func set_student_rating(user_id: String, rating: String, score: float):
 
 func clear_ratings_cache():
 	student_ratings_cache.clear()
+
+# Helper functions for counting totals
+func _count_total_motion_activities() -> int:
+	var total = 0
+	for activity_type in student_motion_data.keys():
+		total += student_motion_data[activity_type].size()
+	return total
+
+func _count_total_voice_entries() -> int:
+	var total = 0
+	for date in student_voice_data.keys():
+		total += student_voice_data[date].size()
+	return total
