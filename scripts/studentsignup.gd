@@ -11,6 +11,11 @@ extends Control
 @onready var terms_button = $Container/Password/TermsButton
 @onready var privacy_button = $Container/Password/PrivacyButton
 @onready var http_request = $HTTPRequest
+
+# Profile picture UI (add these to your scene)
+@onready var profile_preview = $Container/VBoxContainer/ProfilePreview  # TextureRect node
+@onready var upload_picture_button = $Container/VBoxContainer/UploadPictureButton  # Button node
+
 var signup_loading_dialog: AcceptDialog = null
 var dialog_theme = preload("res://assets/main_theme.tres")
 var eye_open_icon = preload("res://assets/eye.png")
@@ -19,9 +24,10 @@ var eye_closed_icon = preload("res://assets/eyeofthetiger.png")
 # Constants
 const FIREBASE_API_KEY = "AIzaSyC7bPi7suzy8DmMFSgP7n090t7zHXzI5Bk"
 const FIRESTORE_URL = "https://firestore.googleapis.com/v1/projects/mindmotion-55c99/databases/(default)/documents"
+const FIREBASE_STORAGE_URL = "https://firebasestorage.googleapis.com/v0/b/mindmotion-55c99.firebasestorage.app/o"
 
 # State Management
-enum Stage { SIGNUP, SEND_VERIFICATION, STORE_DATA, CREATE_PROGRESS, CREATE_STAGES }
+enum Stage { SIGNUP, SEND_VERIFICATION, UPLOAD_PICTURE, STORE_DATA, CREATE_PROGRESS, CREATE_STAGES }
 var current_stage: Stage
 var temp_uid = ""
 var temp_id_token = ""
@@ -29,6 +35,13 @@ var temp_refresh_token = ""
 var temp_email = ""
 var stages_to_create = ["reading", "fine_motor", "math", "art"]
 var current_stage_index = 0
+
+# Profile picture variables
+var profile_image_path = ""
+var profile_image_data: PackedByteArray
+var profile_picture_url = ""
+var upload_http_request: HTTPRequest = null
+var has_profile_picture = false
 
 # Email verification
 var verification_check_timer: Timer = null
@@ -46,6 +59,7 @@ func debug_print(message: String, icon: String = "📋"):
 func _ready():
 	setup_ui()
 	setup_terms_privacy_buttons()
+	setup_profile_picture_upload()
 	gender_option.theme = dialog_theme
 	
 	if hide_button:
@@ -55,6 +69,11 @@ func _ready():
 	verification_check_timer = Timer.new()
 	add_child(verification_check_timer)
 	verification_check_timer.timeout.connect(_check_email_verification)
+	
+	# Setup upload HTTP request
+	upload_http_request = HTTPRequest.new()
+	add_child(upload_http_request)
+	upload_http_request.request_completed.connect(_on_upload_request_completed)
 	
 	# Restore data if returning from terms/privacy screens
 	restore_signup_data()
@@ -78,6 +97,24 @@ func setup_terms_privacy_buttons():
 	if privacy_button:
 		privacy_button.pressed.connect(_on_privacy_button_pressed)
 
+func setup_profile_picture_upload():
+	if upload_picture_button:
+		upload_picture_button.pressed.connect(_on_upload_picture_pressed)
+		debug_print("Upload button connected", "✅")
+	else:
+		debug_print("WARNING: upload_picture_button node not found!", "⚠️")
+	
+	# Set default avatar in preview if it exists
+	if profile_preview:
+		var default_avatar = load("res://assets/boy_avatar.png")
+		if default_avatar:
+			profile_preview.texture = default_avatar
+			debug_print("Default avatar loaded", "✅")
+		else:
+			debug_print("WARNING: default_avatar.png not found at res://assets/", "⚠️")
+	else:
+		debug_print("WARNING: profile_preview node not found!", "⚠️")
+
 func restore_signup_data():
 	if Global.temp_signup_data and Global.temp_signup_data.get("return_scene") == "student_signup":
 		name_input.text = Global.temp_signup_data.get("name", "")
@@ -87,6 +124,22 @@ func restore_signup_data():
 		gender_option.selected = Global.temp_signup_data.get("gender", 0)
 		terms_read = Global.temp_signup_data.get("terms_read", false)
 		privacy_read = Global.temp_signup_data.get("privacy_read", false)
+		
+		# Restore profile picture data
+		profile_image_data = Global.temp_signup_data.get("profile_image_data", PackedByteArray())
+		has_profile_picture = Global.temp_signup_data.get("has_profile_picture", false)
+		
+		# Restore the preview if there's image data
+		if has_profile_picture and not profile_image_data.is_empty() and profile_preview:
+			var image = Image.new()
+			var error = image.load_png_from_buffer(profile_image_data)
+			if error == OK:
+				var texture = ImageTexture.create_from_image(image)
+				profile_preview.texture = texture
+				debug_print("Profile picture restored from saved data", "✅")
+			else:
+				debug_print("Failed to restore profile picture preview", "⚠️")
+		
 		update_agreement_checkbox()
 		Global.temp_signup_data = {}
 
@@ -99,6 +152,8 @@ func _on_terms_button_pressed():
 		"gender": gender_option.selected,
 		"terms_read": terms_read,
 		"privacy_read": privacy_read,
+		"profile_image_data": profile_image_data,  # Save the image data
+		"has_profile_picture": has_profile_picture,  # Save the flag
 		"return_scene": "student_signup"
 	}
 	get_tree().change_scene_to_file("res://scenes/TermsScreen.tscn")
@@ -112,6 +167,8 @@ func _on_privacy_button_pressed():
 		"gender": gender_option.selected,
 		"terms_read": terms_read,
 		"privacy_read": privacy_read,
+		"profile_image_data": profile_image_data,  # Save the image data
+		"has_profile_picture": has_profile_picture,  # Save the flag
 		"return_scene": "student_signup"
 	}
 	get_tree().change_scene_to_file("res://scenes/PrivacyScreen.tscn")
@@ -125,6 +182,160 @@ func update_agreement_checkbox():
 		debug_print("Agreement checkbox enabled and checked", "✅")
 	else:
 		agreement_checkbox.button_pressed = false
+
+# Profile Picture Upload Functions
+func _on_upload_picture_pressed():
+	var file_dialog = FileDialog.new()
+	add_child(file_dialog)
+	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+	file_dialog.access = FileDialog.ACCESS_FILESYSTEM
+	file_dialog.filters = PackedStringArray(["*.png ; PNG Images", "*.jpg,*.jpeg ; JPEG Images"])
+	file_dialog.file_selected.connect(_on_image_file_selected)
+	file_dialog.popup_centered(Vector2(700, 500))
+
+func _on_image_file_selected(path: String):
+	profile_image_path = path
+	debug_print("Image file selected: %s" % path, "📁")
+	
+	# Load and validate image
+	var image = Image.new()
+	var error = image.load(path)
+	
+	if error != OK:
+		show_error_dialog("Failed to load image. Please select a valid image file.")
+		return
+	
+	# Resize image to reasonable size (512x512 max)
+	var max_size = 512
+	if image.get_width() > max_size or image.get_height() > max_size:
+		var scale = min(max_size / float(image.get_width()), max_size / float(image.get_height()))
+		var new_width = int(image.get_width() * scale)
+		var new_height = int(image.get_height() * scale)
+		image.resize(new_width, new_height, Image.INTERPOLATE_LANCZOS)
+		debug_print("Image resized to %dx%d" % [new_width, new_height], "🔧")
+	
+	# Convert to PNG bytes for upload
+	profile_image_data = image.save_png_to_buffer()
+	has_profile_picture = true
+	
+	debug_print("Image loaded: %s (%d bytes)" % [path.get_file(), profile_image_data.size()], "🖼️")
+	
+	# Update preview
+	if profile_preview:
+		var texture = ImageTexture.create_from_image(image)
+		profile_preview.texture = texture
+	
+
+func upload_profile_picture():
+	if profile_image_data.is_empty():
+		debug_print("No profile picture to upload", "ℹ️")
+		return
+	
+	debug_print("Uploading profile picture (%d bytes)..." % profile_image_data.size(), "📤")
+	
+	# Create unique filename using UID
+	var filename = "profile_pictures/%s.png" % temp_uid
+	var encoded_filename = filename.uri_encode()
+	
+	# Firebase Storage upload URL
+	var upload_url = "%s/%s" % [FIREBASE_STORAGE_URL, encoded_filename]
+	
+	debug_print("Upload URL: %s" % upload_url, "🔗")
+	
+	# Headers for upload
+	var headers = [
+		"Content-Type: image/png",
+		"Authorization: Bearer %s" % temp_id_token
+	]
+	
+	# Upload the image - use request_raw for binary data
+	current_stage = Stage.UPLOAD_PICTURE
+	upload_http_request.request_raw(upload_url, headers, HTTPClient.METHOD_POST, profile_image_data)
+
+func _on_upload_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
+	if current_stage != Stage.UPLOAD_PICTURE:
+		return
+	
+	debug_print("Upload request completed - Result: %d, Response Code: %d" % [result, response_code], "📡")
+	
+	if response_code == 200:
+		# Generate the download URL
+		var filename = "profile_pictures/%s.png" % temp_uid
+		var encoded_filename = filename.uri_encode()
+		profile_picture_url = "https://firebasestorage.googleapis.com/v0/b/mindmotion-55c99.firebasestorage.app/o/%s?alt=media" % encoded_filename
+		
+		debug_print("Profile picture uploaded successfully!", "✅")
+		debug_print("Download URL: %s" % profile_picture_url, "🔗")
+		
+		# Update the user document with the profile picture URL
+		update_signup_loading("Updating profile picture...")
+		update_profile_picture_in_firestore()
+	else:
+		debug_print("Failed to upload profile picture: %d" % response_code, "❌")
+		var response_text = body.get_string_from_utf8()
+		debug_print("Error details: %s" % response_text, "❌")
+		debug_print("Result code meaning: %s" % get_result_string(result), "ℹ️")
+		
+		# Continue without profile picture
+		profile_picture_url = ""
+		update_signup_loading("Setting up your activities...")
+		current_stage = Stage.CREATE_PROGRESS
+		create_initial_progress_data()
+
+func update_profile_picture_in_firestore():
+	debug_print("Updating Firestore with profile picture URL", "📝")
+	
+	# Use updateMask to only update the profilePicture field
+	var doc_url = "%s/users/%s?updateMask.fieldPaths=profilePicture" % [FIRESTORE_URL, temp_uid]
+	var update_data = {
+		"fields": {
+			"profilePicture": {"stringValue": profile_picture_url}
+		}
+	}
+	
+	var temp_http = HTTPRequest.new()
+	add_child(temp_http)
+	
+	var headers = [
+		"Content-Type: application/json",
+		"Authorization: Bearer %s" % temp_id_token
+	]
+	
+	temp_http.request(doc_url, headers, HTTPClient.METHOD_PATCH, JSON.stringify(update_data))
+	
+	var response = await temp_http.request_completed
+	var response_code = response[1]
+	
+	temp_http.queue_free()
+	
+	if response_code == 200:
+		debug_print("Profile picture URL updated in Firestore", "✅")
+	else:
+		debug_print("Failed to update profile picture URL: %d" % response_code, "⚠️")
+		var body = response[3] as PackedByteArray
+		debug_print("Response: %s" % body.get_string_from_utf8(), "❌")
+	
+	# Continue with progress setup
+	update_signup_loading("Setting up your activities...")
+	current_stage = Stage.CREATE_PROGRESS
+	create_initial_progress_data()
+
+func get_result_string(result: int) -> String:
+	match result:
+		HTTPRequest.RESULT_SUCCESS: return "SUCCESS"
+		HTTPRequest.RESULT_CHUNKED_BODY_SIZE_MISMATCH: return "CHUNKED_BODY_SIZE_MISMATCH"
+		HTTPRequest.RESULT_CANT_CONNECT: return "CANT_CONNECT"
+		HTTPRequest.RESULT_CANT_RESOLVE: return "CANT_RESOLVE"
+		HTTPRequest.RESULT_CONNECTION_ERROR: return "CONNECTION_ERROR"
+		HTTPRequest.RESULT_TLS_HANDSHAKE_ERROR: return "TLS_HANDSHAKE_ERROR"
+		HTTPRequest.RESULT_NO_RESPONSE: return "NO_RESPONSE"
+		HTTPRequest.RESULT_BODY_SIZE_LIMIT_EXCEEDED: return "BODY_SIZE_LIMIT_EXCEEDED"
+		HTTPRequest.RESULT_REQUEST_FAILED: return "REQUEST_FAILED"
+		HTTPRequest.RESULT_DOWNLOAD_FILE_CANT_OPEN: return "DOWNLOAD_FILE_CANT_OPEN"
+		HTTPRequest.RESULT_DOWNLOAD_FILE_WRITE_ERROR: return "DOWNLOAD_FILE_WRITE_ERROR"
+		HTTPRequest.RESULT_REDIRECT_LIMIT_REACHED: return "REDIRECT_LIMIT_REACHED"
+		HTTPRequest.RESULT_TIMEOUT: return "TIMEOUT"
+		_: return "UNKNOWN_ERROR"
 
 # Email validation function
 func is_valid_email(email: String) -> bool:
@@ -316,7 +527,7 @@ func handle_verification_check_response(response_code: int, body: PackedByteArra
 				verify_dialog.queue_free()
 			
 			# Continue with account creation
-			show_signup_loading("Email verified! Creating your profile...")
+			show_signup_loading("Email verified! Setting up your profile...")
 			proceed_with_account_creation()
 		else:
 			debug_print("Email not yet verified, will check again...", "⏳")
@@ -328,6 +539,8 @@ func proceed_with_account_creation():
 	Global.set_user_type("student")
 	Global.set_user_info(temp_uid, temp_email, name_input.text, temp_id_token, temp_refresh_token)
 	
+	# First create the user document, THEN upload profile picture
+	update_signup_loading("Creating your profile...")
 	current_stage = Stage.STORE_DATA
 	create_user_document()
 
@@ -365,9 +578,16 @@ func delete_unverified_account():
 func handle_store_data_response(response_code: int, response: Dictionary):
 	if response_code == 200:
 		debug_print("Student data stored successfully", "✅")
-		update_signup_loading("Setting up your activities...")
-		current_stage = Stage.CREATE_PROGRESS
-		create_initial_progress_data()
+		
+		# Now upload profile picture if provided (AFTER user document is created)
+		if has_profile_picture and not profile_image_data.is_empty():
+			update_signup_loading("Uploading profile picture...")
+			upload_profile_picture()
+		else:
+			# No profile picture, continue to progress setup
+			update_signup_loading("Setting up your activities...")
+			current_stage = Stage.CREATE_PROGRESS
+			create_initial_progress_data()
 	else:
 		debug_print("Failed to store user data: %s" % str(response), "❌")
 		hide_signup_loading()
@@ -400,17 +620,29 @@ func handle_create_stages_response(response_code: int, response: Dictionary):
 # Document Creation Methods
 func create_user_document():
 	var doc_url = "%s/users/%s" % [FIRESTORE_URL, temp_uid]
-	var student_data = {
-		"fields": {
-			"name": {"stringValue": name_input.text.strip_edges()},
-			"email": {"stringValue": temp_email},
-			"userType": {"stringValue": "student"},
-			"age": {"integerValue": age_input.text.strip_edges()},
-			"gender": {"stringValue": gender_option.get_item_text(gender_option.selected)},
-			"createdAt": {"integerValue": str(int(Time.get_unix_time_from_system()))},
-			"emailVerified": {"booleanValue": true}
-		}
+	
+	# Build user data with optional profile picture
+	var fields = {
+		"name": {"stringValue": name_input.text.strip_edges()},
+		"email": {"stringValue": temp_email},
+		"userType": {"stringValue": "student"},
+		"age": {"integerValue": age_input.text.strip_edges()},
+		"gender": {"stringValue": gender_option.get_item_text(gender_option.selected)},
+		"createdAt": {"integerValue": str(int(Time.get_unix_time_from_system()))},
+		"emailVerified": {"booleanValue": true}
 	}
+	
+	# Add profile picture URL if available
+	if profile_picture_url != "":
+		fields["profilePicture"] = {"stringValue": profile_picture_url}
+		debug_print("Adding profile picture to user document: %s" % profile_picture_url, "🖼️")
+	else:
+		fields["profilePicture"] = {"stringValue": ""}  # Empty string for no picture
+	
+	var student_data = {
+		"fields": fields
+	}
+	
 	make_request(doc_url, student_data)
 
 func create_initial_progress_data():
@@ -545,6 +777,9 @@ func set_inputs_enabled(enabled: bool):
 	agreement_checkbox.disabled = not enabled
 	terms_button.disabled = not enabled
 	privacy_button.disabled = not enabled
+	
+	if upload_picture_button:
+		upload_picture_button.disabled = not enabled
 
 func show_error_dialog(message: String):
 	var error_dialog = AcceptDialog.new()

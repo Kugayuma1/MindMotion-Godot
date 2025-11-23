@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ce1fbp1xnir5b"]
+[gd_scene load_steps=24 format=3 uid="uid://ce1fbp1xnir5b"]
 
 [ext_resource type="Script" uid="uid://bshswddoxt6bg" path="res://scripts/studentsignup.gd" id="1_cr6i3"]
 [ext_resource type="Texture2D" uid="uid://dq8ski7ygx3hp" path="res://assets/back_btn.png" id="2_7wlrd"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://bfkjutsinshvf" path="res://assets/Buttons/Signin-up.png" id="6_0twl3"]
 [ext_resource type="Texture2D" uid="uid://dvxxrww21wm2w" path="res://assets/Buttons/Signin-upHover.png" id="7_8vx3m"]
 [ext_resource type="FontFile" uid="uid://fudxgapvdp4c" path="res://font/Summary Notes DEMO.ttf" id="8_sa0uy"]
+[ext_resource type="Texture2D" uid="uid://lwkteoaxapyj" path="res://assets/Buttons/Login.png" id="10_sa0uy"]
+[ext_resource type="Texture2D" uid="uid://doygaldstucxg" path="res://assets/Buttons/LoginHover.png" id="11_ox7rg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nqwg7"]
 
@@ -407,6 +409,51 @@ grow_horizontal = 2
 texture = ExtResource("4_vo08k")
 expand_mode = 3
 stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 107.0
+offset_top = -128.0
+offset_right = 385.0
+offset_bottom = 128.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="ProfilePreview" type="TextureRect" parent="Container/VBoxContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="UploadPictureButton" type="TextureButton" parent="Container/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("10_sa0uy")
+texture_pressed = ExtResource("11_ox7rg")
+
+[node name="Label" type="Label" parent="Container/VBoxContainer/UploadPictureButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -83.0
+offset_top = -23.0
+offset_right = 83.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_sa0uy")
+theme_override_font_sizes/font_size = 38
+text = "Upload Photo"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 

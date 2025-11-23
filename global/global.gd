@@ -595,7 +595,8 @@ func extract_student_data_from_doc(doc) -> Dictionary:
 		"email": fields.get("email", {}).get("stringValue", "No email"),
 		"gender": fields.get("gender", {}).get("stringValue", "Male"),
 		"age": int(fields.get("age", {}).get("integerValue", 0)),
-		"created_at": int(fields.get("createdAt", {}).get("integerValue", 0))
+		"created_at": int(fields.get("createdAt", {}).get("integerValue", 0)),
+		"profilePicture": fields.get("profilePicture", {}).get("stringValue", "")
 	}
 	
 	# Validate essential data

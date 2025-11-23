@@ -37,6 +37,7 @@ var current_sort_mode = SortMode.ALPHABETICAL_AZ
 
 # Track ongoing rating requests
 var pending_rating_requests = {}  # {user_id: HTTPRequest}
+var profile_picture_cache = {}  # Cache downloaded profile pictures {user_id: ImageTexture}
 
 func _ready():
 	setup_scroll_container()
@@ -213,7 +214,7 @@ func create_student_card(student_data: Dictionary):
 	card_button.texture_normal = student_card_bg
 	card_button.texture_pressed = student_card_pressed
 	var button_width = get_responsive_button_width()
-	card_button.custom_minimum_size = Vector2(button_width, 280)  # Increased height for separated rating
+	card_button.custom_minimum_size = Vector2(button_width, 280)
 	card_button.stretch_mode = TextureButton.STRETCH_SCALE
 	card_button.mouse_filter = Control.MOUSE_FILTER_STOP
 	
@@ -225,26 +226,35 @@ func create_student_card(student_data: Dictionary):
 	card_margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card_button.add_child(card_margin)
 	
-	# Main vertical container to separate top content from rating
 	var main_vbox = VBoxContainer.new()
 	main_vbox.add_theme_constant_override("separation", 40)
 	main_vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card_margin.add_child(main_vbox)
 	
-	# Top section with avatar and info
 	var card_hbox = HBoxContainer.new()
 	card_hbox.add_theme_constant_override("separation", 1)
 	card_hbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	main_vbox.add_child(card_hbox)
 	
+	# Profile picture with smart loading
 	var profile_pic = TextureRect.new()
 	profile_pic.custom_minimum_size = Vector2(150, 150)
 	profile_pic.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 	profile_pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	profile_pic.texture = girl_avatar if student_data.gender.to_lower() == "female" else boy_avatar
+	
+	# Set initial default based on gender
+	var default_avatar = girl_avatar if student_data.gender.to_lower() == "female" else boy_avatar
+	profile_pic.texture = default_avatar
+	
+	# Load custom profile picture if available
+	var profile_picture_url = student_data.get("profilePicture", "")
+	if profile_picture_url != "" and profile_picture_url != null:
+		load_profile_picture(student_data.user_id, profile_picture_url, profile_pic, default_avatar)
+	
 	profile_pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card_hbox.add_child(profile_pic)
 	
+	# ... rest of your existing card creation code stays the same ...
 	var info_vbox = VBoxContainer.new()
 	info_vbox.add_theme_constant_override("separation", 8)
 	info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -275,21 +285,19 @@ func create_student_card(student_data: Dictionary):
 	age_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	info_vbox.add_child(age_label)
 	
-	# Separated and centered rating section
 	var rating_container = CenterContainer.new()
 	rating_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	main_vbox.add_child(rating_container)
 	
 	var rating_label = Label.new()
 	rating_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	rating_label.custom_minimum_size = Vector2(button_width - 40, 0)  # Full width minus margins
+	rating_label.custom_minimum_size = Vector2(button_width - 40, 0)
 	rating_label.add_theme_font_override("font", custom_font)
 	var rating_data = StudentData.get_student_rating(student_data.user_id)
 	
 	if rating_data.rating == "Loading...":
 		rating_label.text = "Loading rating..."
 		rating_label.add_theme_color_override("font_color", Color.GRAY)
-		# Load rating and update this specific label
 		load_student_rating(student_data.user_id, func():
 			if is_instance_valid(rating_label):
 				var updated_rating = StudentData.get_student_rating(student_data.user_id)
@@ -298,7 +306,7 @@ func create_student_card(student_data: Dictionary):
 	else:
 		update_rating_label(rating_label, rating_data.rating)
 	
-	rating_label.add_theme_font_size_override("font_size", 40)  # Slightly larger for prominence
+	rating_label.add_theme_font_size_override("font_size", 40)
 	rating_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	rating_container.add_child(rating_label)
 	
@@ -463,6 +471,52 @@ func _on_sort_option_selected(index: int):
 	print("🔄 Sort mode changed to: %d" % index)
 	LoadingScreen.show_loading()
 	load_students_from_cache()
+
+func load_profile_picture(user_id: String, url: String, texture_rect: TextureRect, fallback_texture: Texture2D):
+	# Check cache first
+	if profile_picture_cache.has(user_id):
+		print("📦 Using cached profile picture for: %s" % user_id)
+		texture_rect.texture = profile_picture_cache[user_id]
+		return
+	
+	print("🖼️ Loading profile picture for user: %s" % user_id)
+	
+	# Create HTTP request to download the image
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	
+	http_request.request_completed.connect(func(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
+		if response_code == 200 and body.size() > 0:
+			# Load image from downloaded bytes
+			var image = Image.new()
+			var error = image.load_png_from_buffer(body)
+			
+			# If PNG fails, try JPEG
+			if error != OK:
+				error = image.load_jpg_from_buffer(body)
+			
+			if error == OK:
+				# Create texture from image
+				var image_texture = ImageTexture.create_from_image(image)
+				
+				# Cache it
+				profile_picture_cache[user_id] = image_texture
+				
+				# Update the TextureRect if it's still valid
+				if is_instance_valid(texture_rect):
+					texture_rect.texture = image_texture
+					print("✅ Profile picture loaded successfully for: %s" % user_id)
+			else:
+				print("⚠️ Failed to load image for user %s, keeping default" % user_id)
+		else:
+			print("⚠️ Failed to download profile picture (Code: %d), keeping default for: %s" % [response_code, user_id])
+		
+		# Clean up the HTTP request
+		http_request.queue_free()
+	)
+	
+	# Start the download
+	http_request.request(url)
 
 func _on_back_button_pressed():
 	print("🔙 Back button pressed - returning to dashboard")
