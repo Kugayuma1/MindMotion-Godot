@@ -246,6 +246,7 @@ func create_cognitive_summary():
 	
 	create_category_bar_chart(category_stats)
 
+		
 func calculate_category_time_stats() -> Dictionary:
 	var stage_to_category = {
 		"fine_motor": "Fine Motor Skills",
@@ -364,6 +365,44 @@ func build_category_stats_result(category_data: Dictionary) -> Dictionary:
 	
 	return result
 
+func create_rating_legend():
+	var legend_container = HBoxContainer.new()
+	legend_container.add_theme_constant_override("separation", 20)
+	legend_container.alignment = BoxContainer.ALIGNMENT_CENTER
+	summary_scroll.add_child(legend_container)
+	
+	var ratings = [
+		{"text": "Very Low", "color": Color(0.9, 0.2, 0.2, 1)},
+		{"text": "Low", "color": Color(0.9, 0.6, 0.2, 1)},
+		{"text": "Average", "color": Color(0.9, 0.9, 0.2, 1)},
+		{"text": "Good", "color": Color(0.3, 0.6, 0.9, 1)},
+		{"text": "Very Good", "color": Color(0.2, 0.8, 0.2, 1)}
+	]
+	
+	for rating_info in ratings:
+		var item_container = HBoxContainer.new()
+		item_container.add_theme_constant_override("separation", 8)
+		
+		# Create colored circle
+		var circle_container = Control.new()
+		circle_container.custom_minimum_size = Vector2(16, 16)
+		var circle = ColorRect.new()
+		circle.color = rating_info["color"]
+		circle.size = Vector2(16, 16)
+		circle_container.add_child(circle)
+		item_container.add_child(circle_container)
+		
+		# Create label
+		var label = Label.new()
+		label.text = rating_info["text"]
+		label.add_theme_font_size_override("font_size", 20)
+		label.add_theme_font_override("font", custom_font)
+		label.add_theme_color_override("font_color", Color(0.4, 0.4, 0.4, 1))
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		item_container.add_child(label)
+		
+		legend_container.add_child(item_container)
+
 func create_category_bar_chart(category_stats: Dictionary):
 	var chart_container = Control.new()
 	chart_container.custom_minimum_size = Vector2(700, 350)
@@ -373,7 +412,8 @@ func create_category_bar_chart(category_stats: Dictionary):
 	chart.category_stats = category_stats
 	chart.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	chart_container.add_child(chart)
-
+		# Add legend below the chart
+	create_rating_legend()
 class CategoryBarChart extends Control:
 	var category_stats = {}
 	var custom_font = preload("res://font/LilitaOne-Regular.ttf")

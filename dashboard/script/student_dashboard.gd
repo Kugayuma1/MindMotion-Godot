@@ -46,11 +46,61 @@ func setup_ui():
 	# Set student name
 	student_name_label.text = current_student_data.get("name", "Unknown Student")
 	
-	# Set student avatar based on gender
-	if current_student_data.get("gender", "Male").to_lower() == "female":
-		student_avatar.texture = girl_avatar
-	else:
-		student_avatar.texture = boy_avatar
+	# Set default avatar based on gender
+	var default_avatar = girl_avatar if current_student_data.get("gender", "Male").to_lower() == "female" else boy_avatar
+	student_avatar.texture = default_avatar
+	
+	# Try to load custom profile picture if available
+	var profile_picture_url = current_student_data.get("profilePicture", "")
+	if profile_picture_url != "" and profile_picture_url != null:
+		load_profile_picture(profile_picture_url, default_avatar)
+
+func load_profile_picture(url: String, fallback_texture: Texture2D):
+	print("🖼️ Loading profile picture from: %s" % url)
+	
+	# Create HTTP request to download the image
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	
+	http_request.request_completed.connect(func(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
+		if response_code == 200 and body.size() > 0:
+			# Load image from downloaded bytes
+			var image = Image.new()
+			var error = image.load_png_from_buffer(body)
+			
+			# If PNG fails, try JPEG
+			if error != OK:
+				error = image.load_jpg_from_buffer(body)
+			
+			if error == OK:
+				# Resize image if it exceeds 300x300
+				var img_size = image.get_size()
+				if img_size.x > 300 or img_size.y > 300:
+					# Calculate scaling to fit within 300x300 while maintaining aspect ratio
+					var scale = min(300.0 / img_size.x, 300.0 / img_size.y)
+					var new_width = int(img_size.x * scale)
+					var new_height = int(img_size.y * scale)
+					image.resize(new_width, new_height, Image.INTERPOLATE_LANCZOS)
+					print("📐 Resized image from %dx%d to %dx%d" % [img_size.x, img_size.y, new_width, new_height])
+				
+				# Create texture from image
+				var image_texture = ImageTexture.create_from_image(image)
+				
+				# Update the avatar if it's still valid
+				if is_instance_valid(student_avatar):
+					student_avatar.texture = image_texture
+					print("✅ Profile picture loaded successfully")
+			else:
+				print("⚠️ Failed to load image, keeping default avatar")
+		else:
+			print("⚠️ Failed to download profile picture (Code: %d), keeping default avatar" % response_code)
+		
+		# Clean up the HTTP request
+		http_request.queue_free()
+	)
+	
+	# Start the download
+	http_request.request(url)
 
 func _on_back_button_pressed():
 	go_back_to_student_list()

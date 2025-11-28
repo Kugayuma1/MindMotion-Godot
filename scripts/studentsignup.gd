@@ -106,7 +106,7 @@ func setup_profile_picture_upload():
 	
 	# Set default avatar in preview if it exists
 	if profile_preview:
-		var default_avatar = load("res://assets/boy_avatar.png")
+		var default_avatar = load("res://assets/addprofile.png")
 		if default_avatar:
 			profile_preview.texture = default_avatar
 			debug_print("Default avatar loaded", "✅")
@@ -152,8 +152,8 @@ func _on_terms_button_pressed():
 		"gender": gender_option.selected,
 		"terms_read": terms_read,
 		"privacy_read": privacy_read,
-		"profile_image_data": profile_image_data,  # Save the image data
-		"has_profile_picture": has_profile_picture,  # Save the flag
+		"profile_image_data": profile_image_data,
+		"has_profile_picture": has_profile_picture,
 		"return_scene": "student_signup"
 	}
 	get_tree().change_scene_to_file("res://scenes/TermsScreen.tscn")
@@ -167,8 +167,8 @@ func _on_privacy_button_pressed():
 		"gender": gender_option.selected,
 		"terms_read": terms_read,
 		"privacy_read": privacy_read,
-		"profile_image_data": profile_image_data,  # Save the image data
-		"has_profile_picture": has_profile_picture,  # Save the flag
+		"profile_image_data": profile_image_data,
+		"has_profile_picture": has_profile_picture,
 		"return_scene": "student_signup"
 	}
 	get_tree().change_scene_to_file("res://scenes/PrivacyScreen.tscn")
@@ -183,27 +183,86 @@ func update_agreement_checkbox():
 	else:
 		agreement_checkbox.button_pressed = false
 
-# Profile Picture Upload Functions
+# Profile Picture Upload Functions - UPDATED FOR ANDROID
 func _on_upload_picture_pressed():
-	var file_dialog = FileDialog.new()
-	add_child(file_dialog)
-	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
-	file_dialog.access = FileDialog.ACCESS_FILESYSTEM
-	file_dialog.filters = PackedStringArray(["*.png ; PNG Images", "*.jpg,*.jpeg ; JPEG Images"])
-	file_dialog.file_selected.connect(_on_image_file_selected)
-	file_dialog.popup_centered(Vector2(700, 500))
+	# Request permissions on Android
+	if OS.get_name() == "Android":
+		var permissions = OS.get_granted_permissions()
+		if permissions.find("android.permission.READ_MEDIA_IMAGES") == -1 and permissions.find("android.permission.READ_EXTERNAL_STORAGE") == -1:
+			OS.request_permissions()
+			await get_tree().create_timer(0.5).timeout
+	
+	debug_print("Opening image picker...", "📱")
+	
+	# Use native file picker (Android will use media picker automatically)
+	DisplayServer.file_dialog_show(
+		"Select Profile Picture",
+		OS.get_system_dir(OS.SYSTEM_DIR_PICTURES),
+		"",
+		false,
+		DisplayServer.FILE_DIALOG_MODE_OPEN_FILE,
+		["*.png", "*.jpg", "*.jpeg", "*.webp"],
+		_on_native_image_selected
+	)
 
+func _on_native_image_selected(status: bool, selected_paths: PackedStringArray, selected_filter_index: int):
+	if not status or selected_paths.is_empty():
+		debug_print("Image selection cancelled", "❌")
+		return
+	
+	var path = selected_paths[0]
+	debug_print("Image selected from native picker: %s" % path, "📁")
+	_on_image_file_selected(path)
+
+# UPDATED: Handle both Android content URIs and desktop file paths
 func _on_image_file_selected(path: String):
 	profile_image_path = path
 	debug_print("Image file selected: %s" % path, "📁")
 	
-	# Load and validate image
 	var image = Image.new()
-	var error = image.load(path)
+	var error: int
 	
-	if error != OK:
-		show_error_dialog("Failed to load image. Please select a valid image file.")
-		return
+	# Check if it's an Android content URI or if we're on Android
+	if path.begins_with("content://") or OS.get_name() == "Android":
+		debug_print("Loading image from Android content URI...", "📱")
+		
+		# Read the file as bytes first
+		var file = FileAccess.open(path, FileAccess.READ)
+		if file == null:
+			var file_error = FileAccess.get_open_error()
+			debug_print("Failed to open file. Error code: %d" % file_error, "❌")
+			show_error_dialog("Failed to access the selected image. Please try again or check app permissions.")
+			return
+		
+		var file_data = file.get_buffer(file.get_length())
+		file.close()
+		
+		debug_print("Read %d bytes from file" % file_data.size(), "✅")
+		
+		# Try to load as different formats
+		error = image.load_png_from_buffer(file_data)
+		if error != OK:
+			debug_print("Not PNG, trying JPG...", "🔄")
+			error = image.load_jpg_from_buffer(file_data)
+		if error != OK:
+			debug_print("Not JPG, trying WebP...", "🔄")
+			error = image.load_webp_from_buffer(file_data)
+		
+		if error != OK:
+			debug_print("Failed to load image from buffer. Error: %d" % error, "❌")
+			show_error_dialog("Failed to load image. Please select a valid PNG, JPG, or WebP file.")
+			return
+	else:
+		# Desktop: Direct file path loading
+		debug_print("Loading image from desktop path...", "💻")
+		error = image.load(path)
+		
+		if error != OK:
+			debug_print("Failed to load image. Error: %d" % error, "❌")
+			show_error_dialog("Failed to load image. Please select a valid image file.")
+			return
+	
+	debug_print("Image loaded successfully: %dx%d" % [image.get_width(), image.get_height()], "✅")
 	
 	# Resize image to reasonable size (512x512 max)
 	var max_size = 512
@@ -218,13 +277,13 @@ func _on_image_file_selected(path: String):
 	profile_image_data = image.save_png_to_buffer()
 	has_profile_picture = true
 	
-	debug_print("Image loaded: %s (%d bytes)" % [path.get_file(), profile_image_data.size()], "🖼️")
+	debug_print("Image processed: %d bytes ready for upload" % profile_image_data.size(), "🖼️")
 	
 	# Update preview
 	if profile_preview:
 		var texture = ImageTexture.create_from_image(image)
 		profile_preview.texture = texture
-	
+		debug_print("Preview updated", "✅")
 
 func upload_profile_picture():
 	if profile_image_data.is_empty():

@@ -1,7 +1,34 @@
-[gd_scene load_steps=3 format=3 uid="uid://ba7n5bcgskquc"]
+[gd_scene load_steps=8 format=3 uid="uid://ba7n5bcgskquc"]
 
 [ext_resource type="Texture2D" uid="uid://ckbw7fan2ff4c" path="res://Game Bg/Gross-motorbg.png" id="1_7s645"]
 [ext_resource type="Script" uid="uid://c8l5ucmq3x8ac" path="res://scripts/raise_hand.gd" id="1_c0n63"]
+[ext_resource type="Texture2D" uid="uid://d4mnf5yw00lni" path="res://Gross-Motor Assets/Raising/7.png" id="3_wfvyv"]
+[ext_resource type="Texture2D" uid="uid://lrddnki3l4o0" path="res://Gross-Motor Assets/Raising/8.png" id="4_6f8sd"]
+[ext_resource type="Texture2D" uid="uid://dn8f0wfclivqo" path="res://Gross-Motor Assets/Raising/9.png" id="5_lfum7"]
+[ext_resource type="Texture2D" uid="uid://b1pitxlhhnv8q" path="res://Gross-Motor Assets/Handing/55.png" id="6_14c0u"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fktl3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_wfvyv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6f8sd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_lfum7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_14c0u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_14c0u")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -28,6 +55,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_7s645")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ColorRect/TextureRect"]
+position = Vector2(925, 765)
+scale = Vector2(1.295, 1.295)
+sprite_frames = SubResource("SpriteFrames_fktl3")
+autoplay = "default"
 
 [node name="InstructionLabel" type="Label" parent="."]
 layout_mode = 1

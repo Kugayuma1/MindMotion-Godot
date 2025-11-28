@@ -121,14 +121,23 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -443.0
-offset_top = -396.0
-offset_right = 432.0
-offset_bottom = 489.0
+offset_left = -857.0
+offset_top = -384.0
+offset_right = 18.0
+offset_bottom = 501.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_nqwg7")
 expand_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="Container"]
+layout_mode = 2
+offset_left = 913.0
+offset_top = 7.0
+offset_right = 1716.0
+offset_bottom = 881.0
+texture = ExtResource("3_nqwg7")
+expand_mode = 1
 
 [node name="Hello" type="Label" parent="Container"]
 layout_mode = 1
@@ -417,16 +426,16 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 107.0
-offset_top = -128.0
-offset_right = 385.0
-offset_bottom = 128.0
+offset_left = 149.0
+offset_top = -291.0
+offset_right = 749.0
+offset_bottom = 315.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_constants/separation = 30
 
 [node name="ProfilePreview" type="TextureRect" parent="Container/VBoxContainer"]
-custom_minimum_size = Vector2(150, 150)
+custom_minimum_size = Vector2(600, 500)
 layout_mode = 2
 expand_mode = 3
 stretch_mode = 5
@@ -435,6 +444,7 @@ stretch_mode = 5
 layout_mode = 2
 texture_normal = ExtResource("10_sa0uy")
 texture_pressed = ExtResource("11_ox7rg")
+stretch_mode = 0
 
 [node name="Label" type="Label" parent="Container/VBoxContainer/UploadPictureButton"]
 layout_mode = 1

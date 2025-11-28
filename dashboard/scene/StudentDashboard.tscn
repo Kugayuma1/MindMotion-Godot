@@ -63,6 +63,7 @@ offset_top = 101.0
 offset_right = 142.0
 offset_bottom = 398.0
 grow_horizontal = 2
+theme_override_constants/separation = 50
 alignment = 1
 
 [node name="StudentAvatar" type="TextureRect" parent="HBoxContainer"]

@@ -1,7 +1,35 @@
-[gd_scene load_steps=3 format=3 uid="uid://nmxnuoxohcbm"]
+[gd_scene load_steps=9 format=3 uid="uid://nmxnuoxohcbm"]
 
 [ext_resource type="Script" uid="uid://sdujyqrcgdks" path="res://scripts/jump.gd" id="1_lm8v8"]
 [ext_resource type="Texture2D" uid="uid://ckbw7fan2ff4c" path="res://Game Bg/Gross-motorbg.png" id="2_pv8p6"]
+[ext_resource type="Texture2D" uid="uid://d4mnf5yw00lni" path="res://Gross-Motor Assets/Raising/7.png" id="3_ppwjm"]
+[ext_resource type="Texture2D" uid="uid://bgsxt6ufxnv7b" path="res://Gross-Motor Assets/Jump/52.png" id="4_0pyr4"]
+[ext_resource type="Texture2D" uid="uid://p7iqngmifcdq" path="res://Gross-Motor Assets/Jump/51.png" id="5_ith5r"]
+[ext_resource type="Texture2D" uid="uid://rgfpf372qo4x" path="res://Gross-Motor Assets/Jump/53.png" id="6_x41ay"]
+[ext_resource type="Texture2D" uid="uid://cynmypovw0myr" path="res://Gross-Motor Assets/Jump/50.png" id="7_ssyfr"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5m42q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ppwjm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_0pyr4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ith5r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_x41ay")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ssyfr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Jump" type="Control"]
 layout_mode = 3
@@ -59,3 +87,10 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
 text = "     ..."
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(807, 761)
+scale = Vector2(1.295, 1.2915)
+sprite_frames = SubResource("SpriteFrames_5m42q")
+autoplay = "default"
+frame_progress = 0.288243

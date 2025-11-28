@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qckic7o6mwpc"
-path="res://.godot/imported/blue.png-3dded87510c145240332f20fd2874d1a.ctex"
+uid="uid://dy828ffyoa6x6"
+path="res://.godot/imported/58.png-72f76f59852a22798a557c951676bbff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game Assets/Arts/blue.png"
-dest_files=["res://.godot/imported/blue.png-3dded87510c145240332f20fd2874d1a.ctex"]
+source_file="res://Gross-Motor Assets/March/58.png"
+dest_files=["res://.godot/imported/58.png-72f76f59852a22798a557c951676bbff.ctex"]
 
 [params]
 
